@@ -9,7 +9,7 @@ using TransportManagmentImplementation.Services.Common;
 
 namespace TransportManagmentAPI.Controllers.Common
 {
-    [Route("api/[controller]")]
+    [Route("api/[controller]/[action]")]
     [ApiController]
     [Authorize]
     public class CompanyProfileController : ControllerBase

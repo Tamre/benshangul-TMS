@@ -1,41 +1,41 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
-using TransportManagmentImplementation.DTOS.Common;
+using TransportManagmentImplementation.DTOS.Vehicle.Configuration;
 using TransportManagmentImplementation.Helper;
-using TransportManagmentImplementation.Interfaces.Common;
+using TransportManagmentImplementation.Interfaces.Vehicle.Configuration;
 
-namespace TransportManagmentAPI.Controllers.Common
+namespace TransportManagmentAPI.Controllers.Vehicle.Configuration
 {
     [Route("api/[controller]/[action]")]
     [ApiController]
-    public class DeviceListController : ControllerBase
+    public class BanBodyController : ControllerBase
     {
-        private readonly IDeviceListService _DeviceListService;
+        private readonly IBanBodyService _BanBodyService;
 
-        public DeviceListController(IDeviceListService DeviceListService)
+        public BanBodyController(IBanBodyService BanBodyService)
         {
 
-            _DeviceListService = DeviceListService;
+            _BanBodyService = BanBodyService;
 
         }
 
         [HttpGet]
-        [ProducesResponseType(typeof(DeviceListGetDto), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(BanBodyGetDto), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> GetAll()
         {
-            return Ok(await _DeviceListService.GetAll());
+            return Ok(await _BanBodyService.GetAll());
         }
 
 
 
         [HttpPost]
         [ProducesResponseType(typeof(ResponseMessage), (int)HttpStatusCode.OK)]
-        public async Task<IActionResult> Add(DeviceListPostDto DeviceListDto)
+        public async Task<IActionResult> Add(BanBodyPostDto BanBodyDto)
         {
             if (ModelState.IsValid)
             {
-                return Ok(await _DeviceListService.Add(DeviceListDto));
+                return Ok(await _BanBodyService.Add(BanBodyDto));
             }
             else
             {
@@ -46,17 +46,16 @@ namespace TransportManagmentAPI.Controllers.Common
 
         [HttpPut]
         [ProducesResponseType(typeof(ResponseMessage), (int)HttpStatusCode.OK)]
-        public async Task<IActionResult> Update(DeviceListGetDto DeviceListDto)
+        public async Task<IActionResult> Update(BanBodyGetDto BanBodyDto)
         {
             if (ModelState.IsValid)
             {
-                return Ok(await _DeviceListService.Update(DeviceListDto));
+                return Ok(await _BanBodyService.Update(BanBodyDto));
             }
             else
             {
                 return BadRequest();
             }
         }
-
     }
 }

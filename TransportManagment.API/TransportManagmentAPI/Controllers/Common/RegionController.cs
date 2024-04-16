@@ -8,7 +8,7 @@ using TransportManagmentImplementation.Interfaces.Common;
 
 namespace TransportManagmentAPI.Controllers.Common
 {
-    [Route("api/[controller]")]
+    [Route("api/[controller]/[action]")]
     [ApiController]
     [Authorize]
     public class RegionController : ControllerBase
