@@ -10,8 +10,10 @@ using System.Text;
 using System.Threading.Tasks;
 using TransportManagmentImplementation.Interfaces.Common;
 using TransportManagmentImplementation.Interfaces.Configuration;
+using TransportManagmentImplementation.Interfaces.Vehicle.Configuration;
 using TransportManagmentImplementation.Services.Common;
 using TransportManagmentImplementation.Services.Configuration;
+using TransportManagmentImplementation.Services.Vehicle.Configuration;
 
 namespace TransportManagmentImplementation.Datas
 {
@@ -41,6 +43,11 @@ namespace TransportManagmentImplementation.Datas
 
             #endregion
 
+            #region Vehicle
+
+            services.AddScoped<IAISORCStockTypeService, AISORCStockTypeService>();
+            services.AddScoped<IBanBodyService, BanBodyService>();
+            #endregion
 
 
             return services;

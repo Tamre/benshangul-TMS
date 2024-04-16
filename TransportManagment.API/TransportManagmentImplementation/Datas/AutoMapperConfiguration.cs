@@ -3,9 +3,11 @@
 using AutoMapper;
 using TransportManagmentImplementation.DTOS.Common;
 using TransportManagmentImplementation.DTOS.Configuration;
+using TransportManagmentImplementation.DTOS.Vehicle.Configuration;
 using TransportManagmentImplementation.Interfaces.Common;
 using TransportManagmentImplementation.Services.Common;
 using TransportManagmentInfrustructure.Model.Common;
+using TransportManagmentInfrustructure.Model.Vehicle.Configuration;
 
 namespace TransportManagmentImplementation.Datas
 {
@@ -33,6 +35,16 @@ namespace TransportManagmentImplementation.Datas
         .ForMember(a => a.ApprovedFor, e => e.MapFrom(mfg => mfg.ApprovedFor.ToString()))
         .ForMember(a => a.ApproverUser, e => e.MapFrom(mfg => mfg.Approver.FullName))
         ;
+            #endregion
+
+            #region
+
+            CreateMap<AISORCStockType, AISORCStockTypeGetDto>()
+                 .ForMember(a => a.Category, e => e.MapFrom(mfg => mfg.Category.ToString()));
+
+            CreateMap<BanBody, BanBodyGetDto>()
+                .ForMember(a => a.BanBodyCategory, e => e.MapFrom(mfg => mfg.BanBodyCategory.ToString()));
+
             #endregion
         }
     }

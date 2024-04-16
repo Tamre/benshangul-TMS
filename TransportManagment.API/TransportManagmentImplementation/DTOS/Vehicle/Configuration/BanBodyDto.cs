@@ -8,25 +8,23 @@ using static TransportManagmentInfrustructure.Enums.VehicleEnum;
 
 namespace TransportManagmentImplementation.DTOS.Vehicle.Configuration
 {
-    public record AISORCStockTypePostDto
+    public record BanBodyPostDto
     {
-
-        public string Name { get; set; } = null!;
         [StringLength(10)]
         [Required]
-        public string AmharicName { get; set; } = null!;
-        [StringLength(3)]
+        public string Name { get; set; } = null!;
+        [StringLength(20)]
         [Required]
-        public string Code { get; set; } = null!;
-        [Required]
-        public string Category { get; set; } = null!;
-        public string CreatedById { get; set; } = null!;
+        public string AmharicNAme { get; set; } = null!;
 
+        [Required]
+        public string BanBodyCategory { get; set; } = null!;
+
+        public string CreatedById { get; set; } = null!;
     }
 
-    public record AISORCStockTypeGetDto : AISORCStockTypePostDto
+    public record BanBodyGetDto : BanBodyPostDto
     {
         public int Id { get; set; }
-
     }
 }
