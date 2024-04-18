@@ -13,4 +13,6 @@ namespace TransportManagmentImplementation.Helper
         public object Data { get; set; } = null!;
     }
 
+    
+
 }
