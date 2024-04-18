@@ -35,29 +35,26 @@ namespace TransportManagmentInfrustructure.Data
 
         #endregion
 
-
         #region VehicleRegistration
         public DbSet<AISORCStockType> AISORCStockTypes { get; set; }
         public DbSet<BanBody> BanBodies { get; set; }
-        public DbSet<BaseEstimation> BaseEstimations { get; set; }
-        public DbSet<BgPoint> BgPoints { get; set; }
+        public DbSet<InitialPrice> InitialPrices { get; set; }
         public DbSet<DocumentType> DocumentTypes { get; set; }
-        public DbSet<HkPoint> HkPoints { get; set; }
-        public DbSet<ManufacturePoint> ManufacturePoints { get; set; }
+        public DbSet<FactoryPoint> FactoryPoints { get; set; }
         public DbSet<ManufacturingCountry> ManufacturingCountries { get; set; }
         public DbSet<PlateType> PlateTypes { get; set; }
         public DbSet<ServiceType> ServiceTypes { get; set; }
         public DbSet<ServiceYearSetting> ServiceYearSettings { get; set; }
-        public DbSet<Spoint> Spoints { get; set; }
         public DbSet<VehicleBodyType> VehicleBodyTypes { get; set; }
-        public DbSet<VehicleLookups> vehicleLookups { get; set; }
+        public DbSet<VehicleLookups> VehicleLookups { get; set; }
         public DbSet<VehicleModel> VehicleModels { get; set; }
         public DbSet<VehicleSerialSetting> VehicleSerialSettings { get; set; }
         public DbSet<VehicleSettings> VehicleSettings { get; set; }
         public DbSet<VehicleType> VehicleTypes { get; set; }
+        public DbSet<DepreciationCost> DepreciationCosts { get; set; }
+        public DbSet<SalvageValue> SalvageValues { get; set; }
 
         #endregion
-
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -113,26 +110,16 @@ namespace TransportManagmentInfrustructure.Data
             {
                 entity.HasIndex(t => t.Name).IsUnique();
             });
-            modelBuilder.Entity<BaseEstimation>(entity =>
+            modelBuilder.Entity<InitialPrice>(entity =>
             {
                 entity.HasIndex(t => t.Name).IsUnique();
             });
-            modelBuilder.Entity<BgPoint>(entity =>
-            {
-                entity.HasIndex(t => t.Name).IsUnique();
-            });
+          
             modelBuilder.Entity<DocumentType>(entity =>
             {
                 entity.HasIndex(t => t.FileName).IsUnique();
             });
-            modelBuilder.Entity<HkPoint>(entity =>
-            {
-                entity.HasIndex(t => t.Name).IsUnique();
-            });
-            modelBuilder.Entity<HkPoint>(entity =>
-            {
-                entity.HasIndex(t => t.Name).IsUnique();
-            });
+           
             modelBuilder.Entity<ManufacturingCountry>(entity =>
             {
                 entity.HasIndex(t => t.Name).IsUnique();
@@ -145,10 +132,7 @@ namespace TransportManagmentInfrustructure.Data
             {
                 entity.HasIndex(t => t.Name).IsUnique();
             });
-            modelBuilder.Entity<Spoint>(entity =>
-            {
-                entity.HasIndex(t => t.Name).IsUnique();
-            });
+         
             modelBuilder.Entity<VehicleBodyType>(entity =>
             {
                 entity.HasIndex(t => t.Name).IsUnique();
@@ -170,6 +154,14 @@ namespace TransportManagmentInfrustructure.Data
                 entity.HasIndex(t => t.VehicleSettingType).IsUnique();
             });
             modelBuilder.Entity<VehicleType>(entity =>
+            {
+                entity.HasIndex(t => t.Name).IsUnique();
+            });
+            modelBuilder.Entity<DepreciationCost>(entity =>
+            {
+                entity.HasIndex(t => t.Name).IsUnique();
+            });
+            modelBuilder.Entity<SalvageValue>(entity =>
             {
                 entity.HasIndex(t => t.Name).IsUnique();
             });
@@ -195,22 +187,22 @@ namespace TransportManagmentInfrustructure.Data
 
             modelBuilder.Entity<AISORCStockType>().ToTable("AISORCStockTypes", schema: "VRMS");
             modelBuilder.Entity<BanBody>().ToTable("BanBodies", schema: "VRMS");
-            modelBuilder.Entity<BaseEstimation>().ToTable("BaseEstimations", schema: "VRMS");
-            modelBuilder.Entity<BgPoint>().ToTable("BgPoints", schema: "VRMS");
+            modelBuilder.Entity<InitialPrice>().ToTable("InitialPrices", schema: "VRMS");
             modelBuilder.Entity<DocumentType>().ToTable("DocumentTypes", schema: "VRMS");
-            modelBuilder.Entity<HkPoint>().ToTable("HkPoints", schema: "VRMS");
-            modelBuilder.Entity<ManufacturePoint>().ToTable("ManufacturePoints", schema: "VRMS");
+            modelBuilder.Entity<FactoryPoint>().ToTable("FactoryPoints", schema: "VRMS");
             modelBuilder.Entity<ManufacturingCountry>().ToTable("ManufacturingCountries", schema: "VRMS");
             modelBuilder.Entity<PlateType>().ToTable("PlateTypes", schema: "VRMS");
             modelBuilder.Entity<ServiceType>().ToTable("ServiceTypes", schema: "VRMS");
             modelBuilder.Entity<ServiceYearSetting>().ToTable("ServiceYearSettings", schema: "VRMS");
-            modelBuilder.Entity<Spoint>().ToTable("Spoints", schema: "VRMS");
             modelBuilder.Entity<VehicleBodyType>().ToTable("VehicleBodyTypes", schema: "VRMS");
             modelBuilder.Entity<VehicleLookups>().ToTable("vehicleLookups", schema: "VRMS");
             modelBuilder.Entity<VehicleModel>().ToTable("VehicleModels", schema: "VRMS");
             modelBuilder.Entity<VehicleSerialSetting>().ToTable("VehicleSerialSettings", schema: "VRMS");
             modelBuilder.Entity<VehicleSettings>().ToTable("VehicleSettings", schema: "VRMS");
             modelBuilder.Entity<VehicleType>().ToTable("VehicleTypes", schema: "VRMS");
+            modelBuilder.Entity<SalvageValue>().ToTable("SalvageValues", schema: "VRMS");
+            modelBuilder.Entity<DepreciationCost>().ToTable("DepreciationCosts", schema: "VRMS");
         }
+    
     }
 }

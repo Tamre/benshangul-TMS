@@ -108,8 +108,7 @@ namespace Implementation.Services.Authentication
                 var jwtToken = tokenHandler.WriteToken(token);
                 var stringToken = tokenHandler.WriteToken(token);
 
-
-                var 
+ 
 
                 return new ResponseMessage()
                 {

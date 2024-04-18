@@ -40,7 +40,7 @@ namespace TransportManagmentImplementation.Services.Vehicle.Configuration
                 var StockType = new AISORCStockType
                 {
                     Name = AISORCStockTypePost.Name,
-                    AmharicName = AISORCStockTypePost.AmharicName,
+                    LocalName = AISORCStockTypePost.LocalName,
                     Code = AISORCStockTypePost.Code,
                     Category = Enum.Parse<AISORCStockCategory>( AISORCStockTypePost.Category),
                     CreatedById = AISORCStockTypePost.CreatedById,
@@ -90,7 +90,7 @@ namespace TransportManagmentImplementation.Services.Vehicle.Configuration
                 {
                     // Update the properties of the AISORCStockType
                     stockType.Name = AISORCStockTypeGet.Name;
-                    stockType.AmharicName = AISORCStockTypeGet.AmharicName;
+                    stockType.LocalName = AISORCStockTypeGet.LocalName;
                     stockType.Code = AISORCStockTypeGet.Code;
                     stockType.Category = Enum.Parse<AISORCStockCategory>(AISORCStockTypeGet.Category);
                    

@@ -8,16 +8,12 @@ using TransportManagmentInfrustructure.Model.Authentication;
 
 namespace TransportManagmentInfrustructure.Model.Vehicle.Configuration
 {
-    public class HkPoint: SettingIdModel
+    public class FactoryPoint: SettingIdModel
     {
-        [StringLength(10)]
         [Required]
-        public string Name { get; set; } = null!;
-        [StringLength(20)]
-        [Required]
-        public string AmharicName { get; set; } = null!;
+        public int MarkId { get; set; }
+        public virtual VehicleLookups Mark { get; set; } = null!;
         [Required]
         public double Value { get; set; }
-
     }
 }

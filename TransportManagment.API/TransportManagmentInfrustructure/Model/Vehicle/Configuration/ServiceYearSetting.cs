@@ -16,10 +16,6 @@ namespace TransportManagmentInfrustructure.Model.Vehicle.Configuration
         public int ToYear { get; set;}
         [Required]
         public double YearValue { get; set; }
-        [Required]
-        public int ServiceYearCategoryId { get; set; }
-        public VehicleLookups ServiceYearCategory { get; set; } = null!;
-
-
+       
     }
 }

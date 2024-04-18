@@ -12,8 +12,8 @@ using TransportManagmentInfrustructure.Data;
 namespace TransportManagmentInfrustructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240411133904_vehicle-configuration")]
-    partial class vehicleconfiguration
+    [Migration("20240418105919_Initital")]
+    partial class Initital
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -734,11 +734,6 @@ namespace TransportManagmentInfrustructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("AmharicName")
-                        .IsRequired()
-                        .HasMaxLength(10)
-                        .HasColumnType("nvarchar(10)");
-
                     b.Property<string>("ApplicationUserId")
                         .HasColumnType("nvarchar(450)");
 
@@ -757,6 +752,11 @@ namespace TransportManagmentInfrustructure.Migrations
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("LocalName")
+                        .IsRequired()
+                        .HasMaxLength(15)
+                        .HasColumnType("nvarchar(15)");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -787,11 +787,6 @@ namespace TransportManagmentInfrustructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("AmharicNAme")
-                        .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
-
                     b.Property<string>("ApplicationUserId")
                         .HasColumnType("nvarchar(450)");
 
@@ -805,6 +800,11 @@ namespace TransportManagmentInfrustructure.Migrations
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("LocalName")
+                        .IsRequired()
+                        .HasMaxLength(15)
+                        .HasColumnType("nvarchar(15)");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -824,18 +824,13 @@ namespace TransportManagmentInfrustructure.Migrations
                     b.ToTable("BanBodies", "VRMS");
                 });
 
-            modelBuilder.Entity("TransportManagmentInfrustructure.Model.Vehicle.Configuration.BaseEstimation", b =>
+            modelBuilder.Entity("TransportManagmentInfrustructure.Model.Vehicle.Configuration.DepreciationCost", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("AmharicName")
-                        .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
 
                     b.Property<string>("ApplicationUserId")
                         .HasColumnType("nvarchar(450)");
@@ -848,50 +843,10 @@ namespace TransportManagmentInfrustructure.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Name")
+                    b.Property<string>("LocalName")
                         .IsRequired()
-                        .HasMaxLength(10)
-                        .HasColumnType("nvarchar(10)");
-
-                    b.Property<double>("Price")
-                        .HasColumnType("float");
-
-                    b.Property<int>("RowStatus")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ApplicationUserId");
-
-                    b.HasIndex("Name")
-                        .IsUnique();
-
-                    b.ToTable("BaseEstimations", "VRMS");
-                });
-
-            modelBuilder.Entity("TransportManagmentInfrustructure.Model.Vehicle.Configuration.BgPoint", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("AmharicName")
-                        .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
-
-                    b.Property<string>("ApplicationUserId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("CreatedById")
-                        .IsRequired()
-                        .HasMaxLength(45)
-                        .HasColumnType("nvarchar(45)");
-
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2");
+                        .HasMaxLength(15)
+                        .HasColumnType("nvarchar(15)");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -902,7 +857,6 @@ namespace TransportManagmentInfrustructure.Migrations
                         .HasColumnType("int");
 
                     b.Property<double>("Value")
-                        .HasMaxLength(10)
                         .HasColumnType("float");
 
                     b.HasKey("Id");
@@ -912,7 +866,7 @@ namespace TransportManagmentInfrustructure.Migrations
                     b.HasIndex("Name")
                         .IsUnique();
 
-                    b.ToTable("BgPoints", "VRMS");
+                    b.ToTable("DepreciationCosts", "VRMS");
                 });
 
             modelBuilder.Entity("TransportManagmentInfrustructure.Model.Vehicle.Configuration.DocumentType", b =>
@@ -961,52 +915,7 @@ namespace TransportManagmentInfrustructure.Migrations
                     b.ToTable("DocumentTypes", "VRMS");
                 });
 
-            modelBuilder.Entity("TransportManagmentInfrustructure.Model.Vehicle.Configuration.HkPoint", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("AmharicName")
-                        .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
-
-                    b.Property<string>("ApplicationUserId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("CreatedById")
-                        .IsRequired()
-                        .HasMaxLength(45)
-                        .HasColumnType("nvarchar(45)");
-
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(10)
-                        .HasColumnType("nvarchar(10)");
-
-                    b.Property<int>("RowStatus")
-                        .HasColumnType("int");
-
-                    b.Property<double>("Value")
-                        .HasColumnType("float");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ApplicationUserId");
-
-                    b.HasIndex("Name")
-                        .IsUnique();
-
-                    b.ToTable("HkPoints", "VRMS");
-                });
-
-            modelBuilder.Entity("TransportManagmentInfrustructure.Model.Vehicle.Configuration.ManufacturePoint", b =>
+            modelBuilder.Entity("TransportManagmentInfrustructure.Model.Vehicle.Configuration.FactoryPoint", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -1034,18 +943,58 @@ namespace TransportManagmentInfrustructure.Migrations
                     b.Property<double>("Value")
                         .HasColumnType("float");
 
-                    b.Property<int>("VehicleTypeId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
                     b.HasIndex("ApplicationUserId");
 
                     b.HasIndex("MarkId");
 
-                    b.HasIndex("VehicleTypeId");
+                    b.ToTable("FactoryPoints", "VRMS");
+                });
 
-                    b.ToTable("ManufacturePoints", "VRMS");
+            modelBuilder.Entity("TransportManagmentInfrustructure.Model.Vehicle.Configuration.InitialPrice", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("ApplicationUserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("CreatedById")
+                        .IsRequired()
+                        .HasMaxLength(45)
+                        .HasColumnType("nvarchar(45)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("LocalName")
+                        .IsRequired()
+                        .HasMaxLength(15)
+                        .HasColumnType("nvarchar(15)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)");
+
+                    b.Property<double>("Price")
+                        .HasColumnType("float");
+
+                    b.Property<int>("RowStatus")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ApplicationUserId");
+
+                    b.HasIndex("Name")
+                        .IsUnique();
+
+                    b.ToTable("InitialPrices", "VRMS");
                 });
 
             modelBuilder.Entity("TransportManagmentInfrustructure.Model.Vehicle.Configuration.ManufacturingCountry", b =>
@@ -1069,8 +1018,13 @@ namespace TransportManagmentInfrustructure.Migrations
 
                     b.Property<string>("ListOfCountries")
                         .IsRequired()
-                        .HasMaxLength(1000)
-                        .HasColumnType("nvarchar(1000)");
+                        .HasMaxLength(3000)
+                        .HasColumnType("nvarchar(3000)");
+
+                    b.Property<string>("LocalName")
+                        .IsRequired()
+                        .HasMaxLength(15)
+                        .HasColumnType("nvarchar(15)");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -1101,11 +1055,6 @@ namespace TransportManagmentInfrustructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("AmharicName")
-                        .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
-
                     b.Property<string>("ApplicationUserId")
                         .HasColumnType("nvarchar(450)");
 
@@ -1122,6 +1071,11 @@ namespace TransportManagmentInfrustructure.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("LocalName")
+                        .IsRequired()
+                        .HasMaxLength(15)
+                        .HasColumnType("nvarchar(15)");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(10)
@@ -1129,8 +1083,8 @@ namespace TransportManagmentInfrustructure.Migrations
 
                     b.Property<string>("RegionList")
                         .IsRequired()
-                        .HasMaxLength(500)
-                        .HasColumnType("nvarchar(500)");
+                        .HasMaxLength(3000)
+                        .HasColumnType("nvarchar(3000)");
 
                     b.Property<int>("RowStatus")
                         .HasColumnType("int");
@@ -1145,7 +1099,7 @@ namespace TransportManagmentInfrustructure.Migrations
                     b.ToTable("PlateTypes", "VRMS");
                 });
 
-            modelBuilder.Entity("TransportManagmentInfrustructure.Model.Vehicle.Configuration.ServiceType", b =>
+            modelBuilder.Entity("TransportManagmentInfrustructure.Model.Vehicle.Configuration.SalvageValue", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -1153,10 +1107,50 @@ namespace TransportManagmentInfrustructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("AmharicName")
+                    b.Property<string>("ApplicationUserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("CreatedById")
                         .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
+                        .HasMaxLength(45)
+                        .HasColumnType("nvarchar(45)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("LocalName")
+                        .IsRequired()
+                        .HasMaxLength(15)
+                        .HasColumnType("nvarchar(15)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)");
+
+                    b.Property<int>("RowStatus")
+                        .HasColumnType("int");
+
+                    b.Property<double>("Value")
+                        .HasColumnType("float");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ApplicationUserId");
+
+                    b.HasIndex("Name")
+                        .IsUnique();
+
+                    b.ToTable("SalvageValues", "VRMS");
+                });
+
+            modelBuilder.Entity("TransportManagmentInfrustructure.Model.Vehicle.Configuration.ServiceType", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("ApplicationUserId")
                         .HasColumnType("nvarchar(450)");
@@ -1171,13 +1165,18 @@ namespace TransportManagmentInfrustructure.Migrations
 
                     b.Property<string>("ListOfAIS")
                         .IsRequired()
-                        .HasMaxLength(1000)
-                        .HasColumnType("nvarchar(1000)");
+                        .HasMaxLength(3000)
+                        .HasColumnType("nvarchar(3000)");
 
                     b.Property<string>("ListOfPlates")
                         .IsRequired()
-                        .HasMaxLength(1000)
-                        .HasColumnType("nvarchar(1000)");
+                        .HasMaxLength(3000)
+                        .HasColumnType("nvarchar(3000)");
+
+                    b.Property<string>("LocalName")
+                        .IsRequired()
+                        .HasMaxLength(15)
+                        .HasColumnType("nvarchar(15)");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -1225,9 +1224,6 @@ namespace TransportManagmentInfrustructure.Migrations
                     b.Property<int>("RowStatus")
                         .HasColumnType("int");
 
-                    b.Property<int>("ServiceYearCategoryId")
-                        .HasColumnType("int");
-
                     b.Property<int>("ToYear")
                         .HasColumnType("int");
 
@@ -1238,12 +1234,10 @@ namespace TransportManagmentInfrustructure.Migrations
 
                     b.HasIndex("ApplicationUserId");
 
-                    b.HasIndex("ServiceYearCategoryId");
-
                     b.ToTable("ServiceYearSettings", "VRMS");
                 });
 
-            modelBuilder.Entity("TransportManagmentInfrustructure.Model.Vehicle.Configuration.Spoint", b =>
+            modelBuilder.Entity("TransportManagmentInfrustructure.Model.Vehicle.Configuration.VehicleBodyType", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -1251,12 +1245,8 @@ namespace TransportManagmentInfrustructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("AmharicName")
-                        .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
-
                     b.Property<string>("ApplicationUserId")
+                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("CreatedById")
@@ -1266,6 +1256,11 @@ namespace TransportManagmentInfrustructure.Migrations
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("LocalName")
+                        .IsRequired()
+                        .HasMaxLength(15)
+                        .HasColumnType("nvarchar(15)");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -1277,49 +1272,6 @@ namespace TransportManagmentInfrustructure.Migrations
 
                     b.Property<double>("Value")
                         .HasColumnType("float");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ApplicationUserId");
-
-                    b.HasIndex("Name")
-                        .IsUnique();
-
-                    b.ToTable("Spoints", "VRMS");
-                });
-
-            modelBuilder.Entity("TransportManagmentInfrustructure.Model.Vehicle.Configuration.VehicleBodyType", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("AmharicName")
-                        .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
-
-                    b.Property<string>("ApplicationUserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("CreatedById")
-                        .IsRequired()
-                        .HasMaxLength(45)
-                        .HasColumnType("nvarchar(45)");
-
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(10)
-                        .HasColumnType("nvarchar(10)");
-
-                    b.Property<int>("RowStatus")
-                        .HasColumnType("int");
 
                     b.Property<int>("VehicleTypeId")
                         .HasColumnType("int");
@@ -1344,11 +1296,6 @@ namespace TransportManagmentInfrustructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("AmharicName")
-                        .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
-
                     b.Property<string>("ApplicationUserId")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
@@ -1360,6 +1307,11 @@ namespace TransportManagmentInfrustructure.Migrations
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("LocalName")
+                        .IsRequired()
+                        .HasMaxLength(15)
+                        .HasColumnType("nvarchar(15)");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -1528,11 +1480,6 @@ namespace TransportManagmentInfrustructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("AmharicName")
-                        .IsRequired()
-                        .HasMaxLength(10)
-                        .HasColumnType("nvarchar(10)");
-
                     b.Property<string>("ApplicationUserId")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
@@ -1544,6 +1491,11 @@ namespace TransportManagmentInfrustructure.Migrations
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("LocalName")
+                        .IsRequired()
+                        .HasMaxLength(15)
+                        .HasColumnType("nvarchar(15)");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -1720,16 +1672,7 @@ namespace TransportManagmentInfrustructure.Migrations
                     b.Navigation("ApplicationUser");
                 });
 
-            modelBuilder.Entity("TransportManagmentInfrustructure.Model.Vehicle.Configuration.BaseEstimation", b =>
-                {
-                    b.HasOne("TransportManagmentInfrustructure.Model.Authentication.ApplicationUser", "ApplicationUser")
-                        .WithMany()
-                        .HasForeignKey("ApplicationUserId");
-
-                    b.Navigation("ApplicationUser");
-                });
-
-            modelBuilder.Entity("TransportManagmentInfrustructure.Model.Vehicle.Configuration.BgPoint", b =>
+            modelBuilder.Entity("TransportManagmentInfrustructure.Model.Vehicle.Configuration.DepreciationCost", b =>
                 {
                     b.HasOne("TransportManagmentInfrustructure.Model.Authentication.ApplicationUser", "ApplicationUser")
                         .WithMany()
@@ -1747,16 +1690,7 @@ namespace TransportManagmentInfrustructure.Migrations
                     b.Navigation("ApplicationUser");
                 });
 
-            modelBuilder.Entity("TransportManagmentInfrustructure.Model.Vehicle.Configuration.HkPoint", b =>
-                {
-                    b.HasOne("TransportManagmentInfrustructure.Model.Authentication.ApplicationUser", "ApplicationUser")
-                        .WithMany()
-                        .HasForeignKey("ApplicationUserId");
-
-                    b.Navigation("ApplicationUser");
-                });
-
-            modelBuilder.Entity("TransportManagmentInfrustructure.Model.Vehicle.Configuration.ManufacturePoint", b =>
+            modelBuilder.Entity("TransportManagmentInfrustructure.Model.Vehicle.Configuration.FactoryPoint", b =>
                 {
                     b.HasOne("TransportManagmentInfrustructure.Model.Authentication.ApplicationUser", "ApplicationUser")
                         .WithMany()
@@ -1768,17 +1702,18 @@ namespace TransportManagmentInfrustructure.Migrations
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("TransportManagmentInfrustructure.Model.Vehicle.Configuration.VehicleType", "VehicleType")
-                        .WithMany()
-                        .HasForeignKey("VehicleTypeId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
                     b.Navigation("ApplicationUser");
 
                     b.Navigation("Mark");
+                });
 
-                    b.Navigation("VehicleType");
+            modelBuilder.Entity("TransportManagmentInfrustructure.Model.Vehicle.Configuration.InitialPrice", b =>
+                {
+                    b.HasOne("TransportManagmentInfrustructure.Model.Authentication.ApplicationUser", "ApplicationUser")
+                        .WithMany()
+                        .HasForeignKey("ApplicationUserId");
+
+                    b.Navigation("ApplicationUser");
                 });
 
             modelBuilder.Entity("TransportManagmentInfrustructure.Model.Vehicle.Configuration.ManufacturingCountry", b =>
@@ -1799,6 +1734,15 @@ namespace TransportManagmentInfrustructure.Migrations
                     b.Navigation("ApplicationUser");
                 });
 
+            modelBuilder.Entity("TransportManagmentInfrustructure.Model.Vehicle.Configuration.SalvageValue", b =>
+                {
+                    b.HasOne("TransportManagmentInfrustructure.Model.Authentication.ApplicationUser", "ApplicationUser")
+                        .WithMany()
+                        .HasForeignKey("ApplicationUserId");
+
+                    b.Navigation("ApplicationUser");
+                });
+
             modelBuilder.Entity("TransportManagmentInfrustructure.Model.Vehicle.Configuration.ServiceType", b =>
                 {
                     b.HasOne("TransportManagmentInfrustructure.Model.Authentication.ApplicationUser", "ApplicationUser")
@@ -1809,23 +1753,6 @@ namespace TransportManagmentInfrustructure.Migrations
                 });
 
             modelBuilder.Entity("TransportManagmentInfrustructure.Model.Vehicle.Configuration.ServiceYearSetting", b =>
-                {
-                    b.HasOne("TransportManagmentInfrustructure.Model.Authentication.ApplicationUser", "ApplicationUser")
-                        .WithMany()
-                        .HasForeignKey("ApplicationUserId");
-
-                    b.HasOne("TransportManagmentInfrustructure.Model.Vehicle.Configuration.VehicleLookups", "ServiceYearCategory")
-                        .WithMany()
-                        .HasForeignKey("ServiceYearCategoryId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.Navigation("ApplicationUser");
-
-                    b.Navigation("ServiceYearCategory");
-                });
-
-            modelBuilder.Entity("TransportManagmentInfrustructure.Model.Vehicle.Configuration.Spoint", b =>
                 {
                     b.HasOne("TransportManagmentInfrustructure.Model.Authentication.ApplicationUser", "ApplicationUser")
                         .WithMany()

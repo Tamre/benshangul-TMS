@@ -34,7 +34,7 @@ namespace TransportManagmentImplementation.Services.Vehicle.Configuration
                 var banBody = new BanBody
                 {
                     Name = BanBodyPost.Name,
-                    AmharicNAme = BanBodyPost.AmharicNAme,
+                    LocalName = BanBodyPost.LocalName,
                     BanBodyCategory = Enum.Parse<BanBodyCategory>(BanBodyPost.BanBodyCategory),
                     CreatedById = BanBodyPost.CreatedById,
                     CreatedDate = DateTime.Now,
@@ -81,7 +81,7 @@ namespace TransportManagmentImplementation.Services.Vehicle.Configuration
                 if (banBody != null)
                 {
                     banBody.Name = BanBodyGet.Name;
-                    banBody.AmharicNAme = BanBodyGet.AmharicNAme;
+                    banBody.LocalName = BanBodyGet.LocalName;
                     banBody.BanBodyCategory = Enum.Parse<BanBodyCategory>(BanBodyGet.BanBodyCategory);
 
                     // Save the changes to the database
