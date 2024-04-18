@@ -33,11 +33,12 @@ namespace TransportManagmentImplementation.Services.Vehicle.Configuration
                 var plateType = new PlateType
                 {
                     Name = plateTypePost.Name,
-                    AmharicName = plateTypePost.AmharicName,
+                    LocalName = plateTypePost.LocalName,
                     Code = plateTypePost.Code,
                     RegionList = plateTypePost.RegionList,
                     CreatedById = plateTypePost.CreatedById,
-                    CreatedDate = DateTime.Now
+                    CreatedDate = DateTime.Now,
+                    IsActive = true
                 };
 
                 await _dbContext.PlateTypes.AddAsync(plateType);
@@ -74,9 +75,11 @@ namespace TransportManagmentImplementation.Services.Vehicle.Configuration
                 if (plateType != null)
                 {
                     plateType.Name = plateTypeGet.Name;
-                    plateType.AmharicName = plateTypeGet.AmharicName;
+                    plateType.LocalName = plateTypeGet.LocalName;
                     plateType.Code = plateTypeGet.Code;
                     plateType.RegionList = plateTypeGet.RegionList;
+
+                    plateType.IsActive = plateTypeGet.IsActive;
 
                     await _dbContext.SaveChangesAsync();
 

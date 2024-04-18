@@ -26,5 +26,6 @@ namespace TransportManagmentImplementation.DTOS.Vehicle.Configuration
     public record BanBodyGetDto : BanBodyPostDto
     {
         public int Id { get; set; }
+        public bool IsActive { get; set; }
     }
 }

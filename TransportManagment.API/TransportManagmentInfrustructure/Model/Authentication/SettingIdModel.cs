@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using static TransportManagmentInfrustructure.Enums.CommonEnum;
+using System.ComponentModel;
 
 namespace TransportManagmentInfrustructure.Model.Authentication
 {
@@ -18,6 +19,8 @@ namespace TransportManagmentInfrustructure.Model.Authentication
         [StringLength(45)]
         public string CreatedById { get; set; } = null!;
         public virtual ApplicationUser ApplicationUser { get; set; } = null!;
-        public RowStatus RowStatus { get; set; }
+
+        [DefaultValue(true)]
+        public bool IsActive { get; set; }
     }
 }

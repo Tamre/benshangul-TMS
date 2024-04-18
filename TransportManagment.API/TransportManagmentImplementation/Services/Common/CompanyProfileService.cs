@@ -68,6 +68,7 @@ namespace TransportManagmentImplementation.Services.Common
                         Description = companyProfileGet.Description,
                         CreatedById = companyProfileGet.CreatedById,                  
                         CreatedDate = DateTime.Now,
+                        IsActive = true
 
                     };
                     await _dbContext.CompanyProfiles.AddAsync(companyProfile);

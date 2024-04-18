@@ -48,7 +48,9 @@ namespace TransportManagmentImplementation.Datas
             CreateMap<DocumentType, DocumentTypeGetDto>()
             .ForMember(a => a.FileExtentions, e => e.MapFrom(mfg => mfg.FileExtentions.ToString()));
 
-          
+            CreateMap<FactoryPoint, FactoryPointGetDto>()
+           .ForMember(a => a.MarkName, e => e.MapFrom(mfg => mfg.Mark.Name.ToString()));
+
 
             #endregion
         }

@@ -240,6 +240,9 @@ namespace TransportManagmentInfrustructure.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
                     b.Property<string>("MobileNo")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -250,9 +253,6 @@ namespace TransportManagmentInfrustructure.Migrations
                     b.Property<string>("RequesterName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("RowStatus")
-                        .HasColumnType("int");
 
                     b.Property<string>("UserCode")
                         .IsRequired()
@@ -343,15 +343,15 @@ namespace TransportManagmentInfrustructure.Migrations
                     b.Property<int>("CurrentNumber")
                         .HasColumnType("int");
 
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(5)
                         .HasColumnType("nvarchar(5)");
 
                     b.Property<int>("Pad")
-                        .HasColumnType("int");
-
-                    b.Property<int>("RowStatus")
                         .HasColumnType("int");
 
                     b.Property<int>("ZoneId")
@@ -403,6 +403,9 @@ namespace TransportManagmentInfrustructure.Migrations
                         .HasMaxLength(20)
                         .HasColumnType("nvarchar(20)");
 
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
                     b.Property<string>("LocalName")
                         .IsRequired()
                         .HasMaxLength(20)
@@ -417,9 +420,6 @@ namespace TransportManagmentInfrustructure.Migrations
                         .IsRequired()
                         .HasMaxLength(20)
                         .HasColumnType("nvarchar(20)");
-
-                    b.Property<int>("RowStatus")
-                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -452,6 +452,9 @@ namespace TransportManagmentInfrustructure.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
                     b.Property<string>("LocalName")
                         .IsRequired()
                         .HasMaxLength(15)
@@ -471,9 +474,6 @@ namespace TransportManagmentInfrustructure.Migrations
                         .IsRequired()
                         .HasMaxLength(10)
                         .HasColumnType("nvarchar(10)");
-
-                    b.Property<int>("RowStatus")
-                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -516,6 +516,9 @@ namespace TransportManagmentInfrustructure.Migrations
                         .HasMaxLength(10)
                         .HasColumnType("nvarchar(10)");
 
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
                     b.Property<string>("MACAddress")
                         .IsRequired()
                         .HasMaxLength(100)
@@ -525,9 +528,6 @@ namespace TransportManagmentInfrustructure.Migrations
                         .IsRequired()
                         .HasMaxLength(10)
                         .HasColumnType("nvarchar(10)");
-
-                    b.Property<int>("RowStatus")
-                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -565,6 +565,9 @@ namespace TransportManagmentInfrustructure.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
                     b.Property<string>("LocalCode")
                         .IsRequired()
                         .HasMaxLength(5)
@@ -579,9 +582,6 @@ namespace TransportManagmentInfrustructure.Migrations
                         .IsRequired()
                         .HasMaxLength(10)
                         .HasColumnType("nvarchar(10)");
-
-                    b.Property<int>("RowStatus")
-                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -620,6 +620,9 @@ namespace TransportManagmentInfrustructure.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
                     b.Property<string>("LocalCode")
                         .IsRequired()
                         .HasMaxLength(5)
@@ -634,9 +637,6 @@ namespace TransportManagmentInfrustructure.Migrations
                         .IsRequired()
                         .HasMaxLength(10)
                         .HasColumnType("nvarchar(10)");
-
-                    b.Property<int>("RowStatus")
-                        .HasColumnType("int");
 
                     b.Property<int>("ZoneId")
                         .HasColumnType("int");
@@ -677,6 +677,9 @@ namespace TransportManagmentInfrustructure.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
                     b.Property<bool>("IsCity")
                         .HasColumnType("bit");
 
@@ -701,9 +704,6 @@ namespace TransportManagmentInfrustructure.Migrations
                         .HasColumnType("nvarchar(10)");
 
                     b.Property<int>("RegionId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("RowStatus")
                         .HasColumnType("int");
 
                     b.Property<string>("Seffix")
@@ -750,6 +750,9 @@ namespace TransportManagmentInfrustructure.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
                     b.Property<string>("LocalName")
                         .IsRequired()
                         .HasMaxLength(15)
@@ -759,9 +762,6 @@ namespace TransportManagmentInfrustructure.Migrations
                         .IsRequired()
                         .HasMaxLength(10)
                         .HasColumnType("nvarchar(10)");
-
-                    b.Property<int>("RowStatus")
-                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -798,6 +798,9 @@ namespace TransportManagmentInfrustructure.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
                     b.Property<string>("LocalName")
                         .IsRequired()
                         .HasMaxLength(15)
@@ -807,9 +810,6 @@ namespace TransportManagmentInfrustructure.Migrations
                         .IsRequired()
                         .HasMaxLength(10)
                         .HasColumnType("nvarchar(10)");
-
-                    b.Property<int>("RowStatus")
-                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -840,6 +840,9 @@ namespace TransportManagmentInfrustructure.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
                     b.Property<string>("LocalName")
                         .IsRequired()
                         .HasMaxLength(15)
@@ -849,9 +852,6 @@ namespace TransportManagmentInfrustructure.Migrations
                         .IsRequired()
                         .HasMaxLength(10)
                         .HasColumnType("nvarchar(10)");
-
-                    b.Property<int>("RowStatus")
-                        .HasColumnType("int");
 
                     b.Property<double>("Value")
                         .HasColumnType("float");
@@ -893,14 +893,14 @@ namespace TransportManagmentInfrustructure.Migrations
                         .HasMaxLength(10)
                         .HasColumnType("nvarchar(10)");
 
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
                     b.Property<bool>("IsPermanentRequired")
                         .HasColumnType("bit");
 
                     b.Property<bool>("IsTemporaryRequired")
                         .HasColumnType("bit");
-
-                    b.Property<int>("RowStatus")
-                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -931,10 +931,10 @@ namespace TransportManagmentInfrustructure.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("MarkId")
-                        .HasColumnType("int");
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
 
-                    b.Property<int>("RowStatus")
+                    b.Property<int>("MarkId")
                         .HasColumnType("int");
 
                     b.Property<double>("Value")
@@ -968,6 +968,9 @@ namespace TransportManagmentInfrustructure.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
                     b.Property<string>("LocalName")
                         .IsRequired()
                         .HasMaxLength(15)
@@ -980,9 +983,6 @@ namespace TransportManagmentInfrustructure.Migrations
 
                     b.Property<double>("Price")
                         .HasColumnType("float");
-
-                    b.Property<int>("RowStatus")
-                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -1013,6 +1013,9 @@ namespace TransportManagmentInfrustructure.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
                     b.Property<string>("ListOfCountries")
                         .IsRequired()
                         .HasMaxLength(3000)
@@ -1027,9 +1030,6 @@ namespace TransportManagmentInfrustructure.Migrations
                         .IsRequired()
                         .HasMaxLength(10)
                         .HasColumnType("nvarchar(10)");
-
-                    b.Property<int>("RowStatus")
-                        .HasColumnType("int");
 
                     b.Property<double>("Value")
                         .HasColumnType("float");
@@ -1068,6 +1068,9 @@ namespace TransportManagmentInfrustructure.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
                     b.Property<string>("LocalName")
                         .IsRequired()
                         .HasMaxLength(15)
@@ -1082,9 +1085,6 @@ namespace TransportManagmentInfrustructure.Migrations
                         .IsRequired()
                         .HasMaxLength(3000)
                         .HasColumnType("nvarchar(3000)");
-
-                    b.Property<int>("RowStatus")
-                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -1115,6 +1115,9 @@ namespace TransportManagmentInfrustructure.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
                     b.Property<string>("LocalName")
                         .IsRequired()
                         .HasMaxLength(15)
@@ -1124,9 +1127,6 @@ namespace TransportManagmentInfrustructure.Migrations
                         .IsRequired()
                         .HasMaxLength(10)
                         .HasColumnType("nvarchar(10)");
-
-                    b.Property<int>("RowStatus")
-                        .HasColumnType("int");
 
                     b.Property<double>("Value")
                         .HasColumnType("float");
@@ -1160,6 +1160,9 @@ namespace TransportManagmentInfrustructure.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
                     b.Property<string>("ListOfAIS")
                         .IsRequired()
                         .HasMaxLength(3000)
@@ -1179,9 +1182,6 @@ namespace TransportManagmentInfrustructure.Migrations
                         .IsRequired()
                         .HasMaxLength(10)
                         .HasColumnType("nvarchar(10)");
-
-                    b.Property<int>("RowStatus")
-                        .HasColumnType("int");
 
                     b.Property<int>("ServiceModule")
                         .HasColumnType("int");
@@ -1218,8 +1218,8 @@ namespace TransportManagmentInfrustructure.Migrations
                     b.Property<int>("FromYear")
                         .HasColumnType("int");
 
-                    b.Property<int>("RowStatus")
-                        .HasColumnType("int");
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
 
                     b.Property<int>("ToYear")
                         .HasColumnType("int");
@@ -1254,6 +1254,9 @@ namespace TransportManagmentInfrustructure.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
                     b.Property<string>("LocalName")
                         .IsRequired()
                         .HasMaxLength(15)
@@ -1263,9 +1266,6 @@ namespace TransportManagmentInfrustructure.Migrations
                         .IsRequired()
                         .HasMaxLength(10)
                         .HasColumnType("nvarchar(10)");
-
-                    b.Property<int>("RowStatus")
-                        .HasColumnType("int");
 
                     b.Property<double>("Value")
                         .HasColumnType("float");
@@ -1305,6 +1305,9 @@ namespace TransportManagmentInfrustructure.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
                     b.Property<string>("LocalName")
                         .IsRequired()
                         .HasMaxLength(15)
@@ -1314,9 +1317,6 @@ namespace TransportManagmentInfrustructure.Migrations
                         .IsRequired()
                         .HasMaxLength(10)
                         .HasColumnType("nvarchar(10)");
-
-                    b.Property<int>("RowStatus")
-                        .HasColumnType("int");
 
                     b.Property<int>("VehicleLookupType")
                         .HasColumnType("int");
@@ -1357,6 +1357,9 @@ namespace TransportManagmentInfrustructure.Migrations
                     b.Property<int>("HorsePowerMeasure")
                         .HasColumnType("int");
 
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
                     b.Property<int>("MarkId")
                         .HasColumnType("int");
 
@@ -1367,9 +1370,6 @@ namespace TransportManagmentInfrustructure.Migrations
 
                     b.Property<double>("NoOfCylinder")
                         .HasColumnType("float");
-
-                    b.Property<int>("RowStatus")
-                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -1403,10 +1403,10 @@ namespace TransportManagmentInfrustructure.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("Pad")
-                        .HasColumnType("int");
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
 
-                    b.Property<int>("RowStatus")
+                    b.Property<int>("Pad")
                         .HasColumnType("int");
 
                     b.Property<int>("Value")
@@ -1450,8 +1450,8 @@ namespace TransportManagmentInfrustructure.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("RowStatus")
-                        .HasColumnType("int");
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
 
                     b.Property<int>("Value")
                         .HasColumnType("int");
@@ -1489,6 +1489,9 @@ namespace TransportManagmentInfrustructure.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
                     b.Property<string>("LocalName")
                         .IsRequired()
                         .HasMaxLength(15)
@@ -1498,9 +1501,6 @@ namespace TransportManagmentInfrustructure.Migrations
                         .IsRequired()
                         .HasMaxLength(10)
                         .HasColumnType("nvarchar(10)");
-
-                    b.Property<int>("RowStatus")
-                        .HasColumnType("int");
 
                     b.Property<int>("VehicleCategoryId")
                         .HasColumnType("int");

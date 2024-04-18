@@ -41,6 +41,7 @@ namespace TransportManagmentImplementation.Services.Common
                     CurrentNumber = CommonCodePost.CurrentNumber,
                     CreatedById = CommonCodePost.CreatedById,                    
                     CreatedDate = DateTime.Now,
+                    IsActive = true
 
                 };
                 await _dbContext.CommonCodes.AddAsync(commonCode);
@@ -97,6 +98,7 @@ namespace TransportManagmentImplementation.Services.Common
                     CommonCode.CommonCodeType = Enum.Parse<CommonCodeType>(CommonCodeGet.CommonCodeType);
                     CommonCode.Pad = CommonCodeGet.Pad;
                     CommonCode.CurrentNumber = CommonCodeGet.CurrentNumber;
+                    CommonCode.IsActive = CommonCodeGet.IsActive;
 
                     // Save the changes to the database
                     await _dbContext.SaveChangesAsync();

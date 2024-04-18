@@ -36,7 +36,8 @@ namespace TransportManagmentImplementation.Services.Vehicle.Configuration
                     IsPermanentRequired = documentTypePost.IsPermanentRequired,
                     IsTemporaryRequired = documentTypePost.IsTemporaryRequired,
                     CreatedById = documentTypePost.CreatedById,
-                    CreatedDate = DateTime.Now
+                    CreatedDate = DateTime.Now,
+                    IsActive = true
                 };
 
                 await _dbContext.DocumentTypes.AddAsync(documentType);
@@ -76,6 +77,8 @@ namespace TransportManagmentImplementation.Services.Vehicle.Configuration
                     documentType.FileExtentions = Enum.Parse<FileExtentions>(documentTypeGet.FileExtentions);
                     documentType.IsPermanentRequired = documentTypeGet.IsPermanentRequired;
                     documentType.IsTemporaryRequired = documentTypeGet.IsTemporaryRequired;
+
+                    documentType.IsActive = documentTypeGet.IsActive;
 
                     await _dbContext.SaveChangesAsync();
 

@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,92 +9,78 @@ using TransportManagmentImplementation.DTOS.Vehicle.Configuration;
 using TransportManagmentImplementation.Helper;
 using TransportManagmentImplementation.Interfaces.Vehicle.Configuration;
 using TransportManagmentInfrustructure.Data;
-using static TransportManagmentInfrustructure.Enums.VehicleEnum;
 using TransportManagmentInfrustructure.Model.Vehicle.Configuration;
-using Microsoft.EntityFrameworkCore;
 
 namespace TransportManagmentImplementation.Services.Vehicle.Configuration
 {
-    public class BanBodyService : IBanBodyService
+    public class FactoryPointService :IFactoryPointService
     {
-
         private readonly ApplicationDbContext _dbContext;
         private readonly IMapper _mapper;
 
-        public BanBodyService(ApplicationDbContext dbContext, IMapper mapper)
+        public FactoryPointService(ApplicationDbContext dbContext, IMapper mapper)
         {
-
             _dbContext = dbContext;
             _mapper = mapper;
-
         }
-        public async Task<ResponseMessage> Add(BanBodyPostDto BanBodyPost)
+
+        public async Task<ResponseMessage> Add(FactoryPointPostDto factoryPointPost)
         {
             try
             {
-                var banBody = new BanBody
+                var factoryPoint = new FactoryPoint
                 {
-                    Name = BanBodyPost.Name,
-                    LocalName = BanBodyPost.LocalName,
-                    BanBodyCategory = Enum.Parse<BanBodyCategory>(BanBodyPost.BanBodyCategory),
-                    CreatedById = BanBodyPost.CreatedById,
+                    MarkId = factoryPointPost.MarkId,
+                    Value = factoryPointPost.Value,                    
+                    CreatedById = factoryPointPost.CreatedById,
                     CreatedDate = DateTime.Now,
                     IsActive = true
-
                 };
-                await _dbContext.BanBodies.AddAsync(banBody);
+
+                await _dbContext.FactoryPoints.AddAsync(factoryPoint);
                 await _dbContext.SaveChangesAsync();
 
                 return new ResponseMessage
                 {
                     Success = true,
-                    Message = "Band Body Added Successfully !!!"
+                    Message = "Factory Point Added Successfully !!!"
                 };
-
             }
             catch (Exception ex)
             {
-
                 return new ResponseMessage
                 {
                     Success = false,
                     Message = ex.Message
-
                 };
             }
         }
 
-        public async Task<List<BanBodyGetDto>> GetAll()
+        public async Task<List<FactoryPointGetDto>> GetAll()
         {
-            var banBodies = await _dbContext.BanBodies.AsNoTracking().ToListAsync();
-
-            var banBodyDtos = _mapper.Map<List<BanBodyGetDto>>(banBodies);
-
-            return banBodyDtos;
+            var factoryPoints = await _dbContext.FactoryPoints.Include(x=>x.Mark).AsNoTracking().ToListAsync();
+            var factoryPointDtos = _mapper.Map<List<FactoryPointGetDto>>(factoryPoints);
+            return factoryPointDtos;
         }
 
-        public async Task<ResponseMessage> Update(BanBodyGetDto BanBodyGet)
+        public async Task<ResponseMessage> Update(FactoryPointGetDto factoryPointGet)
         {
             try
             {
-
-                var banBody = await _dbContext.BanBodies.FindAsync(BanBodyGet.Id);
-
-                if (banBody != null)
+                var factoryPoint = await _dbContext.FactoryPoints.FindAsync(factoryPointGet.Id);
+                if (factoryPoint != null)
                 {
-                    banBody.Name = BanBodyGet.Name;
-                    banBody.LocalName = BanBodyGet.LocalName;
-                    banBody.BanBodyCategory = Enum.Parse<BanBodyCategory>(BanBodyGet.BanBodyCategory);
+                    factoryPoint.MarkId = factoryPointGet.MarkId;
+                    factoryPoint.Value = factoryPointGet.Value;
+                    factoryPoint.IsActive = factoryPointGet.IsActive;
+                  
 
-                    banBody.IsActive = BanBodyGet.IsActive;
-
-                    // Save the changes to the database
                     await _dbContext.SaveChangesAsync();
 
                     return new ResponseMessage
                     {
                         Success = true,
-                        Message = "Ban Body Updated Successfully !!!"
+                        Message = "Factory Point Updated Successfully !!!"
                     };
                 }
                 else
@@ -101,10 +88,9 @@ namespace TransportManagmentImplementation.Services.Vehicle.Configuration
                     return new ResponseMessage
                     {
                         Success = false,
-                        Message = "Ban Body Not Found !!!"
+                        Message = "Factory Point Not Found !!!"
                     };
                 }
-
             }
             catch (Exception ex)
             {
@@ -113,8 +99,9 @@ namespace TransportManagmentImplementation.Services.Vehicle.Configuration
                     Success = false,
                     Message = ex.Message
                 };
-
             }
         }
+
+
     }
 }

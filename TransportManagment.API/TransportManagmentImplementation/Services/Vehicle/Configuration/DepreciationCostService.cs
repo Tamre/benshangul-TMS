@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,92 +10,79 @@ using TransportManagmentImplementation.DTOS.Vehicle.Configuration;
 using TransportManagmentImplementation.Helper;
 using TransportManagmentImplementation.Interfaces.Vehicle.Configuration;
 using TransportManagmentInfrustructure.Data;
-using static TransportManagmentInfrustructure.Enums.VehicleEnum;
 using TransportManagmentInfrustructure.Model.Vehicle.Configuration;
-using Microsoft.EntityFrameworkCore;
 
 namespace TransportManagmentImplementation.Services.Vehicle.Configuration
 {
-    public class BanBodyService : IBanBodyService
+    public class DepreciationCostService :IDepreciationCostService
     {
-
         private readonly ApplicationDbContext _dbContext;
         private readonly IMapper _mapper;
 
-        public BanBodyService(ApplicationDbContext dbContext, IMapper mapper)
+        public DepreciationCostService(ApplicationDbContext dbContext, IMapper mapper)
         {
-
             _dbContext = dbContext;
             _mapper = mapper;
-
         }
-        public async Task<ResponseMessage> Add(BanBodyPostDto BanBodyPost)
+
+        public async Task<ResponseMessage> Add(DepreciationCostPostDto depreciationCostPost)
         {
             try
             {
-                var banBody = new BanBody
+                var depreciationCost = new DepreciationCost
                 {
-                    Name = BanBodyPost.Name,
-                    LocalName = BanBodyPost.LocalName,
-                    BanBodyCategory = Enum.Parse<BanBodyCategory>(BanBodyPost.BanBodyCategory),
-                    CreatedById = BanBodyPost.CreatedById,
+                    Name = depreciationCostPost.Name,
+                    LocalName = depreciationCostPost.LocalName,
+                    Value = depreciationCostPost.Value,
+                    CreatedById = depreciationCostPost.CreatedById,
                     CreatedDate = DateTime.Now,
                     IsActive = true
-
                 };
-                await _dbContext.BanBodies.AddAsync(banBody);
+
+                await _dbContext.DepreciationCosts.AddAsync(depreciationCost);
                 await _dbContext.SaveChangesAsync();
 
                 return new ResponseMessage
                 {
                     Success = true,
-                    Message = "Band Body Added Successfully !!!"
+                    Message = "Depreciation Cost Added Successfully !!!"
                 };
-
             }
             catch (Exception ex)
             {
-
                 return new ResponseMessage
                 {
                     Success = false,
                     Message = ex.Message
-
                 };
             }
         }
 
-        public async Task<List<BanBodyGetDto>> GetAll()
+        public async Task<List<DepreciationCostGetDto>> GetAll()
         {
-            var banBodies = await _dbContext.BanBodies.AsNoTracking().ToListAsync();
-
-            var banBodyDtos = _mapper.Map<List<BanBodyGetDto>>(banBodies);
-
-            return banBodyDtos;
+            var depreciationCosts = await _dbContext.DepreciationCosts.AsNoTracking().ToListAsync();
+            var depreciationCostDtos = _mapper.Map<List<DepreciationCostGetDto>>(depreciationCosts);
+            return depreciationCostDtos;
         }
 
-        public async Task<ResponseMessage> Update(BanBodyGetDto BanBodyGet)
+        public async Task<ResponseMessage> Update(DepreciationCostGetDto depreciationCostGet)
         {
             try
             {
-
-                var banBody = await _dbContext.BanBodies.FindAsync(BanBodyGet.Id);
-
-                if (banBody != null)
+                var depreciationCost = await _dbContext.DepreciationCosts.FindAsync(depreciationCostGet.Id);
+                if (depreciationCost != null)
                 {
-                    banBody.Name = BanBodyGet.Name;
-                    banBody.LocalName = BanBodyGet.LocalName;
-                    banBody.BanBodyCategory = Enum.Parse<BanBodyCategory>(BanBodyGet.BanBodyCategory);
+                    depreciationCost.Name = depreciationCostGet.Name;
+                    depreciationCost.LocalName = depreciationCostGet.LocalName;
+                    depreciationCost.Value = depreciationCostGet.Value;
+                    depreciationCost.IsActive = depreciationCostGet.IsActive;
 
-                    banBody.IsActive = BanBodyGet.IsActive;
-
-                    // Save the changes to the database
                     await _dbContext.SaveChangesAsync();
 
                     return new ResponseMessage
                     {
                         Success = true,
-                        Message = "Ban Body Updated Successfully !!!"
+                        Message = "Depreciation Cost Updated Successfully !!!"
                     };
                 }
                 else
@@ -101,10 +90,9 @@ namespace TransportManagmentImplementation.Services.Vehicle.Configuration
                     return new ResponseMessage
                     {
                         Success = false,
-                        Message = "Ban Body Not Found !!!"
+                        Message = "Depreciation Cost Not Found !!!"
                     };
                 }
-
             }
             catch (Exception ex)
             {
@@ -113,7 +101,6 @@ namespace TransportManagmentImplementation.Services.Vehicle.Configuration
                     Success = false,
                     Message = ex.Message
                 };
-
             }
         }
     }

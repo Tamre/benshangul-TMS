@@ -16,7 +16,7 @@ namespace TransportManagmentImplementation.DTOS.Vehicle.Configuration
 
         [StringLength(20)]
         [Required]
-        public string AmharicName { get; set; } = null!;
+        public string LocalName { get; set; } = null!;
 
         [StringLength(3)]
         [Required]
@@ -32,6 +32,7 @@ namespace TransportManagmentImplementation.DTOS.Vehicle.Configuration
     public record PlateTypeGetDto : PlateTypePostDto
     {
         public int Id { get; set; }
+        public bool IsActive { get; set; }
     }
 
 }

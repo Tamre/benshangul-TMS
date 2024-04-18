@@ -35,5 +35,7 @@ namespace TransportManagmentImplementation.DTOS.Common
         public int Id { get; set; }
 
         public string? ApproverUser { get; set; }
+
+        public bool IsActive { get; set; }
     }
 }

@@ -40,6 +40,7 @@ namespace TransportManagmentImplementation.Services.Common
                     CreatedById = countryPost.CreatedById,
                     CountryCode = countryPost.CountryCode,
                     CreatedDate = DateTime.Now,
+                    IsActive = true
 
                 };
                 await _dbContext.Countries.AddAsync(country);
@@ -96,6 +97,10 @@ namespace TransportManagmentImplementation.Services.Common
                     country.CountryCode = countryGet.CountryCode;
                     country.NationalityName = countryGet.NationalityName;
                     country.LocalNationalityName = countryGet.LocalNationalityName;
+
+                    country.IsActive = countryGet.IsActive;
+
+
 
                     // Save the changes to the database
                     await _dbContext.SaveChangesAsync();

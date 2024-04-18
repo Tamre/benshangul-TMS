@@ -4,30 +4,31 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using static TransportManagmentInfrustructure.Enums.VehicleEnum;
+using TransportManagmentInfrustructure.Data;
 
 namespace TransportManagmentImplementation.DTOS.Vehicle.Configuration
 {
-    public record AISORCStockTypePostDto
+    // DTOs
+    public record DepreciationCostPostDto
     {
-
+        [StringLength(ValidationClasses.MaxNameLength)]
+        [Required]
         public string Name { get; set; } = null!;
-        [StringLength(10)]
+
+        [StringLength(ValidationClasses.MaxLocalNameLength)]
         [Required]
         public string LocalName { get; set; } = null!;
-        [StringLength(3)]
-        [Required]
-        public string Code { get; set; } = null!;
-        [Required]
-        public string Category { get; set; } = null!;
-        public string CreatedById { get; set; } = null!;
 
+        [Required]
+        public double Value { get; set; }
+
+        public string CreatedById { get; set; } = null!;
     }
 
-    public record AISORCStockTypeGetDto : AISORCStockTypePostDto
+    public record DepreciationCostGetDto : DepreciationCostPostDto
     {
         public int Id { get; set; }
         public bool IsActive { get; set; }
-
     }
+
 }

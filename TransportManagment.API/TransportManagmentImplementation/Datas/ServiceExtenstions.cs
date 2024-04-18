@@ -49,6 +49,8 @@ namespace TransportManagmentImplementation.Datas
             services.AddScoped<IBanBodyService, BanBodyService>();
             services.AddScoped<IDocumentTypeService, DocumentTypeService>();
             services.AddScoped<IPlateTypeService, PlateTypeService>();
+            services.AddScoped<IDepreciationCostService, DepreciationCostService>();
+            services.AddScoped<IFactoryPointService, FactoryPointService>();
             #endregion
 
 

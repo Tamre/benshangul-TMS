@@ -28,5 +28,7 @@ namespace TransportManagmentImplementation.DTOS.Common
         public int Id { get; set; }
 
         public string ZoneName { get; set;}
+
+        public bool IsActive { get; set; }
     }
 }

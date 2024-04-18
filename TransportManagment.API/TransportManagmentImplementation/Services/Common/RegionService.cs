@@ -41,6 +41,7 @@ namespace TransportManagmentImplementation.Services.Common
                     CountryId  = RegionPost.CountryId,
                     CreatedById = RegionPost.CreatedById,                   
                     CreatedDate = DateTime.Now,
+                    IsActive = true
 
                 };
                 await _dbContext.Regions.AddAsync(Region);
@@ -97,6 +98,8 @@ namespace TransportManagmentImplementation.Services.Common
                     Region.Code = RegionGet.Code;
                     Region.LocalCode = RegionGet.LocalCode;
                     Region.CountryId = RegionGet.CountryId;
+
+                    Region.IsActive = RegionGet.IsActive;
 
                     // Save the changes to the database
                     await _dbContext.SaveChangesAsync();

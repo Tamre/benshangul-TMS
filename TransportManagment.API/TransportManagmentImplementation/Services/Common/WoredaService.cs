@@ -42,6 +42,7 @@ namespace TransportManagmentImplementation.Services.Common
                     ZoneId = WoredaPost.ZoneId,                  
                     CreatedById = WoredaPost.CreatedById,                    
                     CreatedDate = DateTime.Now,
+                    IsActive = true
 
                 };
                 await _dbContext.Woredas.AddAsync(woreda);
@@ -97,7 +98,9 @@ namespace TransportManagmentImplementation.Services.Common
                     Woreda.LocalName = WoredaGet.LocalName;
                     Woreda.Code = WoredaGet.Code;
                     Woreda.LocalCode = WoredaGet.LocalCode;
-                    Woreda.ZoneId = WoredaGet.ZoneId;                  
+                    Woreda.ZoneId = WoredaGet.ZoneId;
+
+                    Woreda.IsActive = WoredaGet.IsActive;
 
                     // Save the changes to the database
                     await _dbContext.SaveChangesAsync();
