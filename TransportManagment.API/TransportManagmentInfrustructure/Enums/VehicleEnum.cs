@@ -59,13 +59,6 @@ namespace TransportManagmentInfrustructure.Enums
             ORGANIZATION_RENEW_LICENSEYEARS,
         }
 
-        public enum FileExtentions
-        {
-            JPG,
-            JPEG,
-            PNG,
-            PDF
-        }
         public enum VehicleSerialType
         {
             NEWVEHICLE,

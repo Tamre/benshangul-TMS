@@ -109,7 +109,7 @@ namespace Implementation.Services.Authentication
                 var stringToken = tokenHandler.WriteToken(token);
 
 
-                var 
+                 
 
                 return new ResponseMessage()
                 {

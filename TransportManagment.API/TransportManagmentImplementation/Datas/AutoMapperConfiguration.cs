@@ -45,6 +45,11 @@ namespace TransportManagmentImplementation.Datas
             CreateMap<BanBody, BanBodyGetDto>()
                 .ForMember(a => a.BanBodyCategory, e => e.MapFrom(mfg => mfg.BanBodyCategory.ToString()));
 
+            CreateMap<DocumentType, DocumentTypeGetDto>()
+            .ForMember(a => a.FileExtentions, e => e.MapFrom(mfg => mfg.FileExtentions.ToString()));
+
+          
+
             #endregion
         }
     }

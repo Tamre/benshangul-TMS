@@ -47,6 +47,8 @@ namespace TransportManagmentImplementation.Datas
 
             services.AddScoped<IAISORCStockTypeService, AISORCStockTypeService>();
             services.AddScoped<IBanBodyService, BanBodyService>();
+            services.AddScoped<IDocumentTypeService, DocumentTypeService>();
+            services.AddScoped<IPlateTypeService, PlateTypeService>();
             #endregion
 
 
