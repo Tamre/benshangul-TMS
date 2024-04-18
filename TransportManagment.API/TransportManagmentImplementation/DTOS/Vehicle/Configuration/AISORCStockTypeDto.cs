@@ -14,7 +14,7 @@ namespace TransportManagmentImplementation.DTOS.Vehicle.Configuration
         public string Name { get; set; } = null!;
         [StringLength(10)]
         [Required]
-        public string AmharicName { get; set; } = null!;
+        public string LocalName { get; set; } = null!;
         [StringLength(3)]
         [Required]
         public string Code { get; set; } = null!;

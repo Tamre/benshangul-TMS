@@ -4,20 +4,21 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TransportManagmentInfrustructure.Data;
 using TransportManagmentInfrustructure.Model.Authentication;
 
 namespace TransportManagmentInfrustructure.Model.Vehicle.Configuration
 {
-    public class Spoint: SettingIdModel
+    public class SalvageValue: SettingIdModel
     {
-        [StringLength(10)]
+        [StringLength(ValidationClasses.MaxNameLength)]
         [Required]
         public string Name { get; set; } = null!;
 
-        [StringLength(20)]
+        [StringLength(ValidationClasses.MaxLocalNameLength)]
         [Required]
-        public string AmharicName { get; set; } = null!;
-
+        public string LocalName { get; set; } = null!;
+       
         [Required]
         public double Value { get; set; }
     }

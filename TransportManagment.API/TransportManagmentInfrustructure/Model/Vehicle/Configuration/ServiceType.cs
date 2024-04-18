@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TransportManagmentInfrustructure.Data;
 using TransportManagmentInfrustructure.Model.Authentication;
 using static TransportManagmentInfrustructure.Enums.CommonEnum;
 
@@ -11,17 +12,17 @@ namespace TransportManagmentInfrustructure.Model.Vehicle.Configuration
 {
     public class ServiceType: SettingIdModel
     {
-        [StringLength(10)]
+        [StringLength(ValidationClasses.MaxNameLength)]
         [Required]
         public string Name { get; set; } = null!;
-        [StringLength(20)]
+        [StringLength(ValidationClasses.MaxLocalNameLength)]
         [Required]
-        public string AmharicName { get; set; } = null!;
+        public string LocalName { get; set; } = null!;
         public ServiceModule ServiceModule { get; set; }
-        [StringLength(1000)]
+        [StringLength(ValidationClasses.MaxSettingRemarkLength)]
         [Required]
         public string ListOfPlates { get; set; } = null!;
-        [StringLength(1000)]
+        [StringLength(ValidationClasses.MaxSettingRemarkLength)]
         [Required]
         public string ListOfAIS { get; set; } = null!;
 

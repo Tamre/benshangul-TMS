@@ -4,19 +4,22 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TransportManagmentInfrustructure.Data;
 using TransportManagmentInfrustructure.Model.Authentication;
 
 namespace TransportManagmentInfrustructure.Model.Vehicle.Configuration
 {
-    public class ManufacturePoint: SettingIdModel
+    public class InitialPrice: SettingIdModel
     {
+        [StringLength(ValidationClasses.MaxNameLength)]
         [Required]
-        public int VehicleTypeId { get; set; }
-        public virtual VehicleType VehicleType { get; set; } = null!;
+        public string Name { get; set; } = null!;
+
+        [StringLength(ValidationClasses.MaxLocalNameLength)]
         [Required]
-        public int MarkId { get; set; }
-        public virtual VehicleLookups Mark { get; set; } = null!;
+        public string LocalName { get; set; } = null!;
+      
         [Required]
-        public double Value { get; set; }
+        public double Price { get; set; }
     }
 }

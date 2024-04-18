@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TransportManagmentInfrustructure.Data;
 using TransportManagmentInfrustructure.Model.Authentication;
 
 namespace TransportManagmentInfrustructure.Model.Vehicle.Configuration
@@ -14,11 +15,11 @@ namespace TransportManagmentInfrustructure.Model.Vehicle.Configuration
         public int VehicleCategoryId { get; set; }
         public virtual VehicleLookups VehicleCategory { get; set; } = null!;
 
-        [StringLength(10)]
+        [StringLength(ValidationClasses.MaxNameLength)]
         [Required]
         public string Name { get; set; } = null!;
-        [StringLength(10)]
+        [StringLength(ValidationClasses.MaxLocalNameLength)]
         [Required]
-        public string AmharicName { get; set; } = null!;
+        public string LocalName { get; set; } = null!;
     }
 }

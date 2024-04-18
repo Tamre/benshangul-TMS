@@ -34,7 +34,6 @@ namespace TransportManagmentInfrustructure.Enums
             MARK,
             BANCASE,
             PLATESIZE,
-            SERVICEYEARCATEGORY,
             VEHICLECATEGORY,
             VehicleColor
         }
