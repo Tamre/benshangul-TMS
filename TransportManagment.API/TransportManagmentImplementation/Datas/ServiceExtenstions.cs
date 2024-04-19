@@ -51,6 +51,22 @@ namespace TransportManagmentImplementation.Datas
             services.AddScoped<IPlateTypeService, PlateTypeService>();
             services.AddScoped<IDepreciationCostService, DepreciationCostService>();
             services.AddScoped<IFactoryPointService, FactoryPointService>();
+            services.AddScoped<IInitialPriceService, InitialPriceService>();
+            services.AddScoped<IManufacturingCountryService, ManufacturingCountryService>();
+            services.AddScoped<ISalvageValueService, SalvageValueService>();
+            services.AddScoped<IServiceTypeService, ServiceTypeService>();
+            services.AddScoped<IServiceYearSettingService, ServiceYearSettingService>();
+            services.AddScoped<IVehicleBodyTypeService, VehicleBodyTypeService>();
+            services.AddScoped<IVehicleLookupsService, VehicleLookupsService>();
+            services.AddScoped<IVehicleModelService, VehicleModelService>();
+            services.AddScoped<IVehicleSerialSettingService, VehicleSerialSettingService>();
+            services.AddScoped<IVehicleSettingsService, VehicleSettingsService>();
+            services.AddScoped<IVehicleSettingsService, VehicleSettingsService>();
+            services.AddScoped<IVehicleTypeService, VehicleTypeService>();
+
+
+
+
             #endregion
 
 
