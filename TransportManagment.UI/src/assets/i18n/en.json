@@ -229,6 +229,7 @@
   "Country Name is required": "Country Name is required",
   "Country code is required": "Country code is required",
   "Edit":"Edit",
+  "Edit Country": "Edit Country",
   "Enter country name": "Enter country name",
   "Enter Country Code": "Enter Country Code",
   "Enter Local Name": "Enter Local Name",
@@ -246,5 +247,6 @@
   "Sort by": "Sort by",
   "can be edited": "can be edited",
   "country sucessfully added": "country successfully added",
-  "country sucessfully updated": "country successfully updated"
+  "country sucessfully updated": "country successfully updated",
+  "Update":"Update"
 }

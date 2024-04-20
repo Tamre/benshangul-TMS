@@ -72,7 +72,9 @@ export class CountryComponent implements OnInit {
   currentUser!: UserView | null;
   isEditing:Boolean = false;
   successAddMessage = "country successfully added"; 
-  successUpdateMessage = "country successfully updated"
+  successUpdateMessage = "country successfully updated";
+  editCountryText = "Edit Country";
+  updateText = "Update";
  
   constructor(
     private modalService: NgbModal,
@@ -230,9 +232,15 @@ export class CountryComponent implements OnInit {
     this.submitted = false;
     this.modalService.open(content, { size: "md", centered: true });
     var modelTitle = document.querySelector(".modal-title") as HTMLAreaElement;
-    modelTitle.innerHTML = "Edit Contact";
+    this.translate.get("Edit Country").subscribe((res: string) => {
+      this.editCountryText = res;
+    });
+    modelTitle.innerHTML =this.editCountryText ;
     var updateBtn = document.getElementById("add-btn") as HTMLAreaElement;
-    updateBtn.innerHTML = "Update";
+    this.translate.get("Update").subscribe((res: string) => {
+      this.updateText= res;
+    });
+    updateBtn.innerHTML = this.updateText;
     this.isEditing = true;
     this.econtent = this.countries[id];
     this.dataForm.controls["name"].setValue(this.econtent.name);
