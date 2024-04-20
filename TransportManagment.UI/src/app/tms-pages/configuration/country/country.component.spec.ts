@@ -8,10 +8,12 @@ describe('CountryComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [CountryComponent]
+      declarations: [ CountryComponent ]
     })
     .compileComponents();
-    
+  });
+
+  beforeEach(() => {
     fixture = TestBed.createComponent(CountryComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

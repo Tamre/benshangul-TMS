@@ -15,6 +15,8 @@ import { ToastService } from "./toast-service";
 import { Store } from "@ngrx/store";
 import { login } from "src/app/store/Authentication/authentication.actions";
 import { UserProfileService } from "src/app/core/services/user.service";
+import { TokenStorageService } from "src/app/core/services/token-storage.service";
+import { caesarCipherEncrypt } from "src/app/core/helpers/cipher";
 
 @Component({
   selector: "app-login",
@@ -44,6 +46,7 @@ export class LoginComponent implements OnInit {
     private userService: UserProfileService,
     private route: ActivatedRoute,
     public toastService: ToastService,
+    private tokenStorageService:TokenStorageService,
     private store: Store
   ) {
     // redirect to home if already logged in
@@ -80,7 +83,7 @@ export class LoginComponent implements OnInit {
       this.userService
         .login({
           username: this.loginForm.value.email,
-          password: this.loginForm.value.password,
+          password: caesarCipherEncrypt(this.loginForm.value.password,3),
         })
         .subscribe({
           next: (res) => {
@@ -89,9 +92,10 @@ export class LoginComponent implements OnInit {
                 classname: "bg-success text-white",
                 delay: 15000,
               });
+              this.tokenStorageService.saveToken(res.data)
+              console.log("my token",this.tokenStorageService.getToken())
               sessionStorage.setItem("currentUser", res.data);
-
-              console.log(res.data);
+              sessionStorage.setItem("token",res.data)
               this.router.navigate(["/"]);
             } else {
               this.toastService.show(res.message, {

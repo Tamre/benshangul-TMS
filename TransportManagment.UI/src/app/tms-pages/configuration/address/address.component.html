@@ -1,0 +1,212 @@
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card mt-n4 mx-n4">
+            <div class="bg-warning-subtle">
+                <div class="card-body pb-0 px-4">
+                    <div class="row mb-3">
+                        <div class="col-md">
+                            <div class="row align-items-center g-3">
+                                <div class="col-md-auto">
+                                    <div class="avatar-md">
+                                        <div class="avatar-title bg-white rounded-circle">
+                                            <img src="assets/images/brands/slack.png" alt="" class="avatar-xs">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md">
+                                    <div *ngIf="currentUser">
+                                        <h4 class="fw-bold">{{currentUser.email}}</h4>
+                                        
+                                        <div class="hstack gap-3 flex-wrap">
+                                            <div><i class="ri-building-line align-bottom me-1"></i> {{currentUser.userName}}</div>
+                                            <div class="vr"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                       
+                    </div>
+
+                    <ul ngbNav #customNav="ngbNav" [activeId]="1" class="nav nav-tabs-custom border-bottom-0" role="tablist">
+                        <li [ngbNavItem]="1" class="nav-item">
+                            <a ngbNavLink class="nav-link" data-bs-toggle="tab" role="tab">
+                                Country
+                            </a>
+                            <ng-template ngbNavContent>
+                                <app-country></app-country>
+                            </ng-template>
+                        </li>
+                        <li [ngbNavItem]="2" class="nav-item">
+                            <a ngbNavLink class="nav-link" data-bs-toggle="tab" role="tab">
+                                Region
+                            </a>
+                            <ng-template ngbNavContent>
+                                <app-country></app-country>
+                            </ng-template>
+                        </li>
+                        <li [ngbNavItem]="3" class="nav-item">
+                            <a ngbNavLink class="nav-link" data-bs-toggle="tab" role="tab">
+                                Woreda
+                            </a>
+                            <ng-template ngbNavContent>
+                                <app-country></app-country>
+                            </ng-template>
+                        </li>
+                        <li [ngbNavItem]="4" class="nav-item">
+                            <a ngbNavLink class="nav-link" data-bs-toggle="tab" role="tab">
+                                Zone
+                            </a>
+                            <ng-template ngbNavContent>
+                                <app-country></app-country>
+                            </ng-template>
+                        </li>
+                    </ul>
+                </div>
+                <!-- end card body -->
+            </div>
+        </div>
+        <!-- end card -->
+    </div>
+    <!-- end col -->
+</div>
+<!-- end row -->
+<div class="row">
+    <div class="col-lg-12">
+        <div class="tab-content text-muted">
+            <div [ngbNavOutlet]="customNav"></div>
+        </div>
+    </div>
+    <!-- end col -->
+</div>
+<!-- end row -->
+
+<!-- Modal -->
+<ng-template #content role="document" let-modal>
+    <div class="modal-header p-3 bg-success-subtle">
+        <h5 class="modal-title" id="inviteMembersModalLabel">Members</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <div class="modal-body p-4">
+        <div class="search-box mb-3">
+            <input type="text" class="form-control bg-light border-light" placeholder="Search here...">
+            <i class="ri-search-line search-icon"></i>
+        </div>
+
+        <div class="mb-4 d-flex align-items-center">
+            <div class="me-2">
+                <h5 class="mb-0 fs-13">Members :</h5>
+            </div>
+            <div class="avatar-group justify-content-center">
+                <a href="javascript: void(0);" class="avatar-group-item" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Brent Gonzalez">
+                    <div class="avatar-xs">
+                        <img src="assets/images/users/avatar-3.jpg" alt="" class="rounded-circle img-fluid">
+                    </div>
+                </a>
+                <a href="javascript: void(0);" class="avatar-group-item" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Sylvia Wright">
+                    <div class="avatar-xs">
+                        <div class="avatar-title rounded-circle bg-secondary">
+                            S
+                        </div>
+                    </div>
+                </a>
+                <a href="javascript: void(0);" class="avatar-group-item" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Ellen Smith">
+                    <div class="avatar-xs">
+                        <img src="assets/images/users/avatar-4.jpg" alt="" class="rounded-circle img-fluid">
+                    </div>
+                </a>
+            </div>
+        </div>
+        <ngx-simplebar class="mx-n4 px-4" style="max-height: 225px;">
+            <div class="vstack gap-3">
+                <div class="d-flex align-items-center">
+                    <div class="avatar-xs flex-shrink-0 me-3">
+                        <img src="assets/images/users/avatar-2.jpg" alt="" class="img-fluid rounded-circle">
+                    </div>
+                    <div class="flex-grow-1">
+                        <h5 class="fs-13 mb-0"><a href="javascript: void(0);" class="text-body d-block">Nancy
+                                Martino</a></h5>
+                    </div>
+                    <div class="flex-shrink-0">
+                        <button type="button" class="btn btn-light btn-sm">Add</button>
+                    </div>
+                </div>
+                <!-- end member item -->
+                <div class="d-flex align-items-center">
+                    <div class="avatar-xs flex-shrink-0 me-3">
+                        <div class="avatar-title bg-danger-subtle text-danger rounded-circle">
+                            HB
+                        </div>
+                    </div>
+                    <div class="flex-grow-1">
+                        <h5 class="fs-13 mb-0"><a href="javascript: void(0);" class="text-body d-block">Henry Baird</a>
+                        </h5>
+                    </div>
+                    <div class="flex-shrink-0">
+                        <button type="button" class="btn btn-light btn-sm">Add</button>
+                    </div>
+                </div>
+                <!-- end member item -->
+                <div class="d-flex align-items-center">
+                    <div class="avatar-xs flex-shrink-0 me-3">
+                        <img src="assets/images/users/avatar-3.jpg" alt="" class="img-fluid rounded-circle">
+                    </div>
+                    <div class="flex-grow-1">
+                        <h5 class="fs-13 mb-0"><a href="javascript: void(0);" class="text-body d-block">Frank Hook</a>
+                        </h5>
+                    </div>
+                    <div class="flex-shrink-0">
+                        <button type="button" class="btn btn-light btn-sm">Add</button>
+                    </div>
+                </div>
+                <!-- end member item -->
+                <div class="d-flex align-items-center">
+                    <div class="avatar-xs flex-shrink-0 me-3">
+                        <img src="assets/images/users/avatar-4.jpg" alt="" class="img-fluid rounded-circle">
+                    </div>
+                    <div class="flex-grow-1">
+                        <h5 class="fs-13 mb-0"><a href="javascript: void(0);" class="text-body d-block">Jennifer
+                                Carter</a></h5>
+                    </div>
+                    <div class="flex-shrink-0">
+                        <button type="button" class="btn btn-light btn-sm">Add</button>
+                    </div>
+                </div>
+                <!-- end member item -->
+                <div class="d-flex align-items-center">
+                    <div class="avatar-xs flex-shrink-0 me-3">
+                        <div class="avatar-title bg-success-subtle text-success rounded-circle">
+                            AC
+                        </div>
+                    </div>
+                    <div class="flex-grow-1">
+                        <h5 class="fs-13 mb-0"><a href="javascript: void(0);" class="text-body d-block">Alexis
+                                Clarke</a></h5>
+                    </div>
+                    <div class="flex-shrink-0">
+                        <button type="button" class="btn btn-light btn-sm">Add</button>
+                    </div>
+                </div>
+                <!-- end member item -->
+                <div class="d-flex align-items-center">
+                    <div class="avatar-xs flex-shrink-0 me-3">
+                        <img src="assets/images/users/avatar-7.jpg" alt="" class="img-fluid rounded-circle">
+                    </div>
+                    <div class="flex-grow-1">
+                        <h5 class="fs-13 mb-0"><a href="javascript: void(0);" class="text-body d-block">Joseph
+                                Parker</a></h5>
+                    </div>
+                    <div class="flex-shrink-0">
+                        <button type="button" class="btn btn-light btn-sm">Add</button>
+                    </div>
+                </div>
+                <!-- end member item -->
+            </div>
+            <!-- end list -->
+        </ngx-simplebar>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-light w-xs" data-bs-dismiss="modal" (click)="modal.close('Close click')">Cancel</button>
+        <button type="button" class="btn btn-success w-xs">Invite</button>
+    </div>
+</ng-template>

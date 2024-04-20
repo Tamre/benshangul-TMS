@@ -29,14 +29,26 @@ export const MENU: MenuItem[] = [
       {
         id: 4,
         label: "MENUITEMS.CONFIGURATION.LIST.LOCATION",
-        link: "/location",
+        link: "/config/location",
         parentId: 3,
       },
 
       {
         id: 5,
         label: "MENUITEMS.CONFIGURATION.LIST.COMPANY",
-        link: "/company",
+        link: "/config/company",
+        parentId: 3,
+      },
+      {
+        id: 6,
+        label: "MENUITEMS.CONFIGURATION.LIST.USER",
+        link: "/config/users",
+        parentId: 3,
+      },
+      {
+        id: 6,
+        label: "MENUITEMS.CONFIGURATION.LIST.ADDRESS",
+        link: "/config/address",
         parentId: 3,
       },
     ],

@@ -8,7 +8,7 @@ import { AuthGuard } from "./core/guards/auth.guard";
 
 const routes: Routes = [
   {
-    path: "",
+    path: '',
     component: LayoutComponent,
     loadChildren: () =>
       import("./tms-pages/tms-pages.module").then((m) => m.TmsPagesModule),

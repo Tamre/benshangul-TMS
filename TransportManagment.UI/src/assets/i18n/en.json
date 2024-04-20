@@ -19,7 +19,9 @@
       "TEXT": "Configurations",
       "LIST": {
         "LOCATION": "Location",
-        "COMPANY": "Company"
+        "COMPANY": "Company",
+        "USER": "User",
+        "ADDRESS": "Address"
       }
     },
     "LAYOUTS": {
@@ -217,4 +219,32 @@
       }
     }
   }
+,
+  "TEXT":{},
+
+  "Add": "Add",
+  "Add Country": "Add Country",
+  "Close": "Close",
+  "Country": "Country",
+  "Country Name is required": "Country Name is required",
+  "Country code is required": "Country code is required",
+  "Edit":"Edit",
+  "Enter country name": "Enter country name",
+  "Enter Country Code": "Enter Country Code",
+  "Enter Local Name": "Enter Local Name",
+  "Enter Nationality Name": "Enter Nationality Name",
+  "Enter Local Nationality Name": "Enter Local Nationality Name",
+  "Export": "Export",
+  "Local Name": "Local Name",
+  "Local Name is required": "Local Name is required",
+  "Local Nationality Name": "Local Nationality Name",
+  "Local Nationality Name is required": "Local Nationality Name is required",
+  "Name": "Name",
+  "Nationality Name": "Nationality Name",
+  "Nationality Name is required": "Nationality Name is required",
+  "Search for country...": "Search for country...",
+  "Sort by": "Sort by",
+  "can be edited": "can be edited",
+  "country sucessfully added": "country successfully added",
+  "country sucessfully updated": "country successfully updated"
 }
