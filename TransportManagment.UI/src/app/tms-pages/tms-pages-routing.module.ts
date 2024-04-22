@@ -1,34 +1,23 @@
-import { NgModule } from "@angular/core";
-import { CommonModule } from "@angular/common";
-import { RouterModule, Routes } from "@angular/router";
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
 
-//components
-
-import { TmsDashboardsComponent } from "./tms-dashboards/tms-dashboards.component";
+// Component pages
+import { DashboardComponent } from "./dashboards/dashboard/dashboard.component";
 
 const routes: Routes = [
-  {
-    path: "",
-    component: TmsDashboardsComponent,
-  },
-  {
-    path: "",
-    loadChildren: () =>
-      import("./configuration/configuration.module").then(
-        (m) => m.ConfigurationModule
-      ),
-  },
-  {
-    path: "configuration",
-    loadChildren: () =>
-      import("./configuration/configuration.module").then(
-        (m) => m.ConfigurationModule
-      ),
-  },
+    {
+        path: "",
+        component: DashboardComponent
+    },
+  
+    {
+      path: 'config', loadChildren: () => import('./configuration/configuration.module').then(m => m.configurationModule)
+    },
+    
 ];
 
 @NgModule({
-  declarations: [],
-  imports: [CommonModule],
+  imports: [RouterModule.forChild(routes)],
+  exports: [RouterModule]
 })
-export class TmsPagesRoutingModule {}
+export class TmsPagesRoutingModule { }

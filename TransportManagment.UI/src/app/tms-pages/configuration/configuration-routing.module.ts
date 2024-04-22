@@ -1,24 +1,21 @@
-import { NgModule } from "@angular/core";
-import { CommonModule } from "@angular/common";
-import { Routes, RouterModule } from "@angular/router";
+import { NgModule } from '@angular/core';
+import { Routes, RouterModule } from '@angular/router';
 
-// Components
-import { CountryComponent } from "./country/country.component";
-import { CompanyComponent } from "./company/company.component";
+// Component pages
+import { AddressComponent } from './address/address.component';
+
 
 const routes: Routes = [
+
   {
-    path: "location",
-    component: CountryComponent,
+    path: "address",
+    component: AddressComponent
   },
-  {
-    path: "company",
-    component: CompanyComponent,
-  },
+ 
 ];
 
 @NgModule({
-  declarations: [],
-  imports: [CommonModule],
+    imports: [RouterModule.forChild(routes)],
+    exports: [RouterModule]
 })
-export class ConfigurationRoutingModule {}
+export class configurationRoutingModule {}
