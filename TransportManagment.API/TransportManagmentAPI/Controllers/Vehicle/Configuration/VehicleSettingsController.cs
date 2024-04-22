@@ -8,7 +8,7 @@ using TransportManagmentImplementation.Interfaces.Vehicle.Configuration;
 namespace TransportManagmentAPI.Controllers.Vehicle.Configuration
 {
     // Controller
-    [Route("api/[controller]")]
+    [Route("api/vech-config/[controller]")]
     [ApiController]
     public class VehicleSettingsController : ControllerBase
     {

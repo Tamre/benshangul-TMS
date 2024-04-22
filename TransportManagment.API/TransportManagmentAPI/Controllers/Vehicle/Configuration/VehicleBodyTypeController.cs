@@ -6,7 +6,7 @@ using TransportManagmentImplementation.Interfaces.Vehicle.Configuration;
 namespace TransportManagmentAPI.Controllers.Vehicle.Configuration
 {
     // Controller
-    [Route("api/[controller]/[action]")]
+    [Route("api/vech-config/[controller]/[action]")]
     [ApiController]
     public class VehicleBodyTypeController : ControllerBase
     {
