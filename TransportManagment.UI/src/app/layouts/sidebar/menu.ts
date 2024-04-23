@@ -53,4 +53,44 @@ export const MENU: MenuItem[] = [
       },
     ],
   },
+  {
+    id: 7,
+    label: "MENUITEMS.VRMS.TEXT",
+    isTitle: true,
+  },
+
+
+  {
+    id: 8,
+    label: "MENUITEMS.VEHICLE-CONFIGURATION.TEXT",
+    icon: "ri-apps-2-line",
+    isCollapsed: true,
+    subItems: [
+      {
+        id: 9,
+        label: "MENUITEMS.VEHICLE-CONFIGURATION.LIST.VEHICLE",
+        link: "/v-config/vehicle-config",
+        parentId: 8,
+      },
+
+      {
+        id: 10,
+        label: "MENUITEMS.VEHICLE-CONFIGURATION.LIST.STOCKTYPE",
+        link: "/v-config/stock-type",
+        parentId: 8,
+      },
+      {
+        id: 11,
+        label: "MENUITEMS.VEHICLE-CONFIGURATION.LIST.USER",
+        link: "/config/users",
+        parentId: 8,
+      },
+      {
+        id: 12,
+        label: "MENUITEMS.VEHICLE-CONFIGURATION.LIST.ADDRESS",
+        link: "/v-config/address",
+        parentId: 8,
+      },
+    ],
+  },
 ];

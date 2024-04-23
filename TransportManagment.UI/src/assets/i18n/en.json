@@ -8,6 +8,9 @@
     "MENU": {
       "TEXT": "TMS"
     },
+    "VRMS": {
+      "TEXT": "VRMS"
+    },
     "DASHBOARD": {
       "TEXT": "Dashboards",
       "BADGE": "New",
@@ -20,6 +23,15 @@
       "LIST": {
         "LOCATION": "Location",
         "COMPANY": "Company",
+        "USER": "User",
+        "ADDRESS": "Address"
+      }
+    },
+    "VEHICLE-CONFIGURATION": {
+      "TEXT": "Vehicle-Configurations",
+      "LIST": {
+        "VEHICLE": "Vehicle",
+        "STOCKTYPE": "stock-type",
         "USER": "User",
         "ADDRESS": "Address"
       }
