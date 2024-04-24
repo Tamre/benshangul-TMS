@@ -181,9 +181,6 @@ export class DocumentTypeComponent {
         });
       }
     }
-    // setTimeout(() => {
-    //   this.dataForm.reset();
-    // }, 2000);
     this.submitted = true;
   }
   closeModal() {

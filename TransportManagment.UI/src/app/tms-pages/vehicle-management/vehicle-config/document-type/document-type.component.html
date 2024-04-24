@@ -112,17 +112,6 @@
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
-                                    <!-- <div>
-                                        <label for="fileExtentions-field" class="form-label">{{ 'File Extentions' | translate }}</label>
-                                        <input type="text" id="fileExtentions-field" class="form-control" placeholder="{{ 'Enter File Extentions' | translate }}" required formControlName="fileExtentions" [ngClass]="{ 'is-invalid': submitted && form['fileExtentions'].errors }" />
-                                        @if (submitted && form['fileExtentions'].errors) {
-                                        <div class="invalid-feedback" align="left">
-                                            @if (form['fileExtentions'].errors['required']) {
-                                            <div>{{ 'File Extentions is required' | translate }}</div>
-                                            }
-                                        </div>
-                                        }
-                                    </div> -->
                                     <div>
                                         <label for="fileExtentions-field" class="form-label">{{ 'File Extentions' | translate }}</label>
                                             <select id="fileExtentions-field" class="form-control" name="choices-single-default" data-choices data-choices-search-false formControlName="fileExtentions"
@@ -136,17 +125,6 @@
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
-                                    <!-- <div>
-                                        <label for="isPermanentRequired-field" class="form-label">{{ 'Permanent Required' | translate }}</label>
-                                        <input type="text" id="isPermanentRequired-field" class="form-control" placeholder="{{ 'Enter Code' | translate }}" required formControlName="isPermanentRequired" [ngClass]="{ 'is-invalid': submitted && form['isPermanentRequired'].errors }" />
-                                        @if (submitted && form['isPermanentRequired'].errors) {
-                                        <div class="invalid-feedback" align="left">
-                                            @if (form['isPermanentRequired'].errors['required']) {s
-                                            <div>{{ 'Code is required' | translate }}</div>
-                                            }
-                                        </div>
-                                        }
-                                    </div> -->
                                     <div>
                                         <label for="isPermanentRequired-field" class="form-label">{{ 'isPermanentRequired' | translate }}</label>
                                         <div class="form-check form-switch">
@@ -155,17 +133,6 @@
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
-                                    <!-- <div>
-                                        <label for="category-field" class="form-label">{{ 'Category' | translate }}</label>
-                                            <select id="category-field" class="form-control" name="choices-single-default" data-choices data-choices-search-false formControlName="category"
-                                                [ngClass]="{ 'is-invalid': submitted && dataForm.controls['category'].errors }">
-                                                <option value="" disabled>{{ 'Select category' | translate }}</option>
-                                                <option *ngFor="let item of CategoryDropDownItem" [value]="item.code" > {{item.name}} </option>
-                                            </select>
-                                        <div *ngIf="submitted && dataForm.controls['category'].errors" class="invalid-feedback" align="left">
-                                            <div *ngIf="dataForm.controls['category'].errors['required']">{{ 'Category Name is required' | translate }}</div>
-                                        </div>
-                                    </div> -->
                                     <div>
                                         <label for="isTemporaryRequired-field" class="form-label">{{ 'isTemporaryRequired' | translate }}</label>
                                         <div class="form-check form-switch">

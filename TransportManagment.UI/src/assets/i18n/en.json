@@ -28,13 +28,7 @@
       }
     },
     "VEHICLE-CONFIGURATION": {
-      "TEXT": "Vehicle-Configurations",
-      "LIST": {
-        "VEHICLE": "Vehicle",
-        "STOCKTYPE": "stock-type",
-        "USER": "User",
-        "ADDRESS": "Address"
-      }
+      "TEXT": "Vehicle-Configurations"
     },
     "LAYOUTS": {
       "TEXT": "Layouts",
