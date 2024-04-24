@@ -5,6 +5,7 @@ import { AddressComponent } from '../configuration/address/address.component';
 import { VehicleConfigComponent } from './vehicle-config/vehicle-config.component';
 import { StockTypeComponent } from './vehicle-config/stock-type/stock-type.component';
 import { BanBodyComponent } from './vehicle-config/ban-body/ban-body.component';
+import { DepreciatioCostComponent } from './vehicle-config/depreciatio-cost/depreciatio-cost.component';
 
 const routes: Routes = [
 
@@ -20,6 +21,10 @@ const routes: Routes = [
     path: "ban-body",
     component: BanBodyComponent
   },
+  {
+    path: "d-cost",
+    component: DepreciatioCostComponent
+  }
  
 ];
 

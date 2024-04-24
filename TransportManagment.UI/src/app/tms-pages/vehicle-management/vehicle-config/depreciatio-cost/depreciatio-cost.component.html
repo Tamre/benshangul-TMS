@@ -30,7 +30,7 @@
                                 <option value="Dname">{{ 'Name' | translate }}</option>
                                 <option value="DlocalName">{{ 'Local Name' | translate }}</option>
                                 
-                                <option value="DbanBodyCategory">{{ 'Ban Body Category' | translate }}</option>
+                                <option value="Dvalue">{{ 'Value' | translate }}</option>
                                 <option value="DisActive">{{ 'Status' | translate }}</option>
                             </select>
                         </div>
@@ -47,13 +47,13 @@
                                     <th class="sort" (click)="onSort('name')">{{ 'Name' | translate }}</th>
                                     <th class="sort" (click)="onSort('localName')">{{ 'Local Name' | translate }}</th>
                                     
-                                    <th class="sort" (click)="onSort('banBodyCategory')">{{ 'ban Body Category' | translate }}</th>
+                                    <th class="sort" (click)="onSort('value')">{{ 'Value' | translate }}</th>
                                     <th class="sort" (click)="onSort('isActive')">{{ 'Status' | translate }}</th>
                                     <th>{{ 'Edit' | translate }}</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @for (data of banBody | sortBy:sortBy:sortField; track $index) {
+                                @for (data of depCost | sortBy:sortBy:sortField; track $index) {
                                 <tr id="c_{{data.id}}">
                                     <th scope="row">{{ $index + 1 }}</th>
                                     <td class="name">
@@ -64,7 +64,7 @@
                                     </td>
                                     
                                     <td>
-                                        <ngb-highlight [result]="data.banBodyCategory" [term]="searchTerm"></ngb-highlight>
+                                        <ngb-highlight [result]="data.value" [term]="searchTerm"></ngb-highlight>
                                     </td>
                                     <td>
                                         <ngb-highlight [result]="data.isActive" [term]="searchTerm"></ngb-highlight>
@@ -81,7 +81,7 @@
                     </div>
                     <div class="d-flex justify-content-end mt-3">
                         <!-- Pagination -->
-                        <ngb-pagination [collectionSize]="allBan?.length" [(page)]="service.page" [pageSize]="service.pageSize" (pageChange)="changePage()"></ngb-pagination>
+                        <ngb-pagination [collectionSize]="allDepCost?.length" [(page)]="service.page" [pageSize]="service.pageSize" (pageChange)="changePage()"></ngb-pagination>
                     </div>
                 </div>
 
@@ -99,11 +99,11 @@
                                     <input type="hidden" name="id" value="" formControlName="id" />
                                     <div>
                                         <label for="name-field" class="form-label">{{ 'Name' | translate }}</label>
-                                        <input type="text" id="name-field" class="form-control" placeholder="{{ 'Enter Stock Type Name' | translate }}" required formControlName="name" [ngClass]="{ 'is-invalid': submitted && form['name'].errors }" />
+                                        <input type="text" id="name-field" class="form-control" placeholder="{{ 'Enter Depreciation Cost Name' | translate }}" required formControlName="name" [ngClass]="{ 'is-invalid': submitted && form['name'].errors }" />
                                         @if (submitted && form['name'].errors) {
                                         <div class="invalid-feedback" align="left">
                                             @if (form['name'].errors['required']) {
-                                            <div>{{ 'Stock Type Name is required' | translate }}</div>
+                                            <div>{{ 'Name is required' | translate }}</div>
                                             }
                                         </div>
                                         }
@@ -125,17 +125,16 @@
                                 
                                 <div class="col-lg-6">
                                     <div>
-                                        <label for="banBodyCategory-field" class="form-label">{{ 'Ban Body Category' | translate }}</label>
-                                            <select id="banBodyCategory-field" class="form-control" name="choices-single-default" data-choices data-choices-search-false formControlName="banBodyCategory"
-                                                [ngClass]="{ 'is-invalid': submitted && dataForm.controls['banBodyCategory'].errors }">
-                                                <option value="" disabled>{{ 'Select banBodyCategory' | translate }}</option>
-                                                <option *ngFor="let item of banBodyCategoryDropDownItem" [value]="item.code" > {{item.name}} </option>
-                                            </select>
-                                        <div *ngIf="submitted && dataForm.controls['banBodyCategory'].errors" class="invalid-feedback" align="left">
-                                            <div *ngIf="dataForm.controls['banBodyCategory'].errors['required']">{{ 'Ban Body Category Name is required' | translate }}</div>
+                                        <label for="value-field" class="form-label">{{ 'Value' | translate }}</label>
+                                        <input type="text" id="value-field" class="form-control" placeholder="{{ 'Enter Value' | translate }}" required formControlName="value" [ngClass]="{ 'is-invalid': submitted && form['value'].errors }" />
+                                        @if (submitted && form['value'].errors) {
+                                        <div class="invalid-feedback" align="left">
+                                            @if (form['value'].errors['required']) {
+                                            <div>{{ 'Value is required' | translate }}</div>
+                                            }
                                         </div>
+                                        }
                                     </div>
-                                    
                                     
                                 </div>
                                 <div *ngIf="isEditing" class="col-lg-6">

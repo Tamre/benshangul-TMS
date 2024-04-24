@@ -1,29 +1,26 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
+import { UserView } from 'src/app/model/user';
 import { TokenStorageService } from 'src/app/core/services/token-storage.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { PaginationService } from 'src/app/core/services/pagination.service';
-import { StockTypeService } from 'src/app/core/services/vehicle-config-services/stock-type.service';
 import { TranslateService } from '@ngx-translate/core';
 import { RootReducerState } from 'src/app/store';
 import { Store } from '@ngrx/store';
-import { UserView } from 'src/app/model/user';
-import { BanBodyPostDto } from 'src/app/model/vehicle-configuration/ban-body';
-import { BanBodyService } from 'src/app/core/services/vehicle-config-services/ban-body.service';
-import { successToast } from 'src/app/core/services/toast.service';
-import { cloneDeep } from 'lodash';
-import { selectCRMLoading } from 'src/app/store/CRM/crm_selector';
 import { fetchCrmContactData } from 'src/app/store/CRM/crm_action';
+import { selectCRMLoading } from 'src/app/store/CRM/crm_selector';
+import { cloneDeep } from 'lodash';
+import { DocTypeService } from 'src/app/core/services/vehicle-config-services/doc-type.service';
+import { successToast } from 'src/app/core/services/toast.service';
+import { DocTypePostDto } from 'src/app/model/vehicle-configuration/doc-type';
 
 @Component({
-  selector: 'app-ban-body',
-  //standalone: true,
-  //imports: [CommonModule],
-  templateUrl: './ban-body.component.html',
-  styleUrl: './ban-body.component.scss'
+  selector: 'app-document-type',
+  templateUrl: './document-type.component.html',
+  styleUrl: './document-type.component.scss'
 })
-export class BanBodyComponent implements OnInit{
+export class DocumentTypeComponent {
   submitted = false;
   isEditing:Boolean = false;
   dataForm!: UntypedFormGroup;
@@ -32,18 +29,19 @@ export class BanBodyComponent implements OnInit{
   searchResults: any;
   econtent?: any;
 
-  allBan?:any;
-  banBody?: any;
+  allDocTypes?:any;
+  docTypes?: any;
 
-  successAddMessage = "Ban Body successfully added";
-  successUpdateMessage = "Ban Body successfully updated";
-  editBanBodyText = "Edit Ban Body";
+  successAddMessage = "Document Type successfully added";
+  successUpdateMessage = "Document Type successfully updated";
+  editDocumentText = "Edit Document Type";
   updateText = "Update";
 
-  banBodyCategoryDropDownItem = [
-    { name: 'BANK', code: 'BANK'},
-    { name: 'COURT', code: 'COURT'},
-    { name: 'OTHER', code: 'OTHER'}
+  fileExtentionsDropDownItem = [
+    { name: 'JPG', code: 'JPG'},
+    { name: 'JPEG', code: 'JPEG'},
+    { name: 'PNG', code: 'PNG'},
+    { name: 'PDF', code: 'PDF'}
   ]
 
   constructor(
@@ -53,7 +51,7 @@ export class BanBodyComponent implements OnInit{
     public service: PaginationService,
     public translate: TranslateService,
     private store: Store<{ data: RootReducerState }>,
-    public banBodyService: BanBodyService,
+    public docTypeService: DocTypeService,
   ) {}
 
   ngOnInit(): void {
@@ -64,10 +62,10 @@ export class BanBodyComponent implements OnInit{
      */
     this.dataForm = this.formBuilder.group({
       id: [""],
-      name: ["", [Validators.required]],
-      localName: ["", [Validators.required]],
-      //code: ["", [Validators.required]],
-      banBodyCategory:["",[Validators.required]],
+      fileName: ["", [Validators.required]],
+      fileExtentions: ["", [Validators.required]],
+      isPermanentRequired: [false],
+      isTemporaryRequired:[false],
       createdById: [this.currentUser?.id, [Validators.required]],
       isActive:[true]
     });
@@ -81,26 +79,6 @@ export class BanBodyComponent implements OnInit{
       }
     });
   }
-  changePage() {
-    this.banBody = this.service.changePage(this.allBan);
-  }
-  refreshData(){
-    this.banBodyService.getAllBanBody().subscribe({
-      next: (res) => {
-        if (res) 
-          {
-            this.banBody = res
-            this.allBan = cloneDeep(res);
-            this.banBody = this.service.changePage(this.allBan)
-            console.log(this.allBan)
-          }
-      },
-      error: (err) => {
-        
-      },
-    });
-  }
-
   openModal(content: any) {
     this.submitted = false;
     this.isEditing = false;
@@ -108,12 +86,16 @@ export class BanBodyComponent implements OnInit{
     this.dataForm.controls["createdById"].setValue(this.currentUser?.id);
     this.modalService.open(content, { size: "lg", centered: true });
   }
+  changePage() {
+    this.docTypes = this.service.changePage(this.allDocTypes);
+  }
+
   // Search Data
   performSearch(): void {
-    this.searchResults = this.allBan.filter((item: any) => {
+    this.searchResults = this.allDocTypes.filter((item: any) => {
       return item.name.toLowerCase().includes(this.searchTerm.toLowerCase());
     });
-    this.banBody = this.service.changePage(this.searchResults);
+    this.docTypes = this.service.changePage(this.searchResults);
   }
   // Sort filter
   sortField: any;
@@ -133,21 +115,37 @@ export class BanBodyComponent implements OnInit{
   }
   // Sort data
   onSort(column: any) {
-    this.allBan = this.service.onSort(column, this.allBan);
-    this.banBody = this.service.changePage(this.allBan)
+    this.allDocTypes = this.service.onSort(column, this.allDocTypes);
+    this.docTypes = this.service.changePage(this.allDocTypes)
   }
-  //save
+
+  refreshData(){
+    this.docTypeService.getAllDocType().subscribe({
+      next: (res) => {
+        if (res) 
+          {
+            this.docTypes = res
+            this.allDocTypes = cloneDeep(res);
+            this.docTypes = this.service.changePage(this.allDocTypes)
+            console.log(this.allDocTypes)
+          }
+      },
+      error: (err) => {
+        
+      },
+    });
+  }
   saveData() {
     const updatedData = this.dataForm.value;
    
     if (this.dataForm.valid) {
       if (this.dataForm.get("id")?.value) {
         console.log(this.currentUser?.id)
-        const newData: BanBodyPostDto = this.dataForm.value;
-        this.banBodyService.updateBanBody(newData).subscribe({
+        const newData: DocTypePostDto = this.dataForm.value;
+        this.docTypeService.updateDocType(newData).subscribe({
           next: (res) => {
             if (res.success) {
-              this.translate.get('Ban Body sucessfully updated').subscribe((res: string) => {
+              this.translate.get('Document Type sucessfully updated').subscribe((res: string) => {
                 this.successAddMessage = res;
               });
               this.closeModal();
@@ -159,15 +157,19 @@ export class BanBodyComponent implements OnInit{
         });
 
       } else {
-        const newData: BanBodyPostDto = this.dataForm.value;
-        // const newData: Omit<StockTypePostDto, 'id'> = {
-        //   ...this.dataForm.value,
-        // };
+        const newData: DocTypePostDto = this.dataForm.value;
         newData.isActive = true;
-        this.banBodyService.addBanBody(newData).subscribe({
+        // Set default values if not touched
+        if (!this.dataForm?.get('isPermanentRequired')?.touched) {
+          newData.isPermanentRequired = false;
+        }
+        if (!this.dataForm?.get('isTemporaryRequired')?.touched) {
+          newData.isTemporaryRequired = false;
+        }
+        this.docTypeService.addDocType(newData).subscribe({
           next: (res) => {
             if (res.success) {
-              this.translate.get('Ban Body sucessfully added').subscribe((res: string) => {
+              this.translate.get('Document Type sucessfully added').subscribe((res: string) => {
                 this.successAddMessage = res;
               });
               this.closeModal();
@@ -193,26 +195,27 @@ export class BanBodyComponent implements OnInit{
   get form() {
     return this.dataForm.controls;
   }
+
   editDataGet(id: any, content: any) {
     this.submitted = false;
     this.modalService.open(content, { size: "lg", centered: true });
     var modelTitle = document.querySelector(".modal-title") as HTMLAreaElement;
-    this.translate.get("Edit Ban Body Type").subscribe((res: string) => {
-      this.editBanBodyText = res;
+    this.translate.get("Edit Document Type").subscribe((res: string) => {
+      this.editDocumentText = res;
     });
-    modelTitle.innerHTML =this.editBanBodyText ;
+    modelTitle.innerHTML =this.editDocumentText ;
     var updateBtn = document.getElementById("add-btn") as HTMLAreaElement;
     this.translate.get("Update").subscribe((res: string) => {
       this.updateText= res;
     });
     updateBtn.innerHTML = this.updateText;
     this.isEditing = true;
-    this.econtent = this.banBody[id];
-    this.dataForm.controls["name"].setValue(this.econtent.name);
-    this.dataForm.controls["localName"].setValue(this.econtent.localName);
-    //this.dataForm.controls["code"].setValue(this.econtent.code);
-    this.dataForm.controls["banBodyCategory"].setValue(
-      this.econtent.banBodyCategory
+    this.econtent = this.docTypes[id];
+    this.dataForm.controls["fileName"].setValue(this.econtent.fileName);
+    this.dataForm.controls["fileExtentions"].setValue(this.econtent.fileExtentions);
+    this.dataForm.controls["isPermanentRequired"].setValue(this.econtent.isPermanentRequired);
+    this.dataForm.controls["isTemporaryRequired"].setValue(
+      this.econtent.isTemporaryRequired
     );
     this.dataForm.controls["createdById"].setValue(this.currentUser?.id);
     this.dataForm.controls["id"].setValue(this.econtent.id);

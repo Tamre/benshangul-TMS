@@ -19,6 +19,9 @@ import { VehicleTypeComponent } from './vehicle-config/vehicle-type/vehicle-type
 import { SortByCrmPipe } from '../configuration/sort-by.pipe';
 import { StockTypeComponent } from './vehicle-config/stock-type/stock-type.component';
 import { BanBodyComponent } from './vehicle-config/ban-body/ban-body.component';
+import { DepreciatioCostComponent } from './vehicle-config/depreciatio-cost/depreciatio-cost.component';
+import { SortByCrmPipe1 } from './sort-by.pipe';
+import { DocumentTypeComponent } from './vehicle-config/document-type/document-type.component';
 
 
 
@@ -26,9 +29,11 @@ import { BanBodyComponent } from './vehicle-config/ban-body/ban-body.component';
   declarations: [
     VehicleConfigComponent,
     VehicleTypeComponent,
-    SortByCrmPipe,
+    SortByCrmPipe1,
     StockTypeComponent,
-    BanBodyComponent
+    BanBodyComponent,
+    DepreciatioCostComponent,
+    DocumentTypeComponent
   ],
   imports: [
     CommonModule,

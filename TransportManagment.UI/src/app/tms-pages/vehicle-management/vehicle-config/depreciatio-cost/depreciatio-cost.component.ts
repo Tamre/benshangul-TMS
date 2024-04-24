@@ -1,29 +1,28 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
-import { TokenStorageService } from 'src/app/core/services/token-storage.service';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { PaginationService } from 'src/app/core/services/pagination.service';
-import { StockTypeService } from 'src/app/core/services/vehicle-config-services/stock-type.service';
-import { TranslateService } from '@ngx-translate/core';
+import { AbstractControl, UntypedFormBuilder, UntypedFormGroup, ValidationErrors, Validators } from '@angular/forms';
+import { UserView } from 'src/app/model/user';
 import { RootReducerState } from 'src/app/store';
 import { Store } from '@ngrx/store';
-import { UserView } from 'src/app/model/user';
-import { BanBodyPostDto } from 'src/app/model/vehicle-configuration/ban-body';
-import { BanBodyService } from 'src/app/core/services/vehicle-config-services/ban-body.service';
-import { successToast } from 'src/app/core/services/toast.service';
-import { cloneDeep } from 'lodash';
-import { selectCRMLoading } from 'src/app/store/CRM/crm_selector';
+import { TranslateService } from '@ngx-translate/core';
+import { PaginationService } from 'src/app/core/services/pagination.service';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { TokenStorageService } from 'src/app/core/services/token-storage.service';
 import { fetchCrmContactData } from 'src/app/store/CRM/crm_action';
+import { selectCRMLoading } from 'src/app/store/CRM/crm_selector';
+import { DepCostService } from 'src/app/core/services/vehicle-config-services/dep-cost.service';
+import { cloneDeep } from 'lodash';
+import { successToast } from 'src/app/core/services/toast.service';
+import { DepCostPostDto } from 'src/app/model/vehicle-configuration/dep-cost';
 
 @Component({
-  selector: 'app-ban-body',
+  selector: 'app-depreciatio-cost',
   //standalone: true,
   //imports: [CommonModule],
-  templateUrl: './ban-body.component.html',
-  styleUrl: './ban-body.component.scss'
+  templateUrl: './depreciatio-cost.component.html',
+  styleUrl: './depreciatio-cost.component.scss'
 })
-export class BanBodyComponent implements OnInit{
+export class DepreciatioCostComponent {
   submitted = false;
   isEditing:Boolean = false;
   dataForm!: UntypedFormGroup;
@@ -32,19 +31,13 @@ export class BanBodyComponent implements OnInit{
   searchResults: any;
   econtent?: any;
 
-  allBan?:any;
-  banBody?: any;
+  allDepCost?:any;
+  depCost?: any;
 
-  successAddMessage = "Ban Body successfully added";
-  successUpdateMessage = "Ban Body successfully updated";
-  editBanBodyText = "Edit Ban Body";
+  successAddMessage = "Depreciation Cost successfully added";
+  successUpdateMessage = "Depreciation Cost successfully updated";
+  editDepCostText = "Edit Depreciation Cost";
   updateText = "Update";
-
-  banBodyCategoryDropDownItem = [
-    { name: 'BANK', code: 'BANK'},
-    { name: 'COURT', code: 'COURT'},
-    { name: 'OTHER', code: 'OTHER'}
-  ]
 
   constructor(
     private formBuilder: UntypedFormBuilder,
@@ -53,7 +46,7 @@ export class BanBodyComponent implements OnInit{
     public service: PaginationService,
     public translate: TranslateService,
     private store: Store<{ data: RootReducerState }>,
-    public banBodyService: BanBodyService,
+    public depCostService:DepCostService
   ) {}
 
   ngOnInit(): void {
@@ -67,10 +60,11 @@ export class BanBodyComponent implements OnInit{
       name: ["", [Validators.required]],
       localName: ["", [Validators.required]],
       //code: ["", [Validators.required]],
-      banBodyCategory:["",[Validators.required]],
+      value:["",[Validators.required, this.floatValidator]],
       createdById: [this.currentUser?.id, [Validators.required]],
       isActive:[true]
     });
+    
     /**
      * fetches data
      */
@@ -81,18 +75,24 @@ export class BanBodyComponent implements OnInit{
       }
     });
   }
+  floatValidator(control: AbstractControl): ValidationErrors | null {
+    if (control.value && !/^-?\d+(\.\d+)?$/.test(control.value)) {
+      return { floatInvalid: true };
+    }
+    return null;
+  }
   changePage() {
-    this.banBody = this.service.changePage(this.allBan);
+    this.depCost = this.service.changePage(this.allDepCost);
   }
   refreshData(){
-    this.banBodyService.getAllBanBody().subscribe({
+    this.depCostService.getAllDepCost().subscribe({
       next: (res) => {
         if (res) 
           {
-            this.banBody = res
-            this.allBan = cloneDeep(res);
-            this.banBody = this.service.changePage(this.allBan)
-            console.log(this.allBan)
+            this.depCost = res
+            this.allDepCost = cloneDeep(res);
+            this.depCost = this.service.changePage(this.allDepCost)
+            console.log(this.allDepCost)
           }
       },
       error: (err) => {
@@ -100,7 +100,6 @@ export class BanBodyComponent implements OnInit{
       },
     });
   }
-
   openModal(content: any) {
     this.submitted = false;
     this.isEditing = false;
@@ -110,10 +109,10 @@ export class BanBodyComponent implements OnInit{
   }
   // Search Data
   performSearch(): void {
-    this.searchResults = this.allBan.filter((item: any) => {
+    this.searchResults = this.allDepCost.filter((item: any) => {
       return item.name.toLowerCase().includes(this.searchTerm.toLowerCase());
     });
-    this.banBody = this.service.changePage(this.searchResults);
+    this.depCost = this.service.changePage(this.searchResults);
   }
   // Sort filter
   sortField: any;
@@ -133,8 +132,8 @@ export class BanBodyComponent implements OnInit{
   }
   // Sort data
   onSort(column: any) {
-    this.allBan = this.service.onSort(column, this.allBan);
-    this.banBody = this.service.changePage(this.allBan)
+    this.allDepCost = this.service.onSort(column, this.allDepCost);
+    this.depCost = this.service.changePage(this.allDepCost)
   }
   //save
   saveData() {
@@ -143,11 +142,11 @@ export class BanBodyComponent implements OnInit{
     if (this.dataForm.valid) {
       if (this.dataForm.get("id")?.value) {
         console.log(this.currentUser?.id)
-        const newData: BanBodyPostDto = this.dataForm.value;
-        this.banBodyService.updateBanBody(newData).subscribe({
+        const newData: DepCostPostDto = this.dataForm.value;
+        this.depCostService.updateDepCost(newData).subscribe({
           next: (res) => {
             if (res.success) {
-              this.translate.get('Ban Body sucessfully updated').subscribe((res: string) => {
+              this.translate.get('Depreciation Cost sucessfully updated').subscribe((res: string) => {
                 this.successAddMessage = res;
               });
               this.closeModal();
@@ -159,15 +158,15 @@ export class BanBodyComponent implements OnInit{
         });
 
       } else {
-        const newData: BanBodyPostDto = this.dataForm.value;
+        const newData: DepCostPostDto = this.dataForm.value;
         // const newData: Omit<StockTypePostDto, 'id'> = {
         //   ...this.dataForm.value,
         // };
         newData.isActive = true;
-        this.banBodyService.addBanBody(newData).subscribe({
+        this.depCostService.addDepCost(newData).subscribe({
           next: (res) => {
             if (res.success) {
-              this.translate.get('Ban Body sucessfully added').subscribe((res: string) => {
+              this.translate.get('Depreciation Cost sucessfully added').subscribe((res: string) => {
                 this.successAddMessage = res;
               });
               this.closeModal();
@@ -197,22 +196,22 @@ export class BanBodyComponent implements OnInit{
     this.submitted = false;
     this.modalService.open(content, { size: "lg", centered: true });
     var modelTitle = document.querySelector(".modal-title") as HTMLAreaElement;
-    this.translate.get("Edit Ban Body Type").subscribe((res: string) => {
-      this.editBanBodyText = res;
+    this.translate.get("Edit Depreciation Cost").subscribe((res: string) => {
+      this.editDepCostText = res;
     });
-    modelTitle.innerHTML =this.editBanBodyText ;
+    modelTitle.innerHTML =this.editDepCostText ;
     var updateBtn = document.getElementById("add-btn") as HTMLAreaElement;
     this.translate.get("Update").subscribe((res: string) => {
       this.updateText= res;
     });
     updateBtn.innerHTML = this.updateText;
     this.isEditing = true;
-    this.econtent = this.banBody[id];
+    this.econtent = this.depCost[id];
     this.dataForm.controls["name"].setValue(this.econtent.name);
     this.dataForm.controls["localName"].setValue(this.econtent.localName);
     //this.dataForm.controls["code"].setValue(this.econtent.code);
-    this.dataForm.controls["banBodyCategory"].setValue(
-      this.econtent.banBodyCategory
+    this.dataForm.controls["value"].setValue(
+      this.econtent.value
     );
     this.dataForm.controls["createdById"].setValue(this.currentUser?.id);
     this.dataForm.controls["id"].setValue(this.econtent.id);
