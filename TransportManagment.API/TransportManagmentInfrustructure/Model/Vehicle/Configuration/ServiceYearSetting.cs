@@ -16,6 +16,9 @@ namespace TransportManagmentInfrustructure.Model.Vehicle.Configuration
         public int ToYear { get; set;}
         [Required]
         public double YearValue { get; set; }
+
+        public int VehicleTypeId { get; set; }
+        public virtual VehicleType VehicleType { get; set; } = null!;
        
     }
 }
