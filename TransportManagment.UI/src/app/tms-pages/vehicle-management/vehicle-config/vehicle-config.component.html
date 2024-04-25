@@ -7,22 +7,13 @@
             <ul ngbNav #ModifierCustom="ngbNav" [activeId]="1" class="nav nav-pills nav-customs nav-danger mb-3">
                 <li [ngbNavItem]="1">
                     <a ngbNavLink class="nav-link">
-                        Vehicle Type
-                    </a>
-                    <ng-template ngbNavContent>
-                        <!-- <app-vehicle-type></app-vehicle-type> -->
-                        <p>uygy</p>
-                    </ng-template>
-                </li>
-                <li [ngbNavItem]="2">
-                    <a ngbNavLink class="nav-link">
                         Stock Type
                     </a>
                     <ng-template ngbNavContent>
                         <app-stock-type></app-stock-type>
                     </ng-template>
                 </li>
-                <li [ngbNavItem]="3">
+                <li [ngbNavItem]="2">
                     <a ngbNavLink class="nav-link">
                         Ban Body
                     </a>
@@ -30,17 +21,15 @@
                         <app-ban-body></app-ban-body>
                     </ng-template>
                 </li>
-                <li [ngbNavItem]="4">
+                <li [ngbNavItem]="3">
                     <a ngbNavLink class="nav-link">
                         Depreciation Cost
                     </a>
                     <ng-template ngbNavContent>
                         <app-depreciatio-cost></app-depreciatio-cost>
-                        
-                        
                     </ng-template>
                 </li>
-                <li [ngbNavItem]="5">
+                <li [ngbNavItem]="4">
                     <a ngbNavLink class="nav-link">
                         Document Type
                     </a>
@@ -48,12 +37,76 @@
                         <app-document-type></app-document-type>
                     </ng-template>
                 </li>
-                <li [ngbNavItem]="6">
+                <li [ngbNavItem]="5">
                     <a ngbNavLink class="nav-link">
-                        Vehicle Lookup
+                        Factory Point
                     </a>
                     <ng-template ngbNavContent>
-                        <app-country></app-country>
+                        
+                    </ng-template>
+                </li>
+                <li [ngbNavItem]="6">
+                    <a ngbNavLink class="nav-link">
+                        Initial Price
+                    </a>
+                    <ng-template ngbNavContent>
+                        
+                    </ng-template>
+                </li>
+                <li [ngbNavItem]="7">
+                    <a ngbNavLink class="nav-link">
+                        Manufacturing Country
+                    </a>
+                    <ng-template ngbNavContent>
+                        
+                    </ng-template>
+                </li>
+                <li [ngbNavItem]="8">
+                    <a ngbNavLink class="nav-link">
+                        Plate Type
+                    </a>
+                    <ng-template ngbNavContent>
+                        
+                    </ng-template>
+                </li>
+                <li [ngbNavItem]="9">
+                    <a ngbNavLink class="nav-link">
+                        Salvage Value
+                    </a>
+                    <ng-template ngbNavContent>
+                        
+                    </ng-template>
+                </li>
+                <li [ngbNavItem]="10">
+                    <a ngbNavLink class="nav-link">
+                        Service Type
+                    </a>
+                    <ng-template ngbNavContent>
+                        
+                    </ng-template>
+                </li>
+                <li [ngbNavItem]="11">
+                    <a ngbNavLink class="nav-link">
+                        Service Year Setting
+                    </a>
+                    <ng-template ngbNavContent>
+                        
+                    </ng-template>
+                </li>
+                <li [ngbNavItem]="12">
+                    <a ngbNavLink class="nav-link">
+                        Vehicle Body Type
+                    </a>
+                    <ng-template ngbNavContent>
+                        
+                    </ng-template>
+                </li>
+                <li [ngbNavItem]="13">
+                    <a ngbNavLink class="nav-link">
+                        Vehicle Lookups
+                    </a>
+                    <ng-template ngbNavContent>
+                        
                     </ng-template>
                 </li>
             </ul>
@@ -63,136 +116,3 @@
         </div><!-- end card-body -->
     </div>
 </div>
-
-
-
---------------
-<!-- Modal -->
-<ng-template #content role="document" let-modal>
-    <div class="modal-header p-3 bg-success-subtle">
-        <h5 class="modal-title" id="inviteMembersModalLabel">Members</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
-    </div>
-    <div class="modal-body p-4">
-        <div class="search-box mb-3">
-            <input type="text" class="form-control bg-light border-light" placeholder="Search here...">
-            <i class="ri-search-line search-icon"></i>
-        </div>
-
-        <div class="mb-4 d-flex align-items-center">
-            <div class="me-2">
-                <h5 class="mb-0 fs-13">Members :</h5>
-            </div>
-            <div class="avatar-group justify-content-center">
-                <a href="javascript: void(0);" class="avatar-group-item" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Brent Gonzalez">
-                    <div class="avatar-xs">
-                        <img src="assets/images/users/avatar-3.jpg" alt="" class="rounded-circle img-fluid">
-                    </div>
-                </a>
-                <a href="javascript: void(0);" class="avatar-group-item" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Sylvia Wright">
-                    <div class="avatar-xs">
-                        <div class="avatar-title rounded-circle bg-secondary">
-                            S
-                        </div>
-                    </div>
-                </a>
-                <a href="javascript: void(0);" class="avatar-group-item" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Ellen Smith">
-                    <div class="avatar-xs">
-                        <img src="assets/images/users/avatar-4.jpg" alt="" class="rounded-circle img-fluid">
-                    </div>
-                </a>
-            </div>
-        </div>
-        <ngx-simplebar class="mx-n4 px-4" style="max-height: 225px;">
-            <div class="vstack gap-3">
-                <div class="d-flex align-items-center">
-                    <div class="avatar-xs flex-shrink-0 me-3">
-                        <img src="assets/images/users/avatar-2.jpg" alt="" class="img-fluid rounded-circle">
-                    </div>
-                    <div class="flex-grow-1">
-                        <h5 class="fs-13 mb-0"><a href="javascript: void(0);" class="text-body d-block">Nancy
-                                Martino</a></h5>
-                    </div>
-                    <div class="flex-shrink-0">
-                        <button type="button" class="btn btn-light btn-sm">Add</button>
-                    </div>
-                </div>
-                <!-- end member item -->
-                <div class="d-flex align-items-center">
-                    <div class="avatar-xs flex-shrink-0 me-3">
-                        <div class="avatar-title bg-danger-subtle text-danger rounded-circle">
-                            HB
-                        </div>
-                    </div>
-                    <div class="flex-grow-1">
-                        <h5 class="fs-13 mb-0"><a href="javascript: void(0);" class="text-body d-block">Henry Baird</a>
-                        </h5>
-                    </div>
-                    <div class="flex-shrink-0">
-                        <button type="button" class="btn btn-light btn-sm">Add</button>
-                    </div>
-                </div>
-                <!-- end member item -->
-                <div class="d-flex align-items-center">
-                    <div class="avatar-xs flex-shrink-0 me-3">
-                        <img src="assets/images/users/avatar-3.jpg" alt="" class="img-fluid rounded-circle">
-                    </div>
-                    <div class="flex-grow-1">
-                        <h5 class="fs-13 mb-0"><a href="javascript: void(0);" class="text-body d-block">Frank Hook</a>
-                        </h5>
-                    </div>
-                    <div class="flex-shrink-0">
-                        <button type="button" class="btn btn-light btn-sm">Add</button>
-                    </div>
-                </div>
-                <!-- end member item -->
-                <div class="d-flex align-items-center">
-                    <div class="avatar-xs flex-shrink-0 me-3">
-                        <img src="assets/images/users/avatar-4.jpg" alt="" class="img-fluid rounded-circle">
-                    </div>
-                    <div class="flex-grow-1">
-                        <h5 class="fs-13 mb-0"><a href="javascript: void(0);" class="text-body d-block">Jennifer
-                                Carter</a></h5>
-                    </div>
-                    <div class="flex-shrink-0">
-                        <button type="button" class="btn btn-light btn-sm">Add</button>
-                    </div>
-                </div>
-                <!-- end member item -->
-                <div class="d-flex align-items-center">
-                    <div class="avatar-xs flex-shrink-0 me-3">
-                        <div class="avatar-title bg-success-subtle text-success rounded-circle">
-                            AC
-                        </div>
-                    </div>
-                    <div class="flex-grow-1">
-                        <h5 class="fs-13 mb-0"><a href="javascript: void(0);" class="text-body d-block">Alexis
-                                Clarke</a></h5>
-                    </div>
-                    <div class="flex-shrink-0">
-                        <button type="button" class="btn btn-light btn-sm">Add</button>
-                    </div>
-                </div>
-                <!-- end member item -->
-                <div class="d-flex align-items-center">
-                    <div class="avatar-xs flex-shrink-0 me-3">
-                        <img src="assets/images/users/avatar-7.jpg" alt="" class="img-fluid rounded-circle">
-                    </div>
-                    <div class="flex-grow-1">
-                        <h5 class="fs-13 mb-0"><a href="javascript: void(0);" class="text-body d-block">Joseph
-                                Parker</a></h5>
-                    </div>
-                    <div class="flex-shrink-0">
-                        <button type="button" class="btn btn-light btn-sm">Add</button>
-                    </div>
-                </div>
-                <!-- end member item -->
-            </div>
-            <!-- end list -->
-        </ngx-simplebar>
-    </div>
-    <div class="modal-footer">
-        <button type="button" class="btn btn-light w-xs" data-bs-dismiss="modal" (click)="modal.close('Close click')">Cancel</button>
-        <button type="button" class="btn btn-success w-xs">Invite</button>
-    </div>
-</ng-template>

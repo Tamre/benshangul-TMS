@@ -15,13 +15,18 @@ import { allIcons } from 'angular-feather/icons';
 import { DropzoneModule } from 'ngx-dropzone-wrapper';
 import { SimplebarAngularModule } from 'simplebar-angular';
 import { VehicleConfigComponent } from './vehicle-config/vehicle-config.component';
-import { VehicleTypeComponent } from './vehicle-config/vehicle-type/vehicle-type.component';
+import { VehicleTypeComponent } from './vehicle-config/vehicle-attribute/vehicle-type/vehicle-type.component';
 import { SortByCrmPipe } from '../configuration/sort-by.pipe';
-import { StockTypeComponent } from './vehicle-config/stock-type/stock-type.component';
-import { BanBodyComponent } from './vehicle-config/ban-body/ban-body.component';
-import { DepreciatioCostComponent } from './vehicle-config/depreciatio-cost/depreciatio-cost.component';
+import { StockTypeComponent } from './vehicle-config/services/stock-type/stock-type.component';
+import { BanBodyComponent } from './vehicle-config/vehicle-attribute/ban-body/ban-body.component';
+import { DepreciatioCostComponent } from './vehicle-config/financial/depreciatio-cost/depreciatio-cost.component';
 import { SortByCrmPipe1 } from './sort-by.pipe';
-import { DocumentTypeComponent } from './vehicle-config/document-type/document-type.component';
+import { DocumentTypeComponent } from './vehicle-config/documentation/document-type/document-type.component';
+import { VehicleAttributeComponent } from './vehicle-config/vehicle-attribute/vehicle-attribute.component';
+import { FinancialComponent } from './vehicle-config/financial/financial.component';
+import { DocumentationComponent } from './vehicle-config/documentation/documentation.component';
+import { ManufacturingComponent } from './vehicle-config/manufacturing/manufacturing.component';
+import { ServicesComponent } from './vehicle-config/services/services.component';
 
 
 
@@ -33,7 +38,12 @@ import { DocumentTypeComponent } from './vehicle-config/document-type/document-t
     StockTypeComponent,
     BanBodyComponent,
     DepreciatioCostComponent,
-    DocumentTypeComponent
+    DocumentTypeComponent,
+    VehicleAttributeComponent,
+    FinancialComponent,
+    DocumentationComponent,
+    ManufacturingComponent,
+    ServicesComponent
   ],
   imports: [
     CommonModule,

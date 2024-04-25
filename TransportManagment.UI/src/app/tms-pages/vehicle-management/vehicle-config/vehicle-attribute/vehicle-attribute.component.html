@@ -1,0 +1,63 @@
+<div class="col-xxl-12">
+    <h5 class="mb-3">Custom Nav</h5>
+    <div class="card">
+        <div class="card-body">
+
+            <!-- Nav tabs -->
+            <ul ngbNav #ModifierCustom="ngbNav" [activeId]="1" class="nav nav-pills nav-customs nav-danger mb-3">
+                <li [ngbNavItem]="1">
+                    <a ngbNavLink class="nav-link">
+                        Vehicle Body
+                    </a>
+                    <ng-template ngbNavContent>
+                        
+                    </ng-template>
+                </li>
+                <li [ngbNavItem]="2">
+                    <a ngbNavLink class="nav-link">
+                        Vehicle Model
+                    </a>
+                    <ng-template ngbNavContent>
+                        
+                    </ng-template>
+                </li>
+                <li [ngbNavItem]="3">
+                    <a ngbNavLink class="nav-link">
+                        Vehicle Serial Number
+                    </a>
+                    <ng-template ngbNavContent>
+                        
+                    </ng-template>
+                </li>
+                <li [ngbNavItem]="4">
+                    <a ngbNavLink class="nav-link">
+                        Vehicle Types
+                    </a>
+                    <ng-template ngbNavContent>
+                        
+                    </ng-template>
+                </li>
+                <li [ngbNavItem]="5">
+                    <a ngbNavLink class="nav-link">
+                        Banned Body Type
+                    </a>
+                    <ng-template ngbNavContent>
+                        <app-ban-body></app-ban-body>
+                    </ng-template>
+                </li>
+                <li [ngbNavItem]="6">
+                    <a ngbNavLink class="nav-link">
+                        Vehicle Data Lookups
+                    </a>
+                    <ng-template ngbNavContent>
+                        
+                    </ng-template>
+                </li>
+                
+            </ul>
+            <div class="tab-content text-muted">
+                <div [ngbNavOutlet]="ModifierCustom"></div>
+            </div>
+        </div><!-- end card-body -->
+    </div>
+</div>
