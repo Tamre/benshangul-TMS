@@ -19,9 +19,9 @@ namespace TransportManagmentAPI.Controllers.Vehicle.Configuration
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAll()
+        public async Task<IActionResult> GetAllByLookUpType(string LookUpTyoe)
         {
-            return Ok(await _vehicleLookupsService.GetAll());
+            return Ok(await _vehicleLookupsService.GetAllByLookUpType(LookUpTyoe));
         }
 
         [HttpPost]

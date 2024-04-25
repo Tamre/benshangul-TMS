@@ -12,6 +12,7 @@ namespace TransportManagmentAPI.Controllers.Common
     [Route("api/[controller]/[action]")]
     [ApiController]
     [Authorize]
+   
     public class CompanyProfileController : ControllerBase
     {
         private readonly ICompanyProfileService _companyProfileService;

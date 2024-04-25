@@ -59,9 +59,10 @@ namespace TransportManagmentImplementation.Services.Vehicle.Configuration
             }
         }
 
-        public async Task<List<VehicleLookupsGetDto>> GetAll()
+        public async Task<List<VehicleLookupsGetDto>> GetAllByLookUpType(string LookUpType)
         {
-            var vehicleLookups = await _dbContext.VehicleLookups.AsNoTracking().ToListAsync();
+            var lookUpType = Enum.Parse<VehicleLookupType>(LookUpType);
+            var vehicleLookups = await _dbContext.VehicleLookups.Where(x=>x.VehicleLookupType==lookUpType).AsNoTracking().ToListAsync();
             var vehicleLookupsDtos = _mapper.Map<List<VehicleLookupsGetDto>>(vehicleLookups);
             return vehicleLookupsDtos;
         }
