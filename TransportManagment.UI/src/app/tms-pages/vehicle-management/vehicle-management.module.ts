@@ -27,6 +27,7 @@ import { FinancialComponent } from './vehicle-config/financial/financial.compone
 import { DocumentationComponent } from './vehicle-config/documentation/documentation.component';
 import { ManufacturingComponent } from './vehicle-config/manufacturing/manufacturing.component';
 import { ServicesComponent } from './vehicle-config/services/services.component';
+import { TestComponent } from './vehicle-config/test/test.component';
 
 
 
@@ -43,7 +44,8 @@ import { ServicesComponent } from './vehicle-config/services/services.component'
     FinancialComponent,
     DocumentationComponent,
     ManufacturingComponent,
-    ServicesComponent
+    ServicesComponent,
+    TestComponent
   ],
   imports: [
     CommonModule,

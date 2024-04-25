@@ -1,5 +1,5 @@
 <div class="col-xxl-12">
-    <h5 class="mb-3">Custom Nav</h5>
+    <!-- <h5 class="mb-3">Custom Nav</h5> -->
     <div class="card">
         <div class="card-body">
 
@@ -7,39 +7,39 @@
             <ul ngbNav #ModifierCustom="ngbNav" [activeId]="1" class="nav nav-pills nav-customs nav-danger mb-3">
                 <li [ngbNavItem]="1">
                     <a ngbNavLink class="nav-link">
-                        General Setting
+                        Mark
                     </a>
                     <ng-template ngbNavContent>
-                        <app-test></app-test>
+                        <app-depreciatio-cost></app-depreciatio-cost>
                     </ng-template>
                 </li>
                 <li [ngbNavItem]="2">
                     <a ngbNavLink class="nav-link">
-                        Ban Body
+                        Ban Case
                     </a>
                     <ng-template ngbNavContent>
-                        <!-- <app-ban-body></app-ban-body> -->
+                        
                     </ng-template>
                 </li>
                 <li [ngbNavItem]="3">
                     <a ngbNavLink class="nav-link">
-                        Depreciation Cost
+                        Plate Size
                     </a>
                     <ng-template ngbNavContent>
-                        <!-- <app-depreciatio-cost></app-depreciatio-cost> -->
+                        
                     </ng-template>
                 </li>
-                <!-- <li [ngbNavItem]="4">
+                <li [ngbNavItem]="4">
                     <a ngbNavLink class="nav-link">
-                        Document Type
+                        Vehicle Category
                     </a>
                     <ng-template ngbNavContent>
-                        <app-document-type></app-document-type>
+                        
                     </ng-template>
                 </li>
                 <li [ngbNavItem]="5">
                     <a ngbNavLink class="nav-link">
-                        Factory Point
+                        Vehicle Color
                     </a>
                     <ng-template ngbNavContent>
                         
@@ -47,7 +47,7 @@
                 </li>
                 <li [ngbNavItem]="6">
                     <a ngbNavLink class="nav-link">
-                        Initial Price
+                        Major
                     </a>
                     <ng-template ngbNavContent>
                         
@@ -55,7 +55,7 @@
                 </li>
                 <li [ngbNavItem]="7">
                     <a ngbNavLink class="nav-link">
-                        Manufacturing Country
+                        Minor
                     </a>
                     <ng-template ngbNavContent>
                         
@@ -63,52 +63,15 @@
                 </li>
                 <li [ngbNavItem]="8">
                     <a ngbNavLink class="nav-link">
-                        Plate Type
+                        LoadMeasurement
                     </a>
                     <ng-template ngbNavContent>
                         
                     </ng-template>
                 </li>
-                <li [ngbNavItem]="9">
-                    <a ngbNavLink class="nav-link">
-                        Salvage Value
-                    </a>
-                    <ng-template ngbNavContent>
-                        
-                    </ng-template>
-                </li>
-                <li [ngbNavItem]="10">
-                    <a ngbNavLink class="nav-link">
-                        Service Type
-                    </a>
-                    <ng-template ngbNavContent>
-                        
-                    </ng-template>
-                </li>
-                <li [ngbNavItem]="11">
-                    <a ngbNavLink class="nav-link">
-                        Service Year Setting
-                    </a>
-                    <ng-template ngbNavContent>
-                        
-                    </ng-template>
-                </li>
-                <li [ngbNavItem]="12">
-                    <a ngbNavLink class="nav-link">
-                        Vehicle Body Type
-                    </a>
-                    <ng-template ngbNavContent>
-                        
-                    </ng-template>
-                </li>
-                <li [ngbNavItem]="13">
-                    <a ngbNavLink class="nav-link">
-                        Vehicle Lookups
-                    </a>
-                    <ng-template ngbNavContent>
-                        
-                    </ng-template>
-                </li> -->
+
+                
+                
             </ul>
             <div class="tab-content text-muted">
                 <div [ngbNavOutlet]="ModifierCustom"></div>

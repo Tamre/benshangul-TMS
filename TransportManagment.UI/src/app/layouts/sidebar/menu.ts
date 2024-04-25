@@ -66,43 +66,43 @@ export const MENU: MenuItem[] = [
     label: "MENUITEMS.VEHICLE-CONFIGURATION.TEXT",
     //icon: "ri-apps-2-line",
     icon: "ri-settings-4-fill",
-    //link: "/v-config/vehicle-config",
+    link: "/v-config/vehicle-config",
     isCollapsed: true,
-    subItems: [
-      {
-        id: 9,
-        label: "MENUITEMS.VEHICLE-CONFIGURATION.LIST.Vehicle Attribute",
-        link: "/v-config/vehicle-attribute",
-        parentId: 8,
-      },
+    // subItems: [
+    //   {
+    //     id: 9,
+    //     label: "MENUITEMS.VEHICLE-CONFIGURATION.LIST.Vehicle Attribute",
+    //     link: "/v-config/vehicle-attribute",
+    //     parentId: 8,
+    //   },
 
-      {
-        id: 10,
-        label: "MENUITEMS.VEHICLE-CONFIGURATION.LIST.Financial",
-        link: "/v-config/financial",
-        parentId: 8,
-      },
-      {
-        id: 11,
-        label: "MENUITEMS.VEHICLE-CONFIGURATION.LIST.Documentation",
-        link: "/v-config/documentation",
-        parentId: 8,
-      },
-      {
-        id: 12,
-        label: "MENUITEMS.VEHICLE-CONFIGURATION.LIST.Manufacturing",
-        link: "/v-config/manufacturing",
-        parentId: 8,
-      },
-      {
-        id: 13,
-        label: "MENUITEMS.VEHICLE-CONFIGURATION.LIST.Services",
-        link: "/v-config/services",
-        parentId: 8,
-      },
+    //   {
+    //     id: 10,
+    //     label: "MENUITEMS.VEHICLE-CONFIGURATION.LIST.Financial",
+    //     link: "/v-config/financial",
+    //     parentId: 8,
+    //   },
+    //   {
+    //     id: 11,
+    //     label: "MENUITEMS.VEHICLE-CONFIGURATION.LIST.Documentation",
+    //     link: "/v-config/documentation",
+    //     parentId: 8,
+    //   },
+    //   {
+    //     id: 12,
+    //     label: "MENUITEMS.VEHICLE-CONFIGURATION.LIST.Manufacturing",
+    //     link: "/v-config/manufacturing",
+    //     parentId: 8,
+    //   },
+    //   {
+    //     id: 13,
+    //     label: "MENUITEMS.VEHICLE-CONFIGURATION.LIST.Services",
+    //     link: "/v-config/services",
+    //     parentId: 8,
+    //   },
       
       
-    ],
+    // ],
   },
   
 ];
