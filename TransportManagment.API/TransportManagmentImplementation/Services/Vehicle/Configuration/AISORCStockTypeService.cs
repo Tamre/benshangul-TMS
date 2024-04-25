@@ -45,6 +45,7 @@ namespace TransportManagmentImplementation.Services.Vehicle.Configuration
                     Category = Enum.Parse<AISORCStockCategory>( AISORCStockTypePost.Category),
                     CreatedById = AISORCStockTypePost.CreatedById,
                     CreatedDate = DateTime.Now,
+                    IsActive = true
 
                 };
                 await _dbContext.AISORCStockTypes.AddAsync(StockType);
@@ -93,7 +94,9 @@ namespace TransportManagmentImplementation.Services.Vehicle.Configuration
                     stockType.LocalName = AISORCStockTypeGet.LocalName;
                     stockType.Code = AISORCStockTypeGet.Code;
                     stockType.Category = Enum.Parse<AISORCStockCategory>(AISORCStockTypeGet.Category);
-                   
+
+                    stockType.IsActive = AISORCStockTypeGet.IsActive;
+
                     // Save the changes to the database
                     await _dbContext.SaveChangesAsync();
 

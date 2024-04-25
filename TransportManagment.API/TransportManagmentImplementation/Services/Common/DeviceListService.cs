@@ -15,6 +15,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Net.Mail;
 using System.Net;
 using System.Xml.Linq;
+using System.Diagnostics.Metrics;
 
 
 namespace TransportManagmentImplementation.Services.Common
@@ -49,7 +50,7 @@ namespace TransportManagmentImplementation.Services.Common
                     // ApproverId = DeviceListPost.ApproverId,
                     CreatedById = DeviceListPost.CreatedById,
                     CreatedDate = DateTime.Now,
-
+                    IsActive = true
                 };
                 await _dbContext.DeviceLists.AddAsync(DeviceList);
                 await _dbContext.SaveChangesAsync();
@@ -105,6 +106,11 @@ namespace TransportManagmentImplementation.Services.Common
                     DeviceList.MACAddress = DeviceListGet.MACAddress;
                     DeviceList.ApproverId = DeviceListGet.ApproverId;
                     DeviceList.ApprovedFor = Enum.Parse<ApprovedFor>(DeviceListGet.ApprovedFor);
+
+
+                    DeviceList.IsActive = DeviceListGet.IsActive;
+
+
 
                     // Save the changes to the database
                     await _dbContext.SaveChangesAsync();

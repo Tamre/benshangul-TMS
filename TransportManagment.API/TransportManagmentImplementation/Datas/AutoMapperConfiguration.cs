@@ -1,6 +1,7 @@
 ﻿
 
 using AutoMapper;
+using TransportManagmentAPI.Controllers.Vehicle.Configuration;
 using TransportManagmentImplementation.DTOS.Common;
 using TransportManagmentImplementation.DTOS.Configuration;
 using TransportManagmentImplementation.DTOS.Vehicle.Configuration;
@@ -32,8 +33,8 @@ namespace TransportManagmentImplementation.Datas
                 .ForMember(a => a.CommonCodeType, e => e.MapFrom(mfg => mfg.CommonCodeType.ToString()))
                 ;
             CreateMap<DeviceList, DeviceListGetDto>()
-        .ForMember(a => a.ApprovedFor, e => e.MapFrom(mfg => mfg.ApprovedFor.ToString()))
-        .ForMember(a => a.ApproverUser, e => e.MapFrom(mfg => mfg.Approver.FullName))
+                .ForMember(a => a.ApprovedFor, e => e.MapFrom(mfg => mfg.ApprovedFor.ToString()))
+                .ForMember(a => a.ApproverUser, e => e.MapFrom(mfg => mfg.Approver.FullName))
         ;
             #endregion
 
@@ -44,6 +45,40 @@ namespace TransportManagmentImplementation.Datas
 
             CreateMap<BanBody, BanBodyGetDto>()
                 .ForMember(a => a.BanBodyCategory, e => e.MapFrom(mfg => mfg.BanBodyCategory.ToString()));
+
+            CreateMap<DepreciationCost, DepreciationCostGetDto>();
+
+            CreateMap<DocumentType, DocumentTypeGetDto>()
+                .ForMember(a => a.FileExtentions, e => e.MapFrom(mfg => mfg.FileExtentions.ToString()));
+
+            CreateMap<FactoryPoint, FactoryPointGetDto>()
+                .ForMember(a => a.MarkName, e => e.MapFrom(mfg => mfg.Mark.Name.ToString()));
+
+            CreateMap<InitialPrice, InitialPriceGetDto>();
+            CreateMap<ManufacturingCountry, ManufacturingCountryGetDto>();
+            CreateMap<PlateType, PlateTypeGetDto>();
+            CreateMap<SalvageValue, SalvageValueGetDto>();
+
+
+            CreateMap<ServiceType, ServiceTypeGetDto>()
+                .ForMember(a => a.ServiceModule, e => e.MapFrom(mfg => mfg.ServiceModule.ToString()));
+
+            CreateMap<ServiceYearSetting, ServiceYearSettingGetDto>();
+            CreateMap<VehicleBodyType, VehicleBodyTypeGetDto>();
+
+            CreateMap<VehicleLookups, VehicleLookupsGetDto>()
+                .ForMember(a => a.VehicleLookupType, e => e.MapFrom(mfg => mfg.VehicleLookupType.ToString()));
+
+            CreateMap<VehicleModel, VehicleModelGetDto>()
+                .ForMember(a => a.HorsePowerMeasure, e => e.MapFrom(mfg => mfg.HorsePowerMeasure.ToString()));
+
+            CreateMap<VehicleSerialSetting, VehicleSerialSettingGetDto>()
+                .ForMember(a => a.VehicleSerialType, e => e.MapFrom(mfg => mfg.VehicleSerialType.ToString()));
+
+            CreateMap<VehicleSettings, VehicleSettingsGetDto>()
+                .ForMember(a => a.VehicleSettingType, e => e.MapFrom(mfg => mfg.VehicleSettingType.ToString()));
+
+            CreateMap<VehicleType, VehicleTypeGetDto>();
 
             #endregion
         }

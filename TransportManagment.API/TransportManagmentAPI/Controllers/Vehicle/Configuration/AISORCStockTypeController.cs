@@ -9,7 +9,7 @@ using TransportManagmentImplementation.Interfaces.Vehicle.Configuration;
 
 namespace TransportManagmentAPI.Controllers.Vehicle.Configuration
 {
-    [Route("api/[controller]/[action]")]
+    [Route("api/vech-config/[controller]/[action]")]
     [ApiController]
     public class AISORCStockTypeController : ControllerBase
     {

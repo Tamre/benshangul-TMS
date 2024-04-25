@@ -49,6 +49,7 @@ namespace TransportManagmentImplementation.Services.Common
                     IsCity = ZonePost.IsCity,
                     CreatedById = ZonePost.CreatedById,
                     CreatedDate = DateTime.Now,
+                    IsActive = true
 
                 };
                 await _dbContext.Zones.AddAsync(zone);
@@ -109,6 +110,8 @@ namespace TransportManagmentImplementation.Services.Common
                     Zone.Seffix = ZoneGet.Seffix;
                     Zone.LocalSuffix = ZoneGet.LocalSuffix;
                     Zone.IsCity = ZoneGet.IsCity;
+
+                    Zone.IsActive = ZoneGet.IsActive;
 
                     // Save the changes to the database
                     await _dbContext.SaveChangesAsync();

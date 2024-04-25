@@ -27,6 +27,7 @@ namespace TransportManagmentImplementation.DTOS.Vehicle.Configuration
     public record AISORCStockTypeGetDto : AISORCStockTypePostDto
     {
         public int Id { get; set; }
+        public bool IsActive { get; set; }
 
     }
 }

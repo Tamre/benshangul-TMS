@@ -62,13 +62,6 @@ namespace TransportManagmentInfrustructure.Enums
             NUMBER_OF_INSPECTORS
         }
 
-        public enum FileExtentions
-        {
-            JPG,
-            JPEG,
-            PNG,
-            PDF
-        }
         public enum VehicleSerialType
         {
             NEWVEHICLE,

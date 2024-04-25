@@ -1,5 +1,11 @@
 
 
+export interface reponseData {
+        success?: boolean,
+        message?: string,
+        data?:any    
+}
+
 
 export interface SelectList {
 

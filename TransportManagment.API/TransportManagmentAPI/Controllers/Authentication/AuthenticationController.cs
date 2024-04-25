@@ -15,18 +15,13 @@ namespace TransportManagment.Controllers.Authentication
     [ApiController]
     public class AuthenticationController : ControllerBase
     {
-        IAuthenticationService _authenticationService;
+       private readonly IAuthenticationService _authenticationService;
 
         public AuthenticationController(IAuthenticationService authenticationService)
         {
             _authenticationService = authenticationService;
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="loginDto"></param>
-        /// <returns></returns>
         [HttpPost]
         [ProducesResponseType(typeof(ResponseMessage), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> Login(LoginDto loginDto)

@@ -18,5 +18,42 @@ namespace TransportManagmentImplementation.Helper
             }
             return Convert.ToBase64String(keyBytes);
         }
+
+
+        // Encrypts text using a Caesar cipher with the given key
+        public static string CaesarCipherEncrypt(string str, int key)
+        {
+            StringBuilder result = new StringBuilder();
+
+            for (int i = 0; i < str.Length; i++)
+            {
+                char ch = str[i];
+                int code = (int)ch;
+                // Encrypt characters
+                code = (code + key) % 65536; // 65536 is the number of characters in Unicode
+                ch = (char)code;
+                result.Append(ch);
+            }
+            return result.ToString();
+        }
+
+        public static string CaesarCipherDecrypt(string str, int key)
+        {
+            StringBuilder result = new StringBuilder();
+
+            for (int i = 0; i < str.Length; i++)
+            {
+                char ch = str[i];
+                int code = (int)ch;
+                // Decrypt characters
+                code = (code - key + 65536) % 65536; // 65536 is the number of characters in Unicode
+                ch = (char)code;
+                result.Append(ch);
+            }
+            return result.ToString();
+        }
+
+
+
     }
 }

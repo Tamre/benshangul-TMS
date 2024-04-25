@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { UserView } from 'src/app/model/user';
 
 const TOKEN_KEY = 'auth-token';
 const USER_KEY = 'currentUser';
@@ -6,6 +7,9 @@ const USER_KEY = 'currentUser';
 @Injectable({
   providedIn: 'root'
 })
+
+
+
 export class TokenStorageService {
   constructor() { }
 
@@ -19,9 +23,21 @@ export class TokenStorageService {
   }
 
   public getToken(): string | null {
-    return sessionStorage.getItem('token');
+    return sessionStorage.getItem(TOKEN_KEY);
   }
 
+  getCurrentUser(): UserView | null {
+    const token = this.getToken();
+    var payLoad = JSON.parse(window.atob(token!.split('.')[1]));
+    let user: UserView = {
+      userId: payLoad.UserId,
+      email: payLoad.email,
+      id:payLoad.Id,
+      userName: payLoad.sub
+    }
+
+    return user;
+  }
   public saveUser(user: any): void {
     window.sessionStorage.removeItem(USER_KEY);
     window.sessionStorage.setItem(USER_KEY, JSON.stringify(user));

@@ -6,9 +6,10 @@ using IntegratedImplementation.Interfaces.Configuration;
 
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
-using System.Data.Entity;
+
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
@@ -69,7 +70,12 @@ namespace Implementation.Services.Authentication
                     };
                 }
 
-                if (!await _userManager.CheckPasswordAsync(user, login.Password))
+                string encryptedText = login.Password;
+                int encryptionKey = 3;
+
+                string decryptedText = SecurityHelper.CaesarCipherDecrypt(encryptedText, encryptionKey);
+
+                if (!await _userManager.CheckPasswordAsync(user, decryptedText))
                 {
                     return new ResponseMessage()
                     {
@@ -108,7 +114,8 @@ namespace Implementation.Services.Authentication
                 var jwtToken = tokenHandler.WriteToken(token);
                 var stringToken = tokenHandler.WriteToken(token);
 
- 
+
+                 
 
                 return new ResponseMessage()
                 {

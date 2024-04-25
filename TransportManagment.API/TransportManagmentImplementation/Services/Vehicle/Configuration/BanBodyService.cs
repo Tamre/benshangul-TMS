@@ -38,6 +38,7 @@ namespace TransportManagmentImplementation.Services.Vehicle.Configuration
                     BanBodyCategory = Enum.Parse<BanBodyCategory>(BanBodyPost.BanBodyCategory),
                     CreatedById = BanBodyPost.CreatedById,
                     CreatedDate = DateTime.Now,
+                    IsActive = true
 
                 };
                 await _dbContext.BanBodies.AddAsync(banBody);
@@ -83,6 +84,8 @@ namespace TransportManagmentImplementation.Services.Vehicle.Configuration
                     banBody.Name = BanBodyGet.Name;
                     banBody.LocalName = BanBodyGet.LocalName;
                     banBody.BanBodyCategory = Enum.Parse<BanBodyCategory>(BanBodyGet.BanBodyCategory);
+
+                    banBody.IsActive = BanBodyGet.IsActive;
 
                     // Save the changes to the database
                     await _dbContext.SaveChangesAsync();

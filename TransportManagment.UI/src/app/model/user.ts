@@ -3,11 +3,10 @@ export interface User {
     password: string ;
 }
 export interface UserView {
-    fullName : string ; 
-    role: string [];
+    email : string ; 
     userId : string ;
-    employeeId:string;
-    photo:string;
+    id:string;
+    userName:string ;
 }
 
 export interface Token {
