@@ -35,7 +35,10 @@ namespace TransportManagmentInfrustructure.Enums
             BANCASE,
             PLATESIZE,
             VEHICLECATEGORY,
-            VehicleColor
+            VehicleColor,
+            Major,
+            Minor,
+            LoadMeasurement
         }
 
         public enum HorsePowerMeasure
@@ -56,6 +59,7 @@ namespace TransportManagmentInfrustructure.Enums
             ORGANIZATION_DAYS_PER_VEHICLE,
             ORGANIZATION_NEW_LICENSE_YEARS,
             ORGANIZATION_RENEW_LICENSEYEARS,
+            NUMBER_OF_INSPECTORS
         }
 
         public enum VehicleSerialType
@@ -67,6 +71,187 @@ namespace TransportManagmentInfrustructure.Enums
 
         }
 
+
+        public enum GivenStatus
+        {
+            NotGiven,
+            Transfer,
+            Given,
+            Returned
+        }
+
+        public enum IssuanceType
+        {
+            Vehicle,
+            Temporary,
+            Transit,
+            Trailer,
+            Motor
+        }
+
+        public enum RegistrationType
+        {
+            ENCODED,
+            TEMPORARY,
+            PERMANENT
+        }
   
+        public enum TaxStatus 
+        {
+            TAX_PAID,
+            FREE
+        }
+
+        public enum LastActionTaken
+        {
+            Endoding,
+            NewVehicleRegistraion,
+            FieldInspection,
+            TechnicalInspection,
+            PlateAssignemnt,
+            FinishNewVehicleRegistration,
+            AnnualInspection,
+            FinishAnualInspection,
+            Valuation,
+            CancelValuation,
+            FinishValuation,
+            ServiceChange,
+            FinishServiceChange,
+            Ban,
+            FinishBan,
+            ReturnBan,
+            FinishReturnBan,
+            TemporaryDeactivate,
+            FinishTemporaryDeactivation,
+            TemporaryActivation, 
+            FinishTemporaryActivation,
+            LostPlate,
+            FinishLostPlate,
+            LostORC,
+            FinishLostORC,
+            LostAIS,
+            FinishLostAIS,
+            Transfer,
+            FinishTransfer,
+            Cancelation,
+            FinishCancelation,
+            RevertCancelation,
+            FinishRevertCancelation,
+
+
+        }
+
+        public enum TypeOfVehicle
+        {
+            VEHICLE,
+            TRAILER
+        }
+
+        public enum VehicleApprovalStatus
+        {
+            PENDING,
+            SENDTOREGION,
+            REJECTED,
+            APPROVED,
+            APPROVEDWITHOUTVALIDATATION
+        }
+
+
+        public enum VehicleCurrentStatus
+        {
+            New_Vehicle,
+            Drived_Vehicle
+        }
+
+        public enum TransferStatus
+        {
+            New,
+            FromZone,
+            FromOtherRegion,
+            ToZone,
+            ToOtherRegion,
+        }
+
+        public enum OwnerGroup
+        {
+            Private_Owner,
+            Organization,
+            Government,
+            TainingCenter,
+        }
+
+
+        public enum OwnerState
+        {
+            CURRENT_OWNER,
+            FORMER_OWNER,
+            DELETED_OWNER
+        }
+
+        public enum EnergyType
+        {
+            PETROL,
+            DIESEL,
+            ELECTRIC,
+            HYBRID_POWER
+        }
+
+        public enum IssueReason
+        {
+            NEW,
+            ANNUAL,
+            LOSS,
+            DEFECTED,
+            SERVICE_CHANGE,
+            OWNER_CHANGE,
+            RETURN_TRANSFER,
+            OTHER
+        }
+
+
+        public enum ValuationReason
+        {
+            COURT,
+            BID,
+
+        }
+
+
+        public enum OwnershipType
+        {
+            SELLER,
+            BUYER
+        }
+
+        public enum ServiceChangeType
+        {
+            ServiceChange,
+            ServiceBodyChange,
+            EngineChange
+        }
+
+        public enum TypeOfOrganization
+        {
+            Annual_Inspection,
+            Repair_Shop,
+            SparePare_Shop,
+            Importer,
+            Assembly_Plant,
+            Dealer
+        }
+
+        public enum ReplacementType
+        {
+            Plate,
+            AIS,
+            ORC
+        }
+
+        public enum ReplacementReason
+        {
+            Loss,
+            Defect,
+            Other
+        }
     }
 }

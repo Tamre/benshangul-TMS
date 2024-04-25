@@ -9,17 +9,19 @@ using System.Text;
 using System.Threading.Tasks;
 using TransportManagmentInfrustructure.Model.Authentication;
 using TransportManagmentInfrustructure.Model.Common;
+using TransportManagmentInfrustructure.Model.Vehicle.Action;
 using TransportManagmentInfrustructure.Model.Vehicle.Configuration;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace TransportManagmentInfrustructure.Data
 {
-    public class ApplicationDbContext: IdentityDbContext<ApplicationUser, ApplicationRole, string>
+    public class ApplicationDbContext : IdentityDbContext<ApplicationUser, ApplicationRole, string>
     {
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
         }
-        public DbSet<RoleCategory> RoleCategories { get; set; } 
+        public DbSet<RoleCategory> RoleCategories { get; set; }
         public DbSet<PasswordHistory> PasswordHistories { get; set; }
         public DbSet<PasswordChangeRequest> PasswordChangeRequests { get; set; }
 
@@ -54,6 +56,24 @@ namespace TransportManagmentInfrustructure.Data
         public DbSet<DepreciationCost> DepreciationCosts { get; set; }
         public DbSet<SalvageValue> SalvageValues { get; set; }
 
+        public DbSet<VehicleList> VehicleLists { get; set; }
+        public DbSet<VehicleOwner> VehicleOwners { get; set; }
+        public DbSet<AIS> AisLists { get; set; }
+        public DbSet<AisStock> AisStocks { get; set; }
+        public DbSet<FieldInspection> FieldInspections { get; set; }
+        public DbSet<TechnicalInspection> TechnicalInspections { get; set; }
+        public DbSet<ORC> ORCLists { get; set; }
+        public DbSet<ORCStock> ORCStocks { get; set; }
+        public DbSet<OwnerList> OwnerLists { get; set; }
+        public DbSet<PlateStock> PlateStocks { get; set; }
+        public DbSet<VehiclePlate> VehiclePlates { get; set; }
+        public DbSet<ServiceChange> ServiceChanges { get; set; }
+        public DbSet<TemporaryVehicleDeactivation> TemporaryVehicleDeactivations { get; set; }
+        public DbSet<Valuation> ValuationLists { get; set; }
+        public DbSet<ValuationDetail> ValuationDetails { get; set; }
+        public DbSet<VehicleBan> VehicleBans { get; set; }
+        public DbSet<VehicleReplacement> VehicleReplacements { get; set; }
+        public DbSet<VehicleTransfer> VehicleTransfers { get; set; }
         #endregion
 
 
@@ -166,14 +186,56 @@ namespace TransportManagmentInfrustructure.Data
                 entity.HasIndex(t => t.Name).IsUnique();
             });
 
+            modelBuilder.Entity<AisStock>(entity =>
+            {
+                entity.HasIndex(t => new { t.AISNo, t.StockTypeId }).IsUnique();
+            });
 
+            modelBuilder.Entity<AisStock>()
+            .HasOne(s => s.AIS)
+            .WithOne(p => p.Stock)
+           .HasForeignKey<AIS>(p => p.StockId);
 
+            modelBuilder.Entity<ORCStock>(entity =>
+            {
+                entity.HasIndex(t => new { t.ORCNo, t.StockTypeId }).IsUnique();
+            });
+
+            modelBuilder.Entity<ORCStock>()
+            .HasOne(s => s.ORC)
+            .WithOne(p => p.Stock)
+           .HasForeignKey<ORC>(p => p.StockId);
+
+            modelBuilder.Entity<OwnerList>(entity =>
+            {
+                entity.HasIndex(t => t.PhoneNumber).IsUnique();
+                entity.HasIndex(t => t.IdNumber).IsUnique();
+            });
+
+            modelBuilder.Entity<PlateStock>(entity =>
+            {
+                entity.HasIndex(t => new { t.PlateNo , t.IssuanceType}).IsUnique();
+            });
+
+            modelBuilder.Entity<PlateStock>()
+           .HasOne(s => s.VehiclePlate)
+           .WithOne(p => p.PlateStock)
+           .HasForeignKey<VehiclePlate>(p => p.PlateStockId);
+
+            modelBuilder.Entity<VehicleList>(entity =>
+            {
+                entity.HasIndex(t =>  t.ChassisNo).IsUnique();
+                entity.HasIndex(t => t.EngineNumber).IsUnique();
+            });
+            
+
+            #region commonNames
             modelBuilder.Entity<RoleCategory>().ToTable("RoleCategories", schema: "UserMgt");
             modelBuilder.Entity<ApplicationUser>().ToTable("Users", schema: "UserMgt");
             modelBuilder.Entity<ApplicationRole>().ToTable("Roles", schema: "UserMgt");
             modelBuilder.Entity<PasswordHistory>().ToTable("PasswordHistories", schema: "UserMgt");
             modelBuilder.Entity<PasswordChangeRequest>().ToTable("PasswordChangeRequests", schema: "UserMgt");
-
+           
 
             modelBuilder.Entity<CommonCodes>().ToTable("CommonCodes", schema: "Common");
             modelBuilder.Entity<CompanyProfile>().ToTable("CompanyProfiles", schema: "Common");
@@ -182,9 +244,9 @@ namespace TransportManagmentInfrustructure.Data
             modelBuilder.Entity<Region>().ToTable("Regions", schema: "Common");
             modelBuilder.Entity<ZoneList>().ToTable("Zones", schema: "Common");
             modelBuilder.Entity<Woreda>().ToTable("Woredas", schema: "Common");
+            #endregion
 
-
-
+            #region Vehicle
             modelBuilder.Entity<AISORCStockType>().ToTable("AISORCStockTypes", schema: "VRMS");
             modelBuilder.Entity<BanBody>().ToTable("BanBodies", schema: "VRMS");
             modelBuilder.Entity<InitialPrice>().ToTable("InitialPrices", schema: "VRMS");
@@ -202,7 +264,27 @@ namespace TransportManagmentInfrustructure.Data
             modelBuilder.Entity<VehicleType>().ToTable("VehicleTypes", schema: "VRMS");
             modelBuilder.Entity<SalvageValue>().ToTable("SalvageValues", schema: "VRMS");
             modelBuilder.Entity<DepreciationCost>().ToTable("DepreciationCosts", schema: "VRMS");
+            modelBuilder.Entity<AisStock>().ToTable("AisStocks", schema: "VRMS");
+            modelBuilder.Entity<AIS>().ToTable("AisLists", schema: "VRMS");
+            modelBuilder.Entity<FieldInspection>().ToTable("FieldInspections", schema: "VRMS");
+            modelBuilder.Entity<ORCStock>().ToTable("ORCStocks", schema: "VRMS");
+            modelBuilder.Entity<ORC>().ToTable("ORCLists", schema: "VRMS");
+            modelBuilder.Entity<OwnerList>().ToTable("OwnerLists", schema: "VRMS");
+            modelBuilder.Entity<PlateStock>().ToTable("PlateStocks", schema: "VRMS");
+            modelBuilder.Entity <VehiclePlate>().ToTable("VehiclePlates", schema: "VRMS");
+            modelBuilder.Entity <ServiceChange>().ToTable("ServiceChanges", schema: "VRMS");
+            modelBuilder.Entity <TechnicalInspection>().ToTable("TechnicalInspections", schema: "VRMS");
+            modelBuilder.Entity <TemporaryVehicleDeactivation>().ToTable("TemporaryVehicleDeactivations", schema: "VRMS");
+            modelBuilder.Entity <Valuation>().ToTable("ValuationLists", schema: "VRMS");
+            modelBuilder.Entity <ValuationDetail>().ToTable("ValuationDetails", schema: "VRMS");
+            modelBuilder.Entity <VehicleBan>().ToTable("VehicleBans", schema: "VRMS");
+            modelBuilder.Entity <VehicleOwner>().ToTable("VehicleOwners", schema: "VRMS");
+            modelBuilder.Entity <VehicleReplacement>().ToTable("VehicleReplacements", schema: "VRMS");
+            modelBuilder.Entity <VehicleTransfer>().ToTable("VehicleTransfers", schema: "VRMS");
+
+
+            #endregion
         }
-    
+
     }
 }
