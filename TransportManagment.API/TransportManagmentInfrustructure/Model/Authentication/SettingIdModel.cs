@@ -18,7 +18,7 @@ namespace TransportManagmentInfrustructure.Model.Authentication
         public DateTime CreatedDate { get; set; }
         [StringLength(45)]
         public string CreatedById { get; set; } = null!;
-        public virtual ApplicationUser ApplicationUser { get; set; } = null!;
+        public virtual ApplicationUser CreatedBy { get; set; } = null!;
 
         [DefaultValue(true)]
         public bool IsActive { get; set; }
