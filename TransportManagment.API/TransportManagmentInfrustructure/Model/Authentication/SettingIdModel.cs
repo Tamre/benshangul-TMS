@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using static TransportManagmentInfrustructure.Enums.CommonEnum;
 using System.ComponentModel;
+using TransportManagmentInfrustructure.Data;
 
 namespace TransportManagmentInfrustructure.Model.Authentication
 {
@@ -16,7 +17,7 @@ namespace TransportManagmentInfrustructure.Model.Authentication
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
         public DateTime CreatedDate { get; set; }
-        [StringLength(45)]
+        [StringLength(ValidationClasses.UserId)]
         public string CreatedById { get; set; } = null!;
         public virtual ApplicationUser CreatedBy { get; set; } = null!;
 
