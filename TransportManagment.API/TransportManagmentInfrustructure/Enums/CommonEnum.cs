@@ -75,5 +75,8 @@ namespace TransportManagmentInfrustructure.Enums
             PUBLIC,
             FRIGHT
         }
+
+      
+      
     }
-    }
+}

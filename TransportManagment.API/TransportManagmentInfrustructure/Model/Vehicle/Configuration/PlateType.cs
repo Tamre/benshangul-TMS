@@ -9,7 +9,7 @@ using TransportManagmentInfrustructure.Model.Authentication;
 
 namespace TransportManagmentInfrustructure.Model.Vehicle.Configuration
 {
-    public class PlateType: SettingIdModel
+    public class PlateType : SettingIdModel
     {
         [StringLength(ValidationClasses.MaxNameLength)]
         [Required]
@@ -23,5 +23,12 @@ namespace TransportManagmentInfrustructure.Model.Vehicle.Configuration
         [StringLength(ValidationClasses.MaxSettingRemarkLength)]
         [Required]
         public string RegionList { get; set; } = null!;
+
+        public int? MinorId { get; set; }
+        public virtual VehicleLookups Minor { get; set; } = null!;
+
+        public int? MajorId { get; set; }
+        public virtual VehicleLookups Major { get; set; } = null!;
+
     }
 }
