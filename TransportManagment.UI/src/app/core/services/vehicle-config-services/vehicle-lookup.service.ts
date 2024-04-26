@@ -21,21 +21,21 @@ export class VehicleLookupService {
     'Authorization': `Bearer ${this.tokenStorageService.getToken()}`,
     'Content-Type': 'application/json'
   });
-  getVehicleLookup(id: string) {
+  getVehicleLookup(id: number) {
     var headers = this.headers
     return this.http.get<VehicleLookupGetDto[]>(`${this.baseUrl}/vech-config/VehicleLookups?LookUpTyoe=${id}`,{headers},);
   }
   updateVehicleLookup(formData:VehicleLookupPostDto){
     var headers = this.headers
     return this.http.put<ResponseMessage>(
-      `${this.baseUrl}/vech-config/AISORCStockType/Update`,
+      `${this.baseUrl}/vech-config/VehicleLookups`,
       formData,{headers:headers}
     );
   }
   addVehicleLookup(formData:VehicleLookupPostDto){
     var headers = this.headers
     return this.http.post<ResponseMessage>(
-      `${this.baseUrl}/vech-config/AISORCStockType/Add`,
+      `${this.baseUrl}/vech-config/VehicleLookups`,
       formData,{headers:headers}
     );
   }
