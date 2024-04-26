@@ -17,8 +17,6 @@ import { DepCostPostDto } from 'src/app/model/vehicle-configuration/dep-cost';
 
 @Component({
   selector: 'app-depreciatio-cost',
-  //standalone: true,
-  //imports: [CommonModule],
   templateUrl: './depreciatio-cost.component.html',
   styleUrl: './depreciatio-cost.component.scss'
 })
@@ -178,9 +176,6 @@ export class DepreciatioCostComponent {
         });
       }
     }
-    // setTimeout(() => {
-    //   this.dataForm.reset();
-    // }, 2000);
     this.submitted = true;
   }
   closeModal() {

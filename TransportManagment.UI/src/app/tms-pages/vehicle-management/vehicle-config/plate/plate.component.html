@@ -1,19 +1,30 @@
-<ul ngbNav #ModifierCustom="ngbNav" [activeId]="1" class="nav nav-pills nav-customs nav-danger mb-3">
-    <li [ngbNavItem]="1">
-        <a ngbNavLink class="nav-link">
-            Plate Type
-        </a>
-        <ng-template ngbNavContent>
-            
-        </ng-template>
-    </li>
-    <li [ngbNavItem]="2">
-        <a ngbNavLink class="nav-link">
-            AIS ORC Stock Type
-        </a>
-        <ng-template ngbNavContent>
-            <app-aisorc-stock-type></app-aisorc-stock-type>
-        </ng-template>
-    </li>
-    
-</ul>
+<div class="col-xxl-12">
+    <div class="card">
+        <div class="card-body">
+
+            <ul ngbNav #ModifierCustom="ngbNav" [activeId]="1" class="nav nav-pills nav-customs nav-danger mb-3">
+                <li [ngbNavItem]="1">
+                    <a ngbNavLink class="nav-link">
+                        Plate Type
+                    </a>
+                    <ng-template ngbNavContent>
+
+                    </ng-template>
+                </li>
+                <li [ngbNavItem]="2">
+                    <a ngbNavLink class="nav-link">
+                        AIS ORC Stock Type
+                    </a>
+                    <ng-template ngbNavContent>
+                        <app-aisorc-stock-type></app-aisorc-stock-type>
+                    </ng-template>
+                </li>
+
+            </ul>
+            <div class="tab-content text-muted">
+                <div [ngbNavOutlet]="ModifierCustom"></div>
+            </div>
+
+        </div>
+    </div>
+</div>
