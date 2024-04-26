@@ -15,37 +15,35 @@ import { allIcons } from 'angular-feather/icons';
 import { DropzoneModule } from 'ngx-dropzone-wrapper';
 import { SimplebarAngularModule } from 'simplebar-angular';
 import { VehicleConfigComponent } from './vehicle-config/vehicle-config.component';
-import { VehicleTypeComponent } from './vehicle-config/vehicle-attribute/vehicle-type/vehicle-type.component';
-import { SortByCrmPipe } from '../configuration/sort-by.pipe';
-import { StockTypeComponent } from './vehicle-config/services/stock-type/stock-type.component';
-import { BanBodyComponent } from './vehicle-config/vehicle-attribute/ban-body/ban-body.component';
-import { DepreciatioCostComponent } from './vehicle-config/financial/depreciatio-cost/depreciatio-cost.component';
+import { AisorcStockTypeComponent } from './vehicle-config/plate/aisorc-stock-type/aisorc-stock-type.component';
+import { BanBodyComponent } from './vehicle-config/look-ups/ban-body/ban-body.component';
+import { DepreciatioCostComponent } from './vehicle-config/valuation/depreciatio-cost/depreciatio-cost.component';
 import { SortByCrmPipe1 } from './sort-by.pipe';
-import { DocumentTypeComponent } from './vehicle-config/documentation/document-type/document-type.component';
-import { VehicleAttributeComponent } from './vehicle-config/vehicle-attribute/vehicle-attribute.component';
-import { FinancialComponent } from './vehicle-config/financial/financial.component';
-import { DocumentationComponent } from './vehicle-config/documentation/documentation.component';
-import { ManufacturingComponent } from './vehicle-config/manufacturing/manufacturing.component';
-import { ServicesComponent } from './vehicle-config/services/services.component';
-import { TestComponent } from './vehicle-config/test/test.component';
+
+
+
+import { PlateComponent } from './vehicle-config/plate/plate.component';
+import { VehicleSettingComponent } from './vehicle-config/vehicle-setting/vehicle-setting.component';
+import { LookUpsComponent } from './vehicle-config/look-ups/look-ups.component';
+import { ValuationComponent } from './vehicle-config/valuation/valuation.component';
+import { PlateTypeComponent } from './vehicle-config/plate/plate-type/plate-type.component';
+import { DocumentTypeComponent } from './vehicle-config/document-type/document-type.component';
 
 
 
 @NgModule({
   declarations: [
     VehicleConfigComponent,
-    VehicleTypeComponent,
     SortByCrmPipe1,
-    StockTypeComponent,
+    AisorcStockTypeComponent,
     BanBodyComponent,
     DepreciatioCostComponent,
-    DocumentTypeComponent,
-    VehicleAttributeComponent,
-    FinancialComponent,
-    DocumentationComponent,
-    ManufacturingComponent,
-    ServicesComponent,
-    TestComponent
+    PlateComponent,
+    VehicleSettingComponent,
+    LookUpsComponent,
+    ValuationComponent,
+    PlateTypeComponent,
+    DocumentTypeComponent
   ],
   imports: [
     CommonModule,
