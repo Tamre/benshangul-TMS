@@ -35,7 +35,6 @@ import { DocumentTypeComponent } from './vehicle-config/document-type/document-t
   declarations: [
     VehicleConfigComponent,
     SortByCrmPipe1,
-    AisorcStockTypeComponent,
     BanBodyComponent,
     DepreciatioCostComponent,
     PlateComponent,
@@ -43,7 +42,8 @@ import { DocumentTypeComponent } from './vehicle-config/document-type/document-t
     LookUpsComponent,
     ValuationComponent,
     PlateTypeComponent,
-    DocumentTypeComponent
+    DocumentTypeComponent,
+    AisorcStockTypeComponent
   ],
   imports: [
     CommonModule,

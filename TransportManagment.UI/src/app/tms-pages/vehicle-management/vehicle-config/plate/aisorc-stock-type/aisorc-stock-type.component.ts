@@ -17,8 +17,6 @@ import { selectCRMLoading } from 'src/app/store/CRM/crm_selector';
 
 @Component({
   selector: 'app-aisorc-stock-type',
-  //standalone: true,
-  //imports: [CommonModule],
   templateUrl: './aisorc-stock-type.component.html',
   styleUrl: './aisorc-stock-type.component.scss'
 })
@@ -160,9 +158,6 @@ export class AisorcStockTypeComponent {
 
       } else {
         const newData: StockTypePostDto = this.dataForm.value;
-        // const newData: Omit<StockTypePostDto, 'id'> = {
-        //   ...this.dataForm.value,
-        // };
         newData.isActive = true;
         this.stockTypeService.addStockType(newData).subscribe({
           next: (res) => {
@@ -179,9 +174,6 @@ export class AisorcStockTypeComponent {
         });
       }
     }
-    // setTimeout(() => {
-    //   this.dataForm.reset();
-    // }, 2000);
     this.submitted = true;
   }
 
