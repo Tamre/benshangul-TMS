@@ -30,7 +30,7 @@ export class TokenStorageService {
     const token = this.getToken();
     var payLoad = JSON.parse(window.atob(token!.split('.')[1]));
     let user: UserView = {
-      userId: payLoad.UserId,
+      userId: payLoad.userId,
       email: payLoad.email,
       id:payLoad.Id,
       userName: payLoad.sub
