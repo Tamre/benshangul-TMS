@@ -14,6 +14,7 @@ import { cloneDeep } from 'lodash';
 import { VehicleLookupService } from 'src/app/core/services/vehicle-config-services/vehicle-lookup.service';
 import { VehicleLookupPostDto } from 'src/app/model/vehicle-configuration/vehicle-lookup';
 import { successToast } from 'src/app/core/services/toast.service';
+import { ResponseMessage } from 'src/app/model/ResponseMessage.Model';
 
 @Component({
   selector: 'app-vehicle-lookups',
@@ -40,14 +41,14 @@ export class VehicleLookupsComponent {
   updateText = "Update";
 
   VehicleLookupTypeEnum = [
-    { name: 'MARK', code: '0'},
-    { name: 'BANCASE', code: '1'},
-    { name: 'PLATESIZE', code: '2'},
-    { name: 'VEHICLECATEGORY', code: '3'},
-    { name: 'VehicleColor', code: '4'},
+    { name: 'Mark', code: '0'},
+    { name: 'Ban Case', code: '1'},
+    { name: 'Plate Size', code: '2'},
+    { name: 'Vehicle Category', code: '3'},
+    { name: 'Vehicle Color', code: '4'},
     { name: 'Major', code: '5'},
     { name: 'Minor', code: '6'},
-    { name: 'LoadMeasurement', code: '7'},
+    { name: 'Load Measurement', code: '7'},
 
   ]
   
@@ -154,43 +155,40 @@ export class VehicleLookupsComponent {
         //console.log(this.currentUser?.userId)
         const newData: VehicleLookupPostDto = this.dataForm.value;
         this.vehicleLookupService.updateVehicleLookup(newData).subscribe({
-          next: (res) => {
+          next: (res: ResponseMessage) => {
             if (res.success) {
-              this.translate.get('Ban Body sucessfully updated').subscribe((res: string) => {
-                this.successAddMessage = res;
-              });
-              this.closeModal();
-              successToast(this.successUpdateMessage);
-              this.refreshData()
-            }
-          },
-          error: (err) => {},
-        });
-
-      } else {
-        const newData: VehicleLookupPostDto = this.dataForm.value;
-        // const newData: Omit<StockTypePostDto, 'id'> = {
-        //   ...this.dataForm.value,
-        // };
-        newData.isActive = true;
-        this.vehicleLookupService.addVehicleLookup(newData).subscribe({
-          next: (res) => {
-            if (res.success) {
-              this.translate.get('Ban Body sucessfully added').subscribe((res: string) => {
-                this.successAddMessage = res;
-              });
+              this.successAddMessage = res.message;
               this.closeModal();
               successToast(this.successAddMessage);
-              this.refreshData()
+              this.refreshData();
+            } else {
+              console.error( res.message);
             }
           },
-          error: (err) => {},
+          error: (err) => {
+            console.error(err);
+          },
+        });
+      } else {
+        const newData: VehicleLookupPostDto = this.dataForm.value;
+        newData.isActive = true;
+        this.vehicleLookupService.addVehicleLookup(newData).subscribe({
+          next: (res: ResponseMessage) => {
+            if (res.success) {
+              this.successAddMessage = res.message;
+              this.closeModal();
+              successToast(this.successAddMessage);
+              this.refreshData();
+            } else {
+              console.error( res.message);
+            }
+          },
+          error: (err) => {
+            console.error(err);
+          },
         });
       }
     }
-    // setTimeout(() => {
-    //   this.dataForm.reset();
-    // }, 2000);
     this.submitted = true;
   }
   closeModal() {
@@ -219,9 +217,8 @@ export class VehicleLookupsComponent {
     this.econtent = this.vehLookups[id];
     this.dataForm.controls["name"].setValue(this.econtent.name);
     this.dataForm.controls["localName"].setValue(this.econtent.localName);
-    //this.dataForm.controls["code"].setValue(this.econtent.code);
     this.dataForm.controls["vehicleLookupType"].setValue(
-      this.econtent.banBodyCategory
+      this.econtent.vehicleLookupType
     );
     this.dataForm.controls["createdById"].setValue(this.currentUser?.userId);
     this.dataForm.controls["id"].setValue(this.econtent.id);
