@@ -1,27 +1,29 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { UserView } from 'src/app/model/user';
-import { PlateTypeService } from 'src/app/core/services/vehicle-config-services/plate-type.service';
-import { Store } from '@ngrx/store';
-import { RootReducerState } from 'src/app/store';
-import { TranslateService } from '@ngx-translate/core';
-import { PaginationService } from 'src/app/core/services/pagination.service';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { TokenStorageService } from 'src/app/core/services/token-storage.service';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { PaginationService } from 'src/app/core/services/pagination.service';
+import { TranslateService } from '@ngx-translate/core';
+import { RootReducerState } from 'src/app/store';
+import { Store } from '@ngrx/store';
 import { fetchCrmContactData } from 'src/app/store/CRM/crm_action';
 import { selectCRMLoading } from 'src/app/store/CRM/crm_selector';
 import { cloneDeep } from 'lodash';
+import { VehicleLookupService } from 'src/app/core/services/vehicle-config-services/vehicle-lookup.service';
+import { VehicleLookupPostDto } from 'src/app/model/vehicle-configuration/vehicle-lookup';
 import { successToast } from 'src/app/core/services/toast.service';
-import { PlateTypePostDto } from 'src/app/model/vehicle-configuration/plate-type';
 import { ResponseMessage } from 'src/app/model/ResponseMessage.Model';
 
 @Component({
-  selector: 'app-plate-type',
-  templateUrl: './plate-type.component.html',
-  styleUrl: './plate-type.component.scss'
+  selector: 'app-vehicle-lookups',
+  templateUrl: './vehicle-lookups.component.html',
+  styleUrl: './vehicle-lookups.component.scss'
 })
-export class PlateTypeComponent {
+export class VehicleLookupsComponent {
+  @Input() tabValue: number | undefined;
+
   submitted = false;
   isEditing:Boolean = false;
   dataForm!: UntypedFormGroup;
@@ -30,13 +32,26 @@ export class PlateTypeComponent {
   searchResults: any;
   econtent?: any;
 
-  allPlates?:any;
-  plates?: any;
+  allVehLookups?:any;
+  vehLookups?: any;
 
-  successAddMessage: string = "";
-  successUpdateMessage = "Plate Type successfully updated";
-  editPlateTypeText = "Edit Ban Body";
+  successAddMessage = "Ban Body successfully added";
+  successUpdateMessage = "Ban Body successfully updated";
+  editBanBodyText = "Edit Ban Body";
   updateText = "Update";
+
+  VehicleLookupTypeEnum = [
+    { name: 'Mark', code: '0'},
+    { name: 'Ban Case', code: '1'},
+    { name: 'Plate Size', code: '2'},
+    { name: 'Vehicle Category', code: '3'},
+    { name: 'Vehicle Color', code: '4'},
+    { name: 'Major', code: '5'},
+    { name: 'Minor', code: '6'},
+    { name: 'Load Measurement', code: '7'},
+
+  ]
+  
 
   constructor(
     private formBuilder: UntypedFormBuilder,
@@ -45,9 +60,12 @@ export class PlateTypeComponent {
     public service: PaginationService,
     public translate: TranslateService,
     private store: Store<{ data: RootReducerState }>,
-    public plateTypeService:PlateTypeService
-  ) {}
+    public vehicleLookupService:VehicleLookupService
+  ) {
+
+  }
   ngOnInit(): void {
+    
     this.currentUser = this.tokenStorageService.getCurrentUser();
     this.refreshData()
     /**
@@ -57,8 +75,8 @@ export class PlateTypeComponent {
       id: [""],
       name: ["", [Validators.required]],
       localName: ["", [Validators.required]],
-      code: ["", [Validators.required]],
-      regionList:["",[Validators.required]],
+      //code: ["", [Validators.required]],
+      vehicleLookupType:["",[Validators.required]],
       createdById: [this.currentUser?.userId, [Validators.required]],
       isActive:[true]
     });
@@ -72,6 +90,27 @@ export class PlateTypeComponent {
       }
     });
   }
+  changePage() {
+    this.vehLookups = this.service.changePage(this.allVehLookups);
+  }
+  refreshData(){
+    if (this.tabValue != null) {
+    this.vehicleLookupService.getVehicleLookup(this.tabValue).subscribe({
+      next: (res) => {
+        if (res) 
+          {
+            this.vehLookups = res
+            this.allVehLookups = cloneDeep(res);
+            this.vehLookups = this.service.changePage(this.allVehLookups)
+            console.log(this.allVehLookups)
+          }
+      },
+      error: (err) => {
+        
+      },
+    });}
+  }
+
   openModal(content: any) {
     this.submitted = false;
     this.isEditing = false;
@@ -79,16 +118,12 @@ export class PlateTypeComponent {
     this.dataForm.controls["createdById"].setValue(this.currentUser?.userId);
     this.modalService.open(content, { size: "lg", centered: true });
   }
-  changePage() {
-    this.plates = this.service.changePage(this.allPlates);
-  }
-
   // Search Data
   performSearch(): void {
-    this.searchResults = this.allPlates.filter((item: any) => {
+    this.searchResults = this.allVehLookups.filter((item: any) => {
       return item.name.toLowerCase().includes(this.searchTerm.toLowerCase());
     });
-    this.plates = this.service.changePage(this.searchResults);
+    this.vehLookups = this.service.changePage(this.searchResults);
   }
   // Sort filter
   sortField: any;
@@ -108,35 +143,18 @@ export class PlateTypeComponent {
   }
   // Sort data
   onSort(column: any) {
-    this.allPlates = this.service.onSort(column, this.allPlates);
-    this.plates = this.service.changePage(this.allPlates)
+    this.allVehLookups = this.service.onSort(column, this.allVehLookups);
+    this.vehLookups = this.service.changePage(this.allVehLookups)
   }
-
-  refreshData(){
-    this.plateTypeService.getAllPlateType().subscribe({
-      next: (res) => {
-        if (res) 
-          {
-            this.plates = res
-            this.allPlates = cloneDeep(res);
-            this.plates = this.service.changePage(this.allPlates)
-            console.log(this.allPlates)
-          }
-      },
-      error: (err) => {
-        
-      },
-    });
-  }
-
+  //save
   saveData() {
     const updatedData = this.dataForm.value;
    
     if (this.dataForm.valid) {
       if (this.dataForm.get("id")?.value) {
-        console.log(this.currentUser?.userId)
-        const newData: PlateTypePostDto = this.dataForm.value;
-        this.plateTypeService.updatePlateType(newData).subscribe({
+        //console.log(this.currentUser?.userId)
+        const newData: VehicleLookupPostDto = this.dataForm.value;
+        this.vehicleLookupService.updateVehicleLookup(newData).subscribe({
           next: (res: ResponseMessage) => {
             if (res.success) {
               this.successAddMessage = res.message;
@@ -151,11 +169,10 @@ export class PlateTypeComponent {
             console.error(err);
           },
         });
-
       } else {
-        const newData: PlateTypePostDto = this.dataForm.value;
+        const newData: VehicleLookupPostDto = this.dataForm.value;
         newData.isActive = true;
-        this.plateTypeService.addPlateType(newData).subscribe({
+        this.vehicleLookupService.addVehicleLookup(newData).subscribe({
           next: (res: ResponseMessage) => {
             if (res.success) {
               this.successAddMessage = res.message;
@@ -174,7 +191,6 @@ export class PlateTypeComponent {
     }
     this.submitted = true;
   }
-
   closeModal() {
     this.modalService.dismissAll();
   }
@@ -184,27 +200,25 @@ export class PlateTypeComponent {
   get form() {
     return this.dataForm.controls;
   }
-
   editDataGet(id: any, content: any) {
     this.submitted = false;
     this.modalService.open(content, { size: "lg", centered: true });
     var modelTitle = document.querySelector(".modal-title") as HTMLAreaElement;
-    this.translate.get("Edit Stock Type").subscribe((res: string) => {
-      this.editPlateTypeText = res;
+    this.translate.get("Edit Ban Body Type").subscribe((res: string) => {
+      this.editBanBodyText = res;
     });
-    modelTitle.innerHTML =this.editPlateTypeText ;
+    modelTitle.innerHTML =this.editBanBodyText ;
     var updateBtn = document.getElementById("add-btn") as HTMLAreaElement;
     this.translate.get("Update").subscribe((res: string) => {
       this.updateText= res;
     });
     updateBtn.innerHTML = this.updateText;
     this.isEditing = true;
-    this.econtent = this.plates[id];
+    this.econtent = this.vehLookups[id];
     this.dataForm.controls["name"].setValue(this.econtent.name);
     this.dataForm.controls["localName"].setValue(this.econtent.localName);
-    this.dataForm.controls["code"].setValue(this.econtent.code);
-    this.dataForm.controls["regionList"].setValue(
-      this.econtent.regionList
+    this.dataForm.controls["vehicleLookupType"].setValue(
+      this.econtent.vehicleLookupType
     );
     this.dataForm.controls["createdById"].setValue(this.currentUser?.userId);
     this.dataForm.controls["id"].setValue(this.econtent.id);

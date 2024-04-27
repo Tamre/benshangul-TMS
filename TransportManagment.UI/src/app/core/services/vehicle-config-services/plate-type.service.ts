@@ -2,13 +2,13 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { TokenStorageService } from '../token-storage.service';
+import { PlateTypeGetDto, PlateTypePostDto } from 'src/app/model/vehicle-configuration/plate-type';
 import { ResponseMessage } from 'src/app/model/ResponseMessage.Model';
-import { VehicleLookupGetDto, VehicleLookupPostDto } from 'src/app/model/vehicle-configuration/vehicle-lookup';
 
 @Injectable({
   providedIn: 'root'
 })
-export class VehicleLookupService {
+export class PlateTypeService {
 
   baseUrl: string = environment.baseUrl;
   
@@ -21,21 +21,21 @@ export class VehicleLookupService {
     'Authorization': `Bearer ${this.tokenStorageService.getToken()}`,
     'Content-Type': 'application/json'
   });
-  getVehicleLookup(id: number) {
+  getAllPlateType() {
     var headers = this.headers
-    return this.http.get<VehicleLookupGetDto[]>(`${this.baseUrl}/vech-config/VehicleLookups?LookUpTyoe=${id}`,{headers},);
+    return this.http.get<PlateTypeGetDto[]>(`${this.baseUrl}/vech-config/PlateType/GetAll`,{headers});
   }
-  updateVehicleLookup(formData:VehicleLookupPostDto){
+  updatePlateType(formData:PlateTypePostDto){
     var headers = this.headers
     return this.http.put<ResponseMessage>(
-      `${this.baseUrl}/vech-config/VehicleLookups`,
+      `${this.baseUrl}/vech-config/PlateType/Update`,
       formData,{headers:headers}
     );
   }
-  addVehicleLookup(formData:VehicleLookupPostDto){
+  addPlateType(formData:PlateTypePostDto){
     var headers = this.headers
     return this.http.post<ResponseMessage>(
-      `${this.baseUrl}/vech-config/VehicleLookups`,
+      `${this.baseUrl}/vech-config/PlateType/Add`,
       formData,{headers:headers}
     );
   }

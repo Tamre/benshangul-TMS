@@ -1,15 +1,18 @@
-export interface VehicleLookupGetDto {
+export interface PlateTypeGetDto {
     id: number;
     name: string;
     localName: string;
-    vehicleLookupType: string;
+    code: string;
+    regionList: string;
     createdById: string;
     isActive:Boolean;
+    
 }
-export interface VehicleLookupPostDto {
+export interface PlateTypePostDto {
     name: string;
     localName: string;
-    vehicleLookupType: string;
+    code: string;
+    regionList: string;
     createdById: string;
     isActive:Boolean;
 }
