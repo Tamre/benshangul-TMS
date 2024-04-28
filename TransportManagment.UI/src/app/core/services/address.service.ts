@@ -8,6 +8,7 @@ import { TokenStorageService } from "./token-storage.service";
 import { Country } from "src/app/model/address/country";
 import { Region } from "src/app/model/address/region";
 import { Zone } from "src/app/model/address/zone";
+import { Woreda } from "src/app/model/address/woreda";
 @Injectable({ providedIn: "root" })
 
 export class AddressService {
@@ -77,6 +78,26 @@ export class AddressService {
     var headers = this.headers
     return this.http.put<ResponseMessage>(
       `${this.baseUrl}/Zone/Update`,
+      formData,{headers:headers}
+    );
+  }
+
+  // woreda
+  getAllWoreda() {
+    var headers = this.headers
+    return this.http.get<Woreda[]>(`${this.baseUrl}/Woreda/GetAll`,{headers});
+  }
+  addWoreda(formData:Woreda){
+    var headers = this.headers
+    return this.http.post<ResponseMessage>(
+      `${this.baseUrl}/Woreda/Add`,
+      formData,{headers:headers}
+    );
+  }
+  updateWoreda(formData:Woreda){
+    var headers = this.headers
+    return this.http.put<ResponseMessage>(
+      `${this.baseUrl}/Woreda/Update`,
       formData,{headers:headers}
     );
   }

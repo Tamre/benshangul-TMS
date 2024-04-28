@@ -31,6 +31,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { LanguageService } from 'src/app/core/services/language.service';
 import { RegionComponent } from './region/region.component';
 import { ZoneComponent } from './zone/zone.component';
+import { WoredaComponent } from './woreda/woreda.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,8 @@ import { ZoneComponent } from './zone/zone.component';
     SortByCrmPipe,
     AddressComponent,
     RegionComponent,
-    ZoneComponent
+    ZoneComponent,
+    WoredaComponent
   ],
   imports: [
     CommonModule,
