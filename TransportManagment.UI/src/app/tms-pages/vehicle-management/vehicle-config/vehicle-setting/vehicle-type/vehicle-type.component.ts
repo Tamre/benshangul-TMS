@@ -58,7 +58,6 @@ export class VehicleTypeComponent implements OnInit{
       name: ["", [Validators.required]],
       localName: ["", [Validators.required]],
       vehicleCategory: ["", [Validators.required]],
-      rowStatus:["",[Validators.required]],
       createdById: [this.currentUser?.userId, [Validators.required]],
       isActive:[true]
     });
@@ -201,9 +200,7 @@ export class VehicleTypeComponent implements OnInit{
     this.dataForm.controls["name"].setValue(this.econtent.name);
     this.dataForm.controls["localName"].setValue(this.econtent.localName);
     this.dataForm.controls["vehicleCategory"].setValue(this.econtent.vehicleCategory);
-    this.dataForm.controls["rowStatus"].setValue(
-      this.econtent.rowStatus
-    );
+    
     this.dataForm.controls["createdById"].setValue(this.currentUser?.userId);
     this.dataForm.controls["id"].setValue(this.econtent.id);
     this.dataForm.controls["isActive"].setValue(this.econtent.isActive);

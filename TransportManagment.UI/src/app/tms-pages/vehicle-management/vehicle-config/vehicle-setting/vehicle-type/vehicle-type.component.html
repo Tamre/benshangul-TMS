@@ -30,7 +30,7 @@
                                 <option value="Dname">{{ 'Name' | translate }}</option>
                                 <option value="DlocalName">{{ 'Local Name' | translate }}</option>
                                 <option value="DvehicleCategory">{{ 'vehicleCategory' | translate }}</option>
-                                <option value="DrowStatus">{{ 'rowStatus' | translate }}</option>
+                                <!-- <option value="DrowStatus">{{ 'rowStatus' | translate }}</option> -->
                                 <option value="DisActive">{{ 'Status' | translate }}</option>
                             </select>
                         </div>
@@ -47,7 +47,7 @@
                                     <th class="sort" (click)="onSort('name')">{{ 'Name' | translate }}</th>
                                     <th class="sort" (click)="onSort('localName')">{{ 'Local Name' | translate }}</th>
                                     <th class="sort" (click)="onSort('vehicleCategory')">{{ 'vehicleCategory' | translate }}</th>
-                                    <th class="sort" (click)="onSort('rowStatus')">{{ 'rowStatus' | translate }}</th>
+                                    <!-- <th class="sort" (click)="onSort('rowStatus')">{{ 'rowStatus' | translate }}</th> -->
                                     <th class="sort" (click)="onSort('isActive')">{{ 'Status' | translate }}</th>
                                     <th>{{ 'Edit' | translate }}</th>
                                 </tr>
@@ -65,9 +65,9 @@
                                     <td>
                                         <ngb-highlight [result]="data.vehicleCategory" [term]="searchTerm"></ngb-highlight>
                                     </td>
-                                    <td>
+                                    <!-- <td>
                                         <ngb-highlight [result]="data.rowStatus" [term]="searchTerm"></ngb-highlight>
-                                    </td>
+                                    </td> -->
                                     <td>
                                         <ngb-highlight [result]="data.isActive" [term]="searchTerm"></ngb-highlight>
                                     </td>
@@ -137,7 +137,7 @@
                                         }
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
+                                <!-- <div class="col-lg-6">
                                     <div>
                                         <label for="rowStatus-field" class="form-label">{{ 'rowStatus' | translate }}</label>
                                         <input type="text" id="rowStatus-field" class="form-control" placeholder="{{ 'Enter rowStatus' | translate }}" required formControlName="rowStatus" [ngClass]="{ 'is-invalid': submitted && form['rowStatus'].errors }" />
@@ -149,7 +149,7 @@
                                         </div>
                                         }
                                     </div>
-                                </div>
+                                </div> -->
                                 <div *ngIf="isEditing" class="col-lg-6">
                                     <div>
                                         <label for="isActive-field" class="form-label">{{ 'isActive' | translate }}</label>
