@@ -209,12 +209,7 @@ namespace TransportManagmentInfrustructure.Enums
         }
 
 
-        public enum ValuationReason
-        {
-            COURT,
-            BID,
 
-        }
 
 
         public enum OwnershipType

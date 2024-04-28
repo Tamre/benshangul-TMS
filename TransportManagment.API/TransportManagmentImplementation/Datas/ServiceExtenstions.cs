@@ -40,7 +40,7 @@ namespace TransportManagmentImplementation.Datas
             services.AddScoped<ICompanyProfileService, CompanyProfileService>();
             services.AddScoped<ICommonCodeService, CommonCodeService>();
             services.AddScoped<IDeviceListService, DeviceListService>();
-
+           
             #endregion
 
             #region Vehicle
@@ -63,6 +63,8 @@ namespace TransportManagmentImplementation.Datas
             services.AddScoped<IVehicleSettingsService, VehicleSettingsService>();
             services.AddScoped<IVehicleSettingsService, VehicleSettingsService>();
             services.AddScoped<IVehicleTypeService, VehicleTypeService>();
+            services.AddScoped<IValuationReasonService, ValuationReasonService>();
+
 
 
 
