@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
-using TransportManagmentImplementation.DTOS.Common;
 using TransportManagmentImplementation.DTOS.Vehicle.Configuration;
 using TransportManagmentImplementation.Helper;
 using TransportManagmentImplementation.Interfaces.Vehicle.Configuration;
@@ -10,33 +9,33 @@ namespace TransportManagmentAPI.Controllers.Vehicle.Configuration
 {
     [Route("api/vech-config/[controller]/[action]")]
     [ApiController]
-    public class BanBodyController : ControllerBase
+    public class ValuationReasonController : ControllerBase
     {
-        private readonly IBanBodyService _BanBodyService;
+        private readonly IValuationReasonService _ValuationReasonService;
 
-        public BanBodyController(IBanBodyService BanBodyService)
+        public ValuationReasonController(IValuationReasonService ValuationReasonService)
         {
 
-            _BanBodyService = BanBodyService;
+            _ValuationReasonService = ValuationReasonService;
 
         }
 
         [HttpGet]
-        [ProducesResponseType(typeof(BanBodyGetDto), (int)HttpStatusCode.OK)]
-        public async Task<IActionResult> GetAll( [FromQuery] RequestParameter requestParameter)
+        [ProducesResponseType(typeof(ValuationReasonGetDto), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> GetAll()
         {
-            return Ok(await _BanBodyService.GetAll(requestParameter));
+            return Ok(await _ValuationReasonService.GetAll());
         }
 
 
 
         [HttpPost]
         [ProducesResponseType(typeof(ResponseMessage), (int)HttpStatusCode.OK)]
-        public async Task<IActionResult> Add(BanBodyPostDto BanBodyDto)
+        public async Task<IActionResult> Add(ValuationReasonPostDto ValuationReasonDto)
         {
             if (ModelState.IsValid)
             {
-                return Ok(await _BanBodyService.Add(BanBodyDto));
+                return Ok(await _ValuationReasonService.Add(ValuationReasonDto));
             }
             else
             {
@@ -47,11 +46,11 @@ namespace TransportManagmentAPI.Controllers.Vehicle.Configuration
 
         [HttpPut]
         [ProducesResponseType(typeof(ResponseMessage), (int)HttpStatusCode.OK)]
-        public async Task<IActionResult> Update(BanBodyGetDto BanBodyDto)
+        public async Task<IActionResult> Update(ValuationReasonGetDto ValuationReasonDto)
         {
             if (ModelState.IsValid)
             {
-                return Ok(await _BanBodyService.Update(BanBodyDto));
+                return Ok(await _ValuationReasonService.Update(ValuationReasonDto));
             }
             else
             {

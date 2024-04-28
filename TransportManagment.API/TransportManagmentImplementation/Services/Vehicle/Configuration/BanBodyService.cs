@@ -11,6 +11,16 @@ using TransportManagmentInfrustructure.Data;
 using static TransportManagmentInfrustructure.Enums.VehicleEnum;
 using TransportManagmentInfrustructure.Model.Vehicle.Configuration;
 using Microsoft.EntityFrameworkCore;
+using TransportManagmentImplementation.DTOS.Common;
+using TransportManagmentImplementation.Interfaces.Common;
+using Microsoft.Extensions.Logging;
+using Microsoft.VisualBasic;
+using Serilog;
+using static System.Runtime.InteropServices.JavaScript.JSType;
+using System.Diagnostics;
+using Serilog.Context;
+using System.Reflection;
+
 
 namespace TransportManagmentImplementation.Services.Vehicle.Configuration
 {
@@ -19,12 +29,18 @@ namespace TransportManagmentImplementation.Services.Vehicle.Configuration
 
         private readonly ApplicationDbContext _dbContext;
         private readonly IMapper _mapper;
+        private readonly ILogger<BanBodyService> _logger;
 
-        public BanBodyService(ApplicationDbContext dbContext, IMapper mapper)
+
+
+
+        public BanBodyService(ApplicationDbContext dbContext, IMapper mapper, ILogger<BanBodyService> logger)
         {
 
             _dbContext = dbContext;
             _mapper = mapper;
+            _logger = logger;
+
 
         }
         public async Task<ResponseMessage> Add(BanBodyPostDto BanBodyPost)
@@ -44,6 +60,8 @@ namespace TransportManagmentImplementation.Services.Vehicle.Configuration
                 await _dbContext.BanBodies.AddAsync(banBody);
                 await _dbContext.SaveChangesAsync();
 
+                //_loggerManager.LogInfo($"Band Body Added Successfully By {banBody.CreatedById} on {banBody.CreatedDate}");
+
                 return new ResponseMessage
                 {
                     Success = true,
@@ -54,18 +72,31 @@ namespace TransportManagmentImplementation.Services.Vehicle.Configuration
             catch (Exception ex)
             {
 
+                //_loggerManager.LogError($"An error occurred: {ex.Message}\nStack trace: {ex.StackTrace}");
+
                 return new ResponseMessage
                 {
                     Success = false,
                     Message = ex.Message
-
                 };
             }
         }
 
-        public async Task<List<BanBodyGetDto>> GetAll()
+        public async Task<List<BanBodyGetDto>> GetAll(RequestParameter requestParameter)
         {
-            var banBodies = await _dbContext.BanBodies.AsNoTracking().ToListAsync();
+
+
+
+
+            var banBodies = await _dbContext.BanBodies.AsNoTracking()
+ .OrderBy(e => e.Id)
+ .Skip((requestParameter.PageNumber - 1) * requestParameter.PageSize)
+ .Take(requestParameter.PageSize)
+ .ToListAsync();
+
+
+
+
 
             var banBodyDtos = _mapper.Map<List<BanBodyGetDto>>(banBodies);
 
@@ -84,11 +115,20 @@ namespace TransportManagmentImplementation.Services.Vehicle.Configuration
                     banBody.Name = BanBodyGet.Name;
                     banBody.LocalName = BanBodyGet.LocalName;
                     banBody.BanBodyCategory = Enum.Parse<BanBodyCategory>(BanBodyGet.BanBodyCategory);
-
                     banBody.IsActive = BanBodyGet.IsActive;
 
                     // Save the changes to the database
                     await _dbContext.SaveChangesAsync();
+
+                    var changedOn = DateTime.UtcNow.ToString("yyyy-MM-ddTHH:mm:ss");
+
+                    // Enrich the log context with the relevant properties
+                    LogContext.PushProperty("ChangedOn", changedOn);
+                    LogContext.PushProperty("Module", "VRMS");
+                    LogContext.PushProperty("UserId", BanBodyGet.CreatedById);
+
+                    // Log the information
+                    _logger.LogInformation("Ban Body Updated Successfully !!!");
 
                     return new ResponseMessage
                     {
@@ -98,6 +138,7 @@ namespace TransportManagmentImplementation.Services.Vehicle.Configuration
                 }
                 else
                 {
+
                     return new ResponseMessage
                     {
                         Success = false,

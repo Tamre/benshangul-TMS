@@ -38,7 +38,7 @@ namespace TransportManagmentImplementation.Datas
         ;
             #endregion
 
-            #region
+            #region vechile-config
 
             CreateMap<AISORCStockType, AISORCStockTypeGetDto>()
                  .ForMember(a => a.Category, e => e.MapFrom(mfg => mfg.Category.ToString()));
@@ -79,6 +79,7 @@ namespace TransportManagmentImplementation.Datas
                 .ForMember(a => a.VehicleSettingType, e => e.MapFrom(mfg => mfg.VehicleSettingType.ToString()));
 
             CreateMap<VehicleType, VehicleTypeGetDto>();
+            CreateMap<ValuationReason, ValuationReasonGetDto>();
 
             #endregion
         }
