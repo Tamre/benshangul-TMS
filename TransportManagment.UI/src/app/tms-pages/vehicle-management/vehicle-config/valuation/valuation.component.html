@@ -1,0 +1,61 @@
+<div class="col-xxl-12">
+    <div class="card">
+        <div class="card-body">
+            <ul ngbNav #ModifierCustom="ngbNav" [activeId]="1" class="nav nav-pills nav-customs nav-danger mb-3">
+                <li [ngbNavItem]="1">
+                    <a ngbNavLink class="nav-link">
+                        Depreciation Cost
+                    </a>
+                    <ng-template ngbNavContent>
+                        <app-depreciatio-cost></app-depreciatio-cost>
+                    </ng-template>
+                </li>
+                <li [ngbNavItem]="2">
+                    <a ngbNavLink class="nav-link">
+                        Factory Point
+                    </a>
+                    <ng-template ngbNavContent>
+                    </ng-template>
+                </li>
+                <li [ngbNavItem]="3">
+                    <a ngbNavLink class="nav-link">
+                        Manufacture Coountry
+                    </a>
+                    <ng-template ngbNavContent>
+                    </ng-template>
+                </li>
+                <li [ngbNavItem]="4">
+                    <a ngbNavLink class="nav-link">
+                        Service Year
+                    </a>
+                    <ng-template ngbNavContent>
+                    </ng-template>
+                </li>
+                <li [ngbNavItem]="5">
+                    <a ngbNavLink class="nav-link">
+                        Valuation Reason
+                    </a>
+                    <ng-template ngbNavContent>
+                    </ng-template>
+                </li>
+                <li [ngbNavItem]="6">
+                    <a ngbNavLink class="nav-link">
+                        Initial Price
+                    </a>
+                    <ng-template ngbNavContent>
+                    </ng-template>
+                </li>
+                <li [ngbNavItem]="7">
+                    <a ngbNavLink class="nav-link">
+                        Salvage Value
+                    </a>
+                    <ng-template ngbNavContent>
+                    </ng-template>
+                </li>
+            </ul>
+            <div class="tab-content text-muted">
+                <div [ngbNavOutlet]="ModifierCustom"></div>
+            </div>
+        </div>
+    </div>
+</div>
