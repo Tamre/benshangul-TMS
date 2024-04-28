@@ -30,13 +30,15 @@ import { CountryComponent } from './country/country.component';
 import { TranslateModule } from '@ngx-translate/core';
 import { LanguageService } from 'src/app/core/services/language.service';
 import { RegionComponent } from './region/region.component';
+import { ZoneComponent } from './zone/zone.component';
 
 @NgModule({
   declarations: [
     CountryComponent,
     SortByCrmPipe,
     AddressComponent,
-    RegionComponent
+    RegionComponent,
+    ZoneComponent
   ],
   imports: [
     CommonModule,

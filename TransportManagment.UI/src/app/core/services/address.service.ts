@@ -7,6 +7,7 @@ import { environment } from "src/environments/environment";
 import { TokenStorageService } from "./token-storage.service";
 import { Country } from "src/app/model/address/country";
 import { Region } from "src/app/model/address/region";
+import { Zone } from "src/app/model/address/zone";
 @Injectable({ providedIn: "root" })
 
 export class AddressService {
@@ -59,6 +60,26 @@ export class AddressService {
     );
   }
   
+
+  //zone 
+  getAllZone() {
+    var headers = this.headers
+    return this.http.get<Zone[]>(`${this.baseUrl}/Zone/GetAll`,{headers});
+  }
+  addZone(formData:Zone){
+    var headers = this.headers
+    return this.http.post<ResponseMessage>(
+      `${this.baseUrl}/Zone/Add`,
+      formData,{headers:headers}
+    );
+  }
+  updateZone(formData:Zone){
+    var headers = this.headers
+    return this.http.put<ResponseMessage>(
+      `${this.baseUrl}/Zone/Update`,
+      formData,{headers:headers}
+    );
+  }
   login(formData: User) {
     return this.http.post<ResponseMessage>(
       `${this.baseUrl}/Authentication/Login`,
