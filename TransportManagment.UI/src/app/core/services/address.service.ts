@@ -3,8 +3,10 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { User } from "src/app/store/Authentication/auth.models";
 import { ResponseMessage } from "src/app/model/ResponseMessage.Model";
 import { environment } from "src/environments/environment";
-import { Country } from "src/app/model/country";
+
 import { TokenStorageService } from "./token-storage.service";
+import { Country } from "src/app/model/address/country";
+import { Region } from "src/app/model/address/region";
 @Injectable({ providedIn: "root" })
 
 export class AddressService {
@@ -34,6 +36,25 @@ export class AddressService {
     var headers = this.headers
     return this.http.put<ResponseMessage>(
       `${this.baseUrl}/Country/Update`,
+      formData,{headers:headers}
+    );
+  }
+  // Region
+  getAllRegion() {
+    var headers = this.headers
+    return this.http.get<Region[]>(`${this.baseUrl}/Region/GetAll`,{headers});
+  }
+  addRegion(formData:Region){
+    var headers = this.headers
+    return this.http.post<ResponseMessage>(
+      `${this.baseUrl}/Region/Add`,
+      formData,{headers:headers}
+    );
+  }
+  updateRegion(formData:Region){
+    var headers = this.headers
+    return this.http.put<ResponseMessage>(
+      `${this.baseUrl}/Region/Update`,
       formData,{headers:headers}
     );
   }

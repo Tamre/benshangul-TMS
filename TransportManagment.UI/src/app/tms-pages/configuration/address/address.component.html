@@ -6,18 +6,18 @@
             <ul ngbNav #ModifierCustom="ngbNav" [activeId]="1" class="nav nav-pills nav-customs nav-danger mb-3">
                 <li [ngbNavItem]="1">
                     <a ngbNavLink class="nav-link">
-                        Plate
+                        Countries
                     </a>
                     <ng-template ngbNavContent>
-                        <app-region></app-region>
+                        <app-country></app-country>
                     </ng-template>
                 </li>
                 <li [ngbNavItem]="2">
                     <a ngbNavLink class="nav-link">
-                        Vehicle Setting
+                       Regions 
                     </a>
                     <ng-template ngbNavContent>
-                      <h1>hello</h1>
+                    <app-region></app-region>
                     </ng-template>
                 </li>
                 <li [ngbNavItem]="3">
