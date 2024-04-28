@@ -1,27 +1,26 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { AbstractControl, UntypedFormBuilder, UntypedFormGroup, ValidationErrors, Validators } from '@angular/forms';
-import { UserView } from 'src/app/model/user';
-import { PlateTypeService } from 'src/app/core/services/vehicle-config-services/plate-type.service';
-import { Store } from '@ngrx/store';
+import { ManufactureCountryService } from 'src/app/core/services/vehicle-config-services/manufacture-country.service';
 import { RootReducerState } from 'src/app/store';
-import { TranslateService } from '@ngx-translate/core';
+import { Store } from '@ngrx/store';
 import { PaginationService } from 'src/app/core/services/pagination.service';
+import { TranslateService } from '@ngx-translate/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { TokenStorageService } from 'src/app/core/services/token-storage.service';
-import { fetchCrmContactData } from 'src/app/store/CRM/crm_action';
+import { AbstractControl, UntypedFormBuilder, UntypedFormGroup, ValidationErrors, Validators } from '@angular/forms';
+import { UserView } from 'src/app/model/user';
 import { selectCRMLoading } from 'src/app/store/CRM/crm_selector';
+import { fetchCrmContactData } from 'src/app/store/CRM/crm_action';
 import { cloneDeep } from 'lodash';
 import { successToast } from 'src/app/core/services/toast.service';
-import { PlateTypePostDto } from 'src/app/model/vehicle-configuration/plate-type';
-import { ResponseMessage } from 'src/app/model/ResponseMessage.Model';
+import { ManufactureYearPostDto } from 'src/app/model/vehicle-configuration/manufacture-year';
 
 @Component({
-  selector: 'app-plate-type',
-  templateUrl: './plate-type.component.html',
-  styleUrl: './plate-type.component.scss'
+  selector: 'app-manufacture-year',
+  templateUrl: './manufacture-year.component.html',
+  styleUrl: './manufacture-year.component.scss'
 })
-export class PlateTypeComponent {
+export class ManufactureYearComponent {
   submitted = false;
   isEditing:Boolean = false;
   dataForm!: UntypedFormGroup;
@@ -30,12 +29,12 @@ export class PlateTypeComponent {
   searchResults: any;
   econtent?: any;
 
-  allPlates?:any;
-  plates?: any;
+  allManufactureCountries?:any;
+  manufactureCountries?: any;
 
-  successAddMessage: string = "";
-  successUpdateMessage = "Plate Type successfully updated";
-  editPlateTypeText = "Edit Ban Body";
+  successAddMessage = "Depreciation Cost successfully added";
+  successUpdateMessage = "Depreciation Cost successfully updated";
+  editDepCostText = "Edit Depreciation Cost";
   updateText = "Update";
 
   constructor(
@@ -45,7 +44,7 @@ export class PlateTypeComponent {
     public service: PaginationService,
     public translate: TranslateService,
     private store: Store<{ data: RootReducerState }>,
-    public plateTypeService:PlateTypeService
+    public manufactureCountryService:ManufactureCountryService
   ) {}
   ngOnInit(): void {
     this.currentUser = this.tokenStorageService.getCurrentUser();
@@ -57,8 +56,8 @@ export class PlateTypeComponent {
       id: [""],
       name: ["", [Validators.required]],
       localName: ["", [Validators.required]],
-      code: ["", [Validators.required],this.floatValidator],
-      regionList:["",[Validators.required]],
+      listOfCountries: ["", [Validators.required]],
+      value:["",[Validators.required, this.floatValidator]],
       createdById: [this.currentUser?.userId, [Validators.required]],
       isActive:[true]
     });
@@ -79,6 +78,25 @@ export class PlateTypeComponent {
     }
     return null;
   }
+  changePage() {
+    this.manufactureCountries = this.service.changePage(this.allManufactureCountries);
+  }
+  refreshData(){
+    this.manufactureCountryService.getAllManufactureYear().subscribe({
+      next: (res) => {
+        if (res) 
+          {
+            this.manufactureCountries = res
+            this.allManufactureCountries = cloneDeep(res);
+            this.manufactureCountries = this.service.changePage(this.allManufactureCountries)
+            console.log(this.allManufactureCountries)
+          }
+      },
+      error: (err) => {
+        
+      },
+    });
+  }
   openModal(content: any) {
     this.submitted = false;
     this.isEditing = false;
@@ -86,16 +104,12 @@ export class PlateTypeComponent {
     this.dataForm.controls["createdById"].setValue(this.currentUser?.userId);
     this.modalService.open(content, { size: "lg", centered: true });
   }
-  changePage() {
-    this.plates = this.service.changePage(this.allPlates);
-  }
-
   // Search Data
   performSearch(): void {
-    this.searchResults = this.allPlates.filter((item: any) => {
+    this.searchResults = this.allManufactureCountries.filter((item: any) => {
       return item.name.toLowerCase().includes(this.searchTerm.toLowerCase());
     });
-    this.plates = this.service.changePage(this.searchResults);
+    this.manufactureCountries = this.service.changePage(this.searchResults);
   }
   // Sort filter
   sortField: any;
@@ -115,73 +129,54 @@ export class PlateTypeComponent {
   }
   // Sort data
   onSort(column: any) {
-    this.allPlates = this.service.onSort(column, this.allPlates);
-    this.plates = this.service.changePage(this.allPlates)
+    this.allManufactureCountries = this.service.onSort(column, this.allManufactureCountries);
+    this.manufactureCountries = this.service.changePage(this.allManufactureCountries)
   }
-
-  refreshData(){
-    this.plateTypeService.getAllPlateType().subscribe({
-      next: (res) => {
-        if (res) 
-          {
-            this.plates = res
-            this.allPlates = cloneDeep(res);
-            this.plates = this.service.changePage(this.allPlates)
-            console.log(this.allPlates)
-          }
-      },
-      error: (err) => {
-        
-      },
-    });
-  }
-
+  //save
   saveData() {
     const updatedData = this.dataForm.value;
    
     if (this.dataForm.valid) {
       if (this.dataForm.get("id")?.value) {
         console.log(this.currentUser?.userId)
-        const newData: PlateTypePostDto = this.dataForm.value;
-        this.plateTypeService.updatePlateType(newData).subscribe({
-          next: (res: ResponseMessage) => {
+        const newData: ManufactureYearPostDto = this.dataForm.value;
+        this.manufactureCountryService.updateManufactureYear(newData).subscribe({
+          next: (res) => {
             if (res.success) {
-              this.successAddMessage = res.message;
+              this.translate.get('Depreciation Cost sucessfully updated').subscribe((res: string) => {
+                this.successAddMessage = res;
+              });
               this.closeModal();
-              successToast(this.successAddMessage);
-              this.refreshData();
-            } else {
-              console.error( res.message);
+              successToast(this.successUpdateMessage);
+              this.refreshData()
             }
           },
-          error: (err) => {
-            console.error(err);
-          },
+          error: (err) => {},
         });
 
       } else {
-        const newData: PlateTypePostDto = this.dataForm.value;
+        const newData: ManufactureYearPostDto = this.dataForm.value;
+        // const newData: Omit<StockTypePostDto, 'id'> = {
+        //   ...this.dataForm.value,
+        // };
         newData.isActive = true;
-        this.plateTypeService.addPlateType(newData).subscribe({
-          next: (res: ResponseMessage) => {
+        this.manufactureCountryService.addManufactureYear(newData).subscribe({
+          next: (res) => {
             if (res.success) {
-              this.successAddMessage = res.message;
+              this.translate.get('Manufacture Year sucessfully added').subscribe((res: string) => {
+                this.successAddMessage = res;
+              });
               this.closeModal();
               successToast(this.successAddMessage);
-              this.refreshData();
-            } else {
-              console.error( res.message);
+              this.refreshData()
             }
           },
-          error: (err) => {
-            console.error(err);
-          },
+          error: (err) => {},
         });
       }
     }
     this.submitted = true;
   }
-
   closeModal() {
     this.modalService.dismissAll();
   }
@@ -191,27 +186,26 @@ export class PlateTypeComponent {
   get form() {
     return this.dataForm.controls;
   }
-
   editDataGet(id: any, content: any) {
     this.submitted = false;
     this.modalService.open(content, { size: "lg", centered: true });
     var modelTitle = document.querySelector(".modal-title") as HTMLAreaElement;
-    this.translate.get("Edit Stock Type").subscribe((res: string) => {
-      this.editPlateTypeText = res;
+    this.translate.get("Edit Depreciation Cost").subscribe((res: string) => {
+      this.editDepCostText = res;
     });
-    modelTitle.innerHTML =this.editPlateTypeText ;
+    modelTitle.innerHTML =this.editDepCostText ;
     var updateBtn = document.getElementById("add-btn") as HTMLAreaElement;
     this.translate.get("Update").subscribe((res: string) => {
       this.updateText= res;
     });
     updateBtn.innerHTML = this.updateText;
     this.isEditing = true;
-    this.econtent = this.plates[id];
+    this.econtent = this.manufactureCountries[id];
     this.dataForm.controls["name"].setValue(this.econtent.name);
     this.dataForm.controls["localName"].setValue(this.econtent.localName);
-    this.dataForm.controls["code"].setValue(this.econtent.code);
-    this.dataForm.controls["regionList"].setValue(
-      this.econtent.regionList
+    this.dataForm.controls["listOfCountries"].setValue(this.econtent.listOfCountries);
+    this.dataForm.controls["value"].setValue(
+      this.econtent.value
     );
     this.dataForm.controls["createdById"].setValue(this.currentUser?.userId);
     this.dataForm.controls["id"].setValue(this.econtent.id);

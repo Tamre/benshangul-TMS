@@ -1,10 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { AbstractControl, UntypedFormBuilder, UntypedFormGroup, ValidationErrors, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { UserView } from 'src/app/model/user';
-import { PlateTypeService } from 'src/app/core/services/vehicle-config-services/plate-type.service';
-import { Store } from '@ngrx/store';
+import { VehicleModelService } from 'src/app/core/services/vehicle-config-services/vehicle-model.service';
 import { RootReducerState } from 'src/app/store';
+import { Store } from '@ngrx/store';
 import { TranslateService } from '@ngx-translate/core';
 import { PaginationService } from 'src/app/core/services/pagination.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -13,29 +13,36 @@ import { fetchCrmContactData } from 'src/app/store/CRM/crm_action';
 import { selectCRMLoading } from 'src/app/store/CRM/crm_selector';
 import { cloneDeep } from 'lodash';
 import { successToast } from 'src/app/core/services/toast.service';
-import { PlateTypePostDto } from 'src/app/model/vehicle-configuration/plate-type';
 import { ResponseMessage } from 'src/app/model/ResponseMessage.Model';
+import { VehicleModelPostDto } from 'src/app/model/vehicle-configuration/vehicle-model';
+import { VehicleLookupService } from 'src/app/core/services/vehicle-config-services/vehicle-lookup.service';
 
 @Component({
-  selector: 'app-plate-type',
-  templateUrl: './plate-type.component.html',
-  styleUrl: './plate-type.component.scss'
+  selector: 'app-vehicle-model',
+  templateUrl: './vehicle-model.component.html',
+  styleUrl: './vehicle-model.component.scss'
 })
-export class PlateTypeComponent {
+export class VehicleModelComponent implements OnInit {
   submitted = false;
-  isEditing:Boolean = false;
+  isEditing: Boolean = false;
   dataForm!: UntypedFormGroup;
   currentUser!: UserView | null;
   searchTerm: any;
   searchResults: any;
   econtent?: any;
 
-  allPlates?:any;
-  plates?: any;
+  allVehicleModels?: any;
+  vehicleModels?: any;
+
+  allVehLookups?: any;
+  vehLookups?: any;
+  markId: number = 0;
+  markNames: string[] = [];
+  markNameIdMap: { [name: string]: number } = {};
 
   successAddMessage: string = "";
-  successUpdateMessage = "Plate Type successfully updated";
-  editPlateTypeText = "Edit Ban Body";
+  successUpdateMessage = "Vehicle Type successfully updated";
+  editPlateTypeText = "Edit Vehicle Type";
   updateText = "Update";
 
   constructor(
@@ -45,24 +52,27 @@ export class PlateTypeComponent {
     public service: PaginationService,
     public translate: TranslateService,
     private store: Store<{ data: RootReducerState }>,
-    public plateTypeService:PlateTypeService
-  ) {}
+    public vehicleLookupService: VehicleLookupService,
+    public vehicleModelService: VehicleModelService
+  ) { }
   ngOnInit(): void {
     this.currentUser = this.tokenStorageService.getCurrentUser();
     this.refreshData()
+    this.getMark()
     /**
      * Form Validation
      */
     this.dataForm = this.formBuilder.group({
       id: [""],
       name: ["", [Validators.required]],
-      localName: ["", [Validators.required]],
-      code: ["", [Validators.required],this.floatValidator],
-      regionList:["",[Validators.required]],
+      engineCapacity: ["", [Validators.required]],
+      noOfCylinder: ["", [Validators.required]],
+      horsePowerMeasure: ["", [Validators.required]],
+      markId: ["", [Validators.required]],
       createdById: [this.currentUser?.userId, [Validators.required]],
+      //rowStatus: ["", [Validators.required]],
       isActive:[true]
     });
-    
     /**
      * fetches data
      */
@@ -73,11 +83,28 @@ export class PlateTypeComponent {
       }
     });
   }
-  floatValidator(control: AbstractControl): ValidationErrors | null {
-    if (control.value && !/^-?\d+(\.\d+)?$/.test(control.value)) {
-      return { floatInvalid: true };
-    }
-    return null;
+
+  getMark() {
+    this.vehicleLookupService.getVehicleLookup(this.markId).subscribe({
+      next: (res) => {
+        if (res) {
+          this.vehLookups = res
+          this.allVehLookups = cloneDeep(res);
+          this.vehLookups = this.service.changePage(this.allVehLookups)
+          console.log(this.allVehLookups)
+          // Populate the markNames array with names from vehLookups
+        this.markNames = this.vehLookups.map((veh:any) => veh.name);
+        }
+        // Populate the markNameIdMap with name-ID mapping
+        this.markNameIdMap = this.vehLookups.reduce((map:any, veh:any) => {
+          map[veh.name] = veh.id;
+          return map;
+        }, {});
+      },
+      error: (err) => {
+
+      },
+    });
   }
   openModal(content: any) {
     this.submitted = false;
@@ -87,15 +114,15 @@ export class PlateTypeComponent {
     this.modalService.open(content, { size: "lg", centered: true });
   }
   changePage() {
-    this.plates = this.service.changePage(this.allPlates);
+    this.vehicleModels = this.service.changePage(this.allVehicleModels);
   }
 
   // Search Data
   performSearch(): void {
-    this.searchResults = this.allPlates.filter((item: any) => {
+    this.searchResults = this.allVehicleModels.filter((item: any) => {
       return item.name.toLowerCase().includes(this.searchTerm.toLowerCase());
     });
-    this.plates = this.service.changePage(this.searchResults);
+    this.vehicleModels = this.service.changePage(this.searchResults);
   }
   // Sort filter
   sortField: any;
@@ -115,35 +142,33 @@ export class PlateTypeComponent {
   }
   // Sort data
   onSort(column: any) {
-    this.allPlates = this.service.onSort(column, this.allPlates);
-    this.plates = this.service.changePage(this.allPlates)
+    this.allVehicleModels = this.service.onSort(column, this.allVehicleModels);
+    this.vehicleModels = this.service.changePage(this.allVehicleModels)
   }
-
-  refreshData(){
-    this.plateTypeService.getAllPlateType().subscribe({
+  refreshData() {
+    this.vehicleModelService.getAllVehicleModel().subscribe({
       next: (res) => {
-        if (res) 
-          {
-            this.plates = res
-            this.allPlates = cloneDeep(res);
-            this.plates = this.service.changePage(this.allPlates)
-            console.log(this.allPlates)
-          }
+        if (res) {
+          this.vehicleModels = res
+          this.allVehicleModels = cloneDeep(res);
+          this.vehicleModels = this.service.changePage(this.allVehicleModels)
+          console.log(this.allVehicleModels)
+        }
       },
       error: (err) => {
-        
+
       },
     });
   }
 
   saveData() {
     const updatedData = this.dataForm.value;
-   
+
     if (this.dataForm.valid) {
       if (this.dataForm.get("id")?.value) {
         console.log(this.currentUser?.userId)
-        const newData: PlateTypePostDto = this.dataForm.value;
-        this.plateTypeService.updatePlateType(newData).subscribe({
+        const newData: VehicleModelPostDto = this.dataForm.value;
+        this.vehicleModelService.updateVehicleModel(newData).subscribe({
           next: (res: ResponseMessage) => {
             if (res.success) {
               this.successAddMessage = res.message;
@@ -151,7 +176,7 @@ export class PlateTypeComponent {
               successToast(this.successAddMessage);
               this.refreshData();
             } else {
-              console.error( res.message);
+              console.error(res.message);
             }
           },
           error: (err) => {
@@ -160,9 +185,9 @@ export class PlateTypeComponent {
         });
 
       } else {
-        const newData: PlateTypePostDto = this.dataForm.value;
+        const newData: VehicleModelPostDto = this.dataForm.value;
         newData.isActive = true;
-        this.plateTypeService.addPlateType(newData).subscribe({
+        this.vehicleModelService.addVehicleModel(newData).subscribe({
           next: (res: ResponseMessage) => {
             if (res.success) {
               this.successAddMessage = res.message;
@@ -170,7 +195,7 @@ export class PlateTypeComponent {
               successToast(this.successAddMessage);
               this.refreshData();
             } else {
-              console.error( res.message);
+              console.error(res.message);
             }
           },
           error: (err) => {
@@ -191,30 +216,32 @@ export class PlateTypeComponent {
   get form() {
     return this.dataForm.controls;
   }
-
   editDataGet(id: any, content: any) {
     this.submitted = false;
     this.modalService.open(content, { size: "lg", centered: true });
     var modelTitle = document.querySelector(".modal-title") as HTMLAreaElement;
-    this.translate.get("Edit Stock Type").subscribe((res: string) => {
+    this.translate.get("Edit Vehicle Type").subscribe((res: string) => {
       this.editPlateTypeText = res;
     });
-    modelTitle.innerHTML =this.editPlateTypeText ;
+    modelTitle.innerHTML = this.editPlateTypeText;
     var updateBtn = document.getElementById("add-btn") as HTMLAreaElement;
     this.translate.get("Update").subscribe((res: string) => {
-      this.updateText= res;
+      this.updateText = res;
     });
     updateBtn.innerHTML = this.updateText;
     this.isEditing = true;
-    this.econtent = this.plates[id];
+    this.econtent = this.vehicleModels[id];
     this.dataForm.controls["name"].setValue(this.econtent.name);
-    this.dataForm.controls["localName"].setValue(this.econtent.localName);
-    this.dataForm.controls["code"].setValue(this.econtent.code);
-    this.dataForm.controls["regionList"].setValue(
-      this.econtent.regionList
+    this.dataForm.controls["engineCapacity"].setValue(this.econtent.engineCapacity);
+    this.dataForm.controls["noOfCylinder"].setValue(this.econtent.noOfCylinder);
+    this.dataForm.controls["horsePowerMeasure"].setValue(
+      this.econtent.horsePowerMeasure
+    );
+    this.dataForm.controls["markId"].setValue(
+      this.econtent.markId
     );
     this.dataForm.controls["createdById"].setValue(this.currentUser?.userId);
     this.dataForm.controls["id"].setValue(this.econtent.id);
-    this.dataForm.controls["isActive"].setValue(this.econtent.isActive);
+    this.dataForm.controls["rowStatus"].setValue(this.econtent.rowStatus);
   }
 }

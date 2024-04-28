@@ -1,14 +1,15 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { TokenStorageService } from '../token-storage.service';
 import { environment } from 'src/environments/environment';
-import { VehicleTypeGetDto, VehicleTypePostDto } from 'src/app/model/vehicle-configuration/vehicle-type';
+import { TokenStorageService } from '../token-storage.service';
 import { ResponseMessage } from 'src/app/model/ResponseMessage.Model';
+import { VehicleSettingGetDto, VehicleSettingPostDto } from 'src/app/model/vehicle-configuration/vehicle-setting';
 
 @Injectable({
   providedIn: 'root'
 })
-export class VehicleTypeService {
+export class VehicleSettingService {
+
   baseUrl: string = environment.baseUrl;
 
   constructor(private http: HttpClient, private tokenStorageService:TokenStorageService) { }
@@ -20,21 +21,21 @@ export class VehicleTypeService {
     'Authorization': `Bearer ${this.tokenStorageService.getToken()}`,
     'Content-Type': 'application/json'
   });
-  getAllVehicleType() {
+  getAllVehicleSetting() {
     var headers = this.headers
-    return this.http.get<VehicleTypeGetDto[]>(`${this.baseUrl}/vech-config/VehicleType/GetAll`,{headers});
+    return this.http.get<VehicleSettingGetDto[]>(`${this.baseUrl}/vech-config/VehicleSettings`,{headers});
   }
-  updateVehicleType(formData:VehicleTypePostDto){
+  updateVehicleSetting(formData:VehicleSettingPostDto){
     var headers = this.headers
     return this.http.put<ResponseMessage>(
-      `${this.baseUrl}/vech-config/VehicleType/Update`,
+      `${this.baseUrl}/vech-config/VehicleSettings`,
       formData,{headers:headers}
     );
   }
-  addVehicleType(formData:VehicleTypePostDto){
+  addVehicleSetting(formData:VehicleSettingPostDto){
     var headers = this.headers
     return this.http.post<ResponseMessage>(
-      `${this.baseUrl}/vech-config/VehicleType/Add`,
+      `${this.baseUrl}/vech-config/VehicleSettings`,
       formData,{headers:headers}
     );
   }

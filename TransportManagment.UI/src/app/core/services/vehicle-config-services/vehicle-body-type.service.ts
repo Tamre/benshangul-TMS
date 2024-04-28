@@ -1,18 +1,19 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { TokenStorageService } from '../token-storage.service';
 import { environment } from 'src/environments/environment';
-import { VehicleTypeGetDto, VehicleTypePostDto } from 'src/app/model/vehicle-configuration/vehicle-type';
+import { TokenStorageService } from '../token-storage.service';
 import { ResponseMessage } from 'src/app/model/ResponseMessage.Model';
+import { VehicleBodyTypeGetDto, VehicleBodyTypePostDto } from 'src/app/model/vehicle-configuration/vehicle-body-type';
 
 @Injectable({
   providedIn: 'root'
 })
-export class VehicleTypeService {
+export class VehicleBodyTypeService {
+
   baseUrl: string = environment.baseUrl;
+  
 
-  constructor(private http: HttpClient, private tokenStorageService:TokenStorageService) { }
-
+  constructor(private http: HttpClient, private tokenStorageService:TokenStorageService) {}
   /***
    * Get All User
    */
@@ -20,21 +21,21 @@ export class VehicleTypeService {
     'Authorization': `Bearer ${this.tokenStorageService.getToken()}`,
     'Content-Type': 'application/json'
   });
-  getAllVehicleType() {
+  getAllVehicleBodyType() {
     var headers = this.headers
-    return this.http.get<VehicleTypeGetDto[]>(`${this.baseUrl}/vech-config/VehicleType/GetAll`,{headers});
+    return this.http.get<VehicleBodyTypeGetDto[]>(`${this.baseUrl}/vech-config/VehicleBodyType/GetAll`,{headers});
   }
-  updateVehicleType(formData:VehicleTypePostDto){
+  updateVehicleBodyType(formData:VehicleBodyTypePostDto){
     var headers = this.headers
     return this.http.put<ResponseMessage>(
-      `${this.baseUrl}/vech-config/VehicleType/Update`,
+      `${this.baseUrl}/vech-config/VehicleBodyType/Update`,
       formData,{headers:headers}
     );
   }
-  addVehicleType(formData:VehicleTypePostDto){
+  addVehicleBodyType(formData:VehicleBodyTypePostDto){
     var headers = this.headers
     return this.http.post<ResponseMessage>(
-      `${this.baseUrl}/vech-config/VehicleType/Add`,
+      `${this.baseUrl}/vech-config/VehicleBodyType/Add`,
       formData,{headers:headers}
     );
   }

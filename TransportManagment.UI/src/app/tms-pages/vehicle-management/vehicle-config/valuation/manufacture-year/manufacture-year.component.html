@@ -5,7 +5,7 @@
                 <div class="d-flex align-items-center flex-wrap gap-2">
                     <div class="flex-grow-1">
                         <button class="btn btn-info add-btn" data-bs-toggle="modal" data-bs-target="#showModal" (click)="openModal(content)">
-                            <i class="ri-add-fill me-1 align-bottom"></i> {{ 'Add Stock Type' | translate }}
+                            <i class="ri-add-fill me-1 align-bottom"></i> {{ 'Add Manufacture Year' | translate }}
                         </button>
                     </div>
                 </div>
@@ -19,7 +19,7 @@
                 <div class="row g-3">
                     <div class="col-md-4">
                         <div class="search-box">
-                            <input type="text" name="searchTerm" class="form-control" placeholder="{{ 'Search for Stock Type...' | translate }}" [(ngModel)]="searchTerm" (ngModelChange)="performSearch()">
+                            <input type="text" name="searchTerm" class="form-control" placeholder="{{ 'Search for Manufacture Year...' | translate }}" [(ngModel)]="searchTerm" (ngModelChange)="performSearch()">
                             <i class="ri-search-line search-icon"></i>
                         </div>
                     </div>
@@ -29,8 +29,8 @@
                             <select class="form-control mb-0" data-choices data-choices-search-false id="choices-single-default" (click)="SortFilter();">
                                 <option value="Dname">{{ 'Name' | translate }}</option>
                                 <option value="DlocalName">{{ 'Local Name' | translate }}</option>
-                                <option value="Dcode">{{ 'Code' | translate }}</option>
-                                <option value="Dcategory">{{ 'category' | translate }}</option>
+                                <option value="DlistOfCountries">{{ 'listOfCountries' | translate }}</option>
+                                <option value="Dvalue">{{ 'Value' | translate }}</option>
                                 <option value="DisActive">{{ 'Status' | translate }}</option>
                             </select>
                         </div>
@@ -46,14 +46,14 @@
                                     <th scope="col" style="width: 50px;"></th>
                                     <th class="sort" (click)="onSort('name')">{{ 'Name' | translate }}</th>
                                     <th class="sort" (click)="onSort('localName')">{{ 'Local Name' | translate }}</th>
-                                    <th class="sort" (click)="onSort('code')">{{ 'Code' | translate }}</th>
-                                    <th class="sort" (click)="onSort('category')">{{ 'Category' | translate }}</th>
+                                    <th class="sort" (click)="onSort('listOfCountries')">{{ 'listOfCountries' | translate }}</th>
+                                    <th class="sort" (click)="onSort('value')">{{ 'Value' | translate }}</th>
                                     <th class="sort" (click)="onSort('isActive')">{{ 'Status' | translate }}</th>
                                     <th>{{ 'Edit' | translate }}</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @for (data of stocks | sortBy:sortBy:sortField; track $index) {
+                                @for (data of manufactureCountries | sortBy:sortBy:sortField; track $index) {
                                 <tr id="c_{{data.id}}">
                                     <th scope="row">{{ $index + 1 }}</th>
                                     <td class="name">
@@ -63,10 +63,10 @@
                                         <ngb-highlight [result]="data.localName" [term]="searchTerm"></ngb-highlight>
                                     </td>
                                     <td>
-                                        <ngb-highlight [result]="data.code" [term]="searchTerm"></ngb-highlight>
+                                        <ngb-highlight [result]="data.listOfCountries" [term]="searchTerm"></ngb-highlight>
                                     </td>
                                     <td>
-                                        <ngb-highlight [result]="data.category" [term]="searchTerm"></ngb-highlight>
+                                        <ngb-highlight [result]="data.value" [term]="searchTerm"></ngb-highlight>
                                     </td>
                                     <td>
                                         <ngb-highlight [result]="data.isActive" [term]="searchTerm"></ngb-highlight>
@@ -83,7 +83,7 @@
                     </div>
                     <div class="d-flex justify-content-end mt-3">
                         <!-- Pagination -->
-                        <ngb-pagination [collectionSize]="allStocks?.length" [(page)]="service.page" [pageSize]="service.pageSize" (pageChange)="changePage()"></ngb-pagination>
+                        <ngb-pagination [collectionSize]="allManufactureCountries?.length" [(page)]="service.page" [pageSize]="service.pageSize" (pageChange)="changePage()"></ngb-pagination>
                     </div>
                 </div>
 
@@ -101,11 +101,11 @@
                                     <input type="hidden" name="id" value="" formControlName="id" />
                                     <div>
                                         <label for="name-field" class="form-label">{{ 'Name' | translate }}</label>
-                                        <input type="text" id="name-field" class="form-control" placeholder="{{ 'Enter Stock Type Name' | translate }}" required formControlName="name" [ngClass]="{ 'is-invalid': submitted && form['name'].errors }" />
+                                        <input type="text" id="name-field" class="form-control" placeholder="{{ 'Enter Depreciation Cost Name' | translate }}" required formControlName="name" [ngClass]="{ 'is-invalid': submitted && form['name'].errors }" />
                                         @if (submitted && form['name'].errors) {
                                         <div class="invalid-feedback" align="left">
                                             @if (form['name'].errors['required']) {
-                                            <div>{{ 'Stock Type Name is required' | translate }}</div>
+                                            <div>{{ 'Name is required' | translate }}</div>
                                             }
                                         </div>
                                         }
@@ -126,28 +126,29 @@
                                 </div>
                                 <div class="col-lg-6">
                                     <div>
-                                        <label for="code-field" class="form-label">{{ 'Code' | translate }}</label>
-                                        <input type="text" id="code-field" class="form-control" placeholder="{{ 'Enter Code' | translate }}" required formControlName="code" [ngClass]="{ 'is-invalid': submitted && form['code'].errors }" />
-                                        @if (submitted && form['code'].errors) {
+                                        <label for="listOfCountries-field" class="form-label">{{ 'listOfCountries' | translate }}</label>
+                                        <input type="text" id="listOfCountries-field" class="form-control" placeholder="{{ 'Enter listOfCountries' | translate }}" required formControlName="listOfCountries" [ngClass]="{ 'is-invalid': submitted && form['listOfCountries'].errors }" />
+                                        @if (submitted && form['listOfCountries'].errors) {
                                         <div class="invalid-feedback" align="left">
-                                            @if (form['code'].errors['required']) {s
-                                            <div>{{ 'Code is required' | translate }}</div>
+                                            @if (form['listOfCountries'].errors['required']) {
+                                            <div>{{ 'listOfCountries is required' | translate }}</div>
                                             }
                                         </div>
                                         }
                                     </div>
                                 </div>
+                                
                                 <div class="col-lg-6">
                                     <div>
-                                        <label for="category-field" class="form-label">{{ 'Category' | translate }}</label>
-                                            <select id="category-field" class="form-control" name="choices-single-default" data-choices data-choices-search-false formControlName="category"
-                                                [ngClass]="{ 'is-invalid': submitted && dataForm.controls['category'].errors }">
-                                                <option value="" disabled>{{ 'Select category' | translate }}</option>
-                                                <option *ngFor="let item of CategoryDropDownItem" [value]="item.code" > {{item.name}} </option>
-                                            </select>
-                                        <div *ngIf="submitted && dataForm.controls['category'].errors" class="invalid-feedback" align="left">
-                                            <div *ngIf="dataForm.controls['category'].errors['required']">{{ 'Category Name is required' | translate }}</div>
+                                        <label for="value-field" class="form-label">{{ 'Value' | translate }}</label>
+                                        <input type="text" id="value-field" class="form-control" placeholder="{{ 'Enter Value' | translate }}" required formControlName="value" [ngClass]="{ 'is-invalid': submitted && form['value'].errors }" />
+                                        @if (submitted && form['value'].errors) {
+                                        <div class="invalid-feedback" align="left">
+                                            @if (form['value'].errors['required']) {
+                                            <div>{{ 'Value is required' | translate }}</div>
+                                            }
                                         </div>
+                                        }
                                     </div>
                                     
                                 </div>
@@ -164,7 +165,7 @@
                         <div class="modal-footer">
                             <div class="hstack gap-2 justify-content-end">
                                 <button type="button" class="btn btn-light" data-bs-dismiss="modal" (click)="closeModal()">{{ 'Close' | translate }}</button>
-                                <button type="submit" class="btn btn-success" id="add-btn" [disabled]="!dataForm.valid" >{{ 'Add' | translate }}</button>
+                                <button type="submit" class="btn btn-success" id="add-btn" [disabled]="!dataForm.valid">{{ 'Add' | translate }}</button>
                             </div>
                         </div>
                     </form>

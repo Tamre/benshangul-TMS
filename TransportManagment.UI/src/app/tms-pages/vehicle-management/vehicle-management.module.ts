@@ -29,6 +29,11 @@ import { ValuationComponent } from './vehicle-config/valuation/valuation.compone
 import { PlateTypeComponent } from './vehicle-config/plate/plate-type/plate-type.component';
 import { DocumentTypeComponent } from './vehicle-config/document-type/document-type.component';
 import { VehicleLookupsComponent } from './vehicle-config/look-ups/vehicle-lookups/vehicle-lookups.component';
+import { GeneralSettingComponent } from './vehicle-config/vehicle-setting/general-setting/general-setting.component';
+import { VehicleBodyTypeComponent } from './vehicle-config/vehicle-setting/vehicle-body-type/vehicle-body-type.component';
+import { VehicleModelComponent } from './vehicle-config/vehicle-setting/vehicle-model/vehicle-model.component';
+import { VehicleTypeComponent } from './vehicle-config/vehicle-setting/vehicle-type/vehicle-type.component';
+import { ManufactureYearComponent } from './vehicle-config/valuation/manufacture-year/manufacture-year.component';
 
 
 
@@ -45,7 +50,13 @@ import { VehicleLookupsComponent } from './vehicle-config/look-ups/vehicle-looku
     PlateTypeComponent,
     DocumentTypeComponent,
     AisorcStockTypeComponent,
-    VehicleLookupsComponent
+    VehicleLookupsComponent,
+    GeneralSettingComponent,
+    VehicleBodyTypeComponent,
+    VehicleModelComponent,
+    VehicleTypeComponent,
+    ManufactureYearComponent,
+    
   ],
   imports: [
     CommonModule,

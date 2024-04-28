@@ -12,21 +12,23 @@
                 </li>
                 <li [ngbNavItem]="2">
                     <a ngbNavLink class="nav-link">
-                        Vehicle Body Type
+                        Vehicle Model
                     </a>
                     <ng-template ngbNavContent>
+                        <app-vehicle-model></app-vehicle-model>
                     </ng-template>
                 </li>
                 <li [ngbNavItem]="3">
                     <a ngbNavLink class="nav-link">
-                        Vehicle Model
+                        Vehicle Type
                     </a>
                     <ng-template ngbNavContent>
+                        <app-vehicle-type></app-vehicle-type>
                     </ng-template>
                 </li>
                 <li [ngbNavItem]="4">
                     <a ngbNavLink class="nav-link">
-                        Vehicle Type
+                        Vehicle Body Type
                     </a>
                     <ng-template ngbNavContent>
                     </ng-template>
