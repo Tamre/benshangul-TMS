@@ -29,12 +29,14 @@ import { AddressComponent } from './address/address.component';
 import { CountryComponent } from './country/country.component';
 import { TranslateModule } from '@ngx-translate/core';
 import { LanguageService } from 'src/app/core/services/language.service';
+import { RegionComponent } from './region/region.component';
 
 @NgModule({
   declarations: [
     CountryComponent,
     SortByCrmPipe,
     AddressComponent,
+    RegionComponent
   ],
   imports: [
     CommonModule,

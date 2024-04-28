@@ -42,15 +42,15 @@ import { TranslateService } from "@ngx-translate/core";
 import { successToast } from "src/app/core/services/toast.service";
 
 @Component({
-  selector: "app-country",
-  templateUrl: "./country.component.html",
-  styleUrls: ["./country.component.scss"],
+  selector: "app-region",
+  templateUrl: "./region.component.html",
+  styleUrls: ["./region.component.scss"],
 })
 
 /**
  * Contacts Component
  */
-export class CountryComponent implements OnInit {
+export class RegionComponent implements OnInit {
   // bread crumb items
   breadCrumbItems!: Array<{}>;
   submitted = false;
@@ -98,7 +98,7 @@ export class CountryComponent implements OnInit {
 
     this.breadCrumbItems = [
       { label: "Address" },
-      { label: "Countries", active: true },
+      { label: "Regions", active: true },
     ];
 
     /**
