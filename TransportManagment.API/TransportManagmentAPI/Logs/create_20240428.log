@@ -1,0 +1,19 @@
+{ "Create": "Create", "ChangedOn": "{ChangedOn}", "Module": "", "UserId": "", "Message": "Now listening on: "http://localhost:5179"" }
+{ "Create": "Create", "ChangedOn": "{ChangedOn}", "Module": "", "UserId": "", "Message": "Application started. Press Ctrl+C to shut down." }
+{ "Create": "Create", "ChangedOn": "{ChangedOn}", "Module": "", "UserId": "", "Message": "Hosting environment: "Development"" }
+{ "Create": "Create", "ChangedOn": "{ChangedOn}", "Module": "", "UserId": "", "Message": "Content root path: "C:\Users\Hp\Desktop\Kirubel Files\benshangul-TMS\TransportManagment.API\TransportManagmentAPI"" }
+{ "Create": "Create", "ChangedOn": "{ChangedOn}", "Module": "VRMS", "UserId": "18eef146-fc48-4074-94e7-e5dd4a3be236", "Message": "Ban Body Added Successfully on 04/28/2024 15:06:03" }
+{ "Create": "Create", "ChangedOn": "{ChangedOn}", "Module": "", "UserId": "", "Message": "HTTP "POST" "/api/vech-config/BanBody/Add" responded 200 in 7641.0835 ms" }
+{ "Create": "Create", "ChangedOn": "{ChangedOn}", "Module": "VRMS", "UserId": "18eef146-fc48-4074-94e7-e5dd4a3be236", "Message": "Ban Body Added Successfully on 04/28/2024 15:06:31" }
+{ "Create": "Create", "ChangedOn": "{ChangedOn}", "Module": "", "UserId": "", "Message": "HTTP "POST" "/api/vech-config/BanBody/Add" responded 200 in 285.7416 ms" }
+{ "Create": "Create", "ChangedOn": "{ChangedOn}", "Module": "", "UserId": "", "Message": "Now listening on: "http://localhost:5179"" }
+{ "Create": "Create", "ChangedOn": "{ChangedOn}", "Module": "", "UserId": "", "Message": "Application started. Press Ctrl+C to shut down." }
+{ "Create": "Create", "ChangedOn": "{ChangedOn}", "Module": "", "UserId": "", "Message": "Hosting environment: "Development"" }
+{ "Create": "Create", "ChangedOn": "{ChangedOn}", "Module": "", "UserId": "", "Message": "Content root path: "C:\Users\Hp\Desktop\Kirubel Files\benshangul-TMS\TransportManagment.API\TransportManagmentAPI"" }
+{ "Create": "Create", "ChangedOn": "{ChangedOn}", "Module": "", "UserId": "", "Message": "HTTP "GET" "/api/vech-config/VehicleLookups/GetAll" responded 200 in 8139.3471 ms" }
+{ "Create": "Create", "ChangedOn": "{ChangedOn}", "Module": "", "UserId": "", "Message": "HTTP "POST" "/api/vech-config/VehicleType/Add" responded 200 in 999.5290 ms" }
+{ "Create": "Create", "ChangedOn": "{ChangedOn}", "Module": "", "UserId": "", "Message": "HTTP "GET" "/api/vech-config/VehicleType/GetAll" responded 200 in 250.3836 ms" }
+{ "Create": "Create", "ChangedOn": "{ChangedOn}", "Module": "", "UserId": "", "Message": "Now listening on: "http://localhost:5179"" }
+{ "Create": "Create", "ChangedOn": "{ChangedOn}", "Module": "", "UserId": "", "Message": "Application started. Press Ctrl+C to shut down." }
+{ "Create": "Create", "ChangedOn": "{ChangedOn}", "Module": "", "UserId": "", "Message": "Hosting environment: "Development"" }
+{ "Create": "Create", "ChangedOn": "{ChangedOn}", "Module": "", "UserId": "", "Message": "Content root path: "C:\Users\Hp\Desktop\Kirubel Files\benshangul-TMS\TransportManagment.API\TransportManagmentAPI"" }

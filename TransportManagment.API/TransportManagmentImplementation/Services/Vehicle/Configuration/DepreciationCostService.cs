@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TransportManagmentImplementation.DTOS.Common;
 using TransportManagmentImplementation.DTOS.Vehicle.Configuration;
 using TransportManagmentImplementation.Helper;
 using TransportManagmentImplementation.Interfaces.Vehicle.Configuration;
@@ -58,9 +59,12 @@ namespace TransportManagmentImplementation.Services.Vehicle.Configuration
             }
         }
 
-        public async Task<List<DepreciationCostGetDto>> GetAll()
+        public async Task<List<DepreciationCostGetDto>> GetAll(RequestParameter requestParameter)
         {
-            var depreciationCosts = await _dbContext.DepreciationCosts.AsNoTracking().ToListAsync();
+            var depreciationCosts = await _dbContext.DepreciationCosts.AsNoTracking().OrderBy(e => e.Id)
+            .Skip((requestParameter.PageNumber - 1) * requestParameter.PageSize)
+ .Take(requestParameter.PageSize)
+ .ToListAsync(); ;
             var depreciationCostDtos = _mapper.Map<List<DepreciationCostGetDto>>(depreciationCosts);
             return depreciationCostDtos;
         }

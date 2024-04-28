@@ -12,6 +12,6 @@ namespace TransportManagmentImplementation.Interfaces.Common
     {
         public Task<ResponseMessage> Add(RegionPostDto RegionPost);
         public Task<ResponseMessage> Update(RegionGetDto RegionGet);
-        public Task<List<RegionGetDto>> GetAll();
+        public Task<List<RegionGetDto>> GetAll(RequestParameter requestParameter);
     }
 }

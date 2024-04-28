@@ -10,9 +10,11 @@ using System.Text;
 using System.Threading.Tasks;
 using TransportManagmentImplementation.Interfaces.Common;
 using TransportManagmentImplementation.Interfaces.Configuration;
+using TransportManagmentImplementation.Interfaces.Vehicle.Action;
 using TransportManagmentImplementation.Interfaces.Vehicle.Configuration;
 using TransportManagmentImplementation.Services.Common;
 using TransportManagmentImplementation.Services.Configuration;
+using TransportManagmentImplementation.Services.Vehicle.Action;
 using TransportManagmentImplementation.Services.Vehicle.Configuration;
 
 namespace TransportManagmentImplementation.Datas
@@ -21,7 +23,7 @@ namespace TransportManagmentImplementation.Datas
     {
         public static IServiceCollection AddCoreBusiness(this IServiceCollection services)
         {
-           
+
             #region User Service
             services.AddScoped<IAuthenticationService, AuthenticationService>();
 
@@ -40,7 +42,7 @@ namespace TransportManagmentImplementation.Datas
             services.AddScoped<ICompanyProfileService, CompanyProfileService>();
             services.AddScoped<ICommonCodeService, CommonCodeService>();
             services.AddScoped<IDeviceListService, DeviceListService>();
-           
+
             #endregion
 
             #region Vehicle
@@ -64,9 +66,15 @@ namespace TransportManagmentImplementation.Datas
             services.AddScoped<IVehicleSettingsService, VehicleSettingsService>();
             services.AddScoped<IVehicleTypeService, VehicleTypeService>();
             services.AddScoped<IValuationReasonService, ValuationReasonService>();
+            services.AddScoped<ILoggerManagerService, LoggerManagerService>();
 
 
 
+
+
+            #endregion
+            #region
+            services.AddScoped<IVehicleListService, VehicleListService>();
 
 
             #endregion

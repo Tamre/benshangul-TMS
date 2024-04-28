@@ -12,6 +12,6 @@ namespace TransportManagmentImplementation.Interfaces.Common
     {
         public Task<ResponseMessage> Add(CommonCodePostDto CommonCodePost);
         public Task<ResponseMessage> Update(CommonCodeGetDto CommonCodeGet);
-        public Task<List<CommonCodeGetDto>> GetAll();
+        public Task<List<CommonCodeGetDto>> GetAll(RequestParameter requestParameter);
     }
 }

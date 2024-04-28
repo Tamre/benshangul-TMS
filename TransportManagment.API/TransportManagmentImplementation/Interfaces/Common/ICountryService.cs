@@ -12,7 +12,7 @@ namespace TransportManagmentImplementation.Interfaces.Common
     {
         public Task<ResponseMessage> Add(CountryPostDto countryPost);
         public Task<ResponseMessage> Update(CountryGetDto countryGet);
-        public Task<List<CountryGetDto>> GetAll(); 
+        public Task<List<CountryGetDto>> GetAll(RequestParameter requestParameter); 
 
     }
 }

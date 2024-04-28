@@ -28,9 +28,9 @@ namespace TransportManagmentAPI.Controllers.Common
 
         [HttpGet]
         [ProducesResponseType(typeof(CountryGetDto), (int)HttpStatusCode.OK)]
-        public async Task<IActionResult> GetAll()
+        public async Task<IActionResult> GetAll([FromQuery] RequestParameter requestParameter)
         {
-            return Ok(await _countryService.GetAll());
+            return Ok(await _countryService.GetAll(requestParameter));
         }
 
 

@@ -29,12 +29,12 @@ namespace TransportManagmentImplementation.Services.Vehicle.Configuration
 
         private readonly ApplicationDbContext _dbContext;
         private readonly IMapper _mapper;
-        private readonly ILogger<BanBodyService> _logger;
+        private readonly ILoggerManagerService _logger;
 
 
 
 
-        public BanBodyService(ApplicationDbContext dbContext, IMapper mapper, ILogger<BanBodyService> logger)
+        public BanBodyService(ApplicationDbContext dbContext, IMapper mapper, ILoggerManagerService logger)
         {
 
             _dbContext = dbContext;
@@ -60,6 +60,13 @@ namespace TransportManagmentImplementation.Services.Vehicle.Configuration
                 await _dbContext.BanBodies.AddAsync(banBody);
                 await _dbContext.SaveChangesAsync();
 
+
+
+
+                _logger.LogCreate("VRMS", banBody.CreatedById, $"Ban Body Added Successfully on {DateTime.Now}");
+
+
+
                 //_loggerManager.LogInfo($"Band Body Added Successfully By {banBody.CreatedById} on {banBody.CreatedDate}");
 
                 return new ResponseMessage
@@ -71,6 +78,10 @@ namespace TransportManagmentImplementation.Services.Vehicle.Configuration
             }
             catch (Exception ex)
             {
+
+
+                _logger.LogExcption("VRMS", BanBodyPost.CreatedById, ex.Message);
+
 
                 //_loggerManager.LogError($"An error occurred: {ex.Message}\nStack trace: {ex.StackTrace}");
 
@@ -120,15 +131,9 @@ namespace TransportManagmentImplementation.Services.Vehicle.Configuration
                     // Save the changes to the database
                     await _dbContext.SaveChangesAsync();
 
-                    var changedOn = DateTime.UtcNow.ToString("yyyy-MM-ddTHH:mm:ss");
 
-                    // Enrich the log context with the relevant properties
-                    LogContext.PushProperty("ChangedOn", changedOn);
-                    LogContext.PushProperty("Module", "VRMS");
-                    LogContext.PushProperty("UserId", BanBodyGet.CreatedById);
+                    _logger.LogUpdate("VRMS", banBody.CreatedById, $"Ban Body Updated Successfully on {DateTime.Now}");
 
-                    // Log the information
-                    _logger.LogInformation("Ban Body Updated Successfully !!!");
 
                     return new ResponseMessage
                     {
@@ -138,6 +143,8 @@ namespace TransportManagmentImplementation.Services.Vehicle.Configuration
                 }
                 else
                 {
+
+
 
                     return new ResponseMessage
                     {
@@ -149,6 +156,10 @@ namespace TransportManagmentImplementation.Services.Vehicle.Configuration
             }
             catch (Exception ex)
             {
+                _logger.LogExcption("VRMS", BanBodyGet.CreatedById, ex.Message);
+
+
+
                 return new ResponseMessage
                 {
                     Success = false,

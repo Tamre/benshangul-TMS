@@ -11,6 +11,7 @@ using TransportManagmentImplementation.Helper;
 using TransportManagmentImplementation.Interfaces.Common;
 using TransportManagmentInfrustructure.Data;
 using TransportManagmentInfrustructure.Model.Common;
+using TransportManagmentInfrustructure.Model.Vehicle.Configuration;
 using static TransportManagmentInfrustructure.Enums.CommonEnum;
 
 namespace TransportManagmentImplementation.Services.Common
@@ -19,12 +20,14 @@ namespace TransportManagmentImplementation.Services.Common
     {
         private readonly ApplicationDbContext _dbContext;
         private readonly IMapper _mapper;
+        private readonly ILoggerManagerService _logger;
 
-        public CommonCodeService(ApplicationDbContext dbContext, IMapper mapper)
+        public CommonCodeService(ApplicationDbContext dbContext, IMapper mapper,ILoggerManagerService logger)
         {
 
             _dbContext = dbContext;
             _mapper = mapper;
+            _logger = logger;
 
         }
      
@@ -47,6 +50,11 @@ namespace TransportManagmentImplementation.Services.Common
                 await _dbContext.CommonCodes.AddAsync(commonCode);
                 await _dbContext.SaveChangesAsync();
 
+
+             
+   _logger.LogCreate("COMMON", CommonCodePost.CreatedById, $"CommonCode Added Successfully on {DateTime.Now}");
+
+
                 return new ResponseMessage
                 {
                     Success = true,
@@ -57,6 +65,7 @@ namespace TransportManagmentImplementation.Services.Common
             }
             catch (Exception ex)
             {
+                _logger.LogExcption("COMMON", CommonCodePost.CreatedById, ex.Message);
 
                 return new ResponseMessage
                 {
@@ -68,11 +77,18 @@ namespace TransportManagmentImplementation.Services.Common
 
         }
 
-        public async Task<List<CommonCodeGetDto>> GetAll()
+        public async Task<List<CommonCodeGetDto>> GetAll(RequestParameter requestParameter)
         {
 
 
-            var commonCodes = await _dbContext.CommonCodes.Include(x=>x.Zone).AsNoTracking().ToListAsync();
+            var commonCodes = await _dbContext.CommonCodes.Include(x=>x.Zone).AsNoTracking()
+
+                 .OrderBy(e => e.Id)
+ .Skip((requestParameter.PageNumber - 1) * requestParameter.PageSize)
+ .Take(requestParameter.PageSize)
+ .ToListAsync();
+                
+                
 
             var commonCodesDtos = _mapper.Map<List<CommonCodeGetDto>>(commonCodes);
 
@@ -102,6 +118,8 @@ namespace TransportManagmentImplementation.Services.Common
 
                     // Save the changes to the database
                     await _dbContext.SaveChangesAsync();
+
+                    _logger.LogCreate("COMMON", CommonCodeGet.CreatedById, $"CommonCode Updated Successfully on {DateTime.Now}");
 
                     return new ResponseMessage
                     {

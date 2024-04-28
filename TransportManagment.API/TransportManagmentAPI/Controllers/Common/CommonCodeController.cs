@@ -22,9 +22,9 @@ namespace TransportManagmentAPI.Controllers.Common
 
         [HttpGet]
         [ProducesResponseType(typeof(CommonCodeGetDto), (int)HttpStatusCode.OK)]
-        public async Task<IActionResult> GetAll()
+        public async Task<IActionResult> GetAll([FromQuery] RequestParameter requestParameter)
         {
-            return Ok(await _CommonCodeService.GetAll());
+            return Ok(await _CommonCodeService.GetAll(requestParameter));
         }
 
 
