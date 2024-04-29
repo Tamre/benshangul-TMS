@@ -33,8 +33,7 @@ export class ServiceYearComponent {
   serviceYears?: any;
 
   successAddMessage: string = "";
-  successUpdateMessage = "Service Year successfully updated";
-  editPlateTypeText = "Edit Ban Body";
+  editPlateTypeText = "Edit Service Year";
   updateText = "Update";
 
   serviceModuleDropDownItem = [
@@ -145,11 +144,9 @@ export class ServiceYearComponent {
         this.serviceYearService.updateServiceYear(newData).subscribe({
           next: (res) => {
             if (res.success) {
-              this.translate.get('Service Year sucessfully updated').subscribe((res: string) => {
-                this.successAddMessage = res;
-              });
+              this.successAddMessage = res.message;
               this.closeModal();
-              successToast(this.successUpdateMessage);
+              successToast(this.successAddMessage);
               this.refreshData()
             }
           },
@@ -162,9 +159,7 @@ export class ServiceYearComponent {
         this.serviceYearService.addServiceYear(newData).subscribe({
           next: (res) => {
             if (res.success) {
-              this.translate.get('Service Year sucessfully added').subscribe((res: string) => {
-                this.successAddMessage = res;
-              });
+              this.successAddMessage = res.message;
               this.closeModal();
               successToast(this.successAddMessage);
               this.refreshData()
@@ -191,7 +186,7 @@ export class ServiceYearComponent {
     this.submitted = false;
     this.modalService.open(content, { size: "lg", centered: true });
     var modelTitle = document.querySelector(".modal-title") as HTMLAreaElement;
-    this.translate.get("Edit Stock Type").subscribe((res: string) => {
+    this.translate.get("Edit Service Year").subscribe((res: string) => {
       this.editPlateTypeText = res;
     });
     modelTitle.innerHTML =this.editPlateTypeText ;

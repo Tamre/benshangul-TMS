@@ -34,7 +34,7 @@ import { GeneralSettingComponent } from './vehicle-config/vehicle-setting/genera
 import { VehicleBodyTypeComponent } from './vehicle-config/vehicle-setting/vehicle-body-type/vehicle-body-type.component';
 import { VehicleModelComponent } from './vehicle-config/vehicle-setting/vehicle-model/vehicle-model.component';
 import { VehicleTypeComponent } from './vehicle-config/vehicle-setting/vehicle-type/vehicle-type.component';
-import { ManufactureYearComponent } from './vehicle-config/valuation/manufacture-year/manufacture-year.component';
+import { ManufactureCountryComponent } from './vehicle-config/valuation/manufacture-country/manufacture-country.component';
 import { FactoryPointComponent } from './vehicle-config/valuation/factory-point/factory-point.component';
 import { ServiceYearComponent } from './vehicle-config/valuation/service-year/service-year.component';
 import { InitialPriceComponent } from './vehicle-config/valuation/initial-price/initial-price.component';
@@ -62,7 +62,7 @@ import { SalvageValueComponent } from './vehicle-config/valuation/salvage-value/
     VehicleBodyTypeComponent,
     VehicleModelComponent,
     VehicleTypeComponent,
-    ManufactureYearComponent,
+    ManufactureCountryComponent,
     FactoryPointComponent,
     ServiceYearComponent,
     InitialPriceComponent,

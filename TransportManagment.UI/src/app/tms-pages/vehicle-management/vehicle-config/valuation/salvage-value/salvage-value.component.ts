@@ -32,9 +32,8 @@ export class SalvageValueComponent {
   allSalvageValue?:any;
   salvageValue?: any;
 
-  successAddMessage = "Salvage Value successfully added";
-  successUpdateMessage = "Salvage Value successfully updated";
-  editDepCostText = "Edit Salvage Value";
+  successAddMessage : string= "";
+  editSalvageValueText = "Edit Salvage Value";
   updateText = "Update";
 
   constructor(
@@ -143,11 +142,9 @@ export class SalvageValueComponent {
         this.salvageValueService.updateSalvageValue(newData).subscribe({
           next: (res) => {
             if (res.success) {
-              this.translate.get('Salvage Value sucessfully updated').subscribe((res: string) => {
-                this.successAddMessage = res;
-              });
+              this.successAddMessage = res.message;
               this.closeModal();
-              successToast(this.successUpdateMessage);
+              successToast(this.successAddMessage);
               this.refreshData()
             }
           },
@@ -159,9 +156,7 @@ export class SalvageValueComponent {
         this.salvageValueService.addSalvageValue(newData).subscribe({
           next: (res) => {
             if (res.success) {
-              this.translate.get('Salvage Value sucessfully added').subscribe((res: string) => {
-                this.successAddMessage = res;
-              });
+              this.successAddMessage = res.message;
               this.closeModal();
               successToast(this.successAddMessage);
               this.refreshData()
@@ -187,9 +182,9 @@ export class SalvageValueComponent {
     this.modalService.open(content, { size: "lg", centered: true });
     var modelTitle = document.querySelector(".modal-title") as HTMLAreaElement;
     this.translate.get("Edit Salvage Value").subscribe((res: string) => {
-      this.editDepCostText = res;
+      this.editSalvageValueText = res;
     });
-    modelTitle.innerHTML =this.editDepCostText ;
+    modelTitle.innerHTML =this.editSalvageValueText ;
     var updateBtn = document.getElementById("add-btn") as HTMLAreaElement;
     this.translate.get("Update").subscribe((res: string) => {
       this.updateText= res;

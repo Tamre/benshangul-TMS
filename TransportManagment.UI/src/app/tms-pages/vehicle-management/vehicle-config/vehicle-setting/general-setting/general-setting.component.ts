@@ -106,7 +106,7 @@ export class GeneralSettingComponent implements OnInit{
   // Search Data
   performSearch(): void {
     this.searchResults = this.allVehicleSettings.filter((item: any) => {
-      return item.name.toLowerCase().includes(this.searchTerm.toLowerCase());
+      return item.vehicleSettingType.toLowerCase().includes(this.searchTerm.toLowerCase());
     });
     this.vehicleSettings = this.service.changePage(this.searchResults);
   }

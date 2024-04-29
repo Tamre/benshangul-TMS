@@ -27,8 +27,8 @@
                         <div class="d-flex align-items-center gap-2">
                             <span class="text-muted text-nowrap">{{ 'Sort by' | translate }}: </span>
                             <select class="form-control mb-0" data-choices data-choices-search-false id="choices-single-default" (click)="SortFilter();">
-                                <option value="Dvalue">{{ 'value' | translate }}</option>
-                                <option value="DmarkId">{{ 'markId' | translate }}</option>
+                                <option value="Dvalue">{{ 'Value' | translate }}</option>
+                                <option value="DmarkName">{{ 'Mark Name' | translate }}</option>
                                 <option value="DisActive">{{ 'Status' | translate }}</option>
                             </select>
                         </div>
@@ -42,8 +42,8 @@
                             <thead>
                                 <tr class="bg-light">
                                     <th scope="col" style="width: 50px;"></th>
-                                    <th class="sort" (click)="onSort('value')">{{ 'value' | translate }}</th>
-                                    <th class="sort" (click)="onSort('markId')">{{ 'markId' | translate }}</th>
+                                    <th class="sort" (click)="onSort('value')">{{ 'Value' | translate }}</th>
+                                    <th class="sort" (click)="onSort('markName')">{{ 'Mark Name' | translate }}</th>
                                     <th class="sort" (click)="onSort('isActive')">{{ 'Status' | translate }}</th>
                                     <th>{{ 'Edit' | translate }}</th>
                                 </tr>
@@ -56,7 +56,7 @@
                                         <ngb-highlight [result]="data.value" [term]="searchTerm"></ngb-highlight>
                                     </td>
                                     <td>
-                                        <ngb-highlight [result]="data.markId" [term]="searchTerm"></ngb-highlight>
+                                        <ngb-highlight [result]="data.markName" [term]="searchTerm"></ngb-highlight>
                                     </td>
                                     
                                     <td>
@@ -91,12 +91,12 @@
                                 <div class="col-lg-12">
                                     <input type="hidden" name="id" value="" formControlName="id" />
                                     <div>
-                                        <label for="value-field" class="form-label">{{ 'value' | translate }}</label>
-                                        <input type="text" id="value-field" class="form-control" placeholder="{{ 'Enter value' | translate }}" required formControlName="value" [ngClass]="{ 'is-invalid': submitted && form['value'].errors }" />
+                                        <label for="value-field" class="form-label">{{ 'Value' | translate }}</label>
+                                        <input type="text" id="value-field" class="form-control" placeholder="{{ 'Enter Value' | translate }}" required formControlName="value" [ngClass]="{ 'is-invalid': submitted && form['value'].errors }" />
                                         @if (submitted && form['value'].errors) {
                                         <div class="invalid-feedback" align="left">
                                             @if (form['value'].errors['required']) {
-                                            <div>{{ 'value is required' | translate }}</div>
+                                            <div>{{ 'Value is required' | translate }}</div>
                                             }
                                         </div>
                                         }
@@ -104,7 +104,7 @@
                                 </div>
                                 <div class="col-lg-6">
                                     <div>
-                                        <label for="markId-field" class="form-label">{{ 'markId' | translate }}</label>
+                                        <label for="markId-field" class="form-label">{{ 'Mark' | translate }}</label>
                                         <select id="markId-field" class="form-control" formControlName="markId"
                                             [ngClass]="{ 'is-invalid': submitted && form['markId'].errors }">
                                             <option value="" disabled selected>{{ 'Select Mark' | translate }}</option>
@@ -114,8 +114,8 @@
 
                                         @if (submitted && form['markId'].errors) {
                                         <div class="invalid-feedback" align="left">
-                                            @if (form['markId'].errors['required']) {s
-                                            <div>{{ 'markId is required' | translate }}</div>
+                                            @if (form['markId'].errors['required']) {
+                                            <div>{{ 'Mark is required' | translate }}</div>
                                             }
                                         </div>
                                         }
@@ -125,7 +125,7 @@
                                 
                                 <div *ngIf="isEditing" class="col-lg-6">
                                     <div>
-                                        <label for="isActive-field" class="form-label">{{ 'isActive' | translate }}</label>
+                                        <label for="isActive-field" class="form-label">{{ 'Status' | translate }}</label>
                                         <div class="form-check form-switch">
                                             <input  id="isActive-field" class="form-check-input" type="checkbox" role="switch"  formControlName="isActive" />
                                         </div>

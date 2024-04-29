@@ -34,8 +34,7 @@ export class InitialPriceComponent {
   initialPrice?: any;
 
   successAddMessage: string = "";
-  successUpdateMessage = "Plate Type successfully updated";
-  editPlateTypeText = "Edit Ban Body";
+  editServiceYearText = "Edit Service Year";
   updateText = "Update";
 
   constructor(
@@ -198,9 +197,9 @@ export class InitialPriceComponent {
     this.modalService.open(content, { size: "lg", centered: true });
     var modelTitle = document.querySelector(".modal-title") as HTMLAreaElement;
     this.translate.get("Edit Initial Price").subscribe((res: string) => {
-      this.editPlateTypeText = res;
+      this.editServiceYearText = res;
     });
-    modelTitle.innerHTML =this.editPlateTypeText ;
+    modelTitle.innerHTML =this.editServiceYearText ;
     var updateBtn = document.getElementById("add-btn") as HTMLAreaElement;
     this.translate.get("Update").subscribe((res: string) => {
       this.updateText= res;

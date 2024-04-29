@@ -32,11 +32,11 @@
                             <select class="form-control mb-0" data-choices data-choices-search-false
                                 id="choices-single-default" (click)="SortFilter();">
                                 <option value="Dname">{{ 'Name' | translate }}</option>
-                                <option value="DengineCapacity">{{ 'engineCapacity' | translate }}</option>
-                                <option value="DnoOfCylinder">{{ 'noOfCylinder' | translate }}</option>
-                                <option value="DhorsePowerMeasure">{{ 'horsePowerMeasure' | translate }}</option>
-                                <option value="DmarkId">{{ 'markId' | translate }}</option>
-                                <option value="DisActive">{{ 'isActive' | translate }}</option>
+                                <option value="DengineCapacity">{{ 'Engine Capacity' | translate }}</option>
+                                <option value="DnoOfCylinder">{{ 'Num Of Cylinder' | translate }}</option>
+                                <option value="DhorsePowerMeasure">{{ 'Horse PowerMeasure' | translate }}</option>
+                                <option value="DmarkId">{{ 'Mark Name' | translate }}</option>
+                                <option value="DisActive">{{ 'Active' | translate }}</option>
                             </select>
                         </div>
                     </div>
@@ -50,14 +50,14 @@
                                 <tr class="bg-light">
                                     <th scope="col" style="width: 50px;"></th>
                                     <th class="sort" (click)="onSort('name')">{{ 'Name' | translate }}</th>
-                                    <th class="sort" (click)="onSort('engineCapacity')">{{ 'engineCapacity' | translate
+                                    <th class="sort" (click)="onSort('engineCapacity')">{{ 'Engine Capacity' | translate
                                         }}</th>
-                                    <th class="sort" (click)="onSort('noOfCylinder')">{{ 'noOfCylinder' | translate }}
+                                    <th class="sort" (click)="onSort('noOfCylinder')">{{ 'Num Of Cylinder' | translate }}
                                     </th>
-                                    <th class="sort" (click)="onSort('horsePowerMeasure')">{{ 'horsePowerMeasure' |
+                                    <th class="sort" (click)="onSort('horsePowerMeasure')">{{ 'Horse Power Measure' |
                                         translate }}</th>
-                                    <th class="sort" (click)="onSort('markId')">{{ 'markId' | translate }}</th>
-                                    <th class="sort" (click)="onSort('isActive')">{{ 'isActive' | translate }}</th>
+                                    <th class="sort" (click)="onSort('markId')">{{ 'Mark Name' | translate }}</th>
+                                    <th class="sort" (click)="onSort('isActive')">{{ 'Active' | translate }}</th>
                                     <th>{{ 'Edit' | translate }}</th>
                                 </tr>
                             </thead>
@@ -134,16 +134,16 @@
                                 </div>
                                 <div class="col-lg-6">
                                     <div>
-                                        <label for="engineCapacity-field" class="form-label">{{ 'engineCapacity' |
+                                        <label for="engineCapacity-field" class="form-label">{{ 'Engine Capacity' |
                                             translate }}</label>
                                         <input type="text" id="engineCapacity-field" class="form-control"
-                                            placeholder="{{ 'Enter engineCapacity' | translate }}" required
+                                            placeholder="{{ 'Enter Engine Capacity' | translate }}" required
                                             formControlName="engineCapacity"
                                             [ngClass]="{ 'is-invalid': submitted && form['engineCapacity'].errors }" />
                                         @if (submitted && form['engineCapacity'].errors) {
                                         <div class="invalid-feedback" align="left">
                                             @if (form['engineCapacity'].errors['required']) {
-                                            <div>{{ 'engineCapacity is required' | translate }}</div>
+                                            <div>{{ 'Engine Capacity is required' | translate }}</div>
                                             }
                                         </div>
                                         }
@@ -151,16 +151,16 @@
                                 </div>
                                 <div class="col-lg-6">
                                     <div>
-                                        <label for="noOfCylinder-field" class="form-label">{{ 'noOfCylinder' | translate
+                                        <label for="noOfCylinder-field" class="form-label">{{ 'Num Of Cylinder' | translate
                                             }}</label>
                                         <input type="text" id="noOfCylinder-field" class="form-control"
-                                            placeholder="{{ 'Enter noOfCylinder' | translate }}" required
+                                            placeholder="{{ 'Enter Num Of Cylinder' | translate }}" required
                                             formControlName="noOfCylinder"
                                             [ngClass]="{ 'is-invalid': submitted && form['noOfCylinder'].errors }" />
                                         @if (submitted && form['noOfCylinder'].errors) {
                                         <div class="invalid-feedback" align="left">
                                             @if (form['noOfCylinder'].errors['required']) {s
-                                            <div>{{ 'noOfCylinder is required' | translate }}</div>
+                                            <div>{{ 'Num Of Cylinder is required' | translate }}</div>
                                             }
                                         </div>
                                         }
@@ -168,21 +168,18 @@
                                 </div>
                                 <div class="col-lg-6">
                                     <div>
-                                        <label for="horsePowerMeasure-field" class="form-label">{{ 'horsePowerMeasure' |
+                                        <label for="horsePowerMeasure-field" class="form-label">{{ 'Horse Power Measure' |
                                             translate }}</label>
-                                        <!-- <input type="text" id="horsePowerMeasure-field" class="form-control"
-                                            placeholder="{{ 'Enter horsePowerMeasure' | translate }}" required
-                                            formControlName="horsePowerMeasure"
-                                            [ngClass]="{ 'is-invalid': submitted && form['horsePowerMeasure'].errors }" /> -->
+                                        
                                             <select id="horsePowerMeasure-field" class="form-control" name="choices-single-default" data-choices data-choices-search-false formControlName="horsePowerMeasure"
                                             [ngClass]="{ 'is-invalid': submitted && dataForm.controls['horsePowerMeasure'].errors }">
-                                            <option value="" disabled>{{ 'Select horsePowerMeasure' | translate }}</option>
+                                            <option value="" disabled>{{ 'Select Horse Power Measure' | translate }}</option>
                                             <option *ngFor="let item of horsePowerMeasureDropDownItem" [value]="item.code" > {{item.name}} </option>
                                         </select>
                                         @if (submitted && form['horsePowerMeasure'].errors) {
                                         <div class="invalid-feedback" align="left">
                                             @if (form['horsePowerMeasure'].errors['required']) {s
-                                            <div>{{ 'horsePowerMeasure is required' | translate }}</div>
+                                            <div>{{ 'Horse Power Measure is required' | translate }}</div>
                                             }
                                         </div>
                                         }
@@ -190,10 +187,7 @@
                                 </div>
                                 <div class="col-lg-6">
                                     <div>
-                                        <label for="markId-field" class="form-label">{{ 'markId' | translate }}</label>
-                                        <!-- <input type="text" id="markId-field" class="form-control" 
-                                            placeholder="{{ 'Enter markId' | translate }}" required formControlName="markId" 
-                                            [ngClass]="{ 'is-invalid': submitted && form['markId'].errors }" /> -->
+                                        <label for="markId-field" class="form-label">{{ 'Mark Name' | translate }}</label>
                                         <select id="markId-field" class="form-control" formControlName="markId"
                                             [ngClass]="{ 'is-invalid': submitted && form['markId'].errors }">
                                             <option value="" disabled selected>{{ 'Select Mark' | translate }}</option>
@@ -206,7 +200,7 @@
                                         @if (submitted && form['markId'].errors) {
                                         <div class="invalid-feedback" align="left">
                                             @if (form['markId'].errors['required']) {s
-                                            <div>{{ 'markId is required' | translate }}</div>
+                                            <div>{{ 'Mark Name is required' | translate }}</div>
                                             }
                                         </div>
                                         }
@@ -214,7 +208,7 @@
                                 </div>
                                 <div *ngIf="isEditing" class="col-lg-6">
                                     <div>
-                                        <label for="isActive-field" class="form-label">{{ 'isActive' | translate
+                                        <label for="isActive-field" class="form-label">{{ 'Status' | translate
                                             }}</label>
                                         <div class="form-check form-switch">
                                             <input id="isActive-field" class="form-check-input" type="checkbox"

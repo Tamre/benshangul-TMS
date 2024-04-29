@@ -29,7 +29,7 @@
                             <select class="form-control mb-0" data-choices data-choices-search-false id="choices-single-default" (click)="SortFilter();">
                                 <option value="Dname">{{ 'Name' | translate }}</option>
                                 <option value="DlocalName">{{ 'Local Name' | translate }}</option>
-                                <option value="DvehicleTypeId">{{ 'vehicleTypeId' | translate }}</option>
+                                <option value="DvehicleTypeId">{{ 'Vehicle Type' | translate }}</option>
                                 <option value="Dvalue">{{ 'value' | translate }}</option>
                                 <option value="DisActive">{{ 'isActive' | translate }}</option>
                             </select>
@@ -46,7 +46,7 @@
                                     <th scope="col" style="width: 50px;"></th>
                                     <th class="sort" (click)="onSort('name')">{{ 'Name' | translate }}</th>
                                     <th class="sort" (click)="onSort('localName')">{{ 'Local Name' | translate }}</th>
-                                    <th class="sort" (click)="onSort('vehicleTypeId')">{{ 'vehicleTypeId' | translate }}</th>
+                                    <th class="sort" (click)="onSort('vehicleTypeId')">{{ 'Vehicle Type' | translate }}</th>
                                     <th class="sort" (click)="onSort('value')">{{ 'value' | translate }}</th>
                                     <th class="sort" (click)="onSort('isActive')">{{ 'isActive' | translate }}</th>
                                     <th>{{ 'Edit' | translate }}</th>
@@ -90,7 +90,7 @@
                 <!-- Contacts Create Model -->
                 <ng-template #content role="document" let-modal>
                     <div class="modal-header bg-info-subtle p-3">
-                        <h5 class="modal-title" id="exampleModalLabel">{{ 'Add Plate Type' | translate }}</h5>
+                        <h5 class="modal-title" id="exampleModalLabel">{{ 'Add Vehicle Body Type' | translate }}</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal" (click)="modal.dismiss('Cross click')"></button>
                     </div>
                     <form (ngSubmit)="saveData()" [formGroup]="dataForm" class="tablelist-form" autocomplete="off">
@@ -126,19 +126,18 @@
                                 </div>
                                 <div class="col-lg-6">
                                     <div>
-                                        <label for="vehicleTypeId-field" class="form-label">{{ 'vehicleTypeId' | translate }}</label>
-                                        <!-- <input type="text" id="vehicleTypeId-field" class="form-control" placeholder="{{ 'Enter vehicleTypeId' | translate }}" 
-                                        required formControlName="vehicleTypeId" [ngClass]="{ 'is-invalid': submitted && form['vehicleTypeId'].errors }" /> -->
+                                        <label for="vehicleTypeId-field" class="form-label">{{ 'Vehicle Type' | translate }}</label>
+                            
                                         <select id="vehicleTypeId-field" class="form-control" formControlName="vehicleTypeId"
                                             [ngClass]="{ 'is-invalid': submitted && form['vehicleTypeId'].errors }">
-                                            <option value="" disabled>{{ 'Select vehicleTypeId' | translate }}</option>
+                                            <option value="" disabled>{{ 'Select Vehicle Type' | translate }}</option>
                                             <option *ngFor="let categoryName of VehicleTypeNames"
                                                 [value]="VehicleTypeNameIdMap[categoryName]">{{ categoryName }}</option>
                                         </select>
                                         @if (submitted && form['vehicleTypeId'].errors) {
                                         <div class="invalid-feedback" align="left">
                                             @if (form['vehicleTypeId'].errors['required']) {s
-                                            <div>{{ 'vehicleTypeId is required' | translate }}</div>
+                                            <div>{{ 'Vehicle Type is required' | translate }}</div>
                                             }
                                         </div>
                                         }
@@ -159,7 +158,7 @@
                                 </div>
                                 <div *ngIf="isEditing" class="col-lg-6">
                                     <div>
-                                        <label for="isActive-field" class="form-label">{{ 'isActive' | translate }}</label>
+                                        <label for="isActive-field" class="form-label">{{ 'Status' | translate }}</label>
                                         <div class="form-check form-switch">
                                             <input  id="isActive-field" class="form-check-input" type="checkbox" role="switch"  formControlName="isActive" />
                                         </div>

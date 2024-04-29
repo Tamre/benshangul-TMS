@@ -253,6 +253,6 @@ export class VehicleModelComponent implements OnInit {
     );
     this.dataForm.controls["createdById"].setValue(this.currentUser?.userId);
     this.dataForm.controls["id"].setValue(this.econtent.id);
-    this.dataForm.controls["rowStatus"].setValue(this.econtent.rowStatus);
+    this.dataForm.controls["isActive"].setValue(this.econtent.isActive);
   }
 }
