@@ -36,7 +36,7 @@ import { cloneDeep } from "lodash";
 import { PaginationService } from "src/app/core/services/pagination.service";
 import { AddressService } from "src/app/core/services/address.service";
 import { TokenStorageService } from "src/app/core/services/token-storage.service";
-import { Country } from "src/app/model/country";
+import { Country } from "src/app/model/address/country";
 import { UserView } from "src/app/model/user";
 import { TranslateService } from "@ngx-translate/core";
 import { successToast } from "src/app/core/services/toast.service";
@@ -111,7 +111,7 @@ export class CountryComponent implements OnInit {
       countryCode: ["", [Validators.required]],
       nationalityName: ["", [Validators.required]],
       localNationalityName: ["", [Validators.required]],
-      createdById: [this.currentUser?.id, [Validators.required]],
+      createdById: [this.currentUser?.userId, [Validators.required]],
       isActive:[true]
     });
 
@@ -164,7 +164,7 @@ export class CountryComponent implements OnInit {
     this.submitted = false;
     this.isEditing = false;
     this.dataForm.reset();
-    this.dataForm.controls["createdById"].setValue(this.currentUser?.id);
+    this.dataForm.controls["createdById"].setValue(this.currentUser?.userId);
     this.modalService.open(content, { size: "md", centered: true });
   }
 
@@ -252,7 +252,7 @@ export class CountryComponent implements OnInit {
     this.dataForm.controls["localNationalityName"].setValue(
       this.econtent.localNationalityName
     );
-    this.dataForm.controls["createdById"].setValue(this.currentUser?.id);
+    this.dataForm.controls["createdById"].setValue(this.currentUser?.userId);
     this.dataForm.controls["id"].setValue(this.econtent.id);
     this.dataForm.controls["isActive"].setValue(this.econtent.isActive);
   }

@@ -24,13 +24,14 @@ namespace TransportManagmentImplementation.Services.Common
     {
         private readonly ApplicationDbContext _dbContext;
         private readonly IMapper _mapper;
+        private readonly ILoggerManagerService _logger;
 
-        public DeviceListService(ApplicationDbContext dbContext, IMapper mapper)
+        public DeviceListService(ApplicationDbContext dbContext, IMapper mapper, ILoggerManagerService logger)
         {
 
             _dbContext = dbContext;
             _mapper = mapper;
-
+            _logger = logger;
         }
 
         public async Task<ResponseMessage> Add(DeviceListPostDto DeviceListPost)
@@ -55,6 +56,10 @@ namespace TransportManagmentImplementation.Services.Common
                 await _dbContext.DeviceLists.AddAsync(DeviceList);
                 await _dbContext.SaveChangesAsync();
 
+                _logger.LogCreate("COMMON", DeviceListPost.CreatedById, $"Device List Added Successfully on {DateTime.Now}");
+
+
+
                 return new ResponseMessage
                 {
                     Success = true,
@@ -66,6 +71,9 @@ namespace TransportManagmentImplementation.Services.Common
             catch (Exception ex)
             {
 
+
+                _logger.LogExcption("COMMON", DeviceListPost.CreatedById, ex.Message);
+
                 return new ResponseMessage
                 {
                     Success = false,
@@ -76,11 +84,17 @@ namespace TransportManagmentImplementation.Services.Common
 
         }
 
-        public async Task<List<DeviceListGetDto>> GetAll()
+        public async Task<List<DeviceListGetDto>> GetAll(RequestParameter requestParameter)
         {
 
 
-            var DeviceLists = await _dbContext.DeviceLists.Include(x => x.Approver).AsNoTracking().ToListAsync();
+            var DeviceLists = await _dbContext.DeviceLists.Include(x => x.Approver).AsNoTracking()
+                 .OrderBy(e => e.Id)
+ .Skip((requestParameter.PageNumber - 1) * requestParameter.PageSize)
+ .Take(requestParameter.PageSize)
+ .ToListAsync();
+
+                
 
             var DeviceListsDtos = _mapper.Map<List<DeviceListGetDto>>(DeviceLists);
 
@@ -115,6 +129,10 @@ namespace TransportManagmentImplementation.Services.Common
                     // Save the changes to the database
                     await _dbContext.SaveChangesAsync();
 
+                    _logger.LogCreate("COMMON", DeviceListGet.CreatedById, $"Device List Updated Successfully on {DateTime.Now}");
+
+
+
                     return new ResponseMessage
                     {
                         Success = true,
@@ -123,6 +141,8 @@ namespace TransportManagmentImplementation.Services.Common
                 }
                 else
                 {
+
+
                     return new ResponseMessage
                     {
                         Success = false,
@@ -133,6 +153,7 @@ namespace TransportManagmentImplementation.Services.Common
             }
             catch (Exception ex)
             {
+                _logger.LogExcption("COMMON", DeviceListGet.CreatedById, ex.Message);
                 return new ResponseMessage
                 {
                     Success = false,

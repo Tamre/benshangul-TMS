@@ -22,9 +22,9 @@ namespace TransportManagmentAPI.Controllers.Common
 
         [HttpGet]
         [ProducesResponseType(typeof(ZoneGetDto), (int)HttpStatusCode.OK)]
-        public async Task<IActionResult> GetAll()
+        public async Task<IActionResult> GetAll([FromQuery] RequestParameter requestParameter)
         {
-            return Ok(await _ZoneService.GetAll());
+            return Ok(await _ZoneService.GetAll(requestParameter));
         }
 
 

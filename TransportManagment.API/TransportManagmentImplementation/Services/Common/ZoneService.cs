@@ -21,13 +21,14 @@ namespace TransportManagmentImplementation.Services.Common
 
         private readonly ApplicationDbContext _dbContext;
         private readonly IMapper _mapper;
+        private readonly ILoggerManagerService _logger;
 
-        public ZoneService(ApplicationDbContext dbContext, IMapper mapper)
+        public ZoneService(ApplicationDbContext dbContext, IMapper mapper, ILoggerManagerService logger)
         {
 
             _dbContext = dbContext;
             _mapper = mapper;
-
+            _logger = logger;
         }
 
 
@@ -55,6 +56,10 @@ namespace TransportManagmentImplementation.Services.Common
                 await _dbContext.Zones.AddAsync(zone);
                 await _dbContext.SaveChangesAsync();
 
+                _logger.LogCreate("COMMON", ZonePost.CreatedById, $"Zone Added Successfully on {DateTime.Now}");
+
+
+
                 return new ResponseMessage
                 {
                     Success = true,
@@ -65,7 +70,7 @@ namespace TransportManagmentImplementation.Services.Common
             }
             catch (Exception ex)
             {
-
+                _logger.LogExcption("COMMON", ZonePost.CreatedById, ex.Message);
                 return new ResponseMessage
                 {
                     Success = false,
@@ -76,11 +81,14 @@ namespace TransportManagmentImplementation.Services.Common
 
         }
 
-        public async Task<List<ZoneGetDto>> GetAll()
+        public async Task<List<ZoneGetDto>> GetAll(RequestParameter requestParameter)
         {
 
 
-            var Zones = await _dbContext.Zones.Include(x => x.Region).AsNoTracking().ToListAsync();
+            var Zones = await _dbContext.Zones.Include(x => x.Region).AsNoTracking().OrderBy(e => e.Id)
+ .Skip((requestParameter.PageNumber - 1) * requestParameter.PageSize)
+ .Take(requestParameter.PageSize)
+ .ToListAsync();
 
             var ZoneDtos = _mapper.Map<List<ZoneGetDto>>(Zones);
 
@@ -115,6 +123,8 @@ namespace TransportManagmentImplementation.Services.Common
 
                     // Save the changes to the database
                     await _dbContext.SaveChangesAsync();
+                    _logger.LogUpdate("COMMON", ZoneGet.CreatedById, $"Zone Updated Successfully on {DateTime.Now}");
+
 
                     return new ResponseMessage
                     {
@@ -134,6 +144,7 @@ namespace TransportManagmentImplementation.Services.Common
             }
             catch (Exception ex)
             {
+                _logger.LogExcption("COMMON", ZoneGet.CreatedById, ex.Message);
                 return new ResponseMessage
                 {
                     Success = false,
