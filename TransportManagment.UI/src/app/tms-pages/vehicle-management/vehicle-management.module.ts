@@ -29,6 +29,7 @@ import { ValuationComponent } from './vehicle-config/valuation/valuation.compone
 import { PlateTypeComponent } from './vehicle-config/plate/plate-type/plate-type.component';
 import { DocumentTypeComponent } from './vehicle-config/document-type/document-type.component';
 import { VehicleLookupsComponent } from './vehicle-config/look-ups/vehicle-lookups/vehicle-lookups.component';
+import { ServiceTypeComponent } from './vehicle-config/vehicle-setting/service-type/service-type.component';
 
 
 
@@ -45,7 +46,8 @@ import { VehicleLookupsComponent } from './vehicle-config/look-ups/vehicle-looku
     PlateTypeComponent,
     DocumentTypeComponent,
     AisorcStockTypeComponent,
-    VehicleLookupsComponent
+    VehicleLookupsComponent,
+    ServiceTypeComponent
   ],
   imports: [
     CommonModule,
