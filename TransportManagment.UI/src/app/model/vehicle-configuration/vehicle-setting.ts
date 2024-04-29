@@ -1,13 +1,13 @@
 export interface VehicleSettingGetDto {
     id: number;
-    vehicleSettingType: string;
+    vehicleSettingType: number;
     value: number;
     createdById: string;
     isActive:Boolean;
     
 }
 export interface VehicleSettingPostDto {
-    vehicleSettingType: string;
+    vehicleSettingType: number;
     value: number;
     createdById: string;
     isActive:Boolean;

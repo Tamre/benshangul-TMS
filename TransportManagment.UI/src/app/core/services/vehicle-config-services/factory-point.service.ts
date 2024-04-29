@@ -1,14 +1,14 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { environment } from 'src/environments/environment';
 import { TokenStorageService } from '../token-storage.service';
+import { environment } from 'src/environments/environment';
+import { FactoryPointGetDto, FactoryPointPostDto } from 'src/app/model/vehicle-configuration/factory-point';
 import { ResponseMessage } from 'src/app/model/ResponseMessage.Model';
-import { VehicleLookupGetDto, VehicleLookupPostDto } from 'src/app/model/vehicle-configuration/vehicle-lookup';
 
 @Injectable({
   providedIn: 'root'
 })
-export class VehicleLookupService {
+export class FactoryPointService {
 
   baseUrl: string = environment.baseUrl;
   
@@ -21,25 +21,21 @@ export class VehicleLookupService {
     'Authorization': `Bearer ${this.tokenStorageService.getToken()}`,
     'Content-Type': 'application/json'
   });
-  getVehicleLookup(id: number) {
+  getAllFactoryPoint() {
     var headers = this.headers
-    return this.http.get<VehicleLookupGetDto[]>(`${this.baseUrl}/vech-config/VehicleLookups/GetAllByLookUpType?LookUpTyoe=${id}`,{headers},);
+    return this.http.get<FactoryPointGetDto[]>(`${this.baseUrl}/vech-config/FactoryPoint/GetAll`,{headers});
   }
-  getAllVehicleLookup() {
-    var headers = this.headers
-    return this.http.get<VehicleLookupGetDto[]>(`${this.baseUrl}/vech-config/VehicleLookups/GetAll`,{headers});
-  }
-  updateVehicleLookup(formData:VehicleLookupPostDto){
+  updateFactoryPoint(formData:FactoryPointPostDto){
     var headers = this.headers
     return this.http.put<ResponseMessage>(
-      `${this.baseUrl}/vech-config/VehicleLookups/Update`,
+      `${this.baseUrl}/vech-config/FactoryPoint/Update`,
       formData,{headers:headers}
     );
   }
-  addVehicleLookup(formData:VehicleLookupPostDto){
+  addFactoryPoint(formData:FactoryPointPostDto){
     var headers = this.headers
     return this.http.post<ResponseMessage>(
-      `${this.baseUrl}/vech-config/VehicleLookups/Add`,
+      `${this.baseUrl}/vech-config/FactoryPoint/Add`,
       formData,{headers:headers}
     );
   }

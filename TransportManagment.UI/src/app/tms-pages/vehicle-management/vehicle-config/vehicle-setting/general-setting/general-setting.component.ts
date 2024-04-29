@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
+import { AbstractControl, UntypedFormBuilder, UntypedFormGroup, ValidationErrors, Validators } from '@angular/forms';
 import { UserView } from 'src/app/model/user';
 import { VehicleSettingService } from 'src/app/core/services/vehicle-config-services/vehicle-setting.service';
 import { RootReducerState } from 'src/app/store';
@@ -33,6 +33,20 @@ export class GeneralSettingComponent implements OnInit{
   allVehicleSettings?:any;
   vehicleSettings?: any;
 
+  vehicleSettingTypeDropDownItem= [
+    { name: 'ANNUAL_INSPECTION_EXPIRE_YEAR', code: '0'},
+    { name: 'ANNUAL_iNSPECTION_MONTH_sTART', code: '1'},
+    { name: 'ANNUAL_iNSPECTION_MONTH_END', code: '2'},
+    { name: 'ET_INSPECTION_MONTH_START', code: '3'},
+    { name: 'EN_INSPECTION_MONTH_END', code: '4'},
+    { name: 'TEMPORARY_PLATE_EXPIREDATE', code: '5'},
+    { name: 'TEMPORARY_PLATE_EXTENDDATE', code: '6'},
+    { name: 'ORGANIZATION_DAYS_PER_VEHICLE', code: '7'},
+    { name: 'ORGANIZATION_NEW_LICENSE_YEARS', code: '8'},
+    { name: 'ORGANIZATION_RENEW_LICENSEYEARS', code: '9'},
+    { name: 'NUMBER_OF_INSPECTORS', code: '10'}
+  ]
+
   successAddMessage: string = "";
   successUpdateMessage = "Vehicle Type successfully updated";
   editPlateTypeText = "Edit Vehicle Type";
@@ -56,7 +70,7 @@ export class GeneralSettingComponent implements OnInit{
     this.dataForm = this.formBuilder.group({
       id: [""],
       vehicleSettingType: ["", [Validators.required]],
-      value: ["", [Validators.required]],
+      value: ["", [Validators.required],this.floatValidator],
       createdById: [this.currentUser?.userId, [Validators.required]],
       isActive:[true]
     });
@@ -70,6 +84,14 @@ export class GeneralSettingComponent implements OnInit{
       }
     });
   }
+  floatValidator(control: AbstractControl): Promise<ValidationErrors | null> {
+    return Promise.resolve().then(() => {
+       if (control.value && !/^-?\d+(\.\d+)?$/.test(control.value)) {
+         return { floatInvalid: true };
+       }
+       return null;
+    });
+   }
   openModal(content: any) {
     this.submitted = false;
     this.isEditing = false;

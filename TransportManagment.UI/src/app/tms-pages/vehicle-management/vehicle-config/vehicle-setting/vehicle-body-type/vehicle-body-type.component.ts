@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
+import { AbstractControl, UntypedFormBuilder, UntypedFormGroup, ValidationErrors, Validators } from '@angular/forms';
 import { UserView } from 'src/app/model/user';
 import { TokenStorageService } from 'src/app/core/services/token-storage.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -15,6 +15,7 @@ import { cloneDeep } from 'lodash';
 import { ResponseMessage } from 'src/app/model/ResponseMessage.Model';
 import { successToast } from 'src/app/core/services/toast.service';
 import { VehicleBodyTypePostDto } from 'src/app/model/vehicle-configuration/vehicle-body-type';
+import { VehicleTypeService } from 'src/app/core/services/vehicle-config-services/vehicle-type.service';
 
 @Component({
   selector: 'app-vehicle-body-type',
@@ -33,6 +34,12 @@ export class VehicleBodyTypeComponent implements OnInit {
   allVehicleBodyTypes?:any;
   vehicleBodyTypes?: any;
 
+  allVehicleTypes?:any;
+  vehicleTypes?: any;
+  //markId: number = 0;
+  VehicleTypeNames: string[] = [];
+  VehicleTypeNameIdMap: { [name: string]: number } = {};
+
   successAddMessage: string = "";
   successUpdateMessage = "Vehicle Type successfully updated";
   editPlateTypeText = "Edit Vehicle Type";
@@ -45,11 +52,13 @@ export class VehicleBodyTypeComponent implements OnInit {
     public service: PaginationService,
     public translate: TranslateService,
     private store: Store<{ data: RootReducerState }>,
-    public vehicleBodyTypeService:VehicleBodyTypeService
+    public vehicleBodyTypeService:VehicleBodyTypeService,
+    public vehicleTypeService:VehicleTypeService,
   ) {}
   ngOnInit(): void {
     this.currentUser = this.tokenStorageService.getCurrentUser();
     this.refreshData()
+    this.getVehicleType()
     /**
      * Form Validation
      */
@@ -58,10 +67,10 @@ export class VehicleBodyTypeComponent implements OnInit {
       name: ["", [Validators.required]],
       localName: ["", [Validators.required]],
       vehicleTypeId: ["", [Validators.required]],
-      value:["",[Validators.required]],
+      value:["",[Validators.required],this.floatValidator],
       createdById: [this.currentUser?.userId, [Validators.required]],
-      //isActive:[true]
-      rowStatus:["",[Validators.required]],
+      isActive:[true]
+      //rowStatus:["",[Validators.required]],
     });
     /**
      * fetches data
@@ -71,6 +80,37 @@ export class VehicleBodyTypeComponent implements OnInit {
       if (data == false) {
         document.getElementById("elmLoader")?.classList.add("d-none");
       }
+    });
+  }
+  floatValidator(control: AbstractControl): Promise<ValidationErrors | null> {
+    return Promise.resolve().then(() => {
+       if (control.value && !/^-?\d+(\.\d+)?$/.test(control.value)) {
+         return { floatInvalid: true };
+       }
+       return null;
+    });
+   }
+  getVehicleType(){
+    this.vehicleTypeService.getAllVehicleType().subscribe({
+      next: (res) => {
+        if (res) 
+          {
+            this.vehicleTypes = res
+            this.allVehicleTypes = cloneDeep(res);
+            this.vehicleTypes = this.service.changePage(this.allVehicleTypes)
+            console.log(this.allVehicleTypes)
+          // Populate the markNames array with names from vehLookups
+        this.VehicleTypeNames = this.vehicleTypes.map((veh:any) => veh.name);
+      }
+      // Populate the markNameIdMap with name-ID mapping
+      this.VehicleTypeNameIdMap = this.vehicleTypes.reduce((map:any, veh:any) => {
+        map[veh.name] = veh.id;
+        return map;
+      }, {});
+      },
+      error: (err) => {
+        
+      },
     });
   }
   openModal(content: any) {
@@ -153,7 +193,7 @@ export class VehicleBodyTypeComponent implements OnInit {
 
       } else {
         const newData: VehicleBodyTypePostDto = this.dataForm.value;
-        //newData.isActive = true;
+        newData.isActive = true;
         this.vehicleBodyTypeService.addVehicleBodyType(newData).subscribe({
           next: (res: ResponseMessage) => {
             if (res.success) {
@@ -206,6 +246,6 @@ export class VehicleBodyTypeComponent implements OnInit {
     );
     this.dataForm.controls["createdById"].setValue(this.currentUser?.userId);
     this.dataForm.controls["id"].setValue(this.econtent.id);
-    this.dataForm.controls["rowStatus"].setValue(this.econtent.rowStatus);
+    this.dataForm.controls["isActive"].setValue(this.econtent.isActive);
   }
 }

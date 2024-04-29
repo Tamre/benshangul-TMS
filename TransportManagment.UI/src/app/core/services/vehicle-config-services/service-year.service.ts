@@ -2,18 +2,18 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { TokenStorageService } from '../token-storage.service';
+import { ServiceYearGetDto, ServiceYearPostDto } from 'src/app/model/vehicle-configuration/service-year';
 import { ResponseMessage } from 'src/app/model/ResponseMessage.Model';
-import { VehicleLookupGetDto, VehicleLookupPostDto } from 'src/app/model/vehicle-configuration/vehicle-lookup';
 
 @Injectable({
   providedIn: 'root'
 })
-export class VehicleLookupService {
+export class ServiceYearService {
 
   baseUrl: string = environment.baseUrl;
-  
 
-  constructor(private http: HttpClient, private tokenStorageService:TokenStorageService) {}
+  constructor(private http: HttpClient, private tokenStorageService:TokenStorageService) { }
+
   /***
    * Get All User
    */
@@ -21,25 +21,21 @@ export class VehicleLookupService {
     'Authorization': `Bearer ${this.tokenStorageService.getToken()}`,
     'Content-Type': 'application/json'
   });
-  getVehicleLookup(id: number) {
+  getAllServiceYear() {
     var headers = this.headers
-    return this.http.get<VehicleLookupGetDto[]>(`${this.baseUrl}/vech-config/VehicleLookups/GetAllByLookUpType?LookUpTyoe=${id}`,{headers},);
+    return this.http.get<ServiceYearGetDto[]>(`${this.baseUrl}/vech-config/ServiceType/GetAll`,{headers});
   }
-  getAllVehicleLookup() {
-    var headers = this.headers
-    return this.http.get<VehicleLookupGetDto[]>(`${this.baseUrl}/vech-config/VehicleLookups/GetAll`,{headers});
-  }
-  updateVehicleLookup(formData:VehicleLookupPostDto){
+  updateServiceYear(formData:ServiceYearPostDto){
     var headers = this.headers
     return this.http.put<ResponseMessage>(
-      `${this.baseUrl}/vech-config/VehicleLookups/Update`,
+      `${this.baseUrl}/vech-config/ServiceType/Update`,
       formData,{headers:headers}
     );
   }
-  addVehicleLookup(formData:VehicleLookupPostDto){
+  addServiceYear(formData:ServiceYearPostDto){
     var headers = this.headers
     return this.http.post<ResponseMessage>(
-      `${this.baseUrl}/vech-config/VehicleLookups/Add`,
+      `${this.baseUrl}/vech-config/ServiceType/Add`,
       formData,{headers:headers}
     );
   }

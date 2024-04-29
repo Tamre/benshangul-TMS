@@ -5,6 +5,7 @@ export interface VehicleModelGetDto {
     noOfCylinder: number;
     horsePowerMeasure:string;
     markId:number;
+    markName:string;
     createdById: string;
     rowStatus:number;
 }

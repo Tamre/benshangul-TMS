@@ -15,6 +15,7 @@ import { VehicleTypePostDto } from 'src/app/model/vehicle-configuration/vehicle-
 import { ResponseMessage } from 'src/app/model/ResponseMessage.Model';
 import { successToast } from 'src/app/core/services/toast.service';
 import { cloneDeep } from 'lodash';
+import { VehicleLookupService } from 'src/app/core/services/vehicle-config-services/vehicle-lookup.service';
 
 @Component({
   selector: 'app-vehicle-type',
@@ -33,6 +34,12 @@ export class VehicleTypeComponent implements OnInit{
   allVehicleTypes?:any;
   vehicleTypes?: any;
 
+  allVehLookups?: any;
+  vehLookups?: any;
+  markId: number = 0;
+  categoryNames: string[] = [];
+  CategoryNameIdMap: { [name: string]: number } = {};
+
   successAddMessage: string = "";
   successUpdateMessage = "Vehicle Type successfully updated";
   editPlateTypeText = "Edit Vehicle Type";
@@ -45,11 +52,13 @@ export class VehicleTypeComponent implements OnInit{
     public service: PaginationService,
     public translate: TranslateService,
     private store: Store<{ data: RootReducerState }>,
-    public vehicleTypeService:VehicleTypeService
+    public vehicleTypeService:VehicleTypeService,
+    public vehicleLookupService: VehicleLookupService,
   ) {}
   ngOnInit(): void {
     this.currentUser = this.tokenStorageService.getCurrentUser();
     this.refreshData()
+    this.getVehicleCategory()
     /**
      * Form Validation
      */
@@ -59,7 +68,7 @@ export class VehicleTypeComponent implements OnInit{
       localName: ["", [Validators.required]],
       vehicleCategory: ["", [Validators.required]],
       createdById: [this.currentUser?.userId, [Validators.required]],
-      isActive:[true]
+      //isActive:[true]
     });
     /**
      * fetches data
@@ -71,6 +80,30 @@ export class VehicleTypeComponent implements OnInit{
       }
     });
   }
+
+  getVehicleCategory() {
+    this.vehicleLookupService.getAllVehicleLookup().subscribe({
+      next: (res) => {
+        if (res) {
+          this.vehLookups = res
+          this.allVehLookups = cloneDeep(res);
+          this.vehLookups = this.service.changePage(this.allVehLookups)
+          console.log(this.allVehLookups)
+          // Populate the markNames array with names from vehLookups
+        this.categoryNames = this.vehLookups.map((veh:any) => veh.name);
+        }
+        // Populate the markNameIdMap with name-ID mapping
+        this.CategoryNameIdMap = this.vehLookups.reduce((map:any, veh:any) => {
+          map[veh.name] = veh.id;
+          return map;
+        }, {});
+      },
+      error: (err) => {
+
+      },
+    });
+  }
+
   openModal(content: any) {
     this.submitted = false;
     this.isEditing = false;
@@ -151,11 +184,19 @@ export class VehicleTypeComponent implements OnInit{
         });
 
       } else {
+        
         const newData: VehicleTypePostDto = this.dataForm.value;
-        newData.isActive = true;
+        //const newData: VehicleTypePostDto = { ...this.dataForm.value };
+
+        //newData.vehicleCategoryId = parseInt(newData.vehicleCategoryId);
+
+        
+        //newData.isActive = true;
+        console.log('newData:', newData);
         this.vehicleTypeService.addVehicleType(newData).subscribe({
           next: (res: ResponseMessage) => {
             if (res.success) {
+              console.log('Response:', res);
               this.successAddMessage = res.message;
               this.closeModal();
               successToast(this.successAddMessage);
@@ -165,7 +206,7 @@ export class VehicleTypeComponent implements OnInit{
             }
           },
           error: (err) => {
-            console.error(err);
+            console.error('Error saving vehicle type:', err);
           },
         });
       }
@@ -200,7 +241,7 @@ export class VehicleTypeComponent implements OnInit{
     this.dataForm.controls["name"].setValue(this.econtent.name);
     this.dataForm.controls["localName"].setValue(this.econtent.localName);
     this.dataForm.controls["vehicleCategory"].setValue(this.econtent.vehicleCategory);
-    
+
     this.dataForm.controls["createdById"].setValue(this.currentUser?.userId);
     this.dataForm.controls["id"].setValue(this.econtent.id);
     this.dataForm.controls["isActive"].setValue(this.econtent.isActive);

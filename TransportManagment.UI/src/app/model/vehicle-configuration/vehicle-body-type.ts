@@ -5,7 +5,7 @@ export interface VehicleBodyTypeGetDto {
     vehicleTypeId: number;
     value:number;
     createdById: string;
-    rowStatus:number;
+    isActive:boolean;
     
 }
 export interface VehicleBodyTypePostDto {
@@ -14,5 +14,5 @@ export interface VehicleBodyTypePostDto {
     vehicleTypeId: number;
     value:number;
     createdById: string; 
-    rowStatus:number;
+    isActive:boolean;
 }

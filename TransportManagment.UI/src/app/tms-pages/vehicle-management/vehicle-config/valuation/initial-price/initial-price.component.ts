@@ -1,27 +1,27 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { AbstractControl, UntypedFormBuilder, UntypedFormGroup, ValidationErrors, Validators } from '@angular/forms';
-import { UserView } from 'src/app/model/user';
-import { PlateTypeService } from 'src/app/core/services/vehicle-config-services/plate-type.service';
+import { InitialPriceService } from 'src/app/core/services/vehicle-config-services/initial-price.service';
+import { UntypedFormGroup, UntypedFormBuilder, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Store } from '@ngrx/store';
-import { RootReducerState } from 'src/app/store';
 import { TranslateService } from '@ngx-translate/core';
 import { PaginationService } from 'src/app/core/services/pagination.service';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { TokenStorageService } from 'src/app/core/services/token-storage.service';
+import { UserView } from 'src/app/model/user';
+import { RootReducerState } from 'src/app/store';
 import { fetchCrmContactData } from 'src/app/store/CRM/crm_action';
 import { selectCRMLoading } from 'src/app/store/CRM/crm_selector';
 import { cloneDeep } from 'lodash';
 import { successToast } from 'src/app/core/services/toast.service';
-import { PlateTypePostDto } from 'src/app/model/vehicle-configuration/plate-type';
+import { InitialPricePostDto } from 'src/app/model/vehicle-configuration/initial-price';
 import { ResponseMessage } from 'src/app/model/ResponseMessage.Model';
 
 @Component({
-  selector: 'app-plate-type',
-  templateUrl: './plate-type.component.html',
-  styleUrl: './plate-type.component.scss'
+  selector: 'app-initial-price',
+  templateUrl: './initial-price.component.html',
+  styleUrl: './initial-price.component.scss'
 })
-export class PlateTypeComponent {
+export class InitialPriceComponent {
   submitted = false;
   isEditing:Boolean = false;
   dataForm!: UntypedFormGroup;
@@ -30,8 +30,8 @@ export class PlateTypeComponent {
   searchResults: any;
   econtent?: any;
 
-  allPlates?:any;
-  plates?: any;
+  allInitialPrice?:any;
+  initialPrice?: any;
 
   successAddMessage: string = "";
   successUpdateMessage = "Plate Type successfully updated";
@@ -45,7 +45,7 @@ export class PlateTypeComponent {
     public service: PaginationService,
     public translate: TranslateService,
     private store: Store<{ data: RootReducerState }>,
-    public plateTypeService:PlateTypeService
+    public initialPriceService:InitialPriceService
   ) {}
   ngOnInit(): void {
     this.currentUser = this.tokenStorageService.getCurrentUser();
@@ -57,8 +57,7 @@ export class PlateTypeComponent {
       id: [""],
       name: ["", [Validators.required]],
       localName: ["", [Validators.required]],
-      code: ["", [Validators.required,Validators.pattern(/^-?\d+$/)]],
-      regionList:["",[Validators.required]],
+      price: ["", [Validators.required],this.floatValidator],
       createdById: [this.currentUser?.userId, [Validators.required]],
       isActive:[true]
     });
@@ -73,6 +72,14 @@ export class PlateTypeComponent {
       }
     });
   }
+  floatValidator(control: AbstractControl): Promise<ValidationErrors | null> {
+    return Promise.resolve().then(() => {
+       if (control.value && !/^-?\d+(\.\d+)?$/.test(control.value)) {
+         return { floatInvalid: true };
+       }
+       return null;
+    });
+   }
   
   openModal(content: any) {
     this.submitted = false;
@@ -82,15 +89,15 @@ export class PlateTypeComponent {
     this.modalService.open(content, { size: "lg", centered: true });
   }
   changePage() {
-    this.plates = this.service.changePage(this.allPlates);
+    this.initialPrice = this.service.changePage(this.allInitialPrice);
   }
 
   // Search Data
   performSearch(): void {
-    this.searchResults = this.allPlates.filter((item: any) => {
+    this.searchResults = this.allInitialPrice.filter((item: any) => {
       return item.name.toLowerCase().includes(this.searchTerm.toLowerCase());
     });
-    this.plates = this.service.changePage(this.searchResults);
+    this.initialPrice = this.service.changePage(this.searchResults);
   }
   // Sort filter
   sortField: any;
@@ -110,19 +117,18 @@ export class PlateTypeComponent {
   }
   // Sort data
   onSort(column: any) {
-    this.allPlates = this.service.onSort(column, this.allPlates);
-    this.plates = this.service.changePage(this.allPlates)
+    this.allInitialPrice = this.service.onSort(column, this.allInitialPrice);
+    this.initialPrice = this.service.changePage(this.allInitialPrice)
   }
-
   refreshData(){
-    this.plateTypeService.getAllPlateType().subscribe({
+    this.initialPriceService.getAllInitialPrice().subscribe({
       next: (res) => {
         if (res) 
           {
-            this.plates = res
-            this.allPlates = cloneDeep(res);
-            this.plates = this.service.changePage(this.allPlates)
-            console.log(this.allPlates)
+            this.initialPrice = res
+            this.allInitialPrice = cloneDeep(res);
+            this.initialPrice = this.service.changePage(this.allInitialPrice)
+            console.log(this.allInitialPrice)
           }
       },
       error: (err) => {
@@ -137,8 +143,8 @@ export class PlateTypeComponent {
     if (this.dataForm.valid) {
       if (this.dataForm.get("id")?.value) {
         console.log(this.currentUser?.userId)
-        const newData: PlateTypePostDto = this.dataForm.value;
-        this.plateTypeService.updatePlateType(newData).subscribe({
+        const newData: InitialPricePostDto = this.dataForm.value;
+        this.initialPriceService.updateInitialPrice(newData).subscribe({
           next: (res: ResponseMessage) => {
             if (res.success) {
               this.successAddMessage = res.message;
@@ -155,9 +161,9 @@ export class PlateTypeComponent {
         });
 
       } else {
-        const newData: PlateTypePostDto = this.dataForm.value;
-        newData.isActive = true;
-        this.plateTypeService.addPlateType(newData).subscribe({
+        const newData: InitialPricePostDto = this.dataForm.value;
+        //newData.isActive = true;
+        this.initialPriceService.addInitialPrice(newData).subscribe({
           next: (res: ResponseMessage) => {
             if (res.success) {
               this.successAddMessage = res.message;
@@ -191,7 +197,7 @@ export class PlateTypeComponent {
     this.submitted = false;
     this.modalService.open(content, { size: "lg", centered: true });
     var modelTitle = document.querySelector(".modal-title") as HTMLAreaElement;
-    this.translate.get("Edit Stock Type").subscribe((res: string) => {
+    this.translate.get("Edit Initial Price").subscribe((res: string) => {
       this.editPlateTypeText = res;
     });
     modelTitle.innerHTML =this.editPlateTypeText ;
@@ -201,13 +207,11 @@ export class PlateTypeComponent {
     });
     updateBtn.innerHTML = this.updateText;
     this.isEditing = true;
-    this.econtent = this.plates[id];
+    this.econtent = this.initialPrice[id];
     this.dataForm.controls["name"].setValue(this.econtent.name);
     this.dataForm.controls["localName"].setValue(this.econtent.localName);
-    this.dataForm.controls["code"].setValue(this.econtent.code);
-    this.dataForm.controls["regionList"].setValue(
-      this.econtent.regionList
-    );
+    this.dataForm.controls["price"].setValue(this.econtent.price);
+
     this.dataForm.controls["createdById"].setValue(this.currentUser?.userId);
     this.dataForm.controls["id"].setValue(this.econtent.id);
     this.dataForm.controls["isActive"].setValue(this.econtent.isActive);

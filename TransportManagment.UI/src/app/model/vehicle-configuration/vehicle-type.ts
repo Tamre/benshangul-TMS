@@ -12,5 +12,5 @@ export interface VehicleTypePostDto {
     localName: string;
     vehicleCategoryId: number;
     createdById: string;
-    isActive:Boolean;
+    //isActive:Boolean;
 }

@@ -40,6 +40,12 @@ export class VehicleModelComponent implements OnInit {
   markNames: string[] = [];
   markNameIdMap: { [name: string]: number } = {};
 
+  horsePowerMeasureDropDownItem = [
+    { name: 'BHP', code: 'BHP'},
+    { name: 'KW', code: 'OTHEKWR'}
+  ]
+  
+
   successAddMessage: string = "";
   successUpdateMessage = "Vehicle Type successfully updated";
   editPlateTypeText = "Edit Vehicle Type";
@@ -65,12 +71,11 @@ export class VehicleModelComponent implements OnInit {
     this.dataForm = this.formBuilder.group({
       id: [""],
       name: ["", [Validators.required]],
-      engineCapacity: ["", [Validators.required]],
-      noOfCylinder: ["", [Validators.required]],
+      engineCapacity: ["", [Validators.required,Validators.pattern(/^-?\d+$/)]],
+      noOfCylinder: ["", [Validators.required,Validators.pattern(/^-?\d+$/)]],
       horsePowerMeasure: ["", [Validators.required]],
       markId: ["", [Validators.required]],
       createdById: [this.currentUser?.userId, [Validators.required]],
-      //rowStatus: ["", [Validators.required]],
       isActive:[true]
     });
     /**
@@ -92,6 +97,9 @@ export class VehicleModelComponent implements OnInit {
           this.allVehLookups = cloneDeep(res);
           this.vehLookups = this.service.changePage(this.allVehLookups)
           console.log(this.allVehLookups)
+          
+
+          
           // Populate the markNames array with names from vehLookups
         this.markNames = this.vehLookups.map((veh:any) => veh.name);
         }
@@ -100,6 +108,7 @@ export class VehicleModelComponent implements OnInit {
           map[veh.name] = veh.id;
           return map;
         }, {});
+        
       },
       error: (err) => {
 
@@ -153,6 +162,7 @@ export class VehicleModelComponent implements OnInit {
           this.allVehicleModels = cloneDeep(res);
           this.vehicleModels = this.service.changePage(this.allVehicleModels)
           console.log(this.allVehicleModels)
+          
         }
       },
       error: (err) => {
@@ -185,6 +195,7 @@ export class VehicleModelComponent implements OnInit {
         });
 
       } else {
+        
         const newData: VehicleModelPostDto = this.dataForm.value;
         newData.isActive = true;
         this.vehicleModelService.addVehicleModel(newData).subscribe({

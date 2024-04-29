@@ -80,8 +80,8 @@
                                             [term]="searchTerm"></ngb-highlight>
                                     </td>
                                     <td>
-                                        <!-- <ngb-highlight [result]="data.markName" [term]="searchTerm"></ngb-highlight> -->
-                                        {{ markNameIdMap[data.markId] || '' }}
+                                        <ngb-highlight [result]="data.markName" [term]="searchTerm"></ngb-highlight>
+                                        
                                     </td>
                                     <td>
                                         <ngb-highlight [result]="data.isActive" [term]="searchTerm"></ngb-highlight>
@@ -170,10 +170,15 @@
                                     <div>
                                         <label for="horsePowerMeasure-field" class="form-label">{{ 'horsePowerMeasure' |
                                             translate }}</label>
-                                        <input type="text" id="horsePowerMeasure-field" class="form-control"
+                                        <!-- <input type="text" id="horsePowerMeasure-field" class="form-control"
                                             placeholder="{{ 'Enter horsePowerMeasure' | translate }}" required
                                             formControlName="horsePowerMeasure"
-                                            [ngClass]="{ 'is-invalid': submitted && form['horsePowerMeasure'].errors }" />
+                                            [ngClass]="{ 'is-invalid': submitted && form['horsePowerMeasure'].errors }" /> -->
+                                            <select id="horsePowerMeasure-field" class="form-control" name="choices-single-default" data-choices data-choices-search-false formControlName="horsePowerMeasure"
+                                            [ngClass]="{ 'is-invalid': submitted && dataForm.controls['horsePowerMeasure'].errors }">
+                                            <option value="" disabled>{{ 'Select horsePowerMeasure' | translate }}</option>
+                                            <option *ngFor="let item of horsePowerMeasureDropDownItem" [value]="item.code" > {{item.name}} </option>
+                                        </select>
                                         @if (submitted && form['horsePowerMeasure'].errors) {
                                         <div class="invalid-feedback" align="left">
                                             @if (form['horsePowerMeasure'].errors['required']) {s
@@ -189,10 +194,12 @@
                                         <!-- <input type="text" id="markId-field" class="form-control" 
                                             placeholder="{{ 'Enter markId' | translate }}" required formControlName="markId" 
                                             [ngClass]="{ 'is-invalid': submitted && form['markId'].errors }" /> -->
-                                        <select id="markId-field" class="form-control" formControlName="markId" [ngClass]="{ 'is-invalid': submitted && form['markId'].errors }">
+                                        <select id="markId-field" class="form-control" formControlName="markId"
+                                            [ngClass]="{ 'is-invalid': submitted && form['markId'].errors }">
                                             <option value="" disabled selected>{{ 'Select Mark' | translate }}</option>
-                                            <option *ngFor="let markName of markNames" [value]="markNameIdMap[markName]">{{ markName }}</option>
-                                          </select>
+                                            <option *ngFor="let markName of markNames"
+                                                [value]="markNameIdMap[markName]">{{ markName }}</option>
+                                        </select>
 
 
 
@@ -221,7 +228,7 @@
                             <div class="hstack gap-2 justify-content-end">
                                 <button type="button" class="btn btn-light" data-bs-dismiss="modal"
                                     (click)="closeModal()">{{ 'Close' | translate }}</button>
-                                <button type="submit" class="btn btn-success" id="add-btn" >{{ 'Add' | translate
+                                <button type="submit" class="btn btn-success" id="add-btn">{{ 'Add' | translate
                                     }}</button>
                             </div>
                         </div>
