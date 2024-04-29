@@ -30,6 +30,16 @@ import { PlateTypeComponent } from './vehicle-config/plate/plate-type/plate-type
 import { DocumentTypeComponent } from './vehicle-config/document-type/document-type.component';
 import { VehicleLookupsComponent } from './vehicle-config/look-ups/vehicle-lookups/vehicle-lookups.component';
 import { ServiceTypeComponent } from './vehicle-config/vehicle-setting/service-type/service-type.component';
+import { GeneralSettingComponent } from './vehicle-config/vehicle-setting/general-setting/general-setting.component';
+import { VehicleBodyTypeComponent } from './vehicle-config/vehicle-setting/vehicle-body-type/vehicle-body-type.component';
+import { VehicleModelComponent } from './vehicle-config/vehicle-setting/vehicle-model/vehicle-model.component';
+import { VehicleTypeComponent } from './vehicle-config/vehicle-setting/vehicle-type/vehicle-type.component';
+import { ManufactureYearComponent } from './vehicle-config/valuation/manufacture-year/manufacture-year.component';
+import { FactoryPointComponent } from './vehicle-config/valuation/factory-point/factory-point.component';
+import { ServiceYearComponent } from './vehicle-config/valuation/service-year/service-year.component';
+import { InitialPriceComponent } from './vehicle-config/valuation/initial-price/initial-price.component';
+import { SalvageValueComponent } from './vehicle-config/valuation/salvage-value/salvage-value.component';
+
 
 
 
@@ -47,7 +57,18 @@ import { ServiceTypeComponent } from './vehicle-config/vehicle-setting/service-t
     DocumentTypeComponent,
     AisorcStockTypeComponent,
     VehicleLookupsComponent,
-    ServiceTypeComponent
+    ServiceTypeComponent,
+    GeneralSettingComponent,
+    VehicleBodyTypeComponent,
+    VehicleModelComponent,
+    VehicleTypeComponent,
+    ManufactureYearComponent,
+    FactoryPointComponent,
+    ServiceYearComponent,
+    InitialPriceComponent,
+    SalvageValueComponent
+    
+
   ],
   imports: [
     CommonModule,

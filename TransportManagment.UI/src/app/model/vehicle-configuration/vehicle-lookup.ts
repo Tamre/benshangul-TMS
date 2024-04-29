@@ -11,5 +11,5 @@ export interface VehicleLookupPostDto {
     localName: string;
     vehicleLookupType: string;
     createdById: string;
-    isActive:Boolean;
+    //isActive:Boolean;
 }

@@ -279,8 +279,9 @@ namespace Implementation.Services.Authentication
         public async Task<List<UserListDto>> GetUserList()
         {
             var userList = await _userManager.Users.ToListAsync();
-
             var users = new List<UserListDto>();
+
+
             //foreach (var user in userList)
             //{
             //    var useer = new UserListDto();

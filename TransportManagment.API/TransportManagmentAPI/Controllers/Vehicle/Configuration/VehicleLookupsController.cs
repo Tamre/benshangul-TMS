@@ -7,7 +7,7 @@ using TransportManagmentImplementation.Interfaces.Vehicle.Configuration;
 
 namespace TransportManagmentAPI.Controllers.Vehicle.Configuration
 {
-    [Route("api/vech-config/[controller]")]
+    [Route("api/vech-config/[controller]/[action]")]
     [ApiController]
     public class VehicleLookupsController : ControllerBase
     {
@@ -22,6 +22,12 @@ namespace TransportManagmentAPI.Controllers.Vehicle.Configuration
         public async Task<IActionResult> GetAllByLookUpType(string LookUpTyoe)
         {
             return Ok(await _vehicleLookupsService.GetAllByLookUpType(LookUpTyoe));
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetAll()
+        {
+            return Ok(await _vehicleLookupsService.GetAll());
         }
 
         [HttpPost]

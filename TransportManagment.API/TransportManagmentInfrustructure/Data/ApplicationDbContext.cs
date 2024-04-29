@@ -55,6 +55,7 @@ namespace TransportManagmentInfrustructure.Data
         public DbSet<VehicleType> VehicleTypes { get; set; }
         public DbSet<DepreciationCost> DepreciationCosts { get; set; }
         public DbSet<SalvageValue> SalvageValues { get; set; }
+        public DbSet<ValuationReason> ValuationReasons { get; set; }
 
         public DbSet<VehicleList> VehicleLists { get; set; }
         public DbSet<VehicleOwner> VehicleOwners { get; set; }
