@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
+import { AbstractControl, UntypedFormBuilder, UntypedFormGroup, ValidationErrors, Validators } from '@angular/forms';
 import { UserView } from 'src/app/model/user';
 import { TokenStorageService } from 'src/app/core/services/token-storage.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -61,7 +61,7 @@ export class AisorcStockTypeComponent {
       id: [""],
       name: ["", [Validators.required]],
       localName: ["", [Validators.required]],
-      code: ["", [Validators.required]],
+      code: ["", [Validators.required],this.numValidator],
       category:["",[Validators.required]],
       createdById: [this.currentUser?.userId, [Validators.required]],
       isActive:[true]
@@ -76,6 +76,14 @@ export class AisorcStockTypeComponent {
       }
     });
   }
+  numValidator(control: AbstractControl): Promise<ValidationErrors | null> {
+    return Promise.resolve().then(() => {
+       if (!Number.isInteger(control.value)) {
+         return { floatInvalid: true };
+       }
+       return null;
+    });
+   }
 
 
   openModal(content: any) {

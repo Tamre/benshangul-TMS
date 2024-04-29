@@ -78,7 +78,7 @@ export class VehicleLookupsComponent {
       //code: ["", [Validators.required]],
       vehicleLookupType:["",[Validators.required]],
       createdById: [this.currentUser?.userId, [Validators.required]],
-      isActive:[true]
+      //isActive:[true]
     });
     /**
      * fetches data
@@ -171,7 +171,7 @@ export class VehicleLookupsComponent {
         });
       } else {
         const newData: VehicleLookupPostDto = this.dataForm.value;
-        newData.isActive = true;
+        //newData.isActive = true;
         this.vehicleLookupService.addVehicleLookup(newData).subscribe({
           next: (res: ResponseMessage) => {
             if (res.success) {

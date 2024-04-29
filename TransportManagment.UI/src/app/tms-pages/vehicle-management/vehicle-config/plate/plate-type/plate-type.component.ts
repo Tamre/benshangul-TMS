@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
+import { AbstractControl, UntypedFormBuilder, UntypedFormGroup, ValidationErrors, Validators } from '@angular/forms';
 import { UserView } from 'src/app/model/user';
 import { PlateTypeService } from 'src/app/core/services/vehicle-config-services/plate-type.service';
 import { Store } from '@ngrx/store';
@@ -57,11 +57,12 @@ export class PlateTypeComponent {
       id: [""],
       name: ["", [Validators.required]],
       localName: ["", [Validators.required]],
-      code: ["", [Validators.required]],
+      code: ["", [Validators.required,Validators.pattern(/^-?\d+$/)]],
       regionList:["",[Validators.required]],
       createdById: [this.currentUser?.userId, [Validators.required]],
       isActive:[true]
     });
+    
     /**
      * fetches data
      */
@@ -72,6 +73,7 @@ export class PlateTypeComponent {
       }
     });
   }
+  
   openModal(content: any) {
     this.submitted = false;
     this.isEditing = false;
