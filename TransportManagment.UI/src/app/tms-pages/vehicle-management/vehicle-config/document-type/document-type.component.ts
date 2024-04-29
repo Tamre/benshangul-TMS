@@ -32,8 +32,7 @@ export class DocumentTypeComponent {
   allDocTypes?:any;
   docTypes?: any;
 
-  successAddMessage = "Document Type successfully added";
-  successUpdateMessage = "Document Type successfully updated";
+  successAddMessage : string = "";
   editDocumentText = "Edit Document Type";
   updateText = "Update";
 
@@ -145,11 +144,9 @@ export class DocumentTypeComponent {
         this.docTypeService.updateDocType(newData).subscribe({
           next: (res) => {
             if (res.success) {
-              this.translate.get('Document Type sucessfully updated').subscribe((res: string) => {
-                this.successAddMessage = res;
-              });
+              this.successAddMessage = res.message;
               this.closeModal();
-              successToast(this.successUpdateMessage);
+              successToast(this.successAddMessage);
               this.refreshData()
             }
           },
@@ -169,9 +166,7 @@ export class DocumentTypeComponent {
         this.docTypeService.addDocType(newData).subscribe({
           next: (res) => {
             if (res.success) {
-              this.translate.get('Document Type sucessfully added').subscribe((res: string) => {
-                this.successAddMessage = res;
-              });
+              this.successAddMessage = res.message;
               this.closeModal();
               successToast(this.successAddMessage);
               this.refreshData()

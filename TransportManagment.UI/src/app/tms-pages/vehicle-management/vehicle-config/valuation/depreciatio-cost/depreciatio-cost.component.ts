@@ -94,7 +94,7 @@ export class DepreciatioCostComponent {
           }
       },
       error: (err) => {
-        
+        err
       },
     });
   }
@@ -157,9 +157,6 @@ export class DepreciatioCostComponent {
 
       } else {
         const newData: DepCostPostDto = this.dataForm.value;
-        // const newData: Omit<StockTypePostDto, 'id'> = {
-        //   ...this.dataForm.value,
-        // };
         newData.isActive = true;
         this.depCostService.addDepCost(newData).subscribe({
           next: (res) => {

@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { AbstractControl, UntypedFormBuilder, UntypedFormGroup, ValidationErrors, Validators } from '@angular/forms';
 import { UserView } from 'src/app/model/user';
 import { VehicleLookupService } from 'src/app/core/services/vehicle-config-services/vehicle-lookup.service';
@@ -15,7 +14,7 @@ import { fetchCrmContactData } from 'src/app/store/CRM/crm_action';
 import { FactoryPointService } from 'src/app/core/services/vehicle-config-services/factory-point.service';
 import { ResponseMessage } from 'src/app/model/ResponseMessage.Model';
 import { successToast } from 'src/app/core/services/toast.service';
-import { FactoryPointPostDto } from 'src/app/model/vehicle-configuration/factory-point';
+import { FactoryPointPostDto, FactoryPointUpdateDto } from 'src/app/model/vehicle-configuration/factory-point';
 
 @Component({
   selector: 'app-factory-point',
@@ -42,8 +41,7 @@ export class FactoryPointComponent {
   markNameIdMap: { [name: string]: number } = {};
 
   successAddMessage: string = "";
-  successUpdateMessage = "Vehicle Type successfully updated";
-  editPlateTypeText = "Edit Vehicle Type";
+  editFactoryPointText = "Edit Factory Type";
   updateText = "Update";
 
   constructor(
@@ -67,9 +65,10 @@ export class FactoryPointComponent {
     this.dataForm = this.formBuilder.group({
       id: [""],
       value: ["", [Validators.required],this.floatValidator],
+      markName: [""],
       markId: ["", [Validators.required]],
       createdById: [this.currentUser?.userId, [Validators.required]],
-      //isActive:[true]
+      isActive:[true]
     });
     /**
      * fetches data
@@ -117,6 +116,7 @@ export class FactoryPointComponent {
     });
   }
   openModal(content: any) {
+    //this.getMark()
     this.submitted = false;
     this.isEditing = false;
     this.dataForm.reset();
@@ -175,8 +175,8 @@ export class FactoryPointComponent {
 
     if (this.dataForm.valid) {
       if (this.dataForm.get("id")?.value) {
-        console.log(this.currentUser?.userId)
-        const newData: FactoryPointPostDto = this.dataForm.value;
+        const newData: FactoryPointUpdateDto = this.dataForm.value;
+        newData.markName
         this.factoryPointService.updateFactoryPoint(newData).subscribe({
           next: (res: ResponseMessage) => {
             if (res.success) {
@@ -193,10 +193,8 @@ export class FactoryPointComponent {
           },
         });
 
-      } else {
-        
+      } else { 
         const newData: FactoryPointPostDto = this.dataForm.value;
-        //newData.isActive = true;
         this.factoryPointService.addFactoryPoint(newData).subscribe({
           next: (res: ResponseMessage) => {
             if (res.success) {
@@ -227,13 +225,14 @@ export class FactoryPointComponent {
     return this.dataForm.controls;
   }
   editDataGet(id: any, content: any) {
+    //this.getMark()
     this.submitted = false;
     this.modalService.open(content, { size: "lg", centered: true });
     var modelTitle = document.querySelector(".modal-title") as HTMLAreaElement;
     this.translate.get("Edit Vehicle Type").subscribe((res: string) => {
-      this.editPlateTypeText = res;
+      this.editFactoryPointText = res;
     });
-    modelTitle.innerHTML = this.editPlateTypeText;
+    modelTitle.innerHTML = this.editFactoryPointText;
     var updateBtn = document.getElementById("add-btn") as HTMLAreaElement;
     this.translate.get("Update").subscribe((res: string) => {
       this.updateText = res;

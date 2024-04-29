@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { ManufactureCountryService } from 'src/app/core/services/vehicle-config-services/manufacture-country.service';
 import { RootReducerState } from 'src/app/store';
 import { Store } from '@ngrx/store';
@@ -14,13 +13,14 @@ import { fetchCrmContactData } from 'src/app/store/CRM/crm_action';
 import { cloneDeep } from 'lodash';
 import { successToast } from 'src/app/core/services/toast.service';
 import { ManufactureYearPostDto } from 'src/app/model/vehicle-configuration/manufacture-year';
+import { ResponseMessage } from 'src/app/model/ResponseMessage.Model';
 
 @Component({
-  selector: 'app-manufacture-year',
-  templateUrl: './manufacture-year.component.html',
-  styleUrl: './manufacture-year.component.scss'
+  selector: 'app-manufacture-country',
+  templateUrl: './manufacture-country.component.html',
+  styleUrl: './manufacture-country.component.scss'
 })
-export class ManufactureYearComponent {
+export class ManufactureCountryComponent {
   submitted = false;
   isEditing:Boolean = false;
   dataForm!: UntypedFormGroup;
@@ -32,9 +32,9 @@ export class ManufactureYearComponent {
   allManufactureCountries?:any;
   manufactureCountries?: any;
 
-  successAddMessage = "Depreciation Cost successfully added";
-  successUpdateMessage = "Depreciation Cost successfully updated";
-  editDepCostText = "Edit Depreciation Cost";
+  successAddMessage : string = "";
+  successUpdateMessage : string = "";
+  editMnufactureCountryText = "Edit Manufacture Country ";
   updateText = "Update";
 
   constructor(
@@ -141,13 +141,11 @@ export class ManufactureYearComponent {
         console.log(this.currentUser?.userId)
         const newData: ManufactureYearPostDto = this.dataForm.value;
         this.manufactureCountryService.updateManufactureYear(newData).subscribe({
-          next: (res) => {
+          next: (res:ResponseMessage) => {
             if (res.success) {
-              this.translate.get('Depreciation Cost sucessfully updated').subscribe((res: string) => {
-                this.successAddMessage = res;
-              });
+              this.successAddMessage = res.message;
               this.closeModal();
-              successToast(this.successUpdateMessage);
+              successToast(this.successAddMessage);
               this.refreshData()
             }
           },
@@ -156,16 +154,11 @@ export class ManufactureYearComponent {
 
       } else {
         const newData: ManufactureYearPostDto = this.dataForm.value;
-        // const newData: Omit<StockTypePostDto, 'id'> = {
-        //   ...this.dataForm.value,
-        // };
         newData.isActive = true;
         this.manufactureCountryService.addManufactureYear(newData).subscribe({
-          next: (res) => {
+          next: (res:ResponseMessage) => {
             if (res.success) {
-              this.translate.get('Manufacture Year sucessfully added').subscribe((res: string) => {
-                this.successAddMessage = res;
-              });
+              this.successAddMessage = res.message;
               this.closeModal();
               successToast(this.successAddMessage);
               this.refreshData()
@@ -190,10 +183,10 @@ export class ManufactureYearComponent {
     this.submitted = false;
     this.modalService.open(content, { size: "lg", centered: true });
     var modelTitle = document.querySelector(".modal-title") as HTMLAreaElement;
-    this.translate.get("Edit Depreciation Cost").subscribe((res: string) => {
-      this.editDepCostText = res;
+    this.translate.get("Edit Manufacture Country").subscribe((res: string) => {
+      this.editMnufactureCountryText = res;
     });
-    modelTitle.innerHTML =this.editDepCostText ;
+    modelTitle.innerHTML =this.editMnufactureCountryText ;
     var updateBtn = document.getElementById("add-btn") as HTMLAreaElement;
     this.translate.get("Update").subscribe((res: string) => {
       this.updateText= res;

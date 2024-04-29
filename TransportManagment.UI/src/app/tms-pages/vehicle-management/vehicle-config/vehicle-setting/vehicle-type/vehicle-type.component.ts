@@ -42,7 +42,7 @@ export class VehicleTypeComponent implements OnInit{
 
   successAddMessage: string = "";
   successUpdateMessage = "Vehicle Type successfully updated";
-  editPlateTypeText = "Edit Vehicle Type";
+  editVehicleTypeText = "Edit Vehicle Type";
   updateText = "Update";
 
   constructor(
@@ -66,9 +66,9 @@ export class VehicleTypeComponent implements OnInit{
       id: [""],
       name: ["", [Validators.required]],
       localName: ["", [Validators.required]],
-      vehicleCategory: ["", [Validators.required]],
+      vehicleCategoryId: ["", [Validators.required]],
       createdById: [this.currentUser?.userId, [Validators.required]],
-      //isActive:[true]
+      isActive:[true]
     });
     /**
      * fetches data
@@ -186,12 +186,6 @@ export class VehicleTypeComponent implements OnInit{
       } else {
         
         const newData: VehicleTypePostDto = this.dataForm.value;
-        //const newData: VehicleTypePostDto = { ...this.dataForm.value };
-
-        //newData.vehicleCategoryId = parseInt(newData.vehicleCategoryId);
-
-        
-        //newData.isActive = true;
         console.log('newData:', newData);
         this.vehicleTypeService.addVehicleType(newData).subscribe({
           next: (res: ResponseMessage) => {
@@ -228,9 +222,9 @@ export class VehicleTypeComponent implements OnInit{
     this.modalService.open(content, { size: "lg", centered: true });
     var modelTitle = document.querySelector(".modal-title") as HTMLAreaElement;
     this.translate.get("Edit Vehicle Type").subscribe((res: string) => {
-      this.editPlateTypeText = res;
+      this.editVehicleTypeText = res;
     });
-    modelTitle.innerHTML =this.editPlateTypeText ;
+    modelTitle.innerHTML =this.editVehicleTypeText ;
     var updateBtn = document.getElementById("add-btn") as HTMLAreaElement;
     this.translate.get("Update").subscribe((res: string) => {
       this.updateText= res;
@@ -240,7 +234,7 @@ export class VehicleTypeComponent implements OnInit{
     this.econtent = this.vehicleTypes[id];
     this.dataForm.controls["name"].setValue(this.econtent.name);
     this.dataForm.controls["localName"].setValue(this.econtent.localName);
-    this.dataForm.controls["vehicleCategory"].setValue(this.econtent.vehicleCategory);
+    this.dataForm.controls["vehicleCategoryId"].setValue(this.econtent.vehicleCategoryId);
 
     this.dataForm.controls["createdById"].setValue(this.currentUser?.userId);
     this.dataForm.controls["id"].setValue(this.econtent.id);

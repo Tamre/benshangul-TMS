@@ -227,7 +227,7 @@ export class VehicleBodyTypeComponent implements OnInit {
     this.submitted = false;
     this.modalService.open(content, { size: "lg", centered: true });
     var modelTitle = document.querySelector(".modal-title") as HTMLAreaElement;
-    this.translate.get("Edit Vehicle Type").subscribe((res: string) => {
+    this.translate.get("Edit Vehicle Body Type").subscribe((res: string) => {
       this.editPlateTypeText = res;
     });
     modelTitle.innerHTML =this.editPlateTypeText ;

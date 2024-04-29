@@ -29,8 +29,7 @@
                             <select class="form-control mb-0" data-choices data-choices-search-false id="choices-single-default" (click)="SortFilter();">
                                 <option value="Dname">{{ 'Name' | translate }}</option>
                                 <option value="DlocalName">{{ 'Local Name' | translate }}</option>
-                                <option value="DvehicleCategory">{{ 'vehicleCategory' | translate }}</option>
-                                <!-- <option value="DrowStatus">{{ 'rowStatus' | translate }}</option> -->
+                                <option value="DvehicleCategoryId">{{ 'Vehicle Category' | translate }}</option>
                                 <option value="DisActive">{{ 'Status' | translate }}</option>
                             </select>
                         </div>
@@ -46,8 +45,7 @@
                                     <th scope="col" style="width: 50px;"></th>
                                     <th class="sort" (click)="onSort('name')">{{ 'Name' | translate }}</th>
                                     <th class="sort" (click)="onSort('localName')">{{ 'Local Name' | translate }}</th>
-                                    <th class="sort" (click)="onSort('vehicleCategory')">{{ 'vehicleCategory' | translate }}</th>
-                                    <!-- <th class="sort" (click)="onSort('rowStatus')">{{ 'rowStatus' | translate }}</th> -->
+                                    <th class="sort" (click)="onSort('vehicleCategoryId')">{{ 'Vehicle Category' | translate }}</th>
                                     <th class="sort" (click)="onSort('isActive')">{{ 'Status' | translate }}</th>
                                     <th>{{ 'Edit' | translate }}</th>
                                 </tr>
@@ -63,11 +61,8 @@
                                         <ngb-highlight [result]="data.localName" [term]="searchTerm"></ngb-highlight>
                                     </td>
                                     <td>
-                                        <ngb-highlight [result]="data.vehicleCategory" [term]="searchTerm"></ngb-highlight>
+                                        <ngb-highlight [result]="data.vehicleCategoryId" [term]="searchTerm"></ngb-highlight>
                                     </td>
-                                    <!-- <td>
-                                        <ngb-highlight [result]="data.rowStatus" [term]="searchTerm"></ngb-highlight>
-                                    </td> -->
                                     <td>
                                         <ngb-highlight [result]="data.isActive" [term]="searchTerm"></ngb-highlight>
                                     </td>
@@ -90,7 +85,7 @@
                 <!-- Contacts Create Model -->
                 <ng-template #content role="document" let-modal>
                     <div class="modal-header bg-info-subtle p-3">
-                        <h5 class="modal-title" id="exampleModalLabel">{{ 'Add Plate Type' | translate }}</h5>
+                        <h5 class="modal-title" id="exampleModalLabel">{{ 'Add Vehicle Type' | translate }}</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal" (click)="modal.dismiss('Cross click')"></button>
                     </div>
                     <form (ngSubmit)="saveData()" [formGroup]="dataForm" class="tablelist-form" autocomplete="off">
@@ -126,41 +121,27 @@
                                 </div>
                                 <div class="col-lg-6">
                                     <div>
-                                         <label for="vehicleCategory-field" class="form-label">{{ 'vehicleCategory' | translate }}</label>
-                                        <!--<input type="text" id="vehicleCategory-field" class="form-control" 
-                                        placeholder="{{ 'Enter vehicleCategory' | translate }}" required 
-                                        formControlName="vehicleCategory" [ngClass]="{ 'is-invalid': submitted && form['vehicleCategory'].errors }" /> -->
-                                        <select id="vehicleCategory-field" class="form-control" formControlName="vehicleCategory"
-                                            [ngClass]="{ 'is-invalid': submitted && form['vehicleCategory'].errors }">
-                                            <option value="" disabled>{{ 'Select vehicleCategory' | translate }}</option>
+                                         <label for="vehicleCategoryId-field" class="form-label">{{ 'Vehicle Category' | translate }}</label>
+
+                                        <select id="vehicleCategoryId-field" class="form-control" formControlName="vehicleCategoryId"
+                                            [ngClass]="{ 'is-invalid': submitted && form['vehicleCategoryId'].errors }">
+                                            <option value="" disabled>{{ 'Select Vehicle Category' | translate }}</option>
                                             <option *ngFor="let categoryName of categoryNames"
                                                 [value]="CategoryNameIdMap[categoryName]">{{ categoryName }}</option>
                                         </select>
-                                        @if (submitted && form['vehicleCategory'].errors) {
+                                        @if (submitted && form['vehicleCategoryId'].errors) {
                                         <div class="invalid-feedback" align="left">
-                                            @if (form['vehicleCategory'].errors['required']) {s
-                                            <div>{{ 'vehicleCategory is required' | translate }}</div>
+                                            @if (form['vehicleCategoryId'].errors['required']) {s
+                                            <div>{{ 'Vehicle Category is required' | translate }}</div>
                                             }
                                         </div>
                                         }
                                     </div>
                                 </div>
-                                <!-- <div class="col-lg-6">
-                                    <div>
-                                        <label for="rowStatus-field" class="form-label">{{ 'rowStatus' | translate }}</label>
-                                        <input type="text" id="rowStatus-field" class="form-control" placeholder="{{ 'Enter rowStatus' | translate }}" required formControlName="rowStatus" [ngClass]="{ 'is-invalid': submitted && form['rowStatus'].errors }" />
-                                        @if (submitted && form['rowStatus'].errors) {
-                                        <div class="invalid-feedback" align="left">
-                                            @if (form['rowStatus'].errors['required']) {s
-                                            <div>{{ 'rowStatus is required' | translate }}</div>
-                                            }
-                                        </div>
-                                        }
-                                    </div>
-                                </div> -->
+
                                 <div *ngIf="isEditing" class="col-lg-6">
                                     <div>
-                                        <label for="isActive-field" class="form-label">{{ 'isActive' | translate }}</label>
+                                        <label for="isActive-field" class="form-label">{{ 'Status' | translate }}</label>
                                         <div class="form-check form-switch">
                                             <input  id="isActive-field" class="form-check-input" type="checkbox" role="switch"  formControlName="isActive" />
                                         </div>
@@ -171,7 +152,7 @@
                         <div class="modal-footer">
                             <div class="hstack gap-2 justify-content-end">
                                 <button type="button" class="btn btn-light" data-bs-dismiss="modal" (click)="closeModal()">{{ 'Close' | translate }}</button>
-                                <button type="submit" class="btn btn-success" id="add-btn" [disabled]="!dataForm.valid">{{ 'Add' | translate }}</button>
+                                <button type="submit" class="btn btn-success" id="add-btn" >{{ 'Add' | translate }}</button>
                             </div>
                         </div>
                     </form>

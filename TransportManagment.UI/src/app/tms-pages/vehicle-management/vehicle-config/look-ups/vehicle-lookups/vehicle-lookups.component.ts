@@ -75,10 +75,9 @@ export class VehicleLookupsComponent {
       id: [""],
       name: ["", [Validators.required]],
       localName: ["", [Validators.required]],
-      //code: ["", [Validators.required]],
       vehicleLookupType:["",[Validators.required]],
       createdById: [this.currentUser?.userId, [Validators.required]],
-      //isActive:[true]
+      isActive:[true]
     });
     /**
      * fetches data
@@ -204,7 +203,7 @@ export class VehicleLookupsComponent {
     this.submitted = false;
     this.modalService.open(content, { size: "lg", centered: true });
     var modelTitle = document.querySelector(".modal-title") as HTMLAreaElement;
-    this.translate.get("Edit Ban Body Type").subscribe((res: string) => {
+    this.translate.get("Edit Vehicle Lookup").subscribe((res: string) => {
       this.editBanBodyText = res;
     });
     modelTitle.innerHTML =this.editBanBodyText ;

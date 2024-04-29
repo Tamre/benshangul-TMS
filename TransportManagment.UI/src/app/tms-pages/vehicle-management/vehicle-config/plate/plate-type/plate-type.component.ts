@@ -34,8 +34,7 @@ export class PlateTypeComponent {
   plates?: any;
 
   successAddMessage: string = "";
-  successUpdateMessage = "Plate Type successfully updated";
-  editPlateTypeText = "Edit Ban Body";
+  editPlateTypeText = "Edit Plate Type";
   updateText = "Update";
 
   constructor(
@@ -191,7 +190,7 @@ export class PlateTypeComponent {
     this.submitted = false;
     this.modalService.open(content, { size: "lg", centered: true });
     var modelTitle = document.querySelector(".modal-title") as HTMLAreaElement;
-    this.translate.get("Edit Stock Type").subscribe((res: string) => {
+    this.translate.get("Edit Plate Type").subscribe((res: string) => {
       this.editPlateTypeText = res;
     });
     modelTitle.innerHTML =this.editPlateTypeText ;

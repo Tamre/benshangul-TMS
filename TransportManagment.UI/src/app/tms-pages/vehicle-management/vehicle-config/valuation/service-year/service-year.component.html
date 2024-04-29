@@ -29,9 +29,9 @@
                             <select class="form-control mb-0" data-choices data-choices-search-false id="choices-single-default" (click)="SortFilter();">
                                 <option value="Dname">{{ 'Name' | translate }}</option>
                                 <option value="DlocalName">{{ 'Local Name' | translate }}</option>
-                                <option value="DserviceModule">{{ 'serviceModule' | translate }}</option>
-                                <option value="DlistOfPlates">{{ 'listOfPlates' | translate }}</option>
-                                <option value="DlistOfAIS">{{ 'listOfAIS' | translate }}</option>
+                                <option value="DserviceModule">{{ 'Service Module' | translate }}</option>
+                                <option value="DlistOfPlates">{{ 'Plates' | translate }}</option>
+                                <option value="DlistOfAIS">{{ 'AIS' | translate }}</option>
                                 <option value="DisActive">{{ 'Status' | translate }}</option>
                             </select>
                         </div>
@@ -47,9 +47,9 @@
                                     <th scope="col" style="width: 50px;"></th>
                                     <th class="sort" (click)="onSort('name')">{{ 'Name' | translate }}</th>
                                     <th class="sort" (click)="onSort('localName')">{{ 'Local Name' | translate }}</th>
-                                    <th class="sort" (click)="onSort('serviceModule')">{{ 'serviceModule' | translate }}</th>
-                                    <th class="sort" (click)="onSort('listOfPlates')">{{ 'listOfPlates' | translate }}</th>
-                                    <th class="sort" (click)="onSort('listOfAIS')">{{ 'listOfAIS' | translate }}</th>
+                                    <th class="sort" (click)="onSort('serviceModule')">{{ 'Service Module' | translate }}</th>
+                                    <th class="sort" (click)="onSort('listOfPlates')">{{ 'Plates' | translate }}</th>
+                                    <th class="sort" (click)="onSort('listOfAIS')">{{ 'AIS' | translate }}</th>
                                     <th class="sort" (click)="onSort('isActive')">{{ 'Status' | translate }}</th>
                                     <th>{{ 'Edit' | translate }}</th>
                                 </tr>
@@ -95,7 +95,7 @@
                 <!-- Contacts Create Model -->
                 <ng-template #content role="document" let-modal>
                     <div class="modal-header bg-info-subtle p-3">
-                        <h5 class="modal-title" id="exampleModalLabel">{{ 'Add AIS ORC Stock Type' | translate }}</h5>
+                        <h5 class="modal-title" id="exampleModalLabel">{{ 'Add Service Year' | translate }}</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal" (click)="modal.dismiss('Cross click')"></button>
                     </div>
                     <form (ngSubmit)="saveData()" [formGroup]="dataForm" class="tablelist-form" autocomplete="off">
@@ -106,7 +106,7 @@
                                     <input type="hidden" name="id" value="" formControlName="id" />
                                     <div>
                                         <label for="name-field" class="form-label">{{ 'Name' | translate }}</label>
-                                        <input type="text" id="name-field" class="form-control" placeholder="{{ 'Enter Stock Type Name' | translate }}" required formControlName="name" [ngClass]="{ 'is-invalid': submitted && form['name'].errors }" />
+                                        <input type="text" id="name-field" class="form-control" placeholder="{{ 'Enter Service Year Name' | translate }}" required formControlName="name" [ngClass]="{ 'is-invalid': submitted && form['name'].errors }" />
                                         @if (submitted && form['name'].errors) {
                                         <div class="invalid-feedback" align="left">
                                             @if (form['name'].errors['required']) {
@@ -131,18 +131,17 @@
                                 </div>
                                 <div class="col-lg-6">
                                     <div>
-                                        <label for="serviceModule-field" class="form-label">{{ 'serviceModule' | translate }}</label>
-                                        <!-- <input type="text" id="serviceModule-field" class="form-control" placeholder="{{ 'Enter serviceModule' | translate }}" 
-                                        required formControlName="serviceModule" [ngClass]="{ 'is-invalid': submitted && form['serviceModule'].errors }" /> -->
+                                        <label for="serviceModule-field" class="form-label">{{ 'Service Module' | translate }}</label>
+                                        
                                         <select id="serviceModule-field" class="form-control" name="choices-single-default" data-choices data-choices-search-false formControlName="serviceModule"
                                                 [ngClass]="{ 'is-invalid': submitted && dataForm.controls['serviceModule'].errors }">
-                                                <option value="" disabled>{{ 'Select serviceModule' | translate }}</option>
+                                                <option value="" disabled>{{ 'Select Service Module' | translate }}</option>
                                                 <option *ngFor="let item of serviceModuleDropDownItem" [value]="item.code" > {{item.name}} </option>
                                             </select>
                                         @if (submitted && form['serviceModule'].errors) {
                                         <div class="invalid-feedback" align="left">
-                                            @if (form['serviceModule'].errors['required']) {s
-                                            <div>{{ 'serviceModule is required' | translate }}</div>
+                                            @if (form['serviceModule'].errors['required']) {
+                                            <div>{{ 'Service Module is required' | translate }}</div>
                                             }
                                         </div>
                                         }
@@ -150,12 +149,12 @@
                                 </div>
                                 <div class="col-lg-6">
                                     <div>
-                                        <label for="listOfPlates-field" class="form-label">{{ 'listOfPlates' | translate }}</label>
-                                        <input type="text" id="listOfPlates-field" class="form-control" placeholder="{{ 'Enter listOfPlates' | translate }}" required formControlName="listOfPlates" [ngClass]="{ 'is-invalid': submitted && form['listOfPlates'].errors }" />
+                                        <label for="listOfPlates-field" class="form-label">{{ 'Plates' | translate }}</label>
+                                        <input type="text" id="listOfPlates-field" class="form-control" placeholder="{{ 'Enter Plates' | translate }}" required formControlName="listOfPlates" [ngClass]="{ 'is-invalid': submitted && form['listOfPlates'].errors }" />
                                         @if (submitted && form['listOfPlates'].errors) {
                                         <div class="invalid-feedback" align="left">
                                             @if (form['listOfPlates'].errors['required']) {s
-                                            <div>{{ 'listOfPlates is required' | translate }}</div>
+                                            <div>{{ 'Plates is required' | translate }}</div>
                                             }
                                         </div>
                                         }
@@ -163,12 +162,12 @@
                                 </div>
                                 <div class="col-lg-6">
                                     <div>
-                                        <label for="listOfAIS-field" class="form-label">{{ 'listOfAIS' | translate }}</label>
-                                        <input type="text" id="listOfAIS-field" class="form-control" placeholder="{{ 'Enter listOfAIS' | translate }}" required formControlName="listOfAIS" [ngClass]="{ 'is-invalid': submitted && form['listOfAIS'].errors }" />
+                                        <label for="listOfAIS-field" class="form-label">{{ 'AIS' | translate }}</label>
+                                        <input type="text" id="listOfAIS-field" class="form-control" placeholder="{{ 'Enter AIS' | translate }}" required formControlName="listOfAIS" [ngClass]="{ 'is-invalid': submitted && form['listOfAIS'].errors }" />
                                         @if (submitted && form['listOfAIS'].errors) {
                                         <div class="invalid-feedback" align="left">
                                             @if (form['listOfAIS'].errors['required']) {s
-                                            <div>{{ 'listOfAIS is required' | translate }}</div>
+                                            <div>{{ 'AIS is required' | translate }}</div>
                                             }
                                         </div>
                                         }
@@ -176,7 +175,7 @@
                                 </div>
                                 <div *ngIf="isEditing" class="col-lg-6">
                                     <div>
-                                        <label for="isActive-field" class="form-label">{{ 'isActive' | translate }}</label>
+                                        <label for="isActive-field" class="form-label">{{ 'Status' | translate }}</label>
                                         <div class="form-check form-switch">
                                             <input  id="isActive-field" class="form-check-input" type="checkbox" role="switch"  formControlName="isActive" />
                                         </div>
@@ -187,7 +186,7 @@
                         <div class="modal-footer">
                             <div class="hstack gap-2 justify-content-end">
                                 <button type="button" class="btn btn-light" data-bs-dismiss="modal" (click)="closeModal()">{{ 'Close' | translate }}</button>
-                                <button type="submit" class="btn btn-success" id="add-btn" [disabled]="!dataForm.valid" >{{ 'Add' | translate }}</button>
+                                <button type="submit" class="btn btn-success" id="add-btn" >{{ 'Add' | translate }}</button>
                             </div>
                         </div>
                     </form>

@@ -34,9 +34,15 @@ export class ServiceTypeComponent {
   serviceTypes?: any;
 
   successAddMessage: string = "";
-  successUpdateMessage = "Plate Type successfully updated";
-  editPlateTypeText = "Edit Ban Body";
-  updateText = "Update";
+  editServiceTypeText = "Edit Service Year";
+  updateText:string = "";
+
+  serviceModuleDropDownItem = [
+    { name: 'DPMS', code: 'DPMS'},
+    { name: 'VRMS', code: 'VRMS'},
+    { name: 'PUBLIC', code: 'PUBLIC'},
+    { name: 'FRIGHT', code: 'FRIGHT'}
+  ]
 
   constructor(
     private formBuilder: UntypedFormBuilder,
@@ -188,10 +194,10 @@ export class ServiceTypeComponent {
     this.submitted = false;
     this.modalService.open(content, { size: "lg", centered: true });
     var modelTitle = document.querySelector(".modal-title") as HTMLAreaElement;
-    this.translate.get("Edit Stock Type").subscribe((res: string) => {
-      this.editPlateTypeText = res;
+    this.translate.get("Edit Service Type").subscribe((res: string) => {
+      this.editServiceTypeText = res;
     });
-    modelTitle.innerHTML =this.editPlateTypeText ;
+    modelTitle.innerHTML =this.editServiceTypeText ;
     var updateBtn = document.getElementById("add-btn") as HTMLAreaElement;
     this.translate.get("Update").subscribe((res: string) => {
       this.updateText= res;

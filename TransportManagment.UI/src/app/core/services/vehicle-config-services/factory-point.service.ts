@@ -2,7 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { TokenStorageService } from '../token-storage.service';
 import { environment } from 'src/environments/environment';
-import { FactoryPointGetDto, FactoryPointPostDto } from 'src/app/model/vehicle-configuration/factory-point';
+import { FactoryPointGetDto, FactoryPointPostDto, FactoryPointUpdateDto } from 'src/app/model/vehicle-configuration/factory-point';
 import { ResponseMessage } from 'src/app/model/ResponseMessage.Model';
 
 @Injectable({
@@ -25,7 +25,7 @@ export class FactoryPointService {
     var headers = this.headers
     return this.http.get<FactoryPointGetDto[]>(`${this.baseUrl}/vech-config/FactoryPoint/GetAll`,{headers});
   }
-  updateFactoryPoint(formData:FactoryPointPostDto){
+  updateFactoryPoint(formData:FactoryPointUpdateDto){
     var headers = this.headers
     return this.http.put<ResponseMessage>(
       `${this.baseUrl}/vech-config/FactoryPoint/Update`,

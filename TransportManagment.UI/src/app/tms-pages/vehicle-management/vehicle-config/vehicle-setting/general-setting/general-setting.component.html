@@ -5,7 +5,7 @@
                 <div class="d-flex align-items-center flex-wrap gap-2">
                     <div class="flex-grow-1">
                         <button class="btn btn-info add-btn" data-bs-toggle="modal" data-bs-target="#showModal" (click)="openModal(content)">
-                            <i class="ri-add-fill me-1 align-bottom"></i> {{ 'Add Vehicle Setting' | translate }}
+                            <i class="ri-add-fill me-1 align-bottom"></i> {{ 'Add General Setting' | translate }}
                         </button>
                     </div>
                 </div>
@@ -19,7 +19,7 @@
                 <div class="row g-3">
                     <div class="col-md-4">
                         <div class="search-box">
-                            <input type="text" name="searchTerm" class="form-control" placeholder="{{ 'Search for Vehicle Setting...' | translate }}" [(ngModel)]="searchTerm" (ngModelChange)="performSearch()">
+                            <input type="text" name="searchTerm" class="form-control" placeholder="{{ 'Search for General Setting...' | translate }}" [(ngModel)]="searchTerm" (ngModelChange)="performSearch()">
                             <i class="ri-search-line search-icon"></i>
                         </div>
                     </div>
@@ -27,8 +27,8 @@
                         <div class="d-flex align-items-center gap-2">
                             <span class="text-muted text-nowrap">{{ 'Sort by' | translate }}: </span>
                             <select class="form-control mb-0" data-choices data-choices-search-false id="choices-single-default" (click)="SortFilter();">
-                                <option value="DvehicleSettingType">{{ 'vehicleSettingType' | translate }}</option>
-                                <option value="Dvalue">{{ 'value' | translate }}</option>
+                                <option value="DvehicleSettingType">{{ 'Vehicle Setting' | translate }}</option>
+                                <option value="Dvalue">{{ 'Value' | translate }}</option>
                                 <option value="DisActive">{{ 'Status' | translate }}</option>
                             </select>
                         </div>
@@ -42,8 +42,8 @@
                             <thead>
                                 <tr class="bg-light">
                                     <th scope="col" style="width: 50px;"></th>
-                                    <th class="sort" (click)="onSort('vehicleSettingType')">{{ 'vehicleSettingType' | translate }}</th>
-                                    <th class="sort" (click)="onSort('value')">{{ 'value' | translate }}</th>
+                                    <th class="sort" (click)="onSort('vehicleSettingType')">{{ 'Vehicle Setting' | translate }}</th>
+                                    <th class="sort" (click)="onSort('value')">{{ 'Value' | translate }}</th>
                                     <th class="sort" (click)="onSort('isActive')">{{ 'Status' | translate }}</th>
                                     <th>{{ 'Edit' | translate }}</th>
                                 </tr>
@@ -81,7 +81,7 @@
                 <!-- Contacts Create Model -->
                 <ng-template #content role="document" let-modal>
                     <div class="modal-header bg-info-subtle p-3">
-                        <h5 class="modal-title" id="exampleModalLabel">{{ 'Add AIS ORC Stock Type' | translate }}</h5>
+                        <h5 class="modal-title" id="exampleModalLabel">{{ 'Add General Setting' | translate }}</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal" (click)="modal.dismiss('Cross click')"></button>
                     </div>
                     <form (ngSubmit)="saveData()" [formGroup]="dataForm" class="tablelist-form" autocomplete="off">
@@ -91,19 +91,17 @@
                                 <div class="col-lg-12">
                                     <input type="hidden" name="id" value="" formControlName="id" />
                                     <div>
-                                        <label for="vehicleSettingType-field" class="form-label">{{ 'vehicleSettingType' | translate }}</label>
-                                        <!-- <input type="text" id="vehicleSettingType-field" class="form-control" 
-                                        placeholder="{{ 'Enter vehicleSettingType' | translate }}" required 
-                                        formControlName="vehicleSettingType" [ngClass]="{ 'is-invalid': submitted && form['vehicleSettingType'].errors }" /> -->
+                                        <label for="vehicleSettingType-field" class="form-label">{{ 'Vehicle Setting Type' | translate }}</label>
+                                        
                                         <select id="vehicleSettingType-field" class="form-control" name="choices-single-default" data-choices data-choices-search-false formControlName="vehicleSettingType"
                                                 [ngClass]="{ 'is-invalid': submitted && dataForm.controls['vehicleSettingType'].errors }">
-                                                <option value="" disabled>{{ 'Select vehicleSettingType' | translate }}</option>
+                                                <option value="" disabled>{{ 'Select Vehicle Setting Type' | translate }}</option>
                                                 <option *ngFor="let item of vehicleSettingTypeDropDownItem" [value]="item.code" > {{item.name}} </option>
                                             </select>
                                         @if (submitted && form['vehicleSettingType'].errors) {
                                         <div class="invalid-feedback" align="left">
                                             @if (form['vehicleSettingType'].errors['required']) {
-                                            <div>{{ 'vehicleSettingType is required' | translate }}</div>
+                                            <div>{{ 'Vehicle Setting Type is required' | translate }}</div>
                                             }
                                         </div>
                                         }
@@ -111,36 +109,22 @@
                                 </div>
                                 <div class="col-lg-6">
                                     <div>
-                                        <label for="value-field" class="form-label">{{ 'value' | translate }}</label>
-                                        <input type="text" id="value-field" class="form-control" placeholder="{{ 'Enter value' | translate }}" required formControlName="value" [ngClass]="{ 'is-invalid': submitted && form['value'].errors }" />
+                                        <label for="value-field" class="form-label">{{ 'Value' | translate }}</label>
+                                        <input type="text" id="value-field" class="form-control" placeholder="{{ 'Enter Value' | translate }}" required formControlName="value" [ngClass]="{ 'is-invalid': submitted && form['value'].errors }" />
                                         @if (submitted && form['value'].errors) {
                                         <div class="invalid-feedback" align="left">
                                             @if (form['value'].errors['required']) {
-                                            <div>{{ 'value is required' | translate }}</div>
+                                            <div>{{ 'Value is required' | translate }}</div>
                                             }
                                         </div>
                                         }
                                     </div>
                                 </div>
                                 
-                                <!-- <div class="col-lg-6">
-                                    <div>
-                                        <label for="vehicleLookupType-field" class="form-label">{{ 'Vehicle Lookup Type' | translate }}</label>
-                                            <select id="vehicleLookupType-field" class="form-control" name="choices-single-default" data-choices data-choices-search-false formControlName="vehicleLookupType"
-                                                [ngClass]="{ 'is-invalid': submitted && dataForm.controls['vehicleLookupType'].errors }">
-                                                <option value="" disabled>{{ 'Select vehicle Lookup Type' | translate }}</option>
-                                                <option *ngFor="let item of VehicleLookupTypeEnum" [value]="item.code" > {{item.name}} </option>
-                                            </select>
-                                        <div *ngIf="submitted && dataForm.controls['vehicleLookupType'].errors" class="invalid-feedback" align="left">
-                                            <div *ngIf="dataForm.controls['vehicleLookupType'].errors['required']">{{ 'vehicle Lookup Type Name is required' | translate }}</div>
-                                        </div>
-                                    </div>
-                                    
-                                    
-                                </div> -->
+                                
                                 <div *ngIf="isEditing" class="col-lg-6">
                                     <div>
-                                        <label for="isActive-field" class="form-label">{{ 'isActive' | translate }}</label>
+                                        <label for="isActive-field" class="form-label">{{ 'Status' | translate }}</label>
                                         <div class="form-check form-switch">
                                             <input  id="isActive-field" class="form-check-input" type="checkbox" role="switch"  formControlName="isActive" />
                                         </div>
@@ -151,7 +135,7 @@
                         <div class="modal-footer">
                             <div class="hstack gap-2 justify-content-end">
                                 <button type="button" class="btn btn-light" data-bs-dismiss="modal" (click)="closeModal()">{{ 'Close' | translate }}</button>
-                                <button type="submit" class="btn btn-success" id="add-btn" [disabled]="!dataForm.valid" >{{ 'Add' | translate }}</button>
+                                <button type="submit" class="btn btn-success" id="add-btn"  >{{ 'Add' | translate }}</button>
                             </div>
                         </div>
                     </form>

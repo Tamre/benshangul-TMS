@@ -30,7 +30,7 @@
                                 <option value="Dname">{{ 'Name' | translate }}</option>
                                 <option value="DlocalName">{{ 'Local Name' | translate }}</option>
                                 <option value="Dcode">{{ 'Code' | translate }}</option>
-                                <option value="Dcategory">{{ 'category' | translate }}</option>
+                                <option value="Dcategory">{{ 'Category' | translate }}</option>
                                 <option value="DisActive">{{ 'Status' | translate }}</option>
                             </select>
                         </div>
@@ -153,7 +153,7 @@
                                 </div>
                                 <div *ngIf="isEditing" class="col-lg-6">
                                     <div>
-                                        <label for="isActive-field" class="form-label">{{ 'isActive' | translate }}</label>
+                                        <label for="isActive-field" class="form-label">{{ 'Status' | translate }}</label>
                                         <div class="form-check form-switch">
                                             <input  id="isActive-field" class="form-check-input" type="checkbox" role="switch"  formControlName="isActive" />
                                         </div>
@@ -164,7 +164,7 @@
                         <div class="modal-footer">
                             <div class="hstack gap-2 justify-content-end">
                                 <button type="button" class="btn btn-light" data-bs-dismiss="modal" (click)="closeModal()">{{ 'Close' | translate }}</button>
-                                <button type="submit" class="btn btn-success" id="add-btn" [disabled]="!dataForm.valid" >{{ 'Add' | translate }}</button>
+                                <button type="submit" class="btn btn-success" id="add-btn"  >{{ 'Add' | translate }}</button>
                             </div>
                         </div>
                     </form>
