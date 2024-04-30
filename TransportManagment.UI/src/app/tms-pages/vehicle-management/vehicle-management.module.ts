@@ -29,6 +29,17 @@ import { ValuationComponent } from './vehicle-config/valuation/valuation.compone
 import { PlateTypeComponent } from './vehicle-config/plate/plate-type/plate-type.component';
 import { DocumentTypeComponent } from './vehicle-config/document-type/document-type.component';
 import { VehicleLookupsComponent } from './vehicle-config/look-ups/vehicle-lookups/vehicle-lookups.component';
+import { ServiceTypeComponent } from './vehicle-config/vehicle-setting/service-type/service-type.component';
+import { GeneralSettingComponent } from './vehicle-config/vehicle-setting/general-setting/general-setting.component';
+import { VehicleBodyTypeComponent } from './vehicle-config/vehicle-setting/vehicle-body-type/vehicle-body-type.component';
+import { VehicleModelComponent } from './vehicle-config/vehicle-setting/vehicle-model/vehicle-model.component';
+import { VehicleTypeComponent } from './vehicle-config/vehicle-setting/vehicle-type/vehicle-type.component';
+import { ManufactureCountryComponent } from './vehicle-config/valuation/manufacture-country/manufacture-country.component';
+import { FactoryPointComponent } from './vehicle-config/valuation/factory-point/factory-point.component';
+import { ServiceYearComponent } from './vehicle-config/valuation/service-year/service-year.component';
+import { InitialPriceComponent } from './vehicle-config/valuation/initial-price/initial-price.component';
+import { SalvageValueComponent } from './vehicle-config/valuation/salvage-value/salvage-value.component';
+
 
 
 
@@ -45,7 +56,19 @@ import { VehicleLookupsComponent } from './vehicle-config/look-ups/vehicle-looku
     PlateTypeComponent,
     DocumentTypeComponent,
     AisorcStockTypeComponent,
-    VehicleLookupsComponent
+    VehicleLookupsComponent,
+    ServiceTypeComponent,
+    GeneralSettingComponent,
+    VehicleBodyTypeComponent,
+    VehicleModelComponent,
+    VehicleTypeComponent,
+    ManufactureCountryComponent,
+    FactoryPointComponent,
+    ServiceYearComponent,
+    InitialPriceComponent,
+    SalvageValueComponent
+    
+
   ],
   imports: [
     CommonModule,

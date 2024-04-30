@@ -30,7 +30,7 @@
                                 <option value="Dname">{{ 'Name' | translate }}</option>
                                 <option value="DlocalName">{{ 'Local Name' | translate }}</option>
                                 <option value="Dcode">{{ 'Code' | translate }}</option>
-                                <option value="DregionList">{{ 'regionList' | translate }}</option>
+                                <option value="DregionList">{{ 'Region' | translate }}</option>
                                 <option value="DisActive">{{ 'Status' | translate }}</option>
                             </select>
                         </div>
@@ -47,7 +47,7 @@
                                     <th class="sort" (click)="onSort('name')">{{ 'Name' | translate }}</th>
                                     <th class="sort" (click)="onSort('localName')">{{ 'Local Name' | translate }}</th>
                                     <th class="sort" (click)="onSort('code')">{{ 'Code' | translate }}</th>
-                                    <th class="sort" (click)="onSort('regionList')">{{ 'regionList' | translate }}</th>
+                                    <th class="sort" (click)="onSort('regionList')">{{ 'Region' | translate }}</th>
                                     <th class="sort" (click)="onSort('isActive')">{{ 'Status' | translate }}</th>
                                     <th>{{ 'Edit' | translate }}</th>
                                 </tr>
@@ -105,7 +105,7 @@
                                         @if (submitted && form['name'].errors) {
                                         <div class="invalid-feedback" align="left">
                                             @if (form['name'].errors['required']) {
-                                            <div>{{ 'Stock Type Name is required' | translate }}</div>
+                                            <div>{{ 'Plate Type Name is required' | translate }}</div>
                                             }
                                         </div>
                                         }
@@ -138,24 +138,14 @@
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
-                                    <!-- <div>
-                                        <label for="regionList-field" class="form-label">{{ 'regionList' | translate }}</label>
-                                            <select id="regionList-field" class="form-control" name="choices-single-default" data-choices data-choices-search-false formControlName="category"
-                                                [ngClass]="{ 'is-invalid': submitted && dataForm.controls['regionList'].errors }">
-                                                <option value="" disabled>{{ 'Select regionList' | translate }}</option>
-                                                <option *ngFor="let item of CategoryDropDownItem" [value]="item.code" > {{item.name}} </option>
-                                            </select>
-                                        <div *ngIf="submitted && dataForm.controls['category'].errors" class="invalid-feedback" align="left">
-                                            <div *ngIf="dataForm.controls['category'].errors['required']">{{ 'Category Name is required' | translate }}</div>
-                                        </div>
-                                    </div> -->
+                                    
                                     <div>
-                                        <label for="regionList-field" class="form-label">{{ 'regionList' | translate }}</label>
-                                        <input type="text" id="regionList-field" class="form-control" placeholder="{{ 'Enter regionList' | translate }}" required formControlName="regionList" [ngClass]="{ 'is-invalid': submitted && form['regionList'].errors }" />
+                                        <label for="regionList-field" class="form-label">{{ 'Region' | translate }}</label>
+                                        <input type="text" id="regionList-field" class="form-control" placeholder="{{ 'Enter Region' | translate }}" required formControlName="regionList" [ngClass]="{ 'is-invalid': submitted && form['regionList'].errors }" />
                                         @if (submitted && form['regionList'].errors) {
                                         <div class="invalid-feedback" align="left">
                                             @if (form['regionList'].errors['required']) {s
-                                            <div>{{ 'regionList is required' | translate }}</div>
+                                            <div>{{ 'Region is required' | translate }}</div>
                                             }
                                         </div>
                                         }
@@ -163,7 +153,7 @@
                                 </div>
                                 <div *ngIf="isEditing" class="col-lg-6">
                                     <div>
-                                        <label for="isActive-field" class="form-label">{{ 'isActive' | translate }}</label>
+                                        <label for="isActive-field" class="form-label">{{ 'Status' | translate }}</label>
                                         <div class="form-check form-switch">
                                             <input  id="isActive-field" class="form-check-input" type="checkbox" role="switch"  formControlName="isActive" />
                                         </div>
@@ -174,7 +164,7 @@
                         <div class="modal-footer">
                             <div class="hstack gap-2 justify-content-end">
                                 <button type="button" class="btn btn-light" data-bs-dismiss="modal" (click)="closeModal()">{{ 'Close' | translate }}</button>
-                                <button type="submit" class="btn btn-success" id="add-btn">{{ 'Add' | translate }}</button>
+                                <button type="submit" class="btn btn-success" id="add-btn" >{{ 'Add' | translate }}</button>
                             </div>
                         </div>
                     </form>

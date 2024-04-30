@@ -23,19 +23,23 @@ export class VehicleLookupService {
   });
   getVehicleLookup(id: number) {
     var headers = this.headers
-    return this.http.get<VehicleLookupGetDto[]>(`${this.baseUrl}/vech-config/VehicleLookups?LookUpTyoe=${id}`,{headers},);
+    return this.http.get<VehicleLookupGetDto[]>(`${this.baseUrl}/vech-config/VehicleLookups/GetAllByLookUpType?LookUpTyoe=${id}`,{headers},);
+  }
+  getAllVehicleLookup() {
+    var headers = this.headers
+    return this.http.get<VehicleLookupGetDto[]>(`${this.baseUrl}/vech-config/VehicleLookups/GetAll`,{headers});
   }
   updateVehicleLookup(formData:VehicleLookupPostDto){
     var headers = this.headers
     return this.http.put<ResponseMessage>(
-      `${this.baseUrl}/vech-config/VehicleLookups`,
+      `${this.baseUrl}/vech-config/VehicleLookups/Update`,
       formData,{headers:headers}
     );
   }
   addVehicleLookup(formData:VehicleLookupPostDto){
     var headers = this.headers
     return this.http.post<ResponseMessage>(
-      `${this.baseUrl}/vech-config/VehicleLookups`,
+      `${this.baseUrl}/vech-config/VehicleLookups/Add`,
       formData,{headers:headers}
     );
   }

@@ -24,9 +24,9 @@ namespace TransportManagmentAPI.Controllers.Vehicle.Configuration
 
         [HttpGet]
         [ProducesResponseType(typeof(AISORCStockTypeGetDto), (int)HttpStatusCode.OK)]
-        public async Task<IActionResult> GetAll()
+        public async Task<IActionResult> GetAll([FromQuery]RequestParameter requestParameter)
         {
-            return Ok(await _AISORCStockTypeService.GetAll());
+            return Ok(await _AISORCStockTypeService.GetAll(requestParameter));
         }
 
 

@@ -12,6 +12,6 @@ namespace TransportManagmentImplementation.Interfaces.Common
     {
         public Task<ResponseMessage> Add(DeviceListPostDto DeviceListPost);
         public Task<ResponseMessage> Update(DeviceListGetDto DeviceListGet);
-        public Task<List<DeviceListGetDto>> GetAll();
+        public Task<List<DeviceListGetDto>> GetAll(RequestParameter requestParameter);
     }
 }

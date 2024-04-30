@@ -1,0 +1,200 @@
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-header">
+                <div class="d-flex align-items-center flex-wrap gap-2">
+                    <div class="flex-grow-1">
+                        <button class="btn btn-info add-btn" data-bs-toggle="modal" data-bs-target="#showModal" (click)="openModal(content)">
+                            <i class="ri-add-fill me-1 align-bottom"></i> {{ 'Add Service Year' | translate }}
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--end col-->
+    <div class="col-xxl-12">
+        <div class="card" id="contactList">
+            <div class="card-header">
+                <div class="row g-3">
+                    <div class="col-md-4">
+                        <div class="search-box">
+                            <input type="text" name="searchTerm" class="form-control" placeholder="{{ 'Search for Service Year...' | translate }}" [(ngModel)]="searchTerm" (ngModelChange)="performSearch()">
+                            <i class="ri-search-line search-icon"></i>
+                        </div>
+                    </div>
+                    <div class="col-md-auto ms-auto">
+                        <div class="d-flex align-items-center gap-2">
+                            <span class="text-muted text-nowrap">{{ 'Sort by' | translate }}: </span>
+                            <select class="form-control mb-0" data-choices data-choices-search-false id="choices-single-default" (click)="SortFilter();">
+                                <option value="Dname">{{ 'Name' | translate }}</option>
+                                <option value="DlocalName">{{ 'Local Name' | translate }}</option>
+                                <option value="DserviceModule">{{ 'Service Module' | translate }}</option>
+                                <option value="DlistOfPlates">{{ 'Plates' | translate }}</option>
+                                <option value="DlistOfAIS">{{ 'AIS' | translate }}</option>
+                                <option value="DisActive">{{ 'Status' | translate }}</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body">
+                <div>
+                    <div class="table-responsive table-card mb-2">
+                        <table class="table">
+                            <thead>
+                                <tr class="bg-light">
+                                    <th scope="col" style="width: 50px;"></th>
+                                    <th class="sort" (click)="onSort('name')">{{ 'Name' | translate }}</th>
+                                    <th class="sort" (click)="onSort('localName')">{{ 'Local Name' | translate }}</th>
+                                    <th class="sort" (click)="onSort('serviceModule')">{{ 'Service Module' | translate }}</th>
+                                    <th class="sort" (click)="onSort('listOfPlates')">{{ 'Plates' | translate }}</th>
+                                    <th class="sort" (click)="onSort('listOfAIS')">{{ 'AIS' | translate }}</th>
+                                    <th class="sort" (click)="onSort('isActive')">{{ 'Status' | translate }}</th>
+                                    <th>{{ 'Edit' | translate }}</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @for (data of serviceYears | sortBy:sortBy:sortField; track $index) {
+                                <tr id="c_{{data.id}}">
+                                    <th scope="row">{{ $index + 1 }}</th>
+                                    <td class="name">
+                                        <ngb-highlight [result]="data.name" [term]="searchTerm"></ngb-highlight>
+                                    </td>
+                                    <td>
+                                        <ngb-highlight [result]="data.localName" [term]="searchTerm"></ngb-highlight>
+                                    </td>
+                                    <td>
+                                        <ngb-highlight [result]="data.serviceModule" [term]="searchTerm"></ngb-highlight>
+                                    </td>
+                                    <td>
+                                        <ngb-highlight [result]="data.listOfPlates" [term]="searchTerm"></ngb-highlight>
+                                    </td>
+                                    <td>
+                                        <ngb-highlight [result]="data.listOfAIS" [term]="searchTerm"></ngb-highlight>
+                                    </td>
+                                    <td>
+                                        <ngb-highlight [result]="data.isActive" [term]="searchTerm"></ngb-highlight>
+                                    </td>
+                                    <td>
+                                        <button class="btn btn-soft-secondary btn-sm edit-item-btn" type="button" data-bs-toggle="modal" (click)="editDataGet($index,content)">
+                                            <i class="ri-pencil-fill align-middle"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="d-flex justify-content-end mt-3">
+                        <!-- Pagination -->
+                        <ngb-pagination [collectionSize]="allServiceYears?.length" [(page)]="service.page" [pageSize]="service.pageSize" (pageChange)="changePage()"></ngb-pagination>
+                    </div>
+                </div>
+
+                <!-- Contacts Create Model -->
+                <ng-template #content role="document" let-modal>
+                    <div class="modal-header bg-info-subtle p-3">
+                        <h5 class="modal-title" id="exampleModalLabel">{{ 'Add Service Year' | translate }}</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal" (click)="modal.dismiss('Cross click')"></button>
+                    </div>
+                    <form (ngSubmit)="saveData()" [formGroup]="dataForm" class="tablelist-form" autocomplete="off">
+                        <div class="modal-body">
+                            <input type="hidden" id="id-field" />
+                            <div class="row g-3">
+                                <div class="col-lg-12">
+                                    <input type="hidden" name="id" value="" formControlName="id" />
+                                    <div>
+                                        <label for="name-field" class="form-label">{{ 'Name' | translate }}</label>
+                                        <input type="text" id="name-field" class="form-control" placeholder="{{ 'Enter Service Year Name' | translate }}" required formControlName="name" [ngClass]="{ 'is-invalid': submitted && form['name'].errors }" />
+                                        @if (submitted && form['name'].errors) {
+                                        <div class="invalid-feedback" align="left">
+                                            @if (form['name'].errors['required']) {
+                                            <div>{{ 'Service Year Name is required' | translate }}</div>
+                                            }
+                                        </div>
+                                        }
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div>
+                                        <label for="localName-field" class="form-label">{{ 'Local Name' | translate }}</label>
+                                        <input type="text" id="localName-field" class="form-control" placeholder="{{ 'Enter Local Name' | translate }}" required formControlName="localName" [ngClass]="{ 'is-invalid': submitted && form['localName'].errors }" />
+                                        @if (submitted && form['localName'].errors) {
+                                        <div class="invalid-feedback" align="left">
+                                            @if (form['localName'].errors['required']) {
+                                            <div>{{ 'Local Name is required' | translate }}</div>
+                                            }
+                                        </div>
+                                        }
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div>
+                                        <label for="serviceModule-field" class="form-label">{{ 'Service Module' | translate }}</label>
+                                        
+                                        <select id="serviceModule-field" class="form-control" name="choices-single-default" data-choices data-choices-search-false formControlName="serviceModule"
+                                                [ngClass]="{ 'is-invalid': submitted && dataForm.controls['serviceModule'].errors }">
+                                                <option value="" disabled>{{ 'Select Service Module' | translate }}</option>
+                                                <option *ngFor="let item of serviceModuleDropDownItem" [value]="item.code" > {{item.name}} </option>
+                                            </select>
+                                        @if (submitted && form['serviceModule'].errors) {
+                                        <div class="invalid-feedback" align="left">
+                                            @if (form['serviceModule'].errors['required']) {
+                                            <div>{{ 'Service Module is required' | translate }}</div>
+                                            }
+                                        </div>
+                                        }
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div>
+                                        <label for="listOfPlates-field" class="form-label">{{ 'Plates' | translate }}</label>
+                                        <input type="text" id="listOfPlates-field" class="form-control" placeholder="{{ 'Enter Plates' | translate }}" required formControlName="listOfPlates" [ngClass]="{ 'is-invalid': submitted && form['listOfPlates'].errors }" />
+                                        @if (submitted && form['listOfPlates'].errors) {
+                                        <div class="invalid-feedback" align="left">
+                                            @if (form['listOfPlates'].errors['required']) {s
+                                            <div>{{ 'Plates is required' | translate }}</div>
+                                            }
+                                        </div>
+                                        }
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div>
+                                        <label for="listOfAIS-field" class="form-label">{{ 'AIS' | translate }}</label>
+                                        <input type="text" id="listOfAIS-field" class="form-control" placeholder="{{ 'Enter AIS' | translate }}" required formControlName="listOfAIS" [ngClass]="{ 'is-invalid': submitted && form['listOfAIS'].errors }" />
+                                        @if (submitted && form['listOfAIS'].errors) {
+                                        <div class="invalid-feedback" align="left">
+                                            @if (form['listOfAIS'].errors['required']) {s
+                                            <div>{{ 'AIS is required' | translate }}</div>
+                                            }
+                                        </div>
+                                        }
+                                    </div>
+                                </div>
+                                <div *ngIf="isEditing" class="col-lg-6">
+                                    <div>
+                                        <label for="isActive-field" class="form-label">{{ 'Status' | translate }}</label>
+                                        <div class="form-check form-switch">
+                                            <input  id="isActive-field" class="form-check-input" type="checkbox" role="switch"  formControlName="isActive" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <div class="hstack gap-2 justify-content-end">
+                                <button type="button" class="btn btn-light" data-bs-dismiss="modal" (click)="closeModal()">{{ 'Close' | translate }}</button>
+                                <button type="submit" class="btn btn-success" id="add-btn" >{{ 'Add' | translate }}</button>
+                            </div>
+                        </div>
+                    </form>
+                </ng-template>
+            </div>
+        </div>
+        <!--end card-->
+    </div>
+    <!--end col-->
+</div>
+<!--end row-->

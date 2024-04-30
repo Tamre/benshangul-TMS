@@ -23,7 +23,7 @@ namespace TransportManagmentImplementation.Datas
     {
         public static IServiceCollection AddCoreBusiness(this IServiceCollection services)
         {
-           
+
             #region User Service
             services.AddScoped<IAuthenticationService, AuthenticationService>();
 
@@ -65,8 +65,16 @@ namespace TransportManagmentImplementation.Datas
             services.AddScoped<IVehicleSettingsService, VehicleSettingsService>();
             services.AddScoped<IVehicleSettingsService, VehicleSettingsService>();
             services.AddScoped<IVehicleTypeService, VehicleTypeService>();
+            services.AddScoped<IValuationReasonService, ValuationReasonService>();
+            services.AddScoped<ILoggerManagerService, LoggerManagerService>();
 
 
+
+
+
+            #endregion
+            #region
+            services.AddScoped<IVehicleListService, VehicleListService>();
 
 
             #endregion

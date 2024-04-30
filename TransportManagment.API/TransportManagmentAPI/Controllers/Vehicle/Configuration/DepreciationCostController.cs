@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
+using TransportManagmentImplementation.DTOS.Common;
 using TransportManagmentImplementation.DTOS.Vehicle.Configuration;
 using TransportManagmentImplementation.Helper;
 using TransportManagmentImplementation.Interfaces.Vehicle.Configuration;
@@ -19,9 +20,9 @@ namespace TransportManagmentAPI.Controllers.Vehicle.Configuration
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAll()
+        public async Task<IActionResult> GetAll(RequestParameter requestParameter)
         {
-            return Ok(await _depreciationCostService.GetAll());
+            return Ok(await _depreciationCostService.GetAll(requestParameter));
         }
 
         [HttpPost]

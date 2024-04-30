@@ -16,7 +16,14 @@ using TransportManagmentImplementation.Datas;
 using System.Configuration;
 using Microsoft.OpenApi.Models;
 
+
+using TransportManagmentImplementation.Interfaces.Common;
+using Serilog;
+
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Host.UseSerilog((context, configuration) => configuration.ReadFrom.Configuration(context.Configuration));
+
 
 // Add services to the container.
 
@@ -98,7 +105,6 @@ var key = Encoding.UTF8.GetBytes(builder.Configuration["ApplicationSetting:JWT_S
 
 
 
-
 builder.Services.AddAuthentication(options =>
 {
     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -150,8 +156,13 @@ builder.Services.AddSwaggerGen(c =>
 });
 
 
+
+
+
+
 var app = builder.Build();
-app.UseDeveloperExceptionPage();
+
+
 
 // Enable Swagger middleware if in development or production environment
 if (app.Environment.IsDevelopment() || app.Environment.IsProduction())
@@ -160,6 +171,7 @@ if (app.Environment.IsDevelopment() || app.Environment.IsProduction())
     app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Integrated Digital Platforms"));
 }
 
+app.UseSerilogRequestLogging();
 app.UseHttpsRedirection();
 
 // Enable CORS

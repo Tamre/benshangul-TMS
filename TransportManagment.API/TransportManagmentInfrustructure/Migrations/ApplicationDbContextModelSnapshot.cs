@@ -2600,7 +2600,7 @@ namespace TransportManagmentInfrustructure.Migrations
 
                     b.HasIndex("CreatedById");
 
-                    b.ToTable("ValuationReason");
+                    b.ToTable("ValuationReasons");
                 });
 
             modelBuilder.Entity("TransportManagmentInfrustructure.Model.Vehicle.Configuration.VehicleBodyType", b =>
