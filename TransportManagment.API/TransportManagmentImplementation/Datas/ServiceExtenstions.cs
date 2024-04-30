@@ -10,9 +10,11 @@ using System.Text;
 using System.Threading.Tasks;
 using TransportManagmentImplementation.Interfaces.Common;
 using TransportManagmentImplementation.Interfaces.Configuration;
+using TransportManagmentImplementation.Interfaces.Vehicle.Action;
 using TransportManagmentImplementation.Interfaces.Vehicle.Configuration;
 using TransportManagmentImplementation.Services.Common;
 using TransportManagmentImplementation.Services.Configuration;
+using TransportManagmentImplementation.Services.Vehicle.Action;
 using TransportManagmentImplementation.Services.Vehicle.Configuration;
 
 namespace TransportManagmentImplementation.Datas
@@ -43,7 +45,7 @@ namespace TransportManagmentImplementation.Datas
 
             #endregion
 
-            #region Vehicle
+            #region Vehicle_Config
 
             services.AddScoped<IAISORCStockTypeService, AISORCStockTypeService>();
             services.AddScoped<IBanBodyService, BanBodyService>();
@@ -66,6 +68,14 @@ namespace TransportManagmentImplementation.Datas
 
 
 
+
+            #endregion
+
+            #region Vehicle_Action
+
+            services.AddScoped<IAISStockService, AISStockService>();
+            services.AddScoped<IORCStockService, ORCStockService>();
+            services.AddScoped<IPlateStockService, PlateStockService>();
 
             #endregion
 
