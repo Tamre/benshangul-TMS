@@ -39,6 +39,7 @@ import { FactoryPointComponent } from './vehicle-config/valuation/factory-point/
 import { ServiceYearComponent } from './vehicle-config/valuation/service-year/service-year.component';
 import { InitialPriceComponent } from './vehicle-config/valuation/initial-price/initial-price.component';
 import { SalvageValueComponent } from './vehicle-config/valuation/salvage-value/salvage-value.component';
+import { StockManagementComponent } from './stock-management/stock-management.component';
 
 
 
@@ -66,7 +67,8 @@ import { SalvageValueComponent } from './vehicle-config/valuation/salvage-value/
     FactoryPointComponent,
     ServiceYearComponent,
     InitialPriceComponent,
-    SalvageValueComponent
+    SalvageValueComponent,
+    StockManagementComponent
     
 
   ],

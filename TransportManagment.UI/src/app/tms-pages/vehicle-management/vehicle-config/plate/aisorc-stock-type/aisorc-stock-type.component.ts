@@ -37,8 +37,8 @@ export class AisorcStockTypeComponent {
   updateText = "Update";
 
   CategoryDropDownItem = [
-    { name: 'AIS', code: 'AIS'},
-    { name: 'ORC', code: 'ORC'}
+    { name: 'Annual Inspection Statement ("Bolo")', code: 'AIS'},
+    { name: 'Ownership Registration Certificate(“Libre”)', code: 'ORC'}
   ]
 
   constructor(
@@ -61,10 +61,11 @@ export class AisorcStockTypeComponent {
       id: [""],
       name: ["", [Validators.required]],
       localName: ["", [Validators.required]],
-      code: ["", [Validators.required,Validators.pattern(/^-?\d+$/)]],
+      code: ["", [Validators.required, Validators.maxLength(3)]],
       category:["",[Validators.required]],
       createdById: [this.currentUser?.userId, [Validators.required]],
       isActive:[true]
+      //,Validators.pattern(/^-?\d+$/)
     });
     /**
      * fetches data
@@ -75,6 +76,10 @@ export class AisorcStockTypeComponent {
         document.getElementById("elmLoader")?.classList.add("d-none");
       }
     });
+  }
+  getCategoryName(code: string): string {
+    const category = this.CategoryDropDownItem.find(item => item.code === code);
+    return category ? category.name : code;
   }
   numValidator(control: AbstractControl): Promise<ValidationErrors | null> {
     return Promise.resolve().then(() => {

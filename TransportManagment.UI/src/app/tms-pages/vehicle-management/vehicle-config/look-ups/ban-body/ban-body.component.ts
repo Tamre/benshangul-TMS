@@ -40,9 +40,9 @@ export class BanBodyComponent implements OnInit{
   updateText = "Update";
 
   banBodyCategoryDropDownItem = [
-    { name: 'BANK', code: 'BANK'},
-    { name: 'COURT', code: 'COURT'},
-    { name: 'OTHER', code: 'OTHER'}
+    { name: 'Bank', code: 'BANK'},
+    { name: 'Court', code: 'COURT'},
+    { name: 'Other', code: 'OTHER'}
   ]
 
   constructor(
@@ -80,6 +80,10 @@ export class BanBodyComponent implements OnInit{
         document.getElementById("elmLoader")?.classList.add("d-none");
       }
     });
+  }
+  banBodyCategoryName(code: string): string {
+    const banBodyCategory = this.banBodyCategoryDropDownItem.find(item => item.code === code);
+    return banBodyCategory ? banBodyCategory.name : code;
   }
   changePage() {
     this.banBody = this.service.changePage(this.allBan);

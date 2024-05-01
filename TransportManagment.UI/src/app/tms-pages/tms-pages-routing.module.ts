@@ -15,7 +15,7 @@ const routes: Routes = [
       path: 'config', loadChildren: () => import('./configuration/configuration.module').then(m => m.configurationModule)
     },
     {
-      path: 'v-config', loadChildren: () => import('./vehicle-management/vehicle-management.module').then(m => m.VehicleManagementModule)
+      path: 'v-management', loadChildren: () => import('./vehicle-management/vehicle-management.module').then(m => m.VehicleManagementModule)
     },
     
 ];

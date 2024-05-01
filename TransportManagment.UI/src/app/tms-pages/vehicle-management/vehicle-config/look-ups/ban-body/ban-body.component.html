@@ -63,8 +63,13 @@
                                         <ngb-highlight [result]="data.localName" [term]="searchTerm"></ngb-highlight>
                                     </td>
                                     
-                                    <td>
+                                    <!-- <td>
                                         <ngb-highlight [result]="data.banBodyCategory" [term]="searchTerm"></ngb-highlight>
+                                    </td> -->
+                                    <td>
+                                        <ng-container *ngIf="banBodyCategoryName(data.banBodyCategory) as banBodyCategoryName">
+                                          <ngb-highlight [result]="banBodyCategoryName" [term]="searchTerm"></ngb-highlight>
+                                        </ng-container>
                                     </td>
                                     <td>
                                         <ngb-highlight [result]="data.isActive" [term]="searchTerm"></ngb-highlight>
