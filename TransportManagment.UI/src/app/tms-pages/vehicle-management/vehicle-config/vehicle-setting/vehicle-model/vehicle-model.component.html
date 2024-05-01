@@ -36,7 +36,7 @@
                                 <option value="DnoOfCylinder">{{ 'Num Of Cylinder' | translate }}</option>
                                 <option value="DhorsePowerMeasure">{{ 'Horse PowerMeasure' | translate }}</option>
                                 <option value="DmarkId">{{ 'Mark Name' | translate }}</option>
-                                <option value="DisActive">{{ 'Active' | translate }}</option>
+                                <option value="DisActive">{{ 'Status' | translate }}</option>
                             </select>
                         </div>
                     </div>
@@ -57,7 +57,7 @@
                                     <th class="sort" (click)="onSort('horsePowerMeasure')">{{ 'Horse Power Measure' |
                                         translate }}</th>
                                     <th class="sort" (click)="onSort('markId')">{{ 'Mark Name' | translate }}</th>
-                                    <th class="sort" (click)="onSort('isActive')">{{ 'Active' | translate }}</th>
+                                    <th class="sort" (click)="onSort('isActive')">{{ 'Status' | translate }}</th>
                                     <th>{{ 'Edit' | translate }}</th>
                                 </tr>
                             </thead>
@@ -75,10 +75,16 @@
                                     <td>
                                         <ngb-highlight [result]="data.noOfCylinder" [term]="searchTerm"></ngb-highlight>
                                     </td>
-                                    <td>
+                                    <!-- <td>
                                         <ngb-highlight [result]="data.horsePowerMeasure"
                                             [term]="searchTerm"></ngb-highlight>
-                                    </td>
+                                    </td> -->
+                                    <td>
+                                        <ng-container *ngIf="gethorsePowerMeasureName(data.horsePowerMeasure) as horsePowerMeasureName">
+                                          <ngb-highlight [result]="horsePowerMeasureName" [term]="searchTerm"></ngb-highlight>
+                                        </ng-container>
+                                      </td>
+                                    <td>
                                     <td>
                                         <ngb-highlight [result]="data.markName" [term]="searchTerm"></ngb-highlight>
                                         

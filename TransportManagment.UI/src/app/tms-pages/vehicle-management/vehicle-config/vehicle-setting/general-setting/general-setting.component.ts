@@ -34,22 +34,21 @@ export class GeneralSettingComponent implements OnInit{
   vehicleSettings?: any;
 
   vehicleSettingTypeDropDownItem= [
-    { name: 'ANNUAL_INSPECTION_EXPIRE_YEAR', code: '0'},
-    { name: 'ANNUAL_iNSPECTION_MONTH_sTART', code: '1'},
-    { name: 'ANNUAL_iNSPECTION_MONTH_END', code: '2'},
-    { name: 'ET_INSPECTION_MONTH_START', code: '3'},
-    { name: 'EN_INSPECTION_MONTH_END', code: '4'},
-    { name: 'TEMPORARY_PLATE_EXPIREDATE', code: '5'},
-    { name: 'TEMPORARY_PLATE_EXTENDDATE', code: '6'},
-    { name: 'ORGANIZATION_DAYS_PER_VEHICLE', code: '7'},
-    { name: 'ORGANIZATION_NEW_LICENSE_YEARS', code: '8'},
-    { name: 'ORGANIZATION_RENEW_LICENSEYEARS', code: '9'},
-    { name: 'NUMBER_OF_INSPECTORS', code: '10'}
+    { name: 'Annual Inspection Expiry Year', code: 'ANNUAL_INSPECTION_EXPIRE_YEAR'},
+    { name: 'Annual Inspection Start Month', code: 'ANNUAL_iNSPECTION_MONTH_sTART'},
+    { name: 'Annual Inspection End Month', code: 'ANNUAL_iNSPECTION_MONTH_END'},
+    { name: 'ET Inspection Start Month', code: 'ET_INSPECTION_MONTH_START'},
+    { name: 'EN Inspection End Month', code: 'EN_INSPECTION_MONTH_END'},
+    { name: 'Temporary Plate Expiry Date', code: 'TEMPORARY_PLATE_EXPIREDATE'},
+    { name: 'Temporary Plate Extension Date', code: 'TEMPORARY_PLATE_EXTENDDATE'},
+    { name: 'Organization Days Per Vehicle', code: 'ORGANIZATION_DAYS_PER_VEHICLE'},
+    { name: 'Organization New License Years', code: 'ORGANIZATION_NEW_LICENSE_YEARS'},
+    { name: 'Organization License Renewal Years', code: 'ORGANIZATION_RENEW_LICENSEYEARS'},
+    { name: 'Number of Inspectors', code: 'NUMBER_OF_INSPECTORS'}
   ]
 
   successAddMessage: string = "";
-  successUpdateMessage = "Vehicle Type successfully updated";
-  editPlateTypeText = "Edit Vehicle Type";
+  editGeneralSettingText = "Edit General Setting";
   updateText = "Update";
 
   constructor(
@@ -92,6 +91,10 @@ export class GeneralSettingComponent implements OnInit{
        return null;
     });
    }
+   getvehicleSettingName(code: string): string {
+    const vehicleSettingTypeName = this.vehicleSettingTypeDropDownItem.find(item => item.code === code);
+    return vehicleSettingTypeName ? vehicleSettingTypeName.name : code;
+  }
   openModal(content: any) {
     this.submitted = false;
     this.isEditing = false;
@@ -206,10 +209,10 @@ export class GeneralSettingComponent implements OnInit{
     this.submitted = false;
     this.modalService.open(content, { size: "lg", centered: true });
     var modelTitle = document.querySelector(".modal-title") as HTMLAreaElement;
-    this.translate.get("Edit Vehicle Type").subscribe((res: string) => {
-      this.editPlateTypeText = res;
+    this.translate.get("Edit General Setting").subscribe((res: string) => {
+      this.editGeneralSettingText = res;
     });
-    modelTitle.innerHTML =this.editPlateTypeText ;
+    modelTitle.innerHTML =this.editGeneralSettingText ;
     var updateBtn = document.getElementById("add-btn") as HTMLAreaElement;
     this.translate.get("Update").subscribe((res: string) => {
       this.updateText= res;
