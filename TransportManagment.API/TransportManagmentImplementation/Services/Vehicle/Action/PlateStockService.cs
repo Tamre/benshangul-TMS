@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
+using System.Linq.Expressions;
 using TransportManagmentImplementation.DTOS.Vehicle.Action;
 using TransportManagmentImplementation.Helper;
 using TransportManagmentImplementation.Interfaces.Vehicle.Action;
@@ -26,8 +27,9 @@ namespace TransportManagmentImplementation.Services.Vehicle.Action
             try
             {
                 var platDigitInt = (int)Enum.Parse<PlateDigit>(PlateStockPost.PlateDigit);
-                var regionName = _dbContext.Regions.Where(x => x.Id == PlateStockPost.RegionId).Select(x => x.Code);
-                var plateTypeName = _dbContext.PlateTypes.Where(x => x.Id == PlateStockPost.PlateTypeId).Select(x => x.Code);
+                var regionName = _dbContext.Regions.Where(x => x.Id == PlateStockPost.RegionId).Select(x => x.Code).SingleOrDefault();
+                var plateTypeName = _dbContext.PlateTypes.Where(x => x.Id == PlateStockPost.PlateTypeId).Select(x => x.Code).SingleOrDefault();
+
 
                 for (int plateNo = PlateStockPost.FromPlateNo; plateNo <= PlateStockPost.ToPlateNo; plateNo++)
                 {
@@ -57,7 +59,7 @@ namespace TransportManagmentImplementation.Services.Vehicle.Action
                             BackPlateSizeId = PlateStockPost.BackPlateSizeId,
                             GivenStatus = GivenStatus.NotGiven,
                             IssuanceType = Enum.Parse<IssuanceType>(PlateStockPost.IssuanceType),
-                            IsBackLog = PlateStockPost.IsBackLog,
+                            IsBackLog = false,
                             CreatedById = PlateStockPost.CreatedById,
                             CreatedDate = DateTime.Now,
                             IsActive = true
@@ -91,7 +93,19 @@ namespace TransportManagmentImplementation.Services.Vehicle.Action
             IQueryable<PlateStock> plateStockQuery = _dbContext.PlateStocks.AsNoTracking().OrderBy(x => x.PlateNo);
 
             /// Do the Sort And Serch Impleentation here
+            if (!string.IsNullOrEmpty(filterData.SearchTerm))
+            {
+                plateStockQuery = plateStockQuery.Where(p =>
+                p.PlateNo.Contains(filterData.SearchTerm));
+            }
 
+            if (filterData.Criteria != null && filterData.Criteria.Count() > 0)
+            {
+                foreach (var criteria in filterData.Criteria)
+                {
+                    plateStockQuery = plateStockQuery.Where(GetFilterProperty(criteria));
+                }
+            }
 
 
             var pagedPlateStocks = await PagedList<PlateStock>.ToPagedListAsync(plateStockQuery, filterData.PageNumber, filterData.PageSize);
@@ -100,6 +114,21 @@ namespace TransportManagmentImplementation.Services.Vehicle.Action
 
 
             return new PagedList<PlateStockGetDto>(plateStockDtos, pagedPlateStocks.MetaData);
+        }
+
+        
+        private static Expression<Func<PlateStock, bool>> GetFilterProperty(FilterCriteria criteria)
+        {
+            return criteria.ColumnName?.ToLower() switch
+            {
+                "plate_code" => PlateStock => PlateStock.PlateTypeId == Convert.ToInt32(criteria.FilterValue),
+                "region" => PlateStock => PlateStock.RegionId == Convert.ToInt32(criteria.FilterValue),
+                "front_plate_size" => PlateStock => PlateStock.FrontPlateSizeId == Convert.ToInt32(criteria.FilterValue),
+                "back_plate_size" => PlateStock => PlateStock.BackPlateSizeId == Convert.ToInt32(criteria.FilterValue),
+                "zone" => PlateStock => PlateStock.ToZoneId == Convert.ToInt32(criteria.FilterValue),
+                "status" => PlateStock => PlateStock.IsActive == Convert.ToBoolean(criteria.FilterValue),
+
+            };
         }
 
         public async Task<ResponseMessage> Delete(List<Guid> plateIds)

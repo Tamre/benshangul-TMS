@@ -1,0 +1,16 @@
+{ "Create": "Create", "ChangedOn": "{ChangedOn}", "Module": "", "UserId": "", "Message": "Now listening on: "http://localhost:5179"" }
+{ "Create": "Create", "ChangedOn": "{ChangedOn}", "Module": "", "UserId": "", "Message": "Application started. Press Ctrl+C to shut down." }
+{ "Create": "Create", "ChangedOn": "{ChangedOn}", "Module": "", "UserId": "", "Message": "Hosting environment: "Development"" }
+{ "Create": "Create", "ChangedOn": "{ChangedOn}", "Module": "", "UserId": "", "Message": "Content root path: "D:\DAFTech Social Projects\benshangul-TMS\TransportManagment.API\TransportManagmentAPI"" }
+{ "Create": "Create", "ChangedOn": "{ChangedOn}", "Module": "", "UserId": "", "Message": "HTTP "GET" "/api/vech-action/ORCStock/GetAll" responded 200 in 15146.8910 ms" }
+{ "Create": "Create", "ChangedOn": "{ChangedOn}", "Module": "", "UserId": "", "Message": "HTTP "GET" "/api/vech-action/ORCStock/GetAll" responded 200 in 32.8373 ms" }
+{ "Create": "Create", "ChangedOn": "{ChangedOn}", "Module": "", "UserId": "", "Message": "HTTP "GET" "/api/vech-action/ORCStock/GetAll" responded 200 in 38.0625 ms" }
+{ "Create": "Create", "ChangedOn": "{ChangedOn}", "Module": "", "UserId": "", "Message": "HTTP "GET" "/api/vech-action/ORCStock/GetAll" responded 200 in 10.8302 ms" }
+{ "Create": "Create", "ChangedOn": "{ChangedOn}", "Module": "", "UserId": "", "Message": "HTTP "GET" "/api/vech-action/ORCStock/GetAll" responded 200 in 80.3444 ms" }
+{ "Create": "Create", "ChangedOn": "{ChangedOn}", "Module": "", "UserId": "", "Message": "HTTP "GET" "/api/vech-action/ORCStock/GetAll" responded 200 in 12.9751 ms" }
+{ "Create": "Create", "ChangedOn": "{ChangedOn}", "Module": "", "UserId": "", "Message": "HTTP "GET" "/api/vech-action/ORCStock/GetAll" responded 200 in 8.0818 ms" }
+{ "Create": "Create", "ChangedOn": "{ChangedOn}", "Module": "", "UserId": "", "Message": "HTTP "GET" "/api/vech-action/ORCStock/GetAll" responded 200 in 39.4228 ms" }
+{ "Create": "Create", "ChangedOn": "{ChangedOn}", "Module": "", "UserId": "", "Message": "Now listening on: "http://localhost:5179"" }
+{ "Create": "Create", "ChangedOn": "{ChangedOn}", "Module": "", "UserId": "", "Message": "Application started. Press Ctrl+C to shut down." }
+{ "Create": "Create", "ChangedOn": "{ChangedOn}", "Module": "", "UserId": "", "Message": "Hosting environment: "Development"" }
+{ "Create": "Create", "ChangedOn": "{ChangedOn}", "Module": "", "UserId": "", "Message": "Content root path: "D:\DAFTech Social Projects\benshangul-TMS\TransportManagment.API\TransportManagmentAPI"" }
