@@ -12,7 +12,7 @@ namespace TransportManagmentAPI.Controllers.Common
 {
     [Route("api/[controller]/[action]")]
     [ApiController]
-    [Authorize]
+    
    
     public class CountryController : ControllerBase
     {
