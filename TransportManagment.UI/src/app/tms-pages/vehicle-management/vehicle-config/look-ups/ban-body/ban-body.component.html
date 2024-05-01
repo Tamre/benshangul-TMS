@@ -19,7 +19,7 @@
                 <div class="row g-3">
                     <div class="col-md-4">
                         <div class="search-box">
-                            <input type="text" name="searchTerm" class="form-control" placeholder="{{ 'Search for Stock Type...' | translate }}" [(ngModel)]="searchTerm" (ngModelChange)="performSearch()">
+                            <input type="text" name="searchTerm" class="form-control" placeholder="{{ 'Search for Ban Body...' | translate }}" [(ngModel)]="searchTerm" (ngModelChange)="performSearch()">
                             <i class="ri-search-line search-icon"></i>
                         </div>
                     </div>
@@ -47,7 +47,7 @@
                                     <th class="sort" (click)="onSort('name')">{{ 'Name' | translate }}</th>
                                     <th class="sort" (click)="onSort('localName')">{{ 'Local Name' | translate }}</th>
                                     
-                                    <th class="sort" (click)="onSort('banBodyCategory')">{{ 'ban Body Category' | translate }}</th>
+                                    <th class="sort" (click)="onSort('banBodyCategory')">{{ 'Ban Body Category' | translate }}</th>
                                     <th class="sort" (click)="onSort('isActive')">{{ 'Status' | translate }}</th>
                                     <th>{{ 'Edit' | translate }}</th>
                                 </tr>
@@ -63,8 +63,13 @@
                                         <ngb-highlight [result]="data.localName" [term]="searchTerm"></ngb-highlight>
                                     </td>
                                     
-                                    <td>
+                                    <!-- <td>
                                         <ngb-highlight [result]="data.banBodyCategory" [term]="searchTerm"></ngb-highlight>
+                                    </td> -->
+                                    <td>
+                                        <ng-container *ngIf="banBodyCategoryName(data.banBodyCategory) as banBodyCategoryName">
+                                          <ngb-highlight [result]="banBodyCategoryName" [term]="searchTerm"></ngb-highlight>
+                                        </ng-container>
                                     </td>
                                     <td>
                                         <ngb-highlight [result]="data.isActive" [term]="searchTerm"></ngb-highlight>
@@ -88,7 +93,7 @@
                 <!-- Contacts Create Model -->
                 <ng-template #content role="document" let-modal>
                     <div class="modal-header bg-info-subtle p-3">
-                        <h5 class="modal-title" id="exampleModalLabel">{{ 'Add AIS ORC Stock Type' | translate }}</h5>
+                        <h5 class="modal-title" id="exampleModalLabel">{{ 'Add Ban Body' | translate }}</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal" (click)="modal.dismiss('Cross click')"></button>
                     </div>
                     <form (ngSubmit)="saveData()" [formGroup]="dataForm" class="tablelist-form" autocomplete="off">
@@ -103,7 +108,7 @@
                                         @if (submitted && form['name'].errors) {
                                         <div class="invalid-feedback" align="left">
                                             @if (form['name'].errors['required']) {
-                                            <div>{{ 'Stock Type Name is required' | translate }}</div>
+                                            <div>{{ 'Ban Body Name is required' | translate }}</div>
                                             }
                                         </div>
                                         }
@@ -128,7 +133,7 @@
                                         <label for="banBodyCategory-field" class="form-label">{{ 'Ban Body Category' | translate }}</label>
                                             <select id="banBodyCategory-field" class="form-control" name="choices-single-default" data-choices data-choices-search-false formControlName="banBodyCategory"
                                                 [ngClass]="{ 'is-invalid': submitted && dataForm.controls['banBodyCategory'].errors }">
-                                                <option value="" disabled>{{ 'Select banBodyCategory' | translate }}</option>
+                                                <option value="" disabled>{{ 'Select Ban Body Category' | translate }}</option>
                                                 <option *ngFor="let item of banBodyCategoryDropDownItem" [value]="item.code" > {{item.name}} </option>
                                             </select>
                                         <div *ngIf="submitted && dataForm.controls['banBodyCategory'].errors" class="invalid-feedback" align="left">
@@ -140,7 +145,7 @@
                                 </div>
                                 <div *ngIf="isEditing" class="col-lg-6">
                                     <div>
-                                        <label for="isActive-field" class="form-label">{{ 'isActive' | translate }}</label>
+                                        <label for="isActive-field" class="form-label">{{ 'Status' | translate }}</label>
                                         <div class="form-check form-switch">
                                             <input  id="isActive-field" class="form-check-input" type="checkbox" role="switch"  formControlName="isActive" />
                                         </div>
@@ -151,7 +156,7 @@
                         <div class="modal-footer">
                             <div class="hstack gap-2 justify-content-end">
                                 <button type="button" class="btn btn-light" data-bs-dismiss="modal" (click)="closeModal()">{{ 'Close' | translate }}</button>
-                                <button type="submit" class="btn btn-success" id="add-btn" [disabled]="!dataForm.valid" >{{ 'Add' | translate }}</button>
+                                <button type="submit" class="btn btn-success" id="add-btn" >{{ 'Add' | translate }}</button>
                             </div>
                         </div>
                     </form>

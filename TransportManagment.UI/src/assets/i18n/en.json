@@ -28,7 +28,7 @@
       }
     },
     "VEHICLE-CONFIGURATION": {
-      "TEXT": "Vehicle-Configurations",
+      "TEXT": "Vehicle Configurations",
       "LIST": {
         "Vehicle Attribute": "Vehicle Attribute",
         "Financial": "Financial",
@@ -36,6 +36,9 @@
         "Manufacturing": "Manufacturing",
         "Documentation": "Documentation" 
       }
+    },
+    "STOCK-MANAGEMENT": {
+      "TEXT": "Stock Management"
     },
     "LAYOUTS": {
       "TEXT": "Layouts",

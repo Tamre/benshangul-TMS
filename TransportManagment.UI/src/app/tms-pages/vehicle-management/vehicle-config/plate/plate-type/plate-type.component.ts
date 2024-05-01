@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
+import { AbstractControl, UntypedFormBuilder, UntypedFormGroup, ValidationErrors, Validators } from '@angular/forms';
 import { UserView } from 'src/app/model/user';
 import { PlateTypeService } from 'src/app/core/services/vehicle-config-services/plate-type.service';
 import { Store } from '@ngrx/store';
@@ -34,8 +34,7 @@ export class PlateTypeComponent {
   plates?: any;
 
   successAddMessage: string = "";
-  successUpdateMessage = "Plate Type successfully updated";
-  editPlateTypeText = "Edit Ban Body";
+  editPlateTypeText = "Edit Plate Type";
   updateText = "Update";
 
   constructor(
@@ -57,11 +56,12 @@ export class PlateTypeComponent {
       id: [""],
       name: ["", [Validators.required]],
       localName: ["", [Validators.required]],
-      code: ["", [Validators.required]],
+      code: ["", [Validators.required, Validators.maxLength(3)]],
       regionList:["",[Validators.required]],
       createdById: [this.currentUser?.userId, [Validators.required]],
       isActive:[true]
     });
+    
     /**
      * fetches data
      */
@@ -72,6 +72,7 @@ export class PlateTypeComponent {
       }
     });
   }
+  
   openModal(content: any) {
     this.submitted = false;
     this.isEditing = false;
@@ -189,7 +190,7 @@ export class PlateTypeComponent {
     this.submitted = false;
     this.modalService.open(content, { size: "lg", centered: true });
     var modelTitle = document.querySelector(".modal-title") as HTMLAreaElement;
-    this.translate.get("Edit Stock Type").subscribe((res: string) => {
+    this.translate.get("Edit Plate Type").subscribe((res: string) => {
       this.editPlateTypeText = res;
     });
     modelTitle.innerHTML =this.editPlateTypeText ;

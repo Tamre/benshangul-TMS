@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
+import { AbstractControl, UntypedFormBuilder, UntypedFormGroup, ValidationErrors, Validators } from '@angular/forms';
 import { UserView } from 'src/app/model/user';
 import { TokenStorageService } from 'src/app/core/services/token-storage.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -14,6 +14,7 @@ import { Store } from '@ngrx/store';
 import { RootReducerState } from 'src/app/store';
 import { fetchCrmContactData } from 'src/app/store/CRM/crm_action';
 import { selectCRMLoading } from 'src/app/store/CRM/crm_selector';
+import { ResponseMessage } from 'src/app/model/ResponseMessage.Model';
 
 @Component({
   selector: 'app-aisorc-stock-type',
@@ -31,14 +32,13 @@ export class AisorcStockTypeComponent {
   stocks?: any;
   econtent?: any;
 
-  successAddMessage = "AISORC Stock Type successfully added";
-  successUpdateMessage = "AISORC Stock Type successfully updated";
-  editCountryText = "Edit AISORC Stock Type";
+  successAddMessage: string = "";
+  editStockTypeText = "Edit AISORC Stock Type";
   updateText = "Update";
 
   CategoryDropDownItem = [
-    { name: 'AIS', code: 'AIS'},
-    { name: 'ORC', code: 'ORC'}
+    { name: 'Annual Inspection Statement ("Bolo")', code: 'AIS'},
+    { name: 'Ownership Registration Certificate(“Libre”)', code: 'ORC'}
   ]
 
   constructor(
@@ -61,10 +61,11 @@ export class AisorcStockTypeComponent {
       id: [""],
       name: ["", [Validators.required]],
       localName: ["", [Validators.required]],
-      code: ["", [Validators.required]],
+      code: ["", [Validators.required, Validators.maxLength(3)]],
       category:["",[Validators.required]],
       createdById: [this.currentUser?.userId, [Validators.required]],
       isActive:[true]
+      //,Validators.pattern(/^-?\d+$/)
     });
     /**
      * fetches data
@@ -76,6 +77,18 @@ export class AisorcStockTypeComponent {
       }
     });
   }
+  getCategoryName(code: string): string {
+    const category = this.CategoryDropDownItem.find(item => item.code === code);
+    return category ? category.name : code;
+  }
+  numValidator(control: AbstractControl): Promise<ValidationErrors | null> {
+    return Promise.resolve().then(() => {
+       if (!Number.isInteger(control.value)) {
+         return { floatInvalid: true };
+       }
+       return null;
+    });
+   }
 
 
   openModal(content: any) {
@@ -143,34 +156,40 @@ export class AisorcStockTypeComponent {
         console.log(this.currentUser?.userId)
         const newData: StockTypePostDto = this.dataForm.value;
         this.stockTypeService.updateStockType(newData).subscribe({
-          next: (res) => {
+        
+          next: (res: ResponseMessage) => {
             if (res.success) {
-              this.translate.get('AISORC Stock Type sucessfully updated').subscribe((res: string) => {
-                this.successAddMessage = res;
-              });
+              this.successAddMessage = res.message;
               this.closeModal();
-              successToast(this.successUpdateMessage);
-              this.refreshData()
+              successToast(this.successAddMessage);
+              this.refreshData();
+            } else {
+              console.error( res.message);
             }
           },
-          error: (err) => {},
+          error: (err) => {
+            console.error(err);
+          },
         });
 
       } else {
         const newData: StockTypePostDto = this.dataForm.value;
         newData.isActive = true;
         this.stockTypeService.addStockType(newData).subscribe({
-          next: (res) => {
+          next: (res:ResponseMessage) => {
             if (res.success) {
-              this.translate.get('country sucessfully added').subscribe((res: string) => {
-                this.successAddMessage = res;
-              });
+              this.successAddMessage = res.message;
               this.closeModal();
               successToast(this.successAddMessage);
               this.refreshData()
+            }else {
+              console.error( res.message);
             }
+            
           },
-          error: (err) => {},
+          error: (err) => {
+            console.error(err);
+          },
         });
       }
     }
@@ -192,9 +211,9 @@ export class AisorcStockTypeComponent {
     this.modalService.open(content, { size: "lg", centered: true });
     var modelTitle = document.querySelector(".modal-title") as HTMLAreaElement;
     this.translate.get("Edit Stock Type").subscribe((res: string) => {
-      this.editCountryText = res;
+      this.editStockTypeText = res;
     });
-    modelTitle.innerHTML =this.editCountryText ;
+    modelTitle.innerHTML =this.editStockTypeText ;
     var updateBtn = document.getElementById("add-btn") as HTMLAreaElement;
     this.translate.get("Update").subscribe((res: string) => {
       this.updateText= res;

@@ -41,14 +41,14 @@ export class VehicleLookupsComponent {
   updateText = "Update";
 
   VehicleLookupTypeEnum = [
-    { name: 'Mark', code: '0'},
-    { name: 'Ban Case', code: '1'},
-    { name: 'Plate Size', code: '2'},
-    { name: 'Vehicle Category', code: '3'},
-    { name: 'Vehicle Color', code: '4'},
-    { name: 'Major', code: '5'},
-    { name: 'Minor', code: '6'},
-    { name: 'Load Measurement', code: '7'},
+    { name: 'Mark', code: 'MARK'},
+    { name: 'Ban Case', code: 'BANCASE'},
+    { name: 'Plate Size', code: 'PLATESIZE'},
+    { name: 'Vehicle Category', code: 'VEHICLECATEGORY'},
+    { name: 'Vehicle Color', code: 'VehicleColor'},
+    { name: 'Major', code: 'Major'},
+    { name: 'Minor', code: 'Minor'},
+    { name: 'Load Measurement', code: 'LoadMeasurement'},
 
   ]
   
@@ -75,7 +75,6 @@ export class VehicleLookupsComponent {
       id: [""],
       name: ["", [Validators.required]],
       localName: ["", [Validators.required]],
-      //code: ["", [Validators.required]],
       vehicleLookupType:["",[Validators.required]],
       createdById: [this.currentUser?.userId, [Validators.required]],
       isActive:[true]
@@ -171,7 +170,7 @@ export class VehicleLookupsComponent {
         });
       } else {
         const newData: VehicleLookupPostDto = this.dataForm.value;
-        newData.isActive = true;
+        //newData.isActive = true;
         this.vehicleLookupService.addVehicleLookup(newData).subscribe({
           next: (res: ResponseMessage) => {
             if (res.success) {
@@ -204,7 +203,7 @@ export class VehicleLookupsComponent {
     this.submitted = false;
     this.modalService.open(content, { size: "lg", centered: true });
     var modelTitle = document.querySelector(".modal-title") as HTMLAreaElement;
-    this.translate.get("Edit Ban Body Type").subscribe((res: string) => {
+    this.translate.get("Edit Vehicle Lookup").subscribe((res: string) => {
       this.editBanBodyText = res;
     });
     modelTitle.innerHTML =this.editBanBodyText ;

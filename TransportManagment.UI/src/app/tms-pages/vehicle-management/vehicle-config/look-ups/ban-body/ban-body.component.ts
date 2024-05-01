@@ -15,6 +15,7 @@ import { successToast } from 'src/app/core/services/toast.service';
 import { cloneDeep } from 'lodash';
 import { selectCRMLoading } from 'src/app/store/CRM/crm_selector';
 import { fetchCrmContactData } from 'src/app/store/CRM/crm_action';
+import { ResponseMessage } from 'src/app/model/ResponseMessage.Model';
 
 @Component({
   selector: 'app-ban-body',
@@ -33,15 +34,15 @@ export class BanBodyComponent implements OnInit{
   allBan?:any;
   banBody?: any;
 
-  successAddMessage = "Ban Body successfully added";
-  successUpdateMessage = "Ban Body successfully updated";
+  successAddMessage : string = "";
+  successUpdateMessage :string = "";
   editBanBodyText = "Edit Ban Body";
   updateText = "Update";
 
   banBodyCategoryDropDownItem = [
-    { name: 'BANK', code: 'BANK'},
-    { name: 'COURT', code: 'COURT'},
-    { name: 'OTHER', code: 'OTHER'}
+    { name: 'Bank', code: 'BANK'},
+    { name: 'Court', code: 'COURT'},
+    { name: 'Other', code: 'OTHER'}
   ]
 
   constructor(
@@ -79,6 +80,10 @@ export class BanBodyComponent implements OnInit{
         document.getElementById("elmLoader")?.classList.add("d-none");
       }
     });
+  }
+  banBodyCategoryName(code: string): string {
+    const banBodyCategory = this.banBodyCategoryDropDownItem.find(item => item.code === code);
+    return banBodyCategory ? banBodyCategory.name : code;
   }
   changePage() {
     this.banBody = this.service.changePage(this.allBan);
@@ -141,14 +146,11 @@ export class BanBodyComponent implements OnInit{
    
     if (this.dataForm.valid) {
       if (this.dataForm.get("id")?.value) {
-        //console.log(this.currentUser?.userId)
         const newData: BanBodyPostDto = this.dataForm.value;
         this.banBodyService.updateBanBody(newData).subscribe({
-          next: (res) => {
+          next: (res:ResponseMessage) => {
             if (res.success) {
-              this.translate.get('Ban Body sucessfully updated').subscribe((res: string) => {
-                this.successAddMessage = res;
-              });
+              this.successUpdateMessage=res.message;
               this.closeModal();
               successToast(this.successUpdateMessage);
               this.refreshData()
@@ -159,16 +161,11 @@ export class BanBodyComponent implements OnInit{
 
       } else {
         const newData: BanBodyPostDto = this.dataForm.value;
-        // const newData: Omit<StockTypePostDto, 'id'> = {
-        //   ...this.dataForm.value,
-        // };
         newData.isActive = true;
         this.banBodyService.addBanBody(newData).subscribe({
-          next: (res) => {
+          next: (res:ResponseMessage) => {
             if (res.success) {
-              this.translate.get('Ban Body sucessfully added').subscribe((res: string) => {
-                this.successAddMessage = res;
-              });
+              this.successAddMessage = res.message;
               this.closeModal();
               successToast(this.successAddMessage);
               this.refreshData()
@@ -178,9 +175,6 @@ export class BanBodyComponent implements OnInit{
         });
       }
     }
-    // setTimeout(() => {
-    //   this.dataForm.reset();
-    // }, 2000);
     this.submitted = true;
   }
   closeModal() {
@@ -196,7 +190,7 @@ export class BanBodyComponent implements OnInit{
     this.submitted = false;
     this.modalService.open(content, { size: "lg", centered: true });
     var modelTitle = document.querySelector(".modal-title") as HTMLAreaElement;
-    this.translate.get("Edit Ban Body Type").subscribe((res: string) => {
+    this.translate.get("Edit Ban Body").subscribe((res: string) => {
       this.editBanBodyText = res;
     });
     modelTitle.innerHTML =this.editBanBodyText ;

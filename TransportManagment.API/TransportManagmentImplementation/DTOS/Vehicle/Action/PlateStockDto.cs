@@ -18,10 +18,9 @@ namespace TransportManagmentImplementation.DTOS.Vehicle.Action
         public int FrontPlateSizeId { get; set; }
         public int? BackPlateSizeId { get; set; }
         public string PlateDigit { get; set; }
-        public int? ToZoneId { get; set; }
-        public string GivenStatus { get; set; }
+
         public string IssuanceType { get; set; }
-        public bool IsBackLog { get; set; }
+
         public string CreatedById { get; set; } = null!;
         public string? AToZ { get; set; }
     }
@@ -48,5 +47,12 @@ namespace TransportManagmentImplementation.DTOS.Vehicle.Action
         public List<Guid> PlateStockIds { get; set; }
         public int? ToZoneId { get; set; }
     }
+
+
+    public record DeletePlateStockDto
+    {
+        public List<Guid> PlateStockIds { get; set; }
+    }
+
 
 }
