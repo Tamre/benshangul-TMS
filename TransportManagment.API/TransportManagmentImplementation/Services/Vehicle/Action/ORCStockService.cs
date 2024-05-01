@@ -34,7 +34,7 @@ namespace TransportManagmentImplementation.Services.Vehicle.Action
                 
                 for (int orcNo = ORCStockPost.FromORCNo; orcNo <= ORCStockPost.ToORCNo; orcNo++)
                 {
-                    var checkORCExistance = _dbContext.ORCStocks.Any(x => x.ORCNo == orcNo.ToString());
+                    var checkORCExistance = _dbContext.ORCStocks.Any(x => x.ORCNo == orcNo.ToString()&& x.StockTypeId == ORCStockPost.StockTypeId);
 
                     if (!checkORCExistance)
                     {

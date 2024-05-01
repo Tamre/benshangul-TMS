@@ -28,7 +28,7 @@ namespace TransportManagmentImplementation.Services.Vehicle.Action
                 
                 for (int aisNo = AISStockPostDto.FromAISNo; aisNo <= AISStockPostDto.ToAISNo; aisNo++)
                 {
-                    var checkAISExistance = _dbContext.AisStocks.Any(x => x.AISNo == aisNo.ToString());
+                    var checkAISExistance = _dbContext.AisStocks.Any(x => x.AISNo == aisNo.ToString() && x.StockTypeId == AISStockPostDto.StockTypeId);
 
                     if (!checkAISExistance)
                     {

@@ -36,6 +36,7 @@ namespace TransportManagmentImplementation.DTOS.Vehicle.Action
         public Guid Id { get; set; }
         [Required, StringLength(ValidationClasses.SerialNumberLength)]
         public string PlateNo { get; set; } = null!;
+        public string PlateTypeName { get; set; }
         public bool IsActive { get; set; }
 
     }
