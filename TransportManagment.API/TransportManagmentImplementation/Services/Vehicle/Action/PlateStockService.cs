@@ -26,8 +26,8 @@ namespace TransportManagmentImplementation.Services.Vehicle.Action
             try
             {
                 var platDigitInt = (int)Enum.Parse<PlateDigit>(PlateStockPost.PlateDigit);
-                var regionName = _dbContext.Regions.Where(x => x.Id == PlateStockPost.RegionId).Select(x => x.Code);
-                var plateTypeName = _dbContext.PlateTypes.Where(x => x.Id == PlateStockPost.PlateTypeId).Select(x => x.Code);
+                var regionName = _dbContext.Regions.Where(x => x.Id == PlateStockPost.RegionId).Select(x => x.Code).SingleOrDefault();
+                var plateTypeName = _dbContext.PlateTypes.Where(x => x.Id == PlateStockPost.PlateTypeId).Select(x => x.Code).SingleOrDefault();
 
                 for (int plateNo = PlateStockPost.FromPlateNo; plateNo <= PlateStockPost.ToPlateNo; plateNo++)
                 {
@@ -53,8 +53,7 @@ namespace TransportManagmentImplementation.Services.Vehicle.Action
                             RegionId = PlateStockPost.RegionId,
                             PlateNo = plateNoWithPrefix,
                             PlateDigit = Enum.Parse<PlateDigit>(PlateStockPost.PlateDigit),
-                            FrontPlateSizeId = PlateStockPost.FromPlateNo,
-                            BackPlateSizeId = PlateStockPost.BackPlateSizeId,
+                            FrontPlateSizeId = PlateStockPost.FrontPlateSizeId,
                             GivenStatus = GivenStatus.NotGiven,
                             IssuanceType = Enum.Parse<IssuanceType>(PlateStockPost.IssuanceType),
                             IsBackLog = PlateStockPost.IsBackLog,
@@ -62,6 +61,12 @@ namespace TransportManagmentImplementation.Services.Vehicle.Action
                             CreatedDate = DateTime.Now,
                             IsActive = true
                         };
+
+                        if(PlateStockPost.BackPlateSizeId > 0)
+                        {
+                            plateStock.BackPlateSizeId = PlateStockPost.BackPlateSizeId;
+                        }
+
                         await _dbContext.PlateStocks.AddAsync(plateStock);
                     }
 
