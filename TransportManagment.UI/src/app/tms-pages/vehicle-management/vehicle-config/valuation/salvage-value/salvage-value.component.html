@@ -132,6 +132,9 @@
                                             @if (form['value'].errors['required']) {
                                             <div>{{ 'Value is required' | translate }}</div>
                                             }
+                                            @if (form['value'].errors['floatInvalid']) {
+                                                <div>{{ 'Value must be Number' | translate }}</div>
+                                              }
                                         </div>
                                         }
                                     </div>

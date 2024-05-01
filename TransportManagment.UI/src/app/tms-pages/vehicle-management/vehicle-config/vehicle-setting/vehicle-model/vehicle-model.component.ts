@@ -41,8 +41,8 @@ export class VehicleModelComponent implements OnInit {
   markNameIdMap: { [name: string]: number } = {};
 
   horsePowerMeasureDropDownItem = [
-    { name: 'BHP', code: 'BHP'},
-    { name: 'KW', code: 'OTHEKWR'}
+    { name: 'Brake Horsepower(BPH)', code: 'BHP'},
+    { name: 'Kilowatt(KW)', code: 'KW'}
   ]
   
 
@@ -87,6 +87,10 @@ export class VehicleModelComponent implements OnInit {
         document.getElementById("elmLoader")?.classList.add("d-none");
       }
     });
+  }
+  gethorsePowerMeasureName(code: string): string {
+    const horsePowerMeasure = this.horsePowerMeasureDropDownItem.find(item => item.code === code);
+    return horsePowerMeasure ? horsePowerMeasure.name : code;
   }
 
   getMark() {
