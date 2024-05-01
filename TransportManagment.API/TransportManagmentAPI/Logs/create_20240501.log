@@ -1,4 +1,4 @@
 { "Create": "Create", "ChangedOn": "{ChangedOn}", "Module": "", "UserId": "", "Message": "Now listening on: "http://localhost:5179"" }
 { "Create": "Create", "ChangedOn": "{ChangedOn}", "Module": "", "UserId": "", "Message": "Application started. Press Ctrl+C to shut down." }
 { "Create": "Create", "ChangedOn": "{ChangedOn}", "Module": "", "UserId": "", "Message": "Hosting environment: "Development"" }
-{ "Create": "Create", "ChangedOn": "{ChangedOn}", "Module": "", "UserId": "", "Message": "Content root path: "D:\DAFTech Social Projects\benshangul-TMS\TransportManagment.API\TransportManagmentAPI"" }
+{ "Create": "Create", "ChangedOn": "{ChangedOn}", "Module": "", "UserId": "", "Message": "Content root path: "E:\m\benishangul TMS\benshangul-TMS\TransportManagment.API\TransportManagmentAPI"" }
