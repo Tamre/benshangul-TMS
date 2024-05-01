@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq.Expressions;
+
 using TransportManagmentImplementation.DTOS.Vehicle.Action;
 using TransportManagmentImplementation.Helper;
 using TransportManagmentImplementation.Interfaces.Vehicle.Action;
@@ -28,8 +29,10 @@ namespace TransportManagmentImplementation.Services.Vehicle.Action
             try
             {
                 var platDigitInt = (int)Enum.Parse<PlateDigit>(PlateStockPost.PlateDigit);
+
                 var regionName = _dbContext.Regions.Where(x => x.Id == PlateStockPost.RegionId).Select(x => x.Code).SingleOrDefault();
                 var plateTypeName = _dbContext.PlateTypes.Where(x => x.Id == PlateStockPost.PlateTypeId).Select(x => x.Code).SingleOrDefault();
+
 
 
                 for (int plateNo = PlateStockPost.FromPlateNo; plateNo <= PlateStockPost.ToPlateNo; plateNo++)
@@ -99,6 +102,7 @@ namespace TransportManagmentImplementation.Services.Vehicle.Action
             IQueryable<PlateStock> plateStockQuery = _dbContext.PlateStocks.Include(ps => ps.PlateType).AsNoTracking().OrderBy(x => x.PlateNo);
 
             /// Do the Sort And Serch Impleentation here
+
             if (!string.IsNullOrEmpty(filterData.SearchTerm))
             {
                 plateStockQuery = plateStockQuery.Where(p =>
@@ -114,6 +118,7 @@ namespace TransportManagmentImplementation.Services.Vehicle.Action
             }
 
 
+
             var pagedPlateStocks = await PagedList<PlateStock>.ToPagedListAsync(plateStockQuery, filterData.PageNumber, filterData.PageSize);
 
             var plateStockDtos = _mapper.Map<List<PlateStockGetDto>>(pagedPlateStocks);
@@ -121,6 +126,7 @@ namespace TransportManagmentImplementation.Services.Vehicle.Action
 
             return new PagedList<PlateStockGetDto>(plateStockDtos, pagedPlateStocks.MetaData);
         }
+
 
         
         private static Expression<Func<PlateStock, bool>> GetFilterProperty(FilterCriteria criteria)

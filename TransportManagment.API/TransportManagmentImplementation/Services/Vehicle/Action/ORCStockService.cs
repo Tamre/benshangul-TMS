@@ -3,7 +3,9 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+
 using System.Linq.Expressions;
+
 using System.Text;
 using System.Threading.Tasks;
 using TransportManagmentImplementation.DTOS.Vehicle.Action;
@@ -84,6 +86,7 @@ namespace TransportManagmentImplementation.Services.Vehicle.Action
                 p.ORCNo.Contains(filterData.SearchTerm));
             }
 
+
             if (filterData.Criteria != null && filterData.Criteria.Count() > 0)
             {
                 foreach(var criteria in filterData.Criteria)
@@ -91,6 +94,7 @@ namespace TransportManagmentImplementation.Services.Vehicle.Action
                     orcStockQuery = orcStockQuery.Where(GetFilterProperty(criteria));
                 }
             }
+
 
 
 
@@ -112,6 +116,7 @@ namespace TransportManagmentImplementation.Services.Vehicle.Action
 
             };
         }
+
 
 
         public async Task<ResponseMessage> TransferToZone(TransferORCToZoneDto TransferToZone)

@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
+
 using System.Linq.Expressions;
+
 using TransportManagmentImplementation.DTOS.Vehicle.Action;
 using TransportManagmentImplementation.Helper;
 using TransportManagmentImplementation.Interfaces.Vehicle.Action;
@@ -43,6 +45,7 @@ namespace TransportManagmentImplementation.Services.Vehicle.Action
                         };
                         await _dbContext.AisStocks.AddAsync(aisStock);
                     }
+
                 }
                 
                 await _dbContext.SaveChangesAsync();
@@ -70,6 +73,7 @@ namespace TransportManagmentImplementation.Services.Vehicle.Action
             IQueryable<AisStock> aisStockQuery = _dbContext.AisStocks.AsNoTracking().OrderBy(x => x.AISNo);
 
             /// Do the Sort And Serch Impleentation here
+
             if (!string.IsNullOrEmpty(filterData.SearchTerm))
             {
                 aisStockQuery = aisStockQuery.Where(p =>
@@ -85,6 +89,7 @@ namespace TransportManagmentImplementation.Services.Vehicle.Action
             }
 
 
+
             var pagedAisStocks = await PagedList<AisStock>.ToPagedListAsync(aisStockQuery, filterData.PageNumber, filterData.PageSize);
 
             var aisStockDtos = _mapper.Map<List<AISStockGetDto>>(pagedAisStocks);
@@ -93,7 +98,7 @@ namespace TransportManagmentImplementation.Services.Vehicle.Action
             return new PagedList<AISStockGetDto>(aisStockDtos, pagedAisStocks.MetaData);
         }
 
-        
+
 
         private static Expression<Func<AisStock, bool>> GetFilterProperty(FilterCriteria criteria)
         {
