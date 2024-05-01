@@ -3,13 +3,16 @@
 TransportManagment.API/.vs
 
 TransportManagment.API/TransportManagmentAPI/bin
+TransportManagment.API/TransportManagmentAPI/Logs
 TransportManagment.API/TransportManagmentAPI/obj
 
 TransportManagment.API/TransportManagmentImplementation/bin
 TransportManagment.API/TransportManagmentImplementation/obj
+TransportManagment.API/TransportManagmentImplementation/Logs
 
 TransportManagment.API/TransportManagmentInfrustructure/bin
 TransportManagment.API/TransportManagmentInfrustructure/obj
+TransportManagment.API/TransportManagmentImplementation/Logs
 
 
 TransportManagment.UI/node_modules
