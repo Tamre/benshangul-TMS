@@ -31,7 +31,7 @@
                                 <option value="DlocalName">{{ 'Local Name' | translate }}</option>
                                 <option value="DvehicleTypeId">{{ 'Vehicle Type' | translate }}</option>
                                 <option value="Dvalue">{{ 'value' | translate }}</option>
-                                <option value="DisActive">{{ 'isActive' | translate }}</option>
+                                <option value="DisActive">{{ 'Status' | translate }}</option>
                             </select>
                         </div>
                     </div>
@@ -48,7 +48,7 @@
                                     <th class="sort" (click)="onSort('localName')">{{ 'Local Name' | translate }}</th>
                                     <th class="sort" (click)="onSort('vehicleTypeId')">{{ 'Vehicle Type' | translate }}</th>
                                     <th class="sort" (click)="onSort('value')">{{ 'value' | translate }}</th>
-                                    <th class="sort" (click)="onSort('isActive')">{{ 'isActive' | translate }}</th>
+                                    <th class="sort" (click)="onSort('isActive')">{{ 'Status' | translate }}</th>
                                     <th>{{ 'Edit' | translate }}</th>
                                 </tr>
                             </thead>
@@ -152,6 +152,9 @@
                                             @if (form['value'].errors['required']) {s
                                             <div>{{ 'value is required' | translate }}</div>
                                             }
+                                            @if (form['value'].errors['floatInvalid']) {
+                                                <div>{{ 'Value must be Number' | translate }}</div>
+                                              }
                                         </div>
                                         }
                                     </div>

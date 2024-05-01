@@ -1,0 +1,77 @@
+{ "Create": "Create", "ChangedOn": "{ChangedOn}", "Module": "", "UserId": "", "Message": "Now listening on: "http://localhost:5179"" }
+{ "Create": "Create", "ChangedOn": "{ChangedOn}", "Module": "", "UserId": "", "Message": "Application started. Press Ctrl+C to shut down." }
+{ "Create": "Create", "ChangedOn": "{ChangedOn}", "Module": "", "UserId": "", "Message": "Hosting environment: "Development"" }
+{ "Create": "Create", "ChangedOn": "{ChangedOn}", "Module": "", "UserId": "", "Message": "Content root path: "E:\m\benishangul TMS\benshangul-TMS\TransportManagment.API\TransportManagmentAPI"" }
+{ "Create": "Create", "ChangedOn": "{ChangedOn}", "Module": "", "UserId": "", "Message": "Now listening on: "http://localhost:5179"" }
+{ "Create": "Create", "ChangedOn": "{ChangedOn}", "Module": "", "UserId": "", "Message": "Application started. Press Ctrl+C to shut down." }
+{ "Create": "Create", "ChangedOn": "{ChangedOn}", "Module": "", "UserId": "", "Message": "Hosting environment: "Development"" }
+{ "Create": "Create", "ChangedOn": "{ChangedOn}", "Module": "", "UserId": "", "Message": "Content root path: "E:\m\benishangul TMS\benshangul-TMS\TransportManagment.API\TransportManagmentAPI"" }
+{ "Create": "Create", "ChangedOn": "{ChangedOn}", "Module": "", "UserId": "", "Message": "HTTP "GET" "/api/vech-action/PlateStock/GetAll" responded 200 in 3235.0880 ms" }
+{ "Create": "Create", "ChangedOn": "{ChangedOn}", "Module": "", "UserId": "", "Message": "Now listening on: "http://localhost:5179"" }
+{ "Create": "Create", "ChangedOn": "{ChangedOn}", "Module": "", "UserId": "", "Message": "Application started. Press Ctrl+C to shut down." }
+{ "Create": "Create", "ChangedOn": "{ChangedOn}", "Module": "", "UserId": "", "Message": "Hosting environment: "Development"" }
+{ "Create": "Create", "ChangedOn": "{ChangedOn}", "Module": "", "UserId": "", "Message": "Content root path: "E:\m\benishangul TMS\benshangul-TMS\TransportManagment.API\TransportManagmentAPI"" }
+{ "Create": "Create", "ChangedOn": "{ChangedOn}", "Module": "", "UserId": "", "Message": "HTTP "OPTIONS" "/api/Authentication/Login" responded 204 in 9.4841 ms" }
+{ "Create": "Create", "ChangedOn": "{ChangedOn}", "Module": "", "UserId": "", "Message": "HTTP "POST" "/api/Authentication/Login" responded 200 in 2776.6572 ms" }
+{ "Create": "Create", "ChangedOn": "{ChangedOn}", "Module": "", "UserId": "", "Message": "HTTP "OPTIONS" "/api/Country/GetAll" responded 204 in 0.5176 ms" }
+{ "Create": "Create", "ChangedOn": "{ChangedOn}", "Module": "", "UserId": "", "Message": "HTTP "GET" "/api/Country/GetAll" responded 200 in 149.1023 ms" }
+{ "Create": "Create", "ChangedOn": "{ChangedOn}", "Module": "", "UserId": "", "Message": "HTTP "OPTIONS" "/api/Country/Add" responded 204 in 0.0391 ms" }
+{ "Create": "Create", "ChangedOn": "{ChangedOn}", "Module": "COMMON", "UserId": "18eef146-fc48-4074-94e7-e5dd4a3be236", "Message": "Ban Body Added Successfully on 05/01/2024 11:23:17" }
+{ "Create": "Create", "ChangedOn": "{ChangedOn}", "Module": "", "UserId": "", "Message": "HTTP "POST" "/api/Country/Add" responded 200 in 269.1878 ms" }
+{ "Create": "Create", "ChangedOn": "{ChangedOn}", "Module": "", "UserId": "", "Message": "HTTP "OPTIONS" "/api/Country/GetAll" responded 204 in 0.0499 ms" }
+{ "Create": "Create", "ChangedOn": "{ChangedOn}", "Module": "", "UserId": "", "Message": "HTTP "GET" "/api/Country/GetAll" responded 200 in 13.2314 ms" }
+{ "Create": "Create", "ChangedOn": "{ChangedOn}", "Module": "", "UserId": "", "Message": "HTTP "OPTIONS" "/api/Region/GetAll" responded 204 in 0.1605 ms" }
+{ "Create": "Create", "ChangedOn": "{ChangedOn}", "Module": "", "UserId": "", "Message": "HTTP "GET" "/api/Country/GetAll" responded 200 in 14.8543 ms" }
+{ "Create": "Create", "ChangedOn": "{ChangedOn}", "Module": "", "UserId": "", "Message": "HTTP "GET" "/api/Region/GetAll" responded 200 in 72.0977 ms" }
+{ "Create": "Create", "ChangedOn": "{ChangedOn}", "Module": "", "UserId": "", "Message": "HTTP "OPTIONS" "/api/Region/Add" responded 204 in 0.0420 ms" }
+{ "Create": "Create", "ChangedOn": "{ChangedOn}", "Module": "COMMON", "UserId": "18eef146-fc48-4074-94e7-e5dd4a3be236", "Message": "Ban Body Added Successfully on 05/01/2024 11:23:39" }
+{ "Create": "Create", "ChangedOn": "{ChangedOn}", "Module": "", "UserId": "", "Message": "HTTP "POST" "/api/Region/Add" responded 200 in 46.7602 ms" }
+{ "Create": "Create", "ChangedOn": "{ChangedOn}", "Module": "", "UserId": "", "Message": "HTTP "OPTIONS" "/api/Region/GetAll" responded 204 in 0.0661 ms" }
+{ "Create": "Create", "ChangedOn": "{ChangedOn}", "Module": "", "UserId": "", "Message": "HTTP "OPTIONS" "/api/Country/GetAll" responded 204 in 0.0337 ms" }
+{ "Create": "Create", "ChangedOn": "{ChangedOn}", "Module": "", "UserId": "", "Message": "HTTP "GET" "/api/Country/GetAll" responded 200 in 4.6470 ms" }
+{ "Create": "Create", "ChangedOn": "{ChangedOn}", "Module": "", "UserId": "", "Message": "HTTP "GET" "/api/Region/GetAll" responded 200 in 29.0729 ms" }
+{ "Create": "Create", "ChangedOn": "{ChangedOn}", "Module": "", "UserId": "", "Message": "HTTP "GET" "/api/Region/GetAll" responded 200 in 8.6993 ms" }
+{ "Create": "Create", "ChangedOn": "{ChangedOn}", "Module": "", "UserId": "", "Message": "HTTP "OPTIONS" "/api/Zone/GetAll" responded 204 in 0.0841 ms" }
+{ "Create": "Create", "ChangedOn": "{ChangedOn}", "Module": "", "UserId": "", "Message": "HTTP "GET" "/api/Zone/GetAll" responded 200 in 29.9201 ms" }
+{ "Create": "Create", "ChangedOn": "{ChangedOn}", "Module": "", "UserId": "", "Message": "HTTP "OPTIONS" "/api/Zone/Add" responded 204 in 0.0574 ms" }
+{ "Create": "Create", "ChangedOn": "{ChangedOn}", "Module": "COMMON", "UserId": "18eef146-fc48-4074-94e7-e5dd4a3be236", "Message": "Ban Body Added Successfully on 05/01/2024 11:24:20" }
+{ "Create": "Create", "ChangedOn": "{ChangedOn}", "Module": "", "UserId": "", "Message": "HTTP "POST" "/api/Zone/Add" responded 200 in 94.3562 ms" }
+{ "Create": "Create", "ChangedOn": "{ChangedOn}", "Module": "", "UserId": "", "Message": "HTTP "OPTIONS" "/api/Zone/GetAll" responded 204 in 0.0462 ms" }
+{ "Create": "Create", "ChangedOn": "{ChangedOn}", "Module": "", "UserId": "", "Message": "HTTP "OPTIONS" "/api/Region/GetAll" responded 204 in 0.0242 ms" }
+{ "Create": "Create", "ChangedOn": "{ChangedOn}", "Module": "", "UserId": "", "Message": "HTTP "GET" "/api/Region/GetAll" responded 200 in 21.8017 ms" }
+{ "Create": "Create", "ChangedOn": "{ChangedOn}", "Module": "", "UserId": "", "Message": "HTTP "GET" "/api/Zone/GetAll" responded 200 in 27.1400 ms" }
+{ "Create": "Create", "ChangedOn": "{ChangedOn}", "Module": "", "UserId": "", "Message": "HTTP "OPTIONS" "/api/Woreda/GetAll" responded 204 in 0.0538 ms" }
+{ "Create": "Create", "ChangedOn": "{ChangedOn}", "Module": "", "UserId": "", "Message": "HTTP "GET" "/api/Zone/GetAll" responded 200 in 14.4019 ms" }
+{ "Create": "Create", "ChangedOn": "{ChangedOn}", "Module": "", "UserId": "", "Message": "HTTP "GET" "/api/Woreda/GetAll" responded 200 in 28.9175 ms" }
+{ "Create": "Create", "ChangedOn": "{ChangedOn}", "Module": "", "UserId": "", "Message": "HTTP "OPTIONS" "/api/Woreda/Add" responded 204 in 0.2765 ms" }
+{ "Create": "Create", "ChangedOn": "{ChangedOn}", "Module": "COMMON", "UserId": "18eef146-fc48-4074-94e7-e5dd4a3be236", "Message": "Ban Body Added Successfully on 05/01/2024 11:24:43" }
+{ "Create": "Create", "ChangedOn": "{ChangedOn}", "Module": "", "UserId": "", "Message": "HTTP "POST" "/api/Woreda/Add" responded 200 in 45.8375 ms" }
+{ "Create": "Create", "ChangedOn": "{ChangedOn}", "Module": "", "UserId": "", "Message": "HTTP "OPTIONS" "/api/Woreda/GetAll" responded 204 in 0.0481 ms" }
+{ "Create": "Create", "ChangedOn": "{ChangedOn}", "Module": "", "UserId": "", "Message": "HTTP "OPTIONS" "/api/Zone/GetAll" responded 204 in 0.0207 ms" }
+{ "Create": "Create", "ChangedOn": "{ChangedOn}", "Module": "", "UserId": "", "Message": "HTTP "GET" "/api/Zone/GetAll" responded 200 in 8.2575 ms" }
+{ "Create": "Create", "ChangedOn": "{ChangedOn}", "Module": "", "UserId": "", "Message": "HTTP "GET" "/api/Woreda/GetAll" responded 200 in 26.6982 ms" }
+{ "Create": "Create", "ChangedOn": "{ChangedOn}", "Module": "", "UserId": "", "Message": "HTTP "POST" "/api/vech-action/PlateStock/Add" responded 200 in 376.3081 ms" }
+{ "Create": "Create", "ChangedOn": "{ChangedOn}", "Module": "", "UserId": "", "Message": "HTTP "POST" "/api/vech-action/PlateStock/Add" responded 200 in 73.2178 ms" }
+{ "Create": "Create", "ChangedOn": "{ChangedOn}", "Module": "", "UserId": "", "Message": "HTTP "POST" "/api/vech-action/PlateStock/Add" responded 200 in 71.9823 ms" }
+{ "Create": "Create", "ChangedOn": "{ChangedOn}", "Module": "", "UserId": "", "Message": "HTTP "POST" "/api/vech-action/PlateStock/Add" responded 200 in 72.5189 ms" }
+{ "Create": "Create", "ChangedOn": "{ChangedOn}", "Module": "", "UserId": "", "Message": "HTTP "POST" "/api/vech-action/PlateStock/Add" responded 200 in 57.0979 ms" }
+{ "Create": "Create", "ChangedOn": "{ChangedOn}", "Module": "", "UserId": "", "Message": "HTTP "POST" "/api/vech-action/PlateStock/Add" responded 200 in 77.2581 ms" }
+{ "Create": "Create", "ChangedOn": "{ChangedOn}", "Module": "", "UserId": "", "Message": "HTTP "POST" "/api/vech-action/PlateStock/Add" responded 200 in 254663.9886 ms" }
+{ "Create": "Create", "ChangedOn": "{ChangedOn}", "Module": "", "UserId": "", "Message": "HTTP "POST" "/api/vech-action/PlateStock/Add" responded 200 in 142120.9226 ms" }
+{ "Create": "Create", "ChangedOn": "{ChangedOn}", "Module": "", "UserId": "", "Message": "HTTP "POST" "/api/vech-action/PlateStock/Add" responded 200 in 24674.1407 ms" }
+{ "Create": "Create", "ChangedOn": "{ChangedOn}", "Module": "", "UserId": "", "Message": "HTTP "POST" "/api/vech-action/PlateStock/Add" responded 200 in 3866.0646 ms" }
+{ "Create": "Create", "ChangedOn": "{ChangedOn}", "Module": "", "UserId": "", "Message": "Now listening on: "http://localhost:5179"" }
+{ "Create": "Create", "ChangedOn": "{ChangedOn}", "Module": "", "UserId": "", "Message": "Application started. Press Ctrl+C to shut down." }
+{ "Create": "Create", "ChangedOn": "{ChangedOn}", "Module": "", "UserId": "", "Message": "Hosting environment: "Development"" }
+{ "Create": "Create", "ChangedOn": "{ChangedOn}", "Module": "", "UserId": "", "Message": "Content root path: "E:\m\benishangul TMS\benshangul-TMS\TransportManagment.API\TransportManagmentAPI"" }
+{ "Create": "Create", "ChangedOn": "{ChangedOn}", "Module": "", "UserId": "", "Message": "HTTP "POST" "/api/vech-action/PlateStock/Add" responded 200 in 2770.4919 ms" }
+{ "Create": "Create", "ChangedOn": "{ChangedOn}", "Module": "", "UserId": "", "Message": "HTTP "POST" "/api/vech-action/PlateStock/Add" responded 200 in 94.6497 ms" }
+{ "Create": "Create", "ChangedOn": "{ChangedOn}", "Module": "", "UserId": "", "Message": "HTTP "POST" "/api/vech-action/PlateStock/Add" responded 200 in 119.1503 ms" }
+{ "Create": "Create", "ChangedOn": "{ChangedOn}", "Module": "", "UserId": "", "Message": "Now listening on: "http://localhost:5179"" }
+{ "Create": "Create", "ChangedOn": "{ChangedOn}", "Module": "", "UserId": "", "Message": "Application started. Press Ctrl+C to shut down." }
+{ "Create": "Create", "ChangedOn": "{ChangedOn}", "Module": "", "UserId": "", "Message": "Hosting environment: "Development"" }
+{ "Create": "Create", "ChangedOn": "{ChangedOn}", "Module": "", "UserId": "", "Message": "Content root path: "E:\m\benishangul TMS\benshangul-TMS\TransportManagment.API\TransportManagmentAPI"" }
+{ "Create": "Create", "ChangedOn": "{ChangedOn}", "Module": "", "UserId": "", "Message": "HTTP "POST" "/api/vech-action/PlateStock/Add" responded 200 in 205753.0682 ms" }
+{ "Create": "Create", "ChangedOn": "{ChangedOn}", "Module": "", "UserId": "", "Message": "HTTP "POST" "/api/vech-action/PlateStock/Add" responded 200 in 6555.9524 ms" }
+{ "Create": "Create", "ChangedOn": "{ChangedOn}", "Module": "", "UserId": "", "Message": "HTTP "GET" "/api/vech-action/PlateStock/GetAll" responded 200 in 218.5852 ms" }
+{ "Create": "Create", "ChangedOn": "{ChangedOn}", "Module": "", "UserId": "", "Message": "HTTP "GET" "/api/vech-action/PlateStock/GetAll" responded 200 in 21.9347 ms" }

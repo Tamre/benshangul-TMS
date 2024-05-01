@@ -133,6 +133,9 @@
                                             @if (form['code'].errors['required']) {s
                                             <div>{{ 'Code is required' | translate }}</div>
                                             }
+                                            @if (form['code'].errors['maxlength']) {
+                                                <div>{{ 'Code must be less than 3 characters' | translate }}</div>
+                                              }
                                         </div>
                                         }
                                     </div>

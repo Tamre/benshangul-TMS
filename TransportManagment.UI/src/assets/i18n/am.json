@@ -28,14 +28,10 @@
       }
     },
     "VEHICLE-CONFIGURATION": {
-      "TEXT": "Vehicle-Configurations",
-      "LIST": {
-        "Vehicle Attribute": "Vehicle Attribute",
-        "Financial": "Financial",
-        "Services": "Services",
-        "Manufacturing": "Manufacturing",
-        "Documentation": "Documentation"
-      }
+      "TEXT": "Vehicle Configurations"
+    },
+    "STOCK-MANAGEMENT": {
+      "TEXT": "Stock Management"
     },
     "LAYOUTS": {
       "TEXT": "Layouts",

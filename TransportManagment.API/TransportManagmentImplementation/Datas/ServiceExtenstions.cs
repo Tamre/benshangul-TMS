@@ -45,7 +45,7 @@ namespace TransportManagmentImplementation.Datas
 
             #endregion
 
-            #region Vehicle
+            #region Vehicle_Config
 
             services.AddScoped<IAISORCStockTypeService, AISORCStockTypeService>();
             services.AddScoped<IBanBodyService, BanBodyService>();
@@ -76,6 +76,14 @@ namespace TransportManagmentImplementation.Datas
             #region
             services.AddScoped<IVehicleListService, VehicleListService>();
 
+
+            #endregion
+
+            #region Vehicle_Action
+
+            services.AddScoped<IAISStockService, AISStockService>();
+            services.AddScoped<IORCStockService, ORCStockService>();
+            services.AddScoped<IPlateStockService, PlateStockService>();
 
             #endregion
 
