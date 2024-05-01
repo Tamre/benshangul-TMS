@@ -1,5 +1,8 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
+
+using System.Linq.Expressions;
+
 using TransportManagmentImplementation.DTOS.Vehicle.Action;
 using TransportManagmentImplementation.Helper;
 using TransportManagmentImplementation.Interfaces.Vehicle.Action;
@@ -27,16 +30,22 @@ namespace TransportManagmentImplementation.Services.Vehicle.Action
                 
                 for (int aisNo = AISStockPostDto.FromAISNo; aisNo <= AISStockPostDto.ToAISNo; aisNo++)
                 {
-                    AisStock aisStock = new()
+                    var checkAISExistance = _dbContext.AisStocks.Any(x => x.AISNo == aisNo.ToString() && x.StockTypeId == AISStockPostDto.StockTypeId);
+
+                    if (!checkAISExistance)
                     {
-                        AISNo = aisNo.ToString(),
-                        StockTypeId = AISStockPostDto.StockTypeId,
-                        RegionId = AISStockPostDto.RegionId,
-                        CreatedById = AISStockPostDto.CreatedById,
-                        CreatedDate = DateTime.Now,
-                        IsActive = true
-                    };
-                    await _dbContext.AisStocks.AddAsync(aisStock);
+                        AisStock aisStock = new()
+                        {
+                            AISNo = aisNo.ToString(),
+                            StockTypeId = AISStockPostDto.StockTypeId,
+                            RegionId = AISStockPostDto.RegionId,
+                            CreatedById = AISStockPostDto.CreatedById,
+                            CreatedDate = DateTime.Now,
+                            IsActive = true
+                        };
+                        await _dbContext.AisStocks.AddAsync(aisStock);
+                    }
+
                 }
                 
                 await _dbContext.SaveChangesAsync();
@@ -65,6 +74,20 @@ namespace TransportManagmentImplementation.Services.Vehicle.Action
 
             /// Do the Sort And Serch Impleentation here
 
+            if (!string.IsNullOrEmpty(filterData.SearchTerm))
+            {
+                aisStockQuery = aisStockQuery.Where(p =>
+                p.AISNo.Contains(filterData.SearchTerm));
+            }
+
+            if (filterData.Criteria != null && filterData.Criteria.Count() > 0)
+            {
+                foreach (var criteria in filterData.Criteria)
+                {
+                    aisStockQuery = aisStockQuery.Where(GetFilterProperty(criteria));
+                }
+            }
+
 
 
             var pagedAisStocks = await PagedList<AisStock>.ToPagedListAsync(aisStockQuery, filterData.PageNumber, filterData.PageSize);
@@ -73,6 +96,19 @@ namespace TransportManagmentImplementation.Services.Vehicle.Action
 
 
             return new PagedList<AISStockGetDto>(aisStockDtos, pagedAisStocks.MetaData);
+        }
+
+
+
+        private static Expression<Func<AisStock, bool>> GetFilterProperty(FilterCriteria criteria)
+        {
+            return criteria.ColumnName?.ToLower() switch
+            {
+                "ais_type" => AisStock => AisStock.StockTypeId == Convert.ToInt32(criteria.FilterValue),
+                "zone" => AisStock => AisStock.ToZoneId == Convert.ToInt32(criteria.FilterValue),
+                "status" => AisStock => AisStock.IsActive == Convert.ToBoolean(criteria.FilterValue),
+
+            };
         }
 
         public async Task<ResponseMessage> TransferToZone(TransferAISToZoneDto TransferToZone)

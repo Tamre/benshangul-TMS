@@ -1,5 +1,8 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
+using System;
+using System.Linq.Expressions;
+
 using TransportManagmentImplementation.DTOS.Vehicle.Action;
 using TransportManagmentImplementation.Helper;
 using TransportManagmentImplementation.Interfaces.Vehicle.Action;
@@ -26,21 +29,23 @@ namespace TransportManagmentImplementation.Services.Vehicle.Action
             try
             {
                 var platDigitInt = (int)Enum.Parse<PlateDigit>(PlateStockPost.PlateDigit);
+
                 var regionName = _dbContext.Regions.Where(x => x.Id == PlateStockPost.RegionId).Select(x => x.Code).SingleOrDefault();
                 var plateTypeName = _dbContext.PlateTypes.Where(x => x.Id == PlateStockPost.PlateTypeId).Select(x => x.Code).SingleOrDefault();
+
 
                 for (int plateNo = PlateStockPost.FromPlateNo; plateNo <= PlateStockPost.ToPlateNo; plateNo++)
                 {
                     var length = plateNo.ToString().Count();
-                    var difference = platDigitInt - length;
-                    string plateNoString = plateNo.ToString();
+                    string plateNoString = plateNo.ToString().PadLeft(platDigitInt, '0');
 
                     if (!String.IsNullOrEmpty(PlateStockPost.AToZ))
                     {
-                       plateNoString = $"{PlateStockPost.AToZ}{plateNo}";
+                       plateNoString = $"{PlateStockPost.AToZ}{plateNoString}";
                     }
-                    
-                    var plateNoWithPrefix = $"{regionName}-{plateTypeName}-{plateNoString.PadLeft(difference, '0')}";
+
+                   
+                    var plateNoWithPrefix = $"{regionName}-{plateTypeName}-{plateNoString}";
 
                     var checkPlateExistance = _dbContext.PlateStocks.Any(x => x.PlateNo == plateNoWithPrefix && x.IssuanceType == Enum.Parse<IssuanceType>(PlateStockPost.IssuanceType));
 
@@ -56,13 +61,14 @@ namespace TransportManagmentImplementation.Services.Vehicle.Action
                             FrontPlateSizeId = PlateStockPost.FrontPlateSizeId,
                             GivenStatus = GivenStatus.NotGiven,
                             IssuanceType = Enum.Parse<IssuanceType>(PlateStockPost.IssuanceType),
-                            IsBackLog = PlateStockPost.IsBackLog,
+                            IsBackLog = false,
                             CreatedById = PlateStockPost.CreatedById,
                             CreatedDate = DateTime.Now,
                             IsActive = true
                         };
 
-                        if(PlateStockPost.BackPlateSizeId > 0)
+
+                        if (PlateStockPost.BackPlateSizeId > 0)
                         {
                             plateStock.BackPlateSizeId = PlateStockPost.BackPlateSizeId;
                         }
@@ -93,9 +99,23 @@ namespace TransportManagmentImplementation.Services.Vehicle.Action
 
         public async Task<PagedList<PlateStockGetDto>> GetAll(FilterDetail filterData)
         {
-            IQueryable<PlateStock> plateStockQuery = _dbContext.PlateStocks.AsNoTracking().OrderBy(x => x.PlateNo);
+            IQueryable<PlateStock> plateStockQuery = _dbContext.PlateStocks.Include(ps => ps.PlateType).AsNoTracking().OrderBy(x => x.PlateNo);
 
             /// Do the Sort And Serch Impleentation here
+
+            if (!string.IsNullOrEmpty(filterData.SearchTerm))
+            {
+                plateStockQuery = plateStockQuery.Where(p =>
+                p.PlateNo.Contains(filterData.SearchTerm));
+            }
+
+            if (filterData.Criteria != null && filterData.Criteria.Count() > 0)
+            {
+                foreach (var criteria in filterData.Criteria)
+                {
+                    plateStockQuery = plateStockQuery.Where(GetFilterProperty(criteria));
+                }
+            }
 
 
 
@@ -107,14 +127,55 @@ namespace TransportManagmentImplementation.Services.Vehicle.Action
             return new PagedList<PlateStockGetDto>(plateStockDtos, pagedPlateStocks.MetaData);
         }
 
-        public async Task<ResponseMessage> Delete(List<Guid> plateIds)
-        {
 
-            return new ResponseMessage
+        
+        private static Expression<Func<PlateStock, bool>> GetFilterProperty(FilterCriteria criteria)
+        {
+            return criteria.ColumnName?.ToLower() switch
             {
-                Success = false,
-                Message = ""
+                "plate_code" => PlateStock => PlateStock.PlateTypeId == Convert.ToInt32(criteria.FilterValue),
+                "region" => PlateStock => PlateStock.RegionId == Convert.ToInt32(criteria.FilterValue),
+                "front_plate_size" => PlateStock => PlateStock.FrontPlateSizeId == Convert.ToInt32(criteria.FilterValue),
+                "back_plate_size" => PlateStock => PlateStock.BackPlateSizeId == Convert.ToInt32(criteria.FilterValue),
+                "zone" => PlateStock => PlateStock.ToZoneId == Convert.ToInt32(criteria.FilterValue),
+                "status" => PlateStock => PlateStock.IsActive == Convert.ToBoolean(criteria.FilterValue),
+
             };
+        }
+
+        public async Task<ResponseMessage> Delete(DeletePlateStockDto plateIds)
+        {
+            try
+            {
+                var plateStocks = await _dbContext.PlateStocks.Where(e => plateIds.PlateStockIds.Contains(e.Id)).ToListAsync();
+
+                var plateStocksToDelete = plateStocks.Where(e => e.GivenStatus == GivenStatus.NotGiven || e.GivenStatus == GivenStatus.Transfer).ToList();
+
+                _dbContext.PlateStocks.RemoveRange(plateStocksToDelete);
+
+                var remainingPlateStocksReturned = string.Join(", ",plateStocks.Where(e => e.GivenStatus == GivenStatus.Returned).Select(x => x.PlateNo).ToList());
+                var remainingPlateStocksGiven = string.Join(", ", plateStocks.Where(e => e.GivenStatus == GivenStatus.Given).Select(x => x.PlateNo).ToList());
+
+                await _dbContext.SaveChangesAsync();
+
+                var message = $"Delete Plate Stock Successful except for Returned: {remainingPlateStocksReturned}, Given: {remainingPlateStocksGiven}";
+
+                return new ResponseMessage
+                {
+                    Success = true,
+                    Message = message,
+                    
+                };
+
+            }
+            catch (Exception ex)
+            {
+                return new ResponseMessage
+                {
+                    Success = false,
+                    Message = ex.Message
+                };
+            }
 
         }
         
