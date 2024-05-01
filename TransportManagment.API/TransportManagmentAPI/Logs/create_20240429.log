@@ -1,0 +1,24 @@
+{ "Create": "Create", "ChangedOn": "{ChangedOn}", "Module": "", "UserId": "", "Message": "Now listening on: "http://localhost:5179"" }
+{ "Create": "Create", "ChangedOn": "{ChangedOn}", "Module": "", "UserId": "", "Message": "Application started. Press Ctrl+C to shut down." }
+{ "Create": "Create", "ChangedOn": "{ChangedOn}", "Module": "", "UserId": "", "Message": "Hosting environment: "Development"" }
+{ "Create": "Create", "ChangedOn": "{ChangedOn}", "Module": "", "UserId": "", "Message": "Content root path: "C:\Users\Hp\Desktop\Kirubel Files\benshangul-TMS\TransportManagment.API\TransportManagmentAPI"" }
+{ "Create": "Create", "ChangedOn": "{ChangedOn}", "Module": "", "UserId": "", "Message": "HTTP "GET" "/api/vech-config/ValuationReason/GetAll" responded 200 in 4105.8060 ms" }
+{ "Create": "Create", "ChangedOn": "{ChangedOn}", "Module": "", "UserId": "", "Message": "Now listening on: "http://localhost:5179"" }
+{ "Create": "Create", "ChangedOn": "{ChangedOn}", "Module": "", "UserId": "", "Message": "Application started. Press Ctrl+C to shut down." }
+{ "Create": "Create", "ChangedOn": "{ChangedOn}", "Module": "", "UserId": "", "Message": "Hosting environment: "Development"" }
+{ "Create": "Create", "ChangedOn": "{ChangedOn}", "Module": "", "UserId": "", "Message": "Content root path: "C:\Users\Hp\Desktop\Kirubel Files\benshangul-TMS\TransportManagment.API\TransportManagmentAPI"" }
+{ "Create": "Create", "ChangedOn": "{ChangedOn}", "Module": "VRMS", "UserId": "string", "Message": "Ban Body Added Successfully on 04/29/2024 11:51:26" }
+{ "Create": "Create", "ChangedOn": "{ChangedOn}", "Module": "", "UserId": "", "Message": "HTTP "POST" "/api/VehicleList/Add" responded 200 in 476555.6138 ms" }
+{ "Create": "Create", "ChangedOn": "{ChangedOn}", "Module": "COMMON", "UserId": "18eef146-fc48-4074-94e7-e5dd4a3be236", "Message": "Ban Body Added Successfully on 04/29/2024 11:51:33" }
+{ "Create": "Create", "ChangedOn": "{ChangedOn}", "Module": "", "UserId": "", "Message": "HTTP "POST" "/api/Zone/Add" responded 200 in 848.0198 ms" }
+{ "Create": "Create", "ChangedOn": "{ChangedOn}", "Module": "", "UserId": "", "Message": "HTTP "POST" "/api/Country/Add" responded 401 in 28.2848 ms" }
+{ "Create": "Create", "ChangedOn": "{ChangedOn}", "Module": "", "UserId": "", "Message": "HTTP "GET" "/api/vech-config/BanBody/GetAll" responded 200 in 193.7754 ms" }
+{ "Create": "Create", "ChangedOn": "{ChangedOn}", "Module": "COMMON", "UserId": "18eef146-fc48-4074-94e7-e5dd4a3be236", "Message": "Ban Body Added Successfully on 04/29/2024 12:06:20" }
+{ "Create": "Create", "ChangedOn": "{ChangedOn}", "Module": "", "UserId": "", "Message": "HTTP "POST" "/api/Zone/Add" responded 200 in 62.7092 ms" }
+{ "Create": "Create", "ChangedOn": "{ChangedOn}", "Module": "", "UserId": "", "Message": "HTTP "GET" "/api/Zone/GetAll" responded 200 in 132.6963 ms" }
+{ "Create": "Create", "ChangedOn": "{ChangedOn}", "Module": "VRMS", "UserId": "string", "Message": "Ban Body Added Successfully on 04/29/2024 12:08:26" }
+{ "Create": "Create", "ChangedOn": "{ChangedOn}", "Module": "", "UserId": "", "Message": "HTTP "POST" "/api/VehicleList/Add" responded 200 in 36983.8792 ms" }
+{ "Create": "Create", "ChangedOn": "{ChangedOn}", "Module": "VRMS", "UserId": "string", "Message": "Ban Body Added Successfully on 04/29/2024 12:09:18" }
+{ "Create": "Create", "ChangedOn": "{ChangedOn}", "Module": "", "UserId": "", "Message": "HTTP "POST" "/api/VehicleList/Add" responded 200 in 33285.0408 ms" }
+{ "Create": "Create", "ChangedOn": "{ChangedOn}", "Module": "VRMS", "UserId": "string", "Message": "Ban Body Added Successfully on 04/29/2024 12:14:12" }
+{ "Create": "Create", "ChangedOn": "{ChangedOn}", "Module": "", "UserId": "", "Message": "HTTP "POST" "/api/VehicleList/Add" responded 200 in 282633.5957 ms" }
