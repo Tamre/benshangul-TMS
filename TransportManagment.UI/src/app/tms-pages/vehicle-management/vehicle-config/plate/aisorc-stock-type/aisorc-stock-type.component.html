@@ -65,9 +65,14 @@
                                     <td>
                                         <ngb-highlight [result]="data.code" [term]="searchTerm"></ngb-highlight>
                                     </td>
-                                    <td>
+                                    <!-- <td>
                                         <ngb-highlight [result]="data.category" [term]="searchTerm"></ngb-highlight>
-                                    </td>
+                                    </td> -->
+                                    <td>
+                                        <ng-container *ngIf="getCategoryName(data.category) as categoryName">
+                                          <ngb-highlight [result]="categoryName" [term]="searchTerm"></ngb-highlight>
+                                        </ng-container>
+                                      </td>
                                     <td>
                                         <ngb-highlight [result]="data.isActive" [term]="searchTerm"></ngb-highlight>
                                     </td>
@@ -130,9 +135,12 @@
                                         <input type="text" id="code-field" class="form-control" placeholder="{{ 'Enter Code' | translate }}" required formControlName="code" [ngClass]="{ 'is-invalid': submitted && form['code'].errors }" />
                                         @if (submitted && form['code'].errors) {
                                         <div class="invalid-feedback" align="left">
-                                            @if (form['code'].errors['required']) {s
+                                            @if (form['code'].errors['required']) {
                                             <div>{{ 'Code is required' | translate }}</div>
                                             }
+                                            @if (form['code'].errors['maxlength']) {
+                                                <div>{{ 'Code must be less than 3 characters' | translate }}</div>
+                                              }
                                         </div>
                                         }
                                     </div>

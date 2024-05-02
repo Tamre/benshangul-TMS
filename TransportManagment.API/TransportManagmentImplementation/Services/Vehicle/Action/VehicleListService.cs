@@ -32,6 +32,7 @@ namespace TransportManagmentImplementation.Services.Vehicle.Action
 
             try
             {
+                var registrationNo = _generalConfigService.GenerateVechilceCode("RN", VehicleSerialType.NEWVEHICLE);
                 var vechicle = new VehicleList
                 {
                     Id = Guid.NewGuid(),

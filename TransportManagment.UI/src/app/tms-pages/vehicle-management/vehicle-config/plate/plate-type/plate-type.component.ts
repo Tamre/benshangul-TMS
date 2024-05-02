@@ -56,7 +56,7 @@ export class PlateTypeComponent {
       id: [""],
       name: ["", [Validators.required]],
       localName: ["", [Validators.required]],
-      code: ["", [Validators.required,Validators.pattern(/^-?\d+$/)]],
+      code: ["", [Validators.required, Validators.maxLength(3)]],
       regionList:["",[Validators.required]],
       createdById: [this.currentUser?.userId, [Validators.required]],
       isActive:[true]
