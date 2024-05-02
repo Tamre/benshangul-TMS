@@ -5,6 +5,7 @@ using System.Linq.Expressions;
 
 using TransportManagmentImplementation.DTOS.Vehicle.Action;
 using TransportManagmentImplementation.Helper;
+using TransportManagmentImplementation.Interfaces.Common;
 using TransportManagmentImplementation.Interfaces.Vehicle.Action;
 using TransportManagmentInfrustructure.Data;
 using TransportManagmentInfrustructure.Model.Vehicle.Action;
@@ -16,11 +17,13 @@ namespace TransportManagmentImplementation.Services.Vehicle.Action
     {
         private readonly ApplicationDbContext _dbContext;
         private readonly IMapper _mapper;
+        private readonly ILoggerManagerService _logger;
 
-        public PlateStockService(ApplicationDbContext dbContext, IMapper mapper)
+        public PlateStockService(ApplicationDbContext dbContext, IMapper mapper, ILoggerManagerService logger)
         {
             _dbContext = dbContext;
             _mapper = mapper;
+            _logger = logger;
         }
 
 
@@ -158,7 +161,7 @@ namespace TransportManagmentImplementation.Services.Vehicle.Action
 
                 await _dbContext.SaveChangesAsync();
 
-                var message = $"Delete Plate Stock Successful except for Returned: {remainingPlateStocksReturned}, Given: {remainingPlateStocksGiven}";
+                var message = $"Delete Plate Stock Successful \n Except for Returned: {remainingPlateStocksReturned},\n Given: {remainingPlateStocksGiven}";
 
                 return new ResponseMessage
                 {
