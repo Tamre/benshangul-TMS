@@ -4,10 +4,12 @@ using AutoMapper;
 using TransportManagmentAPI.Controllers.Vehicle.Configuration;
 using TransportManagmentImplementation.DTOS.Common;
 using TransportManagmentImplementation.DTOS.Configuration;
+using TransportManagmentImplementation.DTOS.Vehicle.Action;
 using TransportManagmentImplementation.DTOS.Vehicle.Configuration;
 using TransportManagmentImplementation.Interfaces.Common;
 using TransportManagmentImplementation.Services.Common;
 using TransportManagmentInfrustructure.Model.Common;
+using TransportManagmentInfrustructure.Model.Vehicle.Action;
 using TransportManagmentInfrustructure.Model.Vehicle.Configuration;
 
 namespace TransportManagmentImplementation.Datas
@@ -38,7 +40,7 @@ namespace TransportManagmentImplementation.Datas
         ;
             #endregion
 
-            #region
+            #region vechile-config
 
             CreateMap<AISORCStockType, AISORCStockTypeGetDto>()
                  .ForMember(a => a.Category, e => e.MapFrom(mfg => mfg.Category.ToString()));
@@ -79,6 +81,21 @@ namespace TransportManagmentImplementation.Datas
                 .ForMember(a => a.VehicleSettingType, e => e.MapFrom(mfg => mfg.VehicleSettingType.ToString()));
 
             CreateMap<VehicleType, VehicleTypeGetDto>();
+            CreateMap<ValuationReason, ValuationReasonGetDto>();
+
+            #endregion
+
+
+            #region Vechile_Action
+
+            CreateMap<AisStock, AISStockGetDto>();
+
+            CreateMap<ORCStock, ORCStockGetDto>();
+
+            CreateMap<PlateStock, PlateStockGetDto>()
+                .ForMember(a => a.PlateDigit, e => e.MapFrom(mfg => mfg.PlateDigit.ToString()))
+                .ForMember(a => a.PlateTypeName, e => e.MapFrom(mfg => mfg.PlateType.Name))
+                .ForMember(a => a.IssuanceType, e => e.MapFrom(mfg => mfg.IssuanceType.ToString()));
 
             #endregion
         }

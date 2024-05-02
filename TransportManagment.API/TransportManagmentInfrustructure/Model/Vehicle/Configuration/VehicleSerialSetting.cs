@@ -14,6 +14,8 @@ namespace TransportManagmentInfrustructure.Model.Vehicle.Configuration
     public class VehicleSerialSetting: SettingIdModel
     {
         public VehicleSerialType VehicleSerialType { get; set; }
+   
+
         [Required]
         public int Value { get; set; }
         [Required]

@@ -13,6 +13,8 @@ namespace TransportManagmentImplementation.Interfaces.Vehicle.Configuration
     {
         Task<ResponseMessage> Add(VehicleLookupsPostDto vehicleLookupsPost);
         Task<ResponseMessage> Update(VehicleLookupsGetDto vehicleLookupsGet);
+        Task<List<VehicleLookupsGetDto>> GetAllByLookUpType(string LookUpType);
+
         Task<List<VehicleLookupsGetDto>> GetAll();
     }
 

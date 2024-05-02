@@ -53,4 +53,40 @@ export const MENU: MenuItem[] = [
       },
     ],
   },
+  {
+    id: 7,
+    label: "MENUITEMS.VRMS.TEXT",
+    isTitle: true,
+    
+  },
+
+
+  {
+    id: 8,
+    label: "MENUITEMS.VEHICLE-CONFIGURATION.TEXT",
+    icon: "ri-settings-4-fill",
+    link: "/v-management/vehicle-config",
+    isCollapsed: true,
+  },
+  {
+    id: 9,
+    label: "MENUITEMS.STOCK-MANAGEMENT.TEXT",
+    icon: "ri-settings-4-fill",
+    link: "/v-management/stock-management",
+    isCollapsed: true,
+  },
+  {
+    id: 9,
+    label: "MENUITEMS.VEHICLE.TEXT",
+    icon: "ri-apps-2-line",
+    isCollapsed: true,
+    subItems: [
+      {
+        id: 10,
+        label: "MENUITEMS.VEHICLE.LIST.REGISTER",
+        link: "/vehicle/add",
+        parentId: 3,
+      }
+    ],
+  },
 ];

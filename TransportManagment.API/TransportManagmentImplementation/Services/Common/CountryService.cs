@@ -11,6 +11,7 @@ using TransportManagmentImplementation.Helper;
 using TransportManagmentImplementation.Interfaces.Common;
 using TransportManagmentInfrustructure.Data;
 using TransportManagmentInfrustructure.Model.Common;
+using TransportManagmentInfrustructure.Model.Vehicle.Configuration;
 
 namespace TransportManagmentImplementation.Services.Common
 {
@@ -18,13 +19,14 @@ namespace TransportManagmentImplementation.Services.Common
     {
         private readonly ApplicationDbContext _dbContext;
         private readonly IMapper _mapper;
+        private readonly ILoggerManagerService _logger;
 
-        public CountryService(ApplicationDbContext dbContext, IMapper mapper)
+        public CountryService(ApplicationDbContext dbContext, IMapper mapper,ILoggerManagerService logger)
         {
 
             _dbContext = dbContext;
             _mapper = mapper;
-
+            _logger = logger;
         }
 
         public async Task<ResponseMessage> Add(CountryPostDto countryPost)
@@ -46,6 +48,11 @@ namespace TransportManagmentImplementation.Services.Common
                 await _dbContext.Countries.AddAsync(country);
                 await _dbContext.SaveChangesAsync();
 
+
+                _logger.LogCreate("COMMON", country.CreatedById, $"Country Added Successfully on {DateTime.Now}");
+
+
+
                 return new ResponseMessage
                 {
                     Success = true,
@@ -57,6 +64,7 @@ namespace TransportManagmentImplementation.Services.Common
             catch (Exception ex)
             {
 
+                _logger.LogExcption("COMMON", countryPost.CreatedById, ex.Message);
                 return new ResponseMessage
                 {
                     Success = false,
@@ -67,12 +75,17 @@ namespace TransportManagmentImplementation.Services.Common
 
         }
 
-        public async Task<List<CountryGetDto>> GetAll()
+        public async Task<List<CountryGetDto>> GetAll(RequestParameter requestParameter)
         {
 
 
-            var countries = await _dbContext.Countries.AsNoTracking().ToListAsync();
-           
+            var countries = await _dbContext.Countries.AsNoTracking()
+                 .OrderBy(e => e.Id)
+ .Skip((requestParameter.PageNumber - 1) * requestParameter.PageSize)
+ .Take(requestParameter.PageSize)
+ .ToListAsync();
+            ;
+
             var countryDtos = _mapper.Map<List<CountryGetDto>>(countries);
 
             return countryDtos;
@@ -105,6 +118,9 @@ namespace TransportManagmentImplementation.Services.Common
                     // Save the changes to the database
                     await _dbContext.SaveChangesAsync();
 
+                    _logger.LogUpdate("COMMON", country.CreatedById, $"Country Updated Successfully on {DateTime.Now}");
+
+
                     return new ResponseMessage
                     {
                         Success = true,
@@ -123,6 +139,8 @@ namespace TransportManagmentImplementation.Services.Common
             }
             catch (Exception ex)
             {
+                _logger.LogExcption("COMMON", countryGet.CreatedById, ex.Message);
+
                 return new ResponseMessage
                 {
                     Success = false,

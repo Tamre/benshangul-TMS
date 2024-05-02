@@ -6,13 +6,15 @@ using System.Text;
 using System.Threading.Tasks;
 using TransportManagmentImplementation.DTOS.Configuration;
 using static TransportManagmentInfrustructure.Enums.CommonEnum;
+using static TransportManagmentInfrustructure.Enums.VehicleEnum;
 
 
 namespace IntegratedImplementation.Interfaces.Configuration
 {
     public interface IGeneralConfigService
     {
-        Task<string> GenerateCode(GeneralCodeDto GeneralCodeType);
+        //Task<string> GenerateCode(GeneralCodeDto GeneralCodeType);
+        public Task<string> GenerateVechilceCode(string InitialName, VehicleSerialType VehicleSerialType);
         Task<string> UploadFiles(IFormFile formFile, string Name, string FolderName);
         Task<string> GetFiles(string path);
         //Task<List<GeneralCodeDto>> GetGeneralCodes();

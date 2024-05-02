@@ -19,13 +19,14 @@ namespace TransportManagmentImplementation.Services.Common
 
         private readonly ApplicationDbContext _dbContext;
         private readonly IMapper _mapper;
+        private readonly ILoggerManagerService _logger;
 
-        public WoredaService(ApplicationDbContext dbContext, IMapper mapper)
+        public WoredaService(ApplicationDbContext dbContext, IMapper mapper, ILoggerManagerService logger)
         {
 
             _dbContext = dbContext;
             _mapper = mapper;
-
+            _logger = logger;
         }
 
 
@@ -48,6 +49,11 @@ namespace TransportManagmentImplementation.Services.Common
                 await _dbContext.Woredas.AddAsync(woreda);
                 await _dbContext.SaveChangesAsync();
 
+
+                _logger.LogCreate("COMMON", WoredaPost.CreatedById, $"Woreda Added Successfully on {DateTime.Now}");
+
+
+
                 return new ResponseMessage
                 {
                     Success = true,
@@ -58,6 +64,9 @@ namespace TransportManagmentImplementation.Services.Common
             }
             catch (Exception ex)
             {
+                _logger.LogExcption("COOMON", WoredaPost.CreatedById, ex.Message);
+
+
 
                 return new ResponseMessage
                 {
@@ -69,11 +78,15 @@ namespace TransportManagmentImplementation.Services.Common
 
         }
 
-        public async Task<List<WoredaGetDto>> GetAll()
+        public async Task<List<WoredaGetDto>> GetAll(RequestParameter requestParameter)
         {
 
 
-            var Woredas = await _dbContext.Woredas.Include(x => x.Zone).AsNoTracking().ToListAsync();
+            var Woredas = await _dbContext.Woredas.Include(x => x.Zone).AsNoTracking().OrderBy(e => e.Id)
+ .Skip((requestParameter.PageNumber - 1) * requestParameter.PageSize)
+ .Take(requestParameter.PageSize)
+ .ToListAsync(); ;
+
 
             var WoredaDtos = _mapper.Map<List<WoredaGetDto>>(Woredas);
 
@@ -105,6 +118,10 @@ namespace TransportManagmentImplementation.Services.Common
                     // Save the changes to the database
                     await _dbContext.SaveChangesAsync();
 
+                    _logger.LogUpdate("COMMON", WoredaGet.CreatedById, $"Woreda Updated Successfully on {DateTime.Now}");
+
+
+
                     return new ResponseMessage
                     {
                         Success = true,
@@ -123,6 +140,9 @@ namespace TransportManagmentImplementation.Services.Common
             }
             catch (Exception ex)
             {
+                _logger.LogExcption("COOMON", WoredaGet.CreatedById, ex.Message);
+
+
                 return new ResponseMessage
                 {
                     Success = false,

@@ -1,0 +1,84 @@
+<div class="col-xxl-12">
+    <div class="card">
+        <div class="card-body">
+            <!-- Nav tabs -->
+            <ul ngbNav #ModifierCustom="ngbNav" [activeId]="1" class="nav nav-pills nav-customs nav-danger mb-3">
+                <li [ngbNavItem]="1">
+                    <a ngbNavLink class="nav-link">
+                        Ban Body
+                    </a>
+                    <ng-template ngbNavContent>
+                        <app-ban-body></app-ban-body>
+                    </ng-template>
+                </li>
+                <li [ngbNavItem]="2">
+                    <a ngbNavLink class="nav-link">
+                        Ban Case
+                    </a>
+                    <ng-template ngbNavContent>
+                        <app-vehicle-lookups [tabValue]="1"></app-vehicle-lookups>
+                    </ng-template>
+                </li>
+                <li [ngbNavItem]="3">
+                    <a ngbNavLink class="nav-link">
+                        Mark
+                    </a>
+                    <ng-template ngbNavContent>
+                        <app-vehicle-lookups [tabValue]="0"></app-vehicle-lookups>
+                    </ng-template>
+                </li>
+                <li [ngbNavItem]="4">
+                    <a ngbNavLink class="nav-link">
+                        Plate Size
+                    </a>
+                    <ng-template ngbNavContent>
+                        <app-vehicle-lookups [tabValue]="2"></app-vehicle-lookups>
+                    </ng-template>
+                </li>
+                <li [ngbNavItem]="5">
+                    <a ngbNavLink class="nav-link">
+                        Vehicle Category
+                    </a>
+                    <ng-template ngbNavContent>
+                        <app-vehicle-lookups [tabValue]="3"></app-vehicle-lookups>
+                    </ng-template>
+                </li>
+                <li [ngbNavItem]="6">
+                    <a ngbNavLink class="nav-link">
+                        Vehicle Color
+                    </a>
+                    <ng-template ngbNavContent>
+                        <app-vehicle-lookups [tabValue]="4"></app-vehicle-lookups>
+                    </ng-template>
+                </li>
+                <li [ngbNavItem]="7">
+                    <a ngbNavLink class="nav-link">
+                        Major
+                    </a>
+                    <ng-template ngbNavContent>
+                        <app-vehicle-lookups [tabValue]="5"></app-vehicle-lookups>
+                    </ng-template>
+                </li>
+                <li [ngbNavItem]="8">
+                    <a ngbNavLink class="nav-link">
+                        Minor
+                    </a>
+                    <ng-template ngbNavContent>
+                        <app-vehicle-lookups [tabValue]="6"></app-vehicle-lookups>
+                    </ng-template>
+                </li>
+                <li [ngbNavItem]="9">
+                    <a ngbNavLink class="nav-link">
+                        Load Measurement
+                    </a>
+                    <ng-template ngbNavContent>
+                        <app-vehicle-lookups [tabValue]="7"></app-vehicle-lookups>
+                    </ng-template>
+                </li>
+            </ul>
+            <div class="tab-content text-muted">
+                <div [ngbNavOutlet]="ModifierCustom"></div>
+            </div>
+        </div>
+    </div>
+</div>

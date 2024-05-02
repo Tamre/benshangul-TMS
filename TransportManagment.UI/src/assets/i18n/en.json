@@ -8,6 +8,9 @@
     "MENU": {
       "TEXT": "TMS"
     },
+    "VRMS": {
+      "TEXT": "VRMS"
+    },
     "DASHBOARD": {
       "TEXT": "Dashboards",
       "BADGE": "New",
@@ -23,6 +26,28 @@
         "USER": "User",
         "ADDRESS": "Address"
       }
+    },
+    "VEHICLE": {
+      "TEXT": "Vehicle",
+      "LIST": {
+        "REGISTER": "Register Vehicle"
+      }
+    },
+
+
+
+    "VEHICLE-CONFIGURATION": {
+      "TEXT": "Vehicle Configurations",
+      "LIST": {
+        "Vehicle Attribute": "Vehicle Attribute",
+        "Financial": "Financial",
+        "Services": "Services",
+        "Manufacturing": "Manufacturing",
+        "Documentation": "Documentation" 
+      }
+    },
+    "STOCK-MANAGEMENT": {
+      "TEXT": "Stock Management"
     },
     "LAYOUTS": {
       "TEXT": "Layouts",

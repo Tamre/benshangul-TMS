@@ -14,8 +14,16 @@ using TransportManagmentInfrustructure.Model.Authentication;
 using TransportManagmentImplementation.DTOS.Authentication;
 using TransportManagmentImplementation.Datas;
 using System.Configuration;
+using Microsoft.OpenApi.Models;
+
+
+using TransportManagmentImplementation.Interfaces.Common;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Host.UseSerilog((context, configuration) => configuration.ReadFrom.Configuration(context.Configuration));
+
 
 // Add services to the container.
 
@@ -97,7 +105,6 @@ var key = Encoding.UTF8.GetBytes(builder.Configuration["ApplicationSetting:JWT_S
 
 
 
-
 builder.Services.AddAuthentication(options =>
 {
     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -120,11 +127,42 @@ builder.Services.AddAuthentication(options =>
 
 builder.Services.AddAuthorization();
 builder.Services.AddHttpContextAccessor();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(c =>
+{
+    c.SwaggerDoc("v1", new OpenApiInfo { Title = "My API", Version = "v1" });
+    c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+    {
+        In = ParameterLocation.Header,
+        Description = "Please enter a valid token",
+        Name = "Authorization",
+        Type = SecuritySchemeType.Http,
+        BearerFormat = "JWT",
+        Scheme = "Bearer"
+    });
+    c.AddSecurityRequirement(new OpenApiSecurityRequirement
+    {
+        {
+            new OpenApiSecurityScheme
+            {
+                Reference = new OpenApiReference
+                {
+                    Type = ReferenceType.SecurityScheme,
+                    Id = "Bearer"
+                }
+            },
+            new string[] { }
+        }
+    });
+});
+
+
+
+
 
 
 var app = builder.Build();
-app.UseDeveloperExceptionPage();
+
+
 
 // Enable Swagger middleware if in development or production environment
 if (app.Environment.IsDevelopment() || app.Environment.IsProduction())
@@ -133,6 +171,7 @@ if (app.Environment.IsDevelopment() || app.Environment.IsProduction())
     app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Integrated Digital Platforms"));
 }
 
+app.UseSerilogRequestLogging();
 app.UseHttpsRedirection();
 
 // Enable CORS

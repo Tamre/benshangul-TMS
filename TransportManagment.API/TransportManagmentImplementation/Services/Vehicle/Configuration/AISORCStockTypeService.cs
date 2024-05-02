@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using TransportManagmentImplementation.DTOS.Common;
 using TransportManagmentImplementation.DTOS.Vehicle.Configuration;
 using TransportManagmentImplementation.Helper;
+using TransportManagmentImplementation.Interfaces.Common;
 using TransportManagmentImplementation.Interfaces.Vehicle.Configuration;
 using TransportManagmentInfrustructure.Data;
 using TransportManagmentInfrustructure.Model.Common;
@@ -21,12 +22,14 @@ namespace TransportManagmentImplementation.Services.Vehicle.Configuration
 
         private readonly ApplicationDbContext _dbContext;
         private readonly IMapper _mapper;
+        private readonly ILoggerManagerService _logger;
 
-        public AISORCStockTypeService(ApplicationDbContext dbContext, IMapper mapper)
+        public AISORCStockTypeService(ApplicationDbContext dbContext, IMapper mapper,ILoggerManagerService logger)
         {
 
             _dbContext = dbContext;
             _mapper = mapper;
+            _logger = logger;
 
         }
 
@@ -51,6 +54,9 @@ namespace TransportManagmentImplementation.Services.Vehicle.Configuration
                 await _dbContext.AISORCStockTypes.AddAsync(StockType);
                 await _dbContext.SaveChangesAsync();
 
+                _logger.LogCreate("VRMS", AISORCStockTypePost.CreatedById, $"AISORC Stock Type Added Successfully on {DateTime.Now}");
+
+
                 return new ResponseMessage
                 {
                     Success = true,
@@ -61,6 +67,7 @@ namespace TransportManagmentImplementation.Services.Vehicle.Configuration
             catch (Exception ex)
             {
 
+                _logger.LogExcption("VRMS", AISORCStockTypePost.CreatedById, ex.Message);
                 return new ResponseMessage
                 {
                     Success = false,
@@ -70,10 +77,13 @@ namespace TransportManagmentImplementation.Services.Vehicle.Configuration
             }
         }
 
-        public async Task<List<AISORCStockTypeGetDto>> GetAll()
+        public async Task<List<AISORCStockTypeGetDto>> GetAll(RequestParameter requestParameter)
         {
 
-            var stockTypes = await _dbContext.AISORCStockTypes.AsNoTracking().ToListAsync();
+            var stockTypes = await _dbContext.AISORCStockTypes.AsNoTracking().OrderBy(e => e.Id)
+ .Skip((requestParameter.PageNumber - 1) * requestParameter.PageSize)
+ .Take(requestParameter.PageSize)
+ .ToListAsync(); ;
 
             var stockTypeDtos = _mapper.Map<List<AISORCStockTypeGetDto>>(stockTypes);
 
@@ -100,6 +110,9 @@ namespace TransportManagmentImplementation.Services.Vehicle.Configuration
                     // Save the changes to the database
                     await _dbContext.SaveChangesAsync();
 
+                    _logger.LogUpdate("VRMS", AISORCStockTypeGet.CreatedById, $"AISORC Stock Type Updated Successfully on {DateTime.Now}");
+
+
                     return new ResponseMessage
                     {
                         Success = true,
@@ -118,6 +131,7 @@ namespace TransportManagmentImplementation.Services.Vehicle.Configuration
             }
             catch (Exception ex)
             {
+                _logger.LogExcption("VRMS",AISORCStockTypeGet.CreatedById, ex.Message);
                 return new ResponseMessage
                 {
                     Success = false,

@@ -12,6 +12,6 @@ namespace TransportManagmentImplementation.Interfaces.Common
     {
         public Task<ResponseMessage> Add(WoredaPostDto WoredaPost);
         public Task<ResponseMessage> Update(WoredaGetDto WoredaGet);
-        public Task<List<WoredaGetDto>> GetAll();
+        public Task<List<WoredaGetDto>> GetAll(RequestParameter requestParameter);
     }
 }

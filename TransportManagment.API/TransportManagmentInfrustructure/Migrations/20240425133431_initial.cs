@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace TransportManagmentInfrustructure.Migrations
 {
     /// <inheritdoc />
-    public partial class Initital : Migration
+    public partial class initial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -174,16 +174,15 @@ namespace TransportManagmentInfrustructure.Migrations
                     Code = table.Column<string>(type: "nvarchar(3)", maxLength: 3, nullable: false),
                     Category = table.Column<int>(type: "int", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    CreatedById = table.Column<string>(type: "nvarchar(45)", maxLength: 45, nullable: false),
-                    ApplicationUserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
-                    RowStatus = table.Column<int>(type: "int", nullable: false)
+                    CreatedById = table.Column<string>(type: "nvarchar(450)", maxLength: 450, nullable: false),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AISORCStockTypes", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_AISORCStockTypes_Users_ApplicationUserId",
-                        column: x => x.ApplicationUserId,
+                        name: "FK_AISORCStockTypes_Users_CreatedById",
+                        column: x => x.CreatedById,
                         principalSchema: "UserMgt",
                         principalTable: "Users",
                         principalColumn: "Id");
@@ -200,16 +199,15 @@ namespace TransportManagmentInfrustructure.Migrations
                     LocalName = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
                     BanBodyCategory = table.Column<int>(type: "int", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    CreatedById = table.Column<string>(type: "nvarchar(45)", maxLength: 45, nullable: false),
-                    ApplicationUserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
-                    RowStatus = table.Column<int>(type: "int", nullable: false)
+                    CreatedById = table.Column<string>(type: "nvarchar(450)", maxLength: 450, nullable: false),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_BanBodies", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_BanBodies_Users_ApplicationUserId",
-                        column: x => x.ApplicationUserId,
+                        name: "FK_BanBodies_Users_CreatedById",
+                        column: x => x.CreatedById,
                         principalSchema: "UserMgt",
                         principalTable: "Users",
                         principalColumn: "Id");
@@ -229,16 +227,15 @@ namespace TransportManagmentInfrustructure.Migrations
                     Address = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     Description = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    CreatedById = table.Column<string>(type: "nvarchar(45)", maxLength: 45, nullable: false),
-                    ApplicationUserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
-                    RowStatus = table.Column<int>(type: "int", nullable: false)
+                    CreatedById = table.Column<string>(type: "nvarchar(450)", maxLength: 450, nullable: false),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_CompanyProfiles", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_CompanyProfiles_Users_ApplicationUserId",
-                        column: x => x.ApplicationUserId,
+                        name: "FK_CompanyProfiles_Users_CreatedById",
+                        column: x => x.CreatedById,
                         principalSchema: "UserMgt",
                         principalTable: "Users",
                         principalColumn: "Id");
@@ -257,16 +254,15 @@ namespace TransportManagmentInfrustructure.Migrations
                     NationalityName = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
                     LocalNationalityName = table.Column<string>(type: "nvarchar(15)", maxLength: 15, nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    CreatedById = table.Column<string>(type: "nvarchar(45)", maxLength: 45, nullable: false),
-                    ApplicationUserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
-                    RowStatus = table.Column<int>(type: "int", nullable: false)
+                    CreatedById = table.Column<string>(type: "nvarchar(450)", maxLength: 450, nullable: false),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Countries", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Countries_Users_ApplicationUserId",
-                        column: x => x.ApplicationUserId,
+                        name: "FK_Countries_Users_CreatedById",
+                        column: x => x.CreatedById,
                         principalSchema: "UserMgt",
                         principalTable: "Users",
                         principalColumn: "Id");
@@ -283,16 +279,15 @@ namespace TransportManagmentInfrustructure.Migrations
                     LocalName = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
                     Value = table.Column<double>(type: "float", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    CreatedById = table.Column<string>(type: "nvarchar(45)", maxLength: 45, nullable: false),
-                    ApplicationUserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
-                    RowStatus = table.Column<int>(type: "int", nullable: false)
+                    CreatedById = table.Column<string>(type: "nvarchar(450)", maxLength: 450, nullable: false),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_DepreciationCosts", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_DepreciationCosts_Users_ApplicationUserId",
-                        column: x => x.ApplicationUserId,
+                        name: "FK_DepreciationCosts_Users_CreatedById",
+                        column: x => x.CreatedById,
                         principalSchema: "UserMgt",
                         principalTable: "Users",
                         principalColumn: "Id");
@@ -311,22 +306,21 @@ namespace TransportManagmentInfrustructure.Migrations
                     ApproverId = table.Column<string>(type: "nvarchar(450)", maxLength: 450, nullable: true),
                     ApprovedFor = table.Column<int>(type: "int", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    CreatedById = table.Column<string>(type: "nvarchar(45)", maxLength: 45, nullable: false),
-                    ApplicationUserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
-                    RowStatus = table.Column<int>(type: "int", nullable: false)
+                    CreatedById = table.Column<string>(type: "nvarchar(450)", maxLength: 450, nullable: false),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_DeviceLists", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_DeviceLists_Users_ApplicationUserId",
-                        column: x => x.ApplicationUserId,
+                        name: "FK_DeviceLists_Users_ApproverId",
+                        column: x => x.ApproverId,
                         principalSchema: "UserMgt",
                         principalTable: "Users",
                         principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_DeviceLists_Users_ApproverId",
-                        column: x => x.ApproverId,
+                        name: "FK_DeviceLists_Users_CreatedById",
+                        column: x => x.CreatedById,
                         principalSchema: "UserMgt",
                         principalTable: "Users",
                         principalColumn: "Id");
@@ -344,16 +338,15 @@ namespace TransportManagmentInfrustructure.Migrations
                     IsPermanentRequired = table.Column<bool>(type: "bit", nullable: false),
                     IsTemporaryRequired = table.Column<bool>(type: "bit", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    CreatedById = table.Column<string>(type: "nvarchar(45)", maxLength: 45, nullable: false),
-                    ApplicationUserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
-                    RowStatus = table.Column<int>(type: "int", nullable: false)
+                    CreatedById = table.Column<string>(type: "nvarchar(450)", maxLength: 450, nullable: false),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_DocumentTypes", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_DocumentTypes_Users_ApplicationUserId",
-                        column: x => x.ApplicationUserId,
+                        name: "FK_DocumentTypes_Users_CreatedById",
+                        column: x => x.CreatedById,
                         principalSchema: "UserMgt",
                         principalTable: "Users",
                         principalColumn: "Id");
@@ -370,16 +363,15 @@ namespace TransportManagmentInfrustructure.Migrations
                     LocalName = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
                     Price = table.Column<double>(type: "float", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    CreatedById = table.Column<string>(type: "nvarchar(45)", maxLength: 45, nullable: false),
-                    ApplicationUserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
-                    RowStatus = table.Column<int>(type: "int", nullable: false)
+                    CreatedById = table.Column<string>(type: "nvarchar(450)", maxLength: 450, nullable: false),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_InitialPrices", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_InitialPrices_Users_ApplicationUserId",
-                        column: x => x.ApplicationUserId,
+                        name: "FK_InitialPrices_Users_CreatedById",
+                        column: x => x.CreatedById,
                         principalSchema: "UserMgt",
                         principalTable: "Users",
                         principalColumn: "Id");
@@ -397,16 +389,15 @@ namespace TransportManagmentInfrustructure.Migrations
                     Value = table.Column<double>(type: "float", nullable: false),
                     ListOfCountries = table.Column<string>(type: "nvarchar(3000)", maxLength: 3000, nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    CreatedById = table.Column<string>(type: "nvarchar(45)", maxLength: 45, nullable: false),
-                    ApplicationUserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
-                    RowStatus = table.Column<int>(type: "int", nullable: false)
+                    CreatedById = table.Column<string>(type: "nvarchar(450)", maxLength: 450, nullable: false),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_ManufacturingCountries", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_ManufacturingCountries_Users_ApplicationUserId",
-                        column: x => x.ApplicationUserId,
+                        name: "FK_ManufacturingCountries_Users_CreatedById",
+                        column: x => x.CreatedById,
                         principalSchema: "UserMgt",
                         principalTable: "Users",
                         principalColumn: "Id");
@@ -425,16 +416,15 @@ namespace TransportManagmentInfrustructure.Migrations
                     MobileNo = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     PasswordChangeStatus = table.Column<int>(type: "int", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    CreatedById = table.Column<string>(type: "nvarchar(45)", maxLength: 45, nullable: false),
-                    ApplicationUserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
-                    RowStatus = table.Column<int>(type: "int", nullable: false)
+                    CreatedById = table.Column<string>(type: "nvarchar(450)", maxLength: 450, nullable: false),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_PasswordChangeRequests", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_PasswordChangeRequests_Users_ApplicationUserId",
-                        column: x => x.ApplicationUserId,
+                        name: "FK_PasswordChangeRequests_Users_CreatedById",
+                        column: x => x.CreatedById,
                         principalSchema: "UserMgt",
                         principalTable: "Users",
                         principalColumn: "Id");
@@ -473,16 +463,15 @@ namespace TransportManagmentInfrustructure.Migrations
                     LocalName = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
                     Value = table.Column<double>(type: "float", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    CreatedById = table.Column<string>(type: "nvarchar(45)", maxLength: 45, nullable: false),
-                    ApplicationUserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
-                    RowStatus = table.Column<int>(type: "int", nullable: false)
+                    CreatedById = table.Column<string>(type: "nvarchar(450)", maxLength: 450, nullable: false),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_SalvageValues", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_SalvageValues_Users_ApplicationUserId",
-                        column: x => x.ApplicationUserId,
+                        name: "FK_SalvageValues_Users_CreatedById",
+                        column: x => x.CreatedById,
                         principalSchema: "UserMgt",
                         principalTable: "Users",
                         principalColumn: "Id");
@@ -501,16 +490,15 @@ namespace TransportManagmentInfrustructure.Migrations
                     ListOfPlates = table.Column<string>(type: "nvarchar(3000)", maxLength: 3000, nullable: false),
                     ListOfAIS = table.Column<string>(type: "nvarchar(3000)", maxLength: 3000, nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    CreatedById = table.Column<string>(type: "nvarchar(45)", maxLength: 45, nullable: false),
-                    ApplicationUserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
-                    RowStatus = table.Column<int>(type: "int", nullable: false)
+                    CreatedById = table.Column<string>(type: "nvarchar(450)", maxLength: 450, nullable: false),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_ServiceTypes", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_ServiceTypes_Users_ApplicationUserId",
-                        column: x => x.ApplicationUserId,
+                        name: "FK_ServiceTypes_Users_CreatedById",
+                        column: x => x.CreatedById,
                         principalSchema: "UserMgt",
                         principalTable: "Users",
                         principalColumn: "Id");
@@ -527,16 +515,15 @@ namespace TransportManagmentInfrustructure.Migrations
                     IsValuationPayment = table.Column<bool>(type: "bit", nullable: false),
                     IsOwnershipPayment = table.Column<bool>(type: "bit", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    CreatedById = table.Column<string>(type: "nvarchar(45)", maxLength: 45, nullable: false),
-                    ApplicationUserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    RowStatus = table.Column<int>(type: "int", nullable: false)
+                    CreatedById = table.Column<string>(type: "nvarchar(450)", maxLength: 450, nullable: false),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_ValuationReason", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_ValuationReason_Users_ApplicationUserId",
-                        column: x => x.ApplicationUserId,
+                        name: "FK_ValuationReason_Users_CreatedById",
+                        column: x => x.CreatedById,
                         principalSchema: "UserMgt",
                         principalTable: "Users",
                         principalColumn: "Id");
@@ -553,16 +540,15 @@ namespace TransportManagmentInfrustructure.Migrations
                     Name = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
                     LocalName = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    CreatedById = table.Column<string>(type: "nvarchar(45)", maxLength: 45, nullable: false),
-                    ApplicationUserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    RowStatus = table.Column<int>(type: "int", nullable: false)
+                    CreatedById = table.Column<string>(type: "nvarchar(450)", maxLength: 450, nullable: false),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_vehicleLookups", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_vehicleLookups_Users_ApplicationUserId",
-                        column: x => x.ApplicationUserId,
+                        name: "FK_vehicleLookups_Users_CreatedById",
+                        column: x => x.CreatedById,
                         principalSchema: "UserMgt",
                         principalTable: "Users",
                         principalColumn: "Id");
@@ -578,16 +564,15 @@ namespace TransportManagmentInfrustructure.Migrations
                     VehicleSettingType = table.Column<int>(type: "int", nullable: false),
                     Value = table.Column<int>(type: "int", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    CreatedById = table.Column<string>(type: "nvarchar(45)", maxLength: 45, nullable: false),
-                    ApplicationUserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    RowStatus = table.Column<int>(type: "int", nullable: false)
+                    CreatedById = table.Column<string>(type: "nvarchar(450)", maxLength: 450, nullable: false),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_VehicleSettings", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_VehicleSettings_Users_ApplicationUserId",
-                        column: x => x.ApplicationUserId,
+                        name: "FK_VehicleSettings_Users_CreatedById",
+                        column: x => x.CreatedById,
                         principalSchema: "UserMgt",
                         principalTable: "Users",
                         principalColumn: "Id");
@@ -606,9 +591,8 @@ namespace TransportManagmentInfrustructure.Migrations
                     Code = table.Column<string>(type: "nvarchar(5)", maxLength: 5, nullable: false),
                     LocalCode = table.Column<string>(type: "nvarchar(5)", maxLength: 5, nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    CreatedById = table.Column<string>(type: "nvarchar(45)", maxLength: 45, nullable: false),
-                    ApplicationUserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
-                    RowStatus = table.Column<int>(type: "int", nullable: false)
+                    CreatedById = table.Column<string>(type: "nvarchar(450)", maxLength: 450, nullable: false),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -620,8 +604,8 @@ namespace TransportManagmentInfrustructure.Migrations
                         principalTable: "Countries",
                         principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_Regions_Users_ApplicationUserId",
-                        column: x => x.ApplicationUserId,
+                        name: "FK_Regions_Users_CreatedById",
+                        column: x => x.CreatedById,
                         principalSchema: "UserMgt",
                         principalTable: "Users",
                         principalColumn: "Id");
@@ -637,16 +621,15 @@ namespace TransportManagmentInfrustructure.Migrations
                     MarkId = table.Column<int>(type: "int", nullable: false),
                     Value = table.Column<double>(type: "float", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    CreatedById = table.Column<string>(type: "nvarchar(45)", maxLength: 45, nullable: false),
-                    ApplicationUserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
-                    RowStatus = table.Column<int>(type: "int", nullable: false)
+                    CreatedById = table.Column<string>(type: "nvarchar(450)", maxLength: 450, nullable: false),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_FactoryPoints", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_FactoryPoints_Users_ApplicationUserId",
-                        column: x => x.ApplicationUserId,
+                        name: "FK_FactoryPoints_Users_CreatedById",
+                        column: x => x.CreatedById,
                         principalSchema: "UserMgt",
                         principalTable: "Users",
                         principalColumn: "Id");
@@ -672,16 +655,15 @@ namespace TransportManagmentInfrustructure.Migrations
                     MinorId = table.Column<int>(type: "int", nullable: true),
                     MajorId = table.Column<int>(type: "int", nullable: true),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    CreatedById = table.Column<string>(type: "nvarchar(45)", maxLength: 45, nullable: false),
-                    ApplicationUserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
-                    RowStatus = table.Column<int>(type: "int", nullable: false)
+                    CreatedById = table.Column<string>(type: "nvarchar(450)", maxLength: 450, nullable: false),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_PlateTypes", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_PlateTypes_Users_ApplicationUserId",
-                        column: x => x.ApplicationUserId,
+                        name: "FK_PlateTypes_Users_CreatedById",
+                        column: x => x.CreatedById,
                         principalSchema: "UserMgt",
                         principalTable: "Users",
                         principalColumn: "Id");
@@ -712,16 +694,15 @@ namespace TransportManagmentInfrustructure.Migrations
                     HorsePowerMeasure = table.Column<int>(type: "int", nullable: false),
                     MarkId = table.Column<int>(type: "int", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    CreatedById = table.Column<string>(type: "nvarchar(45)", maxLength: 45, nullable: false),
-                    ApplicationUserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    RowStatus = table.Column<int>(type: "int", nullable: false)
+                    CreatedById = table.Column<string>(type: "nvarchar(450)", maxLength: 450, nullable: false),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_VehicleModels", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_VehicleModels_Users_ApplicationUserId",
-                        column: x => x.ApplicationUserId,
+                        name: "FK_VehicleModels_Users_CreatedById",
+                        column: x => x.CreatedById,
                         principalSchema: "UserMgt",
                         principalTable: "Users",
                         principalColumn: "Id");
@@ -744,16 +725,15 @@ namespace TransportManagmentInfrustructure.Migrations
                     Name = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
                     LocalName = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    CreatedById = table.Column<string>(type: "nvarchar(45)", maxLength: 45, nullable: false),
-                    ApplicationUserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    RowStatus = table.Column<int>(type: "int", nullable: false)
+                    CreatedById = table.Column<string>(type: "nvarchar(450)", maxLength: 450, nullable: false),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_VehicleTypes", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_VehicleTypes_Users_ApplicationUserId",
-                        column: x => x.ApplicationUserId,
+                        name: "FK_VehicleTypes_Users_CreatedById",
+                        column: x => x.CreatedById,
                         principalSchema: "UserMgt",
                         principalTable: "Users",
                         principalColumn: "Id");
@@ -781,9 +761,8 @@ namespace TransportManagmentInfrustructure.Migrations
                     LocalSuffix = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
                     IsCity = table.Column<bool>(type: "bit", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    CreatedById = table.Column<string>(type: "nvarchar(45)", maxLength: 45, nullable: false),
-                    ApplicationUserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
-                    RowStatus = table.Column<int>(type: "int", nullable: false)
+                    CreatedById = table.Column<string>(type: "nvarchar(450)", maxLength: 450, nullable: false),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -795,8 +774,8 @@ namespace TransportManagmentInfrustructure.Migrations
                         principalTable: "Regions",
                         principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_Zones_Users_ApplicationUserId",
-                        column: x => x.ApplicationUserId,
+                        name: "FK_Zones_Users_CreatedById",
+                        column: x => x.CreatedById,
                         principalSchema: "UserMgt",
                         principalTable: "Users",
                         principalColumn: "Id");
@@ -814,16 +793,15 @@ namespace TransportManagmentInfrustructure.Migrations
                     YearValue = table.Column<double>(type: "float", nullable: false),
                     VehicleTypeId = table.Column<int>(type: "int", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    CreatedById = table.Column<string>(type: "nvarchar(45)", maxLength: 45, nullable: false),
-                    ApplicationUserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
-                    RowStatus = table.Column<int>(type: "int", nullable: false)
+                    CreatedById = table.Column<string>(type: "nvarchar(450)", maxLength: 450, nullable: false),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_ServiceYearSettings", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_ServiceYearSettings_Users_ApplicationUserId",
-                        column: x => x.ApplicationUserId,
+                        name: "FK_ServiceYearSettings_Users_CreatedById",
+                        column: x => x.CreatedById,
                         principalSchema: "UserMgt",
                         principalTable: "Users",
                         principalColumn: "Id");
@@ -847,16 +825,15 @@ namespace TransportManagmentInfrustructure.Migrations
                     VehicleTypeId = table.Column<int>(type: "int", nullable: false),
                     Value = table.Column<double>(type: "float", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    CreatedById = table.Column<string>(type: "nvarchar(45)", maxLength: 45, nullable: false),
-                    ApplicationUserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    RowStatus = table.Column<int>(type: "int", nullable: false)
+                    CreatedById = table.Column<string>(type: "nvarchar(450)", maxLength: 450, nullable: false),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_VehicleBodyTypes", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_VehicleBodyTypes_Users_ApplicationUserId",
-                        column: x => x.ApplicationUserId,
+                        name: "FK_VehicleBodyTypes_Users_CreatedById",
+                        column: x => x.CreatedById,
                         principalSchema: "UserMgt",
                         principalTable: "Users",
                         principalColumn: "Id");
@@ -880,7 +857,6 @@ namespace TransportManagmentInfrustructure.Migrations
                     ToZoneId = table.Column<int>(type: "int", nullable: true),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CreatedById = table.Column<string>(type: "nvarchar(450)", maxLength: 450, nullable: false),
-                    ApplicationUserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     IsActive = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
@@ -899,8 +875,8 @@ namespace TransportManagmentInfrustructure.Migrations
                         principalTable: "Regions",
                         principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_AisStocks_Users_ApplicationUserId",
-                        column: x => x.ApplicationUserId,
+                        name: "FK_AisStocks_Users_CreatedById",
+                        column: x => x.CreatedById,
                         principalSchema: "UserMgt",
                         principalTable: "Users",
                         principalColumn: "Id");
@@ -925,16 +901,15 @@ namespace TransportManagmentInfrustructure.Migrations
                     Pad = table.Column<int>(type: "int", nullable: false),
                     CurrentNumber = table.Column<int>(type: "int", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    CreatedById = table.Column<string>(type: "nvarchar(45)", maxLength: 45, nullable: false),
-                    ApplicationUserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
-                    RowStatus = table.Column<int>(type: "int", nullable: false)
+                    CreatedById = table.Column<string>(type: "nvarchar(450)", maxLength: 450, nullable: false),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_CommonCodes", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_CommonCodes_Users_ApplicationUserId",
-                        column: x => x.ApplicationUserId,
+                        name: "FK_CommonCodes_Users_CreatedById",
+                        column: x => x.CreatedById,
                         principalSchema: "UserMgt",
                         principalTable: "Users",
                         principalColumn: "Id");
@@ -958,7 +933,6 @@ namespace TransportManagmentInfrustructure.Migrations
                     ToZoneId = table.Column<int>(type: "int", nullable: true),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CreatedById = table.Column<string>(type: "nvarchar(450)", maxLength: 450, nullable: false),
-                    ApplicationUserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     IsActive = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
@@ -977,8 +951,8 @@ namespace TransportManagmentInfrustructure.Migrations
                         principalTable: "Regions",
                         principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_ORCStocks_Users_ApplicationUserId",
-                        column: x => x.ApplicationUserId,
+                        name: "FK_ORCStocks_Users_CreatedById",
+                        column: x => x.CreatedById,
                         principalSchema: "UserMgt",
                         principalTable: "Users",
                         principalColumn: "Id");
@@ -1008,7 +982,6 @@ namespace TransportManagmentInfrustructure.Migrations
                     IsBackLog = table.Column<bool>(type: "bit", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CreatedById = table.Column<string>(type: "nvarchar(450)", maxLength: 450, nullable: false),
-                    ApplicationUserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     IsActive = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
@@ -1027,8 +1000,8 @@ namespace TransportManagmentInfrustructure.Migrations
                         principalTable: "Regions",
                         principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_PlateStocks_Users_ApplicationUserId",
-                        column: x => x.ApplicationUserId,
+                        name: "FK_PlateStocks_Users_CreatedById",
+                        column: x => x.CreatedById,
                         principalSchema: "UserMgt",
                         principalTable: "Users",
                         principalColumn: "Id");
@@ -1087,7 +1060,6 @@ namespace TransportManagmentInfrustructure.Migrations
                     ServiceZoneId = table.Column<int>(type: "int", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CreatedById = table.Column<string>(type: "nvarchar(450)", maxLength: 450, nullable: false),
-                    ApplicationUserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     IsActive = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
@@ -1106,14 +1078,14 @@ namespace TransportManagmentInfrustructure.Migrations
                         principalTable: "Countries",
                         principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_VehicleLists_Users_ApplicationUserId",
-                        column: x => x.ApplicationUserId,
+                        name: "FK_VehicleLists_Users_ApprovedById",
+                        column: x => x.ApprovedById,
                         principalSchema: "UserMgt",
                         principalTable: "Users",
                         principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_VehicleLists_Users_ApprovedById",
-                        column: x => x.ApprovedById,
+                        name: "FK_VehicleLists_Users_CreatedById",
+                        column: x => x.CreatedById,
                         principalSchema: "UserMgt",
                         principalTable: "Users",
                         principalColumn: "Id");
@@ -1143,16 +1115,15 @@ namespace TransportManagmentInfrustructure.Migrations
                     Pad = table.Column<int>(type: "int", nullable: false),
                     ZoneId = table.Column<int>(type: "int", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    CreatedById = table.Column<string>(type: "nvarchar(45)", maxLength: 45, nullable: false),
-                    ApplicationUserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    RowStatus = table.Column<int>(type: "int", nullable: false)
+                    CreatedById = table.Column<string>(type: "nvarchar(450)", maxLength: 450, nullable: false),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_VehicleSerialSettings", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_VehicleSerialSettings_Users_ApplicationUserId",
-                        column: x => x.ApplicationUserId,
+                        name: "FK_VehicleSerialSettings_Users_CreatedById",
+                        column: x => x.CreatedById,
                         principalSchema: "UserMgt",
                         principalTable: "Users",
                         principalColumn: "Id");
@@ -1177,16 +1148,15 @@ namespace TransportManagmentInfrustructure.Migrations
                     Code = table.Column<string>(type: "nvarchar(5)", maxLength: 5, nullable: false),
                     LocalCode = table.Column<string>(type: "nvarchar(5)", maxLength: 5, nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    CreatedById = table.Column<string>(type: "nvarchar(45)", maxLength: 45, nullable: false),
-                    ApplicationUserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    RowStatus = table.Column<int>(type: "int", nullable: false)
+                    CreatedById = table.Column<string>(type: "nvarchar(450)", maxLength: 450, nullable: false),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Woredas", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Woredas_Users_ApplicationUserId",
-                        column: x => x.ApplicationUserId,
+                        name: "FK_Woredas_Users_CreatedById",
+                        column: x => x.CreatedById,
                         principalSchema: "UserMgt",
                         principalTable: "Users",
                         principalColumn: "Id");
@@ -1215,7 +1185,6 @@ namespace TransportManagmentInfrustructure.Migrations
                     PreviousReason = table.Column<int>(type: "int", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CreatedById = table.Column<string>(type: "nvarchar(450)", maxLength: 450, nullable: false),
-                    ApplicationUserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     IsActive = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
@@ -1228,8 +1197,8 @@ namespace TransportManagmentInfrustructure.Migrations
                         principalTable: "AisStocks",
                         principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_AisLists_Users_ApplicationUserId",
-                        column: x => x.ApplicationUserId,
+                        name: "FK_AisLists_Users_CreatedById",
+                        column: x => x.CreatedById,
                         principalSchema: "UserMgt",
                         principalTable: "Users",
                         principalColumn: "Id");
@@ -1261,7 +1230,6 @@ namespace TransportManagmentInfrustructure.Migrations
                     PreviousReason = table.Column<int>(type: "int", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CreatedById = table.Column<string>(type: "nvarchar(450)", maxLength: 450, nullable: false),
-                    ApplicationUserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     IsActive = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
@@ -1274,8 +1242,8 @@ namespace TransportManagmentInfrustructure.Migrations
                         principalTable: "ORCStocks",
                         principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_ORCLists_Users_ApplicationUserId",
-                        column: x => x.ApplicationUserId,
+                        name: "FK_ORCLists_Users_CreatedById",
+                        column: x => x.CreatedById,
                         principalSchema: "UserMgt",
                         principalTable: "Users",
                         principalColumn: "Id");
@@ -1307,7 +1275,6 @@ namespace TransportManagmentInfrustructure.Migrations
                     ActivatedById = table.Column<string>(type: "nvarchar(450)", maxLength: 450, nullable: true),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CreatedById = table.Column<string>(type: "nvarchar(450)", maxLength: 450, nullable: false),
-                    ApplicationUserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     IsActive = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
@@ -1320,8 +1287,8 @@ namespace TransportManagmentInfrustructure.Migrations
                         principalTable: "Users",
                         principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_TemporaryVehicleDeactivations_Users_ApplicationUserId",
-                        column: x => x.ApplicationUserId,
+                        name: "FK_TemporaryVehicleDeactivations_Users_CreatedById",
+                        column: x => x.CreatedById,
                         principalSchema: "UserMgt",
                         principalTable: "Users",
                         principalColumn: "Id");
@@ -1356,7 +1323,6 @@ namespace TransportManagmentInfrustructure.Migrations
                     SellersAgreement = table.Column<double>(type: "float", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CreatedById = table.Column<string>(type: "nvarchar(450)", maxLength: 450, nullable: false),
-                    ApplicationUserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     IsActive = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
@@ -1393,8 +1359,8 @@ namespace TransportManagmentInfrustructure.Migrations
                         principalTable: "ServiceYearSettings",
                         principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_ValuationLists_Users_ApplicationUserId",
-                        column: x => x.ApplicationUserId,
+                        name: "FK_ValuationLists_Users_CreatedById",
+                        column: x => x.CreatedById,
                         principalSchema: "UserMgt",
                         principalTable: "Users",
                         principalColumn: "Id");
@@ -1429,7 +1395,6 @@ namespace TransportManagmentInfrustructure.Migrations
                     Enclosure = table.Column<string>(type: "nvarchar(3000)", maxLength: 3000, nullable: true),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CreatedById = table.Column<string>(type: "nvarchar(450)", maxLength: 450, nullable: false),
-                    ApplicationUserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     IsActive = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
@@ -1442,8 +1407,8 @@ namespace TransportManagmentInfrustructure.Migrations
                         principalTable: "BanBodies",
                         principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_VehicleBans_Users_ApplicationUserId",
-                        column: x => x.ApplicationUserId,
+                        name: "FK_VehicleBans_Users_CreatedById",
+                        column: x => x.CreatedById,
                         principalSchema: "UserMgt",
                         principalTable: "Users",
                         principalColumn: "Id");
@@ -1479,7 +1444,6 @@ namespace TransportManagmentInfrustructure.Migrations
                     PreviousModule = table.Column<int>(type: "int", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CreatedById = table.Column<string>(type: "nvarchar(450)", maxLength: 450, nullable: false),
-                    ApplicationUserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     IsActive = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
@@ -1492,8 +1456,8 @@ namespace TransportManagmentInfrustructure.Migrations
                         principalTable: "PlateStocks",
                         principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_VehiclePlates_Users_ApplicationUserId",
-                        column: x => x.ApplicationUserId,
+                        name: "FK_VehiclePlates_Users_CreatedById",
+                        column: x => x.CreatedById,
                         principalSchema: "UserMgt",
                         principalTable: "Users",
                         principalColumn: "Id");
@@ -1525,15 +1489,14 @@ namespace TransportManagmentInfrustructure.Migrations
                     Remark = table.Column<string>(type: "nvarchar(3000)", maxLength: 3000, nullable: true),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CreatedById = table.Column<string>(type: "nvarchar(450)", maxLength: 450, nullable: false),
-                    ApplicationUserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     IsActive = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_VehicleReplacements", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_VehicleReplacements_Users_ApplicationUserId",
-                        column: x => x.ApplicationUserId,
+                        name: "FK_VehicleReplacements_Users_CreatedById",
+                        column: x => x.CreatedById,
                         principalSchema: "UserMgt",
                         principalTable: "Users",
                         principalColumn: "Id");
@@ -1565,15 +1528,14 @@ namespace TransportManagmentInfrustructure.Migrations
                     ChangeServiceType = table.Column<bool>(type: "bit", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CreatedById = table.Column<string>(type: "nvarchar(450)", maxLength: 450, nullable: false),
-                    ApplicationUserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     IsActive = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_VehicleTransfers", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_VehicleTransfers_Users_ApplicationUserId",
-                        column: x => x.ApplicationUserId,
+                        name: "FK_VehicleTransfers_Users_CreatedById",
+                        column: x => x.CreatedById,
                         principalSchema: "UserMgt",
                         principalTable: "Users",
                         principalColumn: "Id");
@@ -1614,15 +1576,14 @@ namespace TransportManagmentInfrustructure.Migrations
                     TypeOfOrganization = table.Column<int>(type: "int", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CreatedById = table.Column<string>(type: "nvarchar(450)", maxLength: 450, nullable: false),
-                    ApplicationUserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     IsActive = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_OrganizationList", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_OrganizationList_Users_ApplicationUserId",
-                        column: x => x.ApplicationUserId,
+                        name: "FK_OrganizationList_Users_CreatedById",
+                        column: x => x.CreatedById,
                         principalSchema: "UserMgt",
                         principalTable: "Users",
                         principalColumn: "Id");
@@ -1664,15 +1625,14 @@ namespace TransportManagmentInfrustructure.Migrations
                     PoBox = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: true),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CreatedById = table.Column<string>(type: "nvarchar(450)", maxLength: 450, nullable: false),
-                    ApplicationUserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     IsActive = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_OwnerLists", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_OwnerLists_Users_ApplicationUserId",
-                        column: x => x.ApplicationUserId,
+                        name: "FK_OwnerLists_Users_CreatedById",
+                        column: x => x.CreatedById,
                         principalSchema: "UserMgt",
                         principalTable: "Users",
                         principalColumn: "Id");
@@ -1710,15 +1670,14 @@ namespace TransportManagmentInfrustructure.Migrations
                     LogoPath = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CreatedById = table.Column<string>(type: "nvarchar(450)", maxLength: 450, nullable: false),
-                    ApplicationUserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     IsActive = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_TrainingCenterList", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_TrainingCenterList_Users_ApplicationUserId",
-                        column: x => x.ApplicationUserId,
+                        name: "FK_TrainingCenterList_Users_CreatedById",
+                        column: x => x.CreatedById,
                         principalSchema: "UserMgt",
                         principalTable: "Users",
                         principalColumn: "Id");
@@ -1763,7 +1722,6 @@ namespace TransportManagmentInfrustructure.Migrations
                     EngineNo = table.Column<string>(type: "nvarchar(40)", maxLength: 40, nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CreatedById = table.Column<string>(type: "nvarchar(450)", maxLength: 450, nullable: false),
-                    ApplicationUserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     IsActive = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
@@ -1775,8 +1733,8 @@ namespace TransportManagmentInfrustructure.Migrations
                         principalTable: "OrganizationList",
                         principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_ServiceChanges_Users_ApplicationUserId",
-                        column: x => x.ApplicationUserId,
+                        name: "FK_ServiceChanges_Users_CreatedById",
+                        column: x => x.CreatedById,
                         principalSchema: "UserMgt",
                         principalTable: "Users",
                         principalColumn: "Id");
@@ -1806,7 +1764,6 @@ namespace TransportManagmentInfrustructure.Migrations
                     OwnershipType = table.Column<int>(type: "int", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CreatedById = table.Column<string>(type: "nvarchar(450)", maxLength: 450, nullable: false),
-                    ApplicationUserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     IsActive = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
@@ -1819,8 +1776,8 @@ namespace TransportManagmentInfrustructure.Migrations
                         principalTable: "OwnerLists",
                         principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_ValuationDetails_Users_ApplicationUserId",
-                        column: x => x.ApplicationUserId,
+                        name: "FK_ValuationDetails_Users_CreatedById",
+                        column: x => x.CreatedById,
                         principalSchema: "UserMgt",
                         principalTable: "Users",
                         principalColumn: "Id");
@@ -1844,7 +1801,6 @@ namespace TransportManagmentInfrustructure.Migrations
                     OwnerState = table.Column<int>(type: "int", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CreatedById = table.Column<string>(type: "nvarchar(450)", maxLength: 450, nullable: false),
-                    ApplicationUserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     IsActive = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
@@ -1862,8 +1818,8 @@ namespace TransportManagmentInfrustructure.Migrations
                         principalTable: "TrainingCenterList",
                         principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_VehicleOwners_Users_ApplicationUserId",
-                        column: x => x.ApplicationUserId,
+                        name: "FK_VehicleOwners_Users_CreatedById",
+                        column: x => x.CreatedById,
                         principalSchema: "UserMgt",
                         principalTable: "Users",
                         principalColumn: "Id");
@@ -1900,7 +1856,6 @@ namespace TransportManagmentInfrustructure.Migrations
                     BackPlateSizeId = table.Column<int>(type: "int", nullable: true),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CreatedById = table.Column<string>(type: "nvarchar(450)", maxLength: 450, nullable: false),
-                    ApplicationUserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     IsActive = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
@@ -1913,8 +1868,8 @@ namespace TransportManagmentInfrustructure.Migrations
                         principalTable: "ServiceChanges",
                         principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_FieldInspections_Users_ApplicationUserId",
-                        column: x => x.ApplicationUserId,
+                        name: "FK_FieldInspections_Users_CreatedById",
+                        column: x => x.CreatedById,
                         principalSchema: "UserMgt",
                         principalTable: "Users",
                         principalColumn: "Id");
@@ -1964,7 +1919,6 @@ namespace TransportManagmentInfrustructure.Migrations
                     Remark = table.Column<string>(type: "nvarchar(3000)", maxLength: 3000, nullable: true),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CreatedById = table.Column<string>(type: "nvarchar(450)", maxLength: 450, nullable: false),
-                    ApplicationUserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     IsActive = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
@@ -1983,8 +1937,8 @@ namespace TransportManagmentInfrustructure.Migrations
                         principalTable: "ServiceTypes",
                         principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_TechnicalInspections_Users_ApplicationUserId",
-                        column: x => x.ApplicationUserId,
+                        name: "FK_TechnicalInspections_Users_CreatedById",
+                        column: x => x.CreatedById,
                         principalSchema: "UserMgt",
                         principalTable: "Users",
                         principalColumn: "Id");
@@ -2009,10 +1963,10 @@ namespace TransportManagmentInfrustructure.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_AisLists_ApplicationUserId",
+                name: "IX_AisLists_CreatedById",
                 schema: "VRMS",
                 table: "AisLists",
-                column: "ApplicationUserId");
+                column: "CreatedById");
 
             migrationBuilder.CreateIndex(
                 name: "IX_AisLists_GivenZoneId",
@@ -2034,17 +1988,17 @@ namespace TransportManagmentInfrustructure.Migrations
                 column: "VehicleId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_AISORCStockTypes_ApplicationUserId",
-                schema: "VRMS",
-                table: "AISORCStockTypes",
-                column: "ApplicationUserId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_AISORCStockTypes_Code",
                 schema: "VRMS",
                 table: "AISORCStockTypes",
                 column: "Code",
                 unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AISORCStockTypes_CreatedById",
+                schema: "VRMS",
+                table: "AISORCStockTypes",
+                column: "CreatedById");
 
             migrationBuilder.CreateIndex(
                 name: "IX_AISORCStockTypes_Name",
@@ -2061,10 +2015,10 @@ namespace TransportManagmentInfrustructure.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_AisStocks_ApplicationUserId",
+                name: "IX_AisStocks_CreatedById",
                 schema: "VRMS",
                 table: "AisStocks",
-                column: "ApplicationUserId");
+                column: "CreatedById");
 
             migrationBuilder.CreateIndex(
                 name: "IX_AisStocks_RegionId",
@@ -2085,10 +2039,10 @@ namespace TransportManagmentInfrustructure.Migrations
                 column: "ToZoneId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_BanBodies_ApplicationUserId",
+                name: "IX_BanBodies_CreatedById",
                 schema: "VRMS",
                 table: "BanBodies",
-                column: "ApplicationUserId");
+                column: "CreatedById");
 
             migrationBuilder.CreateIndex(
                 name: "IX_BanBodies_Name",
@@ -2098,17 +2052,17 @@ namespace TransportManagmentInfrustructure.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_CommonCodes_ApplicationUserId",
-                schema: "Common",
-                table: "CommonCodes",
-                column: "ApplicationUserId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_CommonCodes_CommonCodeType",
                 schema: "Common",
                 table: "CommonCodes",
                 column: "CommonCodeType",
                 unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_CommonCodes_CreatedById",
+                schema: "Common",
+                table: "CommonCodes",
+                column: "CreatedById");
 
             migrationBuilder.CreateIndex(
                 name: "IX_CommonCodes_ZoneId",
@@ -2117,16 +2071,16 @@ namespace TransportManagmentInfrustructure.Migrations
                 column: "ZoneId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_CompanyProfiles_ApplicationUserId",
+                name: "IX_CompanyProfiles_CreatedById",
                 schema: "Common",
                 table: "CompanyProfiles",
-                column: "ApplicationUserId");
+                column: "CreatedById");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Countries_ApplicationUserId",
+                name: "IX_Countries_CreatedById",
                 schema: "Common",
                 table: "Countries",
-                column: "ApplicationUserId");
+                column: "CreatedById");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Countries_Name",
@@ -2136,10 +2090,10 @@ namespace TransportManagmentInfrustructure.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_DepreciationCosts_ApplicationUserId",
+                name: "IX_DepreciationCosts_CreatedById",
                 schema: "VRMS",
                 table: "DepreciationCosts",
-                column: "ApplicationUserId");
+                column: "CreatedById");
 
             migrationBuilder.CreateIndex(
                 name: "IX_DepreciationCosts_Name",
@@ -2149,22 +2103,22 @@ namespace TransportManagmentInfrustructure.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_DeviceLists_ApplicationUserId",
-                schema: "Common",
-                table: "DeviceLists",
-                column: "ApplicationUserId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_DeviceLists_ApproverId",
                 schema: "Common",
                 table: "DeviceLists",
                 column: "ApproverId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_DocumentTypes_ApplicationUserId",
+                name: "IX_DeviceLists_CreatedById",
+                schema: "Common",
+                table: "DeviceLists",
+                column: "CreatedById");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_DocumentTypes_CreatedById",
                 schema: "VRMS",
                 table: "DocumentTypes",
-                column: "ApplicationUserId");
+                column: "CreatedById");
 
             migrationBuilder.CreateIndex(
                 name: "IX_DocumentTypes_FileName",
@@ -2174,10 +2128,10 @@ namespace TransportManagmentInfrustructure.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_FactoryPoints_ApplicationUserId",
+                name: "IX_FactoryPoints_CreatedById",
                 schema: "VRMS",
                 table: "FactoryPoints",
-                column: "ApplicationUserId");
+                column: "CreatedById");
 
             migrationBuilder.CreateIndex(
                 name: "IX_FactoryPoints_MarkId",
@@ -2186,16 +2140,16 @@ namespace TransportManagmentInfrustructure.Migrations
                 column: "MarkId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_FieldInspections_ApplicationUserId",
-                schema: "VRMS",
-                table: "FieldInspections",
-                column: "ApplicationUserId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_FieldInspections_BackPlateSizeId",
                 schema: "VRMS",
                 table: "FieldInspections",
                 column: "BackPlateSizeId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_FieldInspections_CreatedById",
+                schema: "VRMS",
+                table: "FieldInspections",
+                column: "CreatedById");
 
             migrationBuilder.CreateIndex(
                 name: "IX_FieldInspections_FrontPlateSizeId",
@@ -2222,10 +2176,10 @@ namespace TransportManagmentInfrustructure.Migrations
                 column: "VehicleId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_InitialPrices_ApplicationUserId",
+                name: "IX_InitialPrices_CreatedById",
                 schema: "VRMS",
                 table: "InitialPrices",
-                column: "ApplicationUserId");
+                column: "CreatedById");
 
             migrationBuilder.CreateIndex(
                 name: "IX_InitialPrices_Name",
@@ -2235,10 +2189,10 @@ namespace TransportManagmentInfrustructure.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_ManufacturingCountries_ApplicationUserId",
+                name: "IX_ManufacturingCountries_CreatedById",
                 schema: "VRMS",
                 table: "ManufacturingCountries",
-                column: "ApplicationUserId");
+                column: "CreatedById");
 
             migrationBuilder.CreateIndex(
                 name: "IX_ManufacturingCountries_Name",
@@ -2248,10 +2202,10 @@ namespace TransportManagmentInfrustructure.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_ORCLists_ApplicationUserId",
+                name: "IX_ORCLists_CreatedById",
                 schema: "VRMS",
                 table: "ORCLists",
-                column: "ApplicationUserId");
+                column: "CreatedById");
 
             migrationBuilder.CreateIndex(
                 name: "IX_ORCLists_GivenZoneId",
@@ -2273,10 +2227,10 @@ namespace TransportManagmentInfrustructure.Migrations
                 column: "VehicleId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ORCStocks_ApplicationUserId",
+                name: "IX_ORCStocks_CreatedById",
                 schema: "VRMS",
                 table: "ORCStocks",
-                column: "ApplicationUserId");
+                column: "CreatedById");
 
             migrationBuilder.CreateIndex(
                 name: "IX_ORCStocks_ORCNo_StockTypeId",
@@ -2304,9 +2258,9 @@ namespace TransportManagmentInfrustructure.Migrations
                 column: "ToZoneId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_OrganizationList_ApplicationUserId",
+                name: "IX_OrganizationList_CreatedById",
                 table: "OrganizationList",
-                column: "ApplicationUserId");
+                column: "CreatedById");
 
             migrationBuilder.CreateIndex(
                 name: "IX_OrganizationList_WoredaId",
@@ -2319,10 +2273,10 @@ namespace TransportManagmentInfrustructure.Migrations
                 column: "ZoneId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_OwnerLists_ApplicationUserId",
+                name: "IX_OwnerLists_CreatedById",
                 schema: "VRMS",
                 table: "OwnerLists",
-                column: "ApplicationUserId");
+                column: "CreatedById");
 
             migrationBuilder.CreateIndex(
                 name: "IX_OwnerLists_IdNumber",
@@ -2351,10 +2305,10 @@ namespace TransportManagmentInfrustructure.Migrations
                 column: "ZoneId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_PasswordChangeRequests_ApplicationUserId",
+                name: "IX_PasswordChangeRequests_CreatedById",
                 schema: "UserMgt",
                 table: "PasswordChangeRequests",
-                column: "ApplicationUserId");
+                column: "CreatedById");
 
             migrationBuilder.CreateIndex(
                 name: "IX_PasswordHistories_UserId",
@@ -2363,16 +2317,16 @@ namespace TransportManagmentInfrustructure.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_PlateStocks_ApplicationUserId",
-                schema: "VRMS",
-                table: "PlateStocks",
-                column: "ApplicationUserId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_PlateStocks_BackPlateSizeId",
                 schema: "VRMS",
                 table: "PlateStocks",
                 column: "BackPlateSizeId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PlateStocks_CreatedById",
+                schema: "VRMS",
+                table: "PlateStocks",
+                column: "CreatedById");
 
             migrationBuilder.CreateIndex(
                 name: "IX_PlateStocks_FrontPlateSizeId",
@@ -2406,10 +2360,10 @@ namespace TransportManagmentInfrustructure.Migrations
                 column: "ToZoneId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_PlateTypes_ApplicationUserId",
+                name: "IX_PlateTypes_CreatedById",
                 schema: "VRMS",
                 table: "PlateTypes",
-                column: "ApplicationUserId");
+                column: "CreatedById");
 
             migrationBuilder.CreateIndex(
                 name: "IX_PlateTypes_MajorId",
@@ -2431,16 +2385,16 @@ namespace TransportManagmentInfrustructure.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_Regions_ApplicationUserId",
-                schema: "Common",
-                table: "Regions",
-                column: "ApplicationUserId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Regions_CountryId",
                 schema: "Common",
                 table: "Regions",
                 column: "CountryId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Regions_CreatedById",
+                schema: "Common",
+                table: "Regions",
+                column: "CreatedById");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Regions_Name",
@@ -2456,10 +2410,10 @@ namespace TransportManagmentInfrustructure.Migrations
                 column: "RoleCategoryId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_SalvageValues_ApplicationUserId",
+                name: "IX_SalvageValues_CreatedById",
                 schema: "VRMS",
                 table: "SalvageValues",
-                column: "ApplicationUserId");
+                column: "CreatedById");
 
             migrationBuilder.CreateIndex(
                 name: "IX_SalvageValues_Name",
@@ -2469,10 +2423,10 @@ namespace TransportManagmentInfrustructure.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_ServiceChanges_ApplicationUserId",
+                name: "IX_ServiceChanges_CreatedById",
                 schema: "VRMS",
                 table: "ServiceChanges",
-                column: "ApplicationUserId");
+                column: "CreatedById");
 
             migrationBuilder.CreateIndex(
                 name: "IX_ServiceChanges_GivingZoneId",
@@ -2493,10 +2447,10 @@ namespace TransportManagmentInfrustructure.Migrations
                 column: "VehicleId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ServiceTypes_ApplicationUserId",
+                name: "IX_ServiceTypes_CreatedById",
                 schema: "VRMS",
                 table: "ServiceTypes",
-                column: "ApplicationUserId");
+                column: "CreatedById");
 
             migrationBuilder.CreateIndex(
                 name: "IX_ServiceTypes_Name",
@@ -2506,10 +2460,10 @@ namespace TransportManagmentInfrustructure.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_ServiceYearSettings_ApplicationUserId",
+                name: "IX_ServiceYearSettings_CreatedById",
                 schema: "VRMS",
                 table: "ServiceYearSettings",
-                column: "ApplicationUserId");
+                column: "CreatedById");
 
             migrationBuilder.CreateIndex(
                 name: "IX_ServiceYearSettings_VehicleTypeId",
@@ -2518,16 +2472,16 @@ namespace TransportManagmentInfrustructure.Migrations
                 column: "VehicleTypeId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_TechnicalInspections_ApplicationUserId",
-                schema: "VRMS",
-                table: "TechnicalInspections",
-                column: "ApplicationUserId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_TechnicalInspections_ColorId",
                 schema: "VRMS",
                 table: "TechnicalInspections",
                 column: "ColorId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_TechnicalInspections_CreatedById",
+                schema: "VRMS",
+                table: "TechnicalInspections",
+                column: "CreatedById");
 
             migrationBuilder.CreateIndex(
                 name: "IX_TechnicalInspections_FieldInspectionId",
@@ -2560,10 +2514,10 @@ namespace TransportManagmentInfrustructure.Migrations
                 column: "ActivatedById");
 
             migrationBuilder.CreateIndex(
-                name: "IX_TemporaryVehicleDeactivations_ApplicationUserId",
+                name: "IX_TemporaryVehicleDeactivations_CreatedById",
                 schema: "VRMS",
                 table: "TemporaryVehicleDeactivations",
-                column: "ApplicationUserId");
+                column: "CreatedById");
 
             migrationBuilder.CreateIndex(
                 name: "IX_TemporaryVehicleDeactivations_VehicleId",
@@ -2572,9 +2526,9 @@ namespace TransportManagmentInfrustructure.Migrations
                 column: "VehicleId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_TrainingCenterList_ApplicationUserId",
+                name: "IX_TrainingCenterList_CreatedById",
                 table: "TrainingCenterList",
-                column: "ApplicationUserId");
+                column: "CreatedById");
 
             migrationBuilder.CreateIndex(
                 name: "IX_TrainingCenterList_ServiceZoneId",
@@ -2592,10 +2546,10 @@ namespace TransportManagmentInfrustructure.Migrations
                 column: "ZoneId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ValuationDetails_ApplicationUserId",
+                name: "IX_ValuationDetails_CreatedById",
                 schema: "VRMS",
                 table: "ValuationDetails",
-                column: "ApplicationUserId");
+                column: "CreatedById");
 
             migrationBuilder.CreateIndex(
                 name: "IX_ValuationDetails_OwnerId",
@@ -2610,10 +2564,10 @@ namespace TransportManagmentInfrustructure.Migrations
                 column: "ValuationId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ValuationLists_ApplicationUserId",
+                name: "IX_ValuationLists_CreatedById",
                 schema: "VRMS",
                 table: "ValuationLists",
-                column: "ApplicationUserId");
+                column: "CreatedById");
 
             migrationBuilder.CreateIndex(
                 name: "IX_ValuationLists_DepreciationCostId",
@@ -2658,15 +2612,9 @@ namespace TransportManagmentInfrustructure.Migrations
                 column: "VehicleListId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ValuationReason_ApplicationUserId",
+                name: "IX_ValuationReason_CreatedById",
                 table: "ValuationReason",
-                column: "ApplicationUserId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_VehicleBans_ApplicationUserId",
-                schema: "VRMS",
-                table: "VehicleBans",
-                column: "ApplicationUserId");
+                column: "CreatedById");
 
             migrationBuilder.CreateIndex(
                 name: "IX_VehicleBans_BanBodyId",
@@ -2681,6 +2629,12 @@ namespace TransportManagmentInfrustructure.Migrations
                 column: "BanCaseId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_VehicleBans_CreatedById",
+                schema: "VRMS",
+                table: "VehicleBans",
+                column: "CreatedById");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_VehicleBans_LiftedById",
                 schema: "VRMS",
                 table: "VehicleBans",
@@ -2693,10 +2647,10 @@ namespace TransportManagmentInfrustructure.Migrations
                 column: "VehicleId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_VehicleBodyTypes_ApplicationUserId",
+                name: "IX_VehicleBodyTypes_CreatedById",
                 schema: "VRMS",
                 table: "VehicleBodyTypes",
-                column: "ApplicationUserId");
+                column: "CreatedById");
 
             migrationBuilder.CreateIndex(
                 name: "IX_VehicleBodyTypes_Name",
@@ -2710,11 +2664,6 @@ namespace TransportManagmentInfrustructure.Migrations
                 schema: "VRMS",
                 table: "VehicleBodyTypes",
                 column: "VehicleTypeId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_VehicleLists_ApplicationUserId",
-                table: "VehicleLists",
-                column: "ApplicationUserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_VehicleLists_ApprovedById",
@@ -2738,6 +2687,11 @@ namespace TransportManagmentInfrustructure.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
+                name: "IX_VehicleLists_CreatedById",
+                table: "VehicleLists",
+                column: "CreatedById");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_VehicleLists_EngineNumber",
                 table: "VehicleLists",
                 column: "EngineNumber",
@@ -2755,10 +2709,10 @@ namespace TransportManagmentInfrustructure.Migrations
                 column: "ServiceZoneId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_vehicleLookups_ApplicationUserId",
+                name: "IX_vehicleLookups_CreatedById",
                 schema: "VRMS",
                 table: "vehicleLookups",
-                column: "ApplicationUserId");
+                column: "CreatedById");
 
             migrationBuilder.CreateIndex(
                 name: "IX_vehicleLookups_Name",
@@ -2768,10 +2722,10 @@ namespace TransportManagmentInfrustructure.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_VehicleModels_ApplicationUserId",
+                name: "IX_VehicleModels_CreatedById",
                 schema: "VRMS",
                 table: "VehicleModels",
-                column: "ApplicationUserId");
+                column: "CreatedById");
 
             migrationBuilder.CreateIndex(
                 name: "IX_VehicleModels_MarkId",
@@ -2787,10 +2741,10 @@ namespace TransportManagmentInfrustructure.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_VehicleOwners_ApplicationUserId",
+                name: "IX_VehicleOwners_CreatedById",
                 schema: "VRMS",
                 table: "VehicleOwners",
-                column: "ApplicationUserId");
+                column: "CreatedById");
 
             migrationBuilder.CreateIndex(
                 name: "IX_VehicleOwners_OwnerId",
@@ -2811,10 +2765,10 @@ namespace TransportManagmentInfrustructure.Migrations
                 column: "VehicleId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_VehiclePlates_ApplicationUserId",
+                name: "IX_VehiclePlates_CreatedById",
                 schema: "VRMS",
                 table: "VehiclePlates",
-                column: "ApplicationUserId");
+                column: "CreatedById");
 
             migrationBuilder.CreateIndex(
                 name: "IX_VehiclePlates_GivenZoneId",
@@ -2836,10 +2790,10 @@ namespace TransportManagmentInfrustructure.Migrations
                 column: "VehicleId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_VehicleReplacements_ApplicationUserId",
+                name: "IX_VehicleReplacements_CreatedById",
                 schema: "VRMS",
                 table: "VehicleReplacements",
-                column: "ApplicationUserId");
+                column: "CreatedById");
 
             migrationBuilder.CreateIndex(
                 name: "IX_VehicleReplacements_VehicleId",
@@ -2848,10 +2802,10 @@ namespace TransportManagmentInfrustructure.Migrations
                 column: "VehicleId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_VehicleSerialSettings_ApplicationUserId",
+                name: "IX_VehicleSerialSettings_CreatedById",
                 schema: "VRMS",
                 table: "VehicleSerialSettings",
-                column: "ApplicationUserId");
+                column: "CreatedById");
 
             migrationBuilder.CreateIndex(
                 name: "IX_VehicleSerialSettings_VehicleSerialType",
@@ -2867,10 +2821,10 @@ namespace TransportManagmentInfrustructure.Migrations
                 column: "ZoneId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_VehicleSettings_ApplicationUserId",
+                name: "IX_VehicleSettings_CreatedById",
                 schema: "VRMS",
                 table: "VehicleSettings",
-                column: "ApplicationUserId");
+                column: "CreatedById");
 
             migrationBuilder.CreateIndex(
                 name: "IX_VehicleSettings_VehicleSettingType",
@@ -2880,10 +2834,10 @@ namespace TransportManagmentInfrustructure.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_VehicleTransfers_ApplicationUserId",
+                name: "IX_VehicleTransfers_CreatedById",
                 schema: "VRMS",
                 table: "VehicleTransfers",
-                column: "ApplicationUserId");
+                column: "CreatedById");
 
             migrationBuilder.CreateIndex(
                 name: "IX_VehicleTransfers_FromZoneId",
@@ -2904,10 +2858,10 @@ namespace TransportManagmentInfrustructure.Migrations
                 column: "VehicleId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_VehicleTypes_ApplicationUserId",
+                name: "IX_VehicleTypes_CreatedById",
                 schema: "VRMS",
                 table: "VehicleTypes",
-                column: "ApplicationUserId");
+                column: "CreatedById");
 
             migrationBuilder.CreateIndex(
                 name: "IX_VehicleTypes_Name",
@@ -2923,10 +2877,10 @@ namespace TransportManagmentInfrustructure.Migrations
                 column: "VehicleCategoryId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Woredas_ApplicationUserId",
+                name: "IX_Woredas_CreatedById",
                 schema: "Common",
                 table: "Woredas",
-                column: "ApplicationUserId");
+                column: "CreatedById");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Woredas_Name",
@@ -2942,10 +2896,10 @@ namespace TransportManagmentInfrustructure.Migrations
                 column: "ZoneId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Zones_ApplicationUserId",
+                name: "IX_Zones_CreatedById",
                 schema: "Common",
                 table: "Zones",
-                column: "ApplicationUserId");
+                column: "CreatedById");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Zones_Name",

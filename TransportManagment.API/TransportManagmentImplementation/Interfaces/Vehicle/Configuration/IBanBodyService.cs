@@ -14,6 +14,6 @@ namespace TransportManagmentImplementation.Interfaces.Vehicle.Configuration
 
         public Task<ResponseMessage> Add(BanBodyPostDto BanBodyPost);
         public Task<ResponseMessage> Update(BanBodyGetDto BanBodyGet);
-        public Task<List<BanBodyGetDto>> GetAll();
+        public Task<List<BanBodyGetDto>> GetAll(RequestParameter requestParameter);
     }
 }

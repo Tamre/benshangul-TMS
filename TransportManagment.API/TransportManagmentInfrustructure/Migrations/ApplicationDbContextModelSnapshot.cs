@@ -229,13 +229,10 @@ namespace TransportManagmentInfrustructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("ApplicationUserId")
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<string>("CreatedById")
                         .IsRequired()
-                        .HasMaxLength(45)
-                        .HasColumnType("nvarchar(45)");
+                        .HasMaxLength(450)
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
@@ -264,7 +261,7 @@ namespace TransportManagmentInfrustructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ApplicationUserId");
+                    b.HasIndex("CreatedById");
 
                     b.ToTable("PasswordChangeRequests", "UserMgt");
                 });
@@ -326,16 +323,13 @@ namespace TransportManagmentInfrustructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("ApplicationUserId")
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<int>("CommonCodeType")
                         .HasColumnType("int");
 
                     b.Property<string>("CreatedById")
                         .IsRequired()
-                        .HasMaxLength(45)
-                        .HasColumnType("nvarchar(45)");
+                        .HasMaxLength(450)
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
@@ -359,10 +353,10 @@ namespace TransportManagmentInfrustructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ApplicationUserId");
-
                     b.HasIndex("CommonCodeType")
                         .IsUnique();
+
+                    b.HasIndex("CreatedById");
 
                     b.HasIndex("ZoneId");
 
@@ -382,13 +376,10 @@ namespace TransportManagmentInfrustructure.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<string>("ApplicationUserId")
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<string>("CreatedById")
                         .IsRequired()
-                        .HasMaxLength(45)
-                        .HasColumnType("nvarchar(45)");
+                        .HasMaxLength(450)
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
@@ -423,7 +414,7 @@ namespace TransportManagmentInfrustructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ApplicationUserId");
+                    b.HasIndex("CreatedById");
 
                     b.ToTable("CompanyProfiles", "Common");
                 });
@@ -436,9 +427,6 @@ namespace TransportManagmentInfrustructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("ApplicationUserId")
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<string>("CountryCode")
                         .IsRequired()
                         .HasMaxLength(5)
@@ -446,8 +434,8 @@ namespace TransportManagmentInfrustructure.Migrations
 
                     b.Property<string>("CreatedById")
                         .IsRequired()
-                        .HasMaxLength(45)
-                        .HasColumnType("nvarchar(45)");
+                        .HasMaxLength(450)
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
@@ -477,7 +465,7 @@ namespace TransportManagmentInfrustructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ApplicationUserId");
+                    b.HasIndex("CreatedById");
 
                     b.HasIndex("Name")
                         .IsUnique();
@@ -493,9 +481,6 @@ namespace TransportManagmentInfrustructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("ApplicationUserId")
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<int>("ApprovedFor")
                         .HasColumnType("int");
 
@@ -505,8 +490,8 @@ namespace TransportManagmentInfrustructure.Migrations
 
                     b.Property<string>("CreatedById")
                         .IsRequired()
-                        .HasMaxLength(45)
-                        .HasColumnType("nvarchar(45)");
+                        .HasMaxLength(450)
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
@@ -531,9 +516,9 @@ namespace TransportManagmentInfrustructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ApplicationUserId");
-
                     b.HasIndex("ApproverId");
+
+                    b.HasIndex("CreatedById");
 
                     b.ToTable("DeviceLists", "Common");
                 });
@@ -546,9 +531,6 @@ namespace TransportManagmentInfrustructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("ApplicationUserId")
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<string>("Code")
                         .IsRequired()
                         .HasMaxLength(5)
@@ -559,8 +541,8 @@ namespace TransportManagmentInfrustructure.Migrations
 
                     b.Property<string>("CreatedById")
                         .IsRequired()
-                        .HasMaxLength(45)
-                        .HasColumnType("nvarchar(45)");
+                        .HasMaxLength(450)
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
@@ -585,9 +567,9 @@ namespace TransportManagmentInfrustructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ApplicationUserId");
-
                     b.HasIndex("CountryId");
+
+                    b.HasIndex("CreatedById");
 
                     b.HasIndex("Name")
                         .IsUnique();
@@ -603,10 +585,6 @@ namespace TransportManagmentInfrustructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("ApplicationUserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<string>("Code")
                         .IsRequired()
                         .HasMaxLength(5)
@@ -614,8 +592,8 @@ namespace TransportManagmentInfrustructure.Migrations
 
                     b.Property<string>("CreatedById")
                         .IsRequired()
-                        .HasMaxLength(45)
-                        .HasColumnType("nvarchar(45)");
+                        .HasMaxLength(450)
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
@@ -643,7 +621,7 @@ namespace TransportManagmentInfrustructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ApplicationUserId");
+                    b.HasIndex("CreatedById");
 
                     b.HasIndex("Name")
                         .IsUnique();
@@ -661,9 +639,6 @@ namespace TransportManagmentInfrustructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("ApplicationUserId")
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<string>("Code")
                         .IsRequired()
                         .HasMaxLength(5)
@@ -671,8 +646,8 @@ namespace TransportManagmentInfrustructure.Migrations
 
                     b.Property<string>("CreatedById")
                         .IsRequired()
-                        .HasMaxLength(45)
-                        .HasColumnType("nvarchar(45)");
+                        .HasMaxLength(450)
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
@@ -713,7 +688,7 @@ namespace TransportManagmentInfrustructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ApplicationUserId");
+                    b.HasIndex("CreatedById");
 
                     b.HasIndex("Name")
                         .IsUnique();
@@ -728,10 +703,6 @@ namespace TransportManagmentInfrustructure.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("ApplicationUserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("CreatedById")
                         .IsRequired()
@@ -783,7 +754,7 @@ namespace TransportManagmentInfrustructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ApplicationUserId");
+                    b.HasIndex("CreatedById");
 
                     b.HasIndex("WoredaId");
 
@@ -801,10 +772,6 @@ namespace TransportManagmentInfrustructure.Migrations
                     b.Property<string>("AmharicName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ApplicationUserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("CreatedById")
                         .IsRequired()
@@ -861,7 +828,7 @@ namespace TransportManagmentInfrustructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ApplicationUserId");
+                    b.HasIndex("CreatedById");
 
                     b.HasIndex("ServiceZoneId");
 
@@ -882,9 +849,6 @@ namespace TransportManagmentInfrustructure.Migrations
                         .IsRequired()
                         .HasMaxLength(5)
                         .HasColumnType("nvarchar(5)");
-
-                    b.Property<string>("ApplicationUserId")
-                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("CreatedById")
                         .IsRequired()
@@ -925,7 +889,7 @@ namespace TransportManagmentInfrustructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ApplicationUserId");
+                    b.HasIndex("CreatedById");
 
                     b.HasIndex("GivenZoneId");
 
@@ -947,9 +911,6 @@ namespace TransportManagmentInfrustructure.Migrations
                         .IsRequired()
                         .HasMaxLength(40)
                         .HasColumnType("nvarchar(40)");
-
-                    b.Property<string>("ApplicationUserId")
-                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("CreatedById")
                         .IsRequired()
@@ -973,7 +934,7 @@ namespace TransportManagmentInfrustructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ApplicationUserId");
+                    b.HasIndex("CreatedById");
 
                     b.HasIndex("RegionId");
 
@@ -992,9 +953,6 @@ namespace TransportManagmentInfrustructure.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("ApplicationUserId")
-                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("AxelDriveType")
                         .IsRequired()
@@ -1069,9 +1027,9 @@ namespace TransportManagmentInfrustructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ApplicationUserId");
-
                     b.HasIndex("BackPlateSizeId");
+
+                    b.HasIndex("CreatedById");
 
                     b.HasIndex("FrontPlateSizeId");
 
@@ -1089,9 +1047,6 @@ namespace TransportManagmentInfrustructure.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("ApplicationUserId")
-                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("CreatedById")
                         .IsRequired()
@@ -1127,7 +1082,7 @@ namespace TransportManagmentInfrustructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ApplicationUserId");
+                    b.HasIndex("CreatedById");
 
                     b.HasIndex("GivenZoneId");
 
@@ -1144,9 +1099,6 @@ namespace TransportManagmentInfrustructure.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("ApplicationUserId")
-                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("CreatedById")
                         .IsRequired()
@@ -1175,7 +1127,7 @@ namespace TransportManagmentInfrustructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ApplicationUserId");
+                    b.HasIndex("CreatedById");
 
                     b.HasIndex("RegionId");
 
@@ -1209,9 +1161,6 @@ namespace TransportManagmentInfrustructure.Migrations
                         .IsRequired()
                         .HasMaxLength(20)
                         .HasColumnType("nvarchar(20)");
-
-                    b.Property<string>("ApplicationUserId")
-                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("CreatedById")
                         .IsRequired()
@@ -1281,7 +1230,7 @@ namespace TransportManagmentInfrustructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ApplicationUserId");
+                    b.HasIndex("CreatedById");
 
                     b.HasIndex("IdNumber")
                         .IsUnique();
@@ -1301,9 +1250,6 @@ namespace TransportManagmentInfrustructure.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("ApplicationUserId")
-                        .HasColumnType("nvarchar(450)");
 
                     b.Property<int?>("BackPlateSizeId")
                         .HasColumnType("int");
@@ -1350,9 +1296,9 @@ namespace TransportManagmentInfrustructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ApplicationUserId");
-
                     b.HasIndex("BackPlateSizeId");
+
+                    b.HasIndex("CreatedById");
 
                     b.HasIndex("FrontPlateSizeId");
 
@@ -1373,9 +1319,6 @@ namespace TransportManagmentInfrustructure.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("ApplicationUserId")
-                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("CreatedById")
                         .IsRequired()
@@ -1436,7 +1379,7 @@ namespace TransportManagmentInfrustructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ApplicationUserId");
+                    b.HasIndex("CreatedById");
 
                     b.HasIndex("GivingZoneId");
 
@@ -1452,9 +1395,6 @@ namespace TransportManagmentInfrustructure.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("ApplicationUserId")
-                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("CarbonMonoOxide")
                         .HasMaxLength(10)
@@ -1512,9 +1452,9 @@ namespace TransportManagmentInfrustructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ApplicationUserId");
-
                     b.HasIndex("ColorId");
+
+                    b.HasIndex("CreatedById");
 
                     b.HasIndex("FieldInspectionId");
 
@@ -1539,9 +1479,6 @@ namespace TransportManagmentInfrustructure.Migrations
 
                     b.Property<DateTime?>("ActivatedDate")
                         .HasColumnType("datetime2");
-
-                    b.Property<string>("ApplicationUserId")
-                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("CreatedById")
                         .IsRequired()
@@ -1576,7 +1513,7 @@ namespace TransportManagmentInfrustructure.Migrations
 
                     b.HasIndex("ActivatedById");
 
-                    b.HasIndex("ApplicationUserId");
+                    b.HasIndex("CreatedById");
 
                     b.HasIndex("VehicleId");
 
@@ -1588,10 +1525,6 @@ namespace TransportManagmentInfrustructure.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("ApplicationUserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("CreatedById")
                         .IsRequired()
@@ -1655,7 +1588,7 @@ namespace TransportManagmentInfrustructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ApplicationUserId");
+                    b.HasIndex("CreatedById");
 
                     b.HasIndex("DepreciationCostId");
 
@@ -1679,10 +1612,6 @@ namespace TransportManagmentInfrustructure.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("ApplicationUserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("CreatedById")
                         .IsRequired()
@@ -1712,7 +1641,7 @@ namespace TransportManagmentInfrustructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ApplicationUserId");
+                    b.HasIndex("CreatedById");
 
                     b.HasIndex("OwnerId");
 
@@ -1726,10 +1655,6 @@ namespace TransportManagmentInfrustructure.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("ApplicationUserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
 
                     b.Property<int>("BanBodyId")
                         .HasColumnType("int");
@@ -1782,11 +1707,11 @@ namespace TransportManagmentInfrustructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ApplicationUserId");
-
                     b.HasIndex("BanBodyId");
 
                     b.HasIndex("BanCaseId");
+
+                    b.HasIndex("CreatedById");
 
                     b.HasIndex("LiftedById");
 
@@ -1800,9 +1725,6 @@ namespace TransportManagmentInfrustructure.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("ApplicationUserId")
-                        .HasColumnType("nvarchar(450)");
 
                     b.Property<int>("ApprovalStatus")
                         .HasColumnType("int");
@@ -1912,8 +1834,6 @@ namespace TransportManagmentInfrustructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ApplicationUserId");
-
                     b.HasIndex("ApprovedById");
 
                     b.HasIndex("AssembledCountryId");
@@ -1922,6 +1842,8 @@ namespace TransportManagmentInfrustructure.Migrations
 
                     b.HasIndex("ChassisNo")
                         .IsUnique();
+
+                    b.HasIndex("CreatedById");
 
                     b.HasIndex("EngineNumber")
                         .IsUnique()
@@ -1939,10 +1861,6 @@ namespace TransportManagmentInfrustructure.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("ApplicationUserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("CreatedById")
                         .IsRequired()
@@ -1969,7 +1887,7 @@ namespace TransportManagmentInfrustructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ApplicationUserId");
+                    b.HasIndex("CreatedById");
 
                     b.HasIndex("OwnerId");
 
@@ -1985,10 +1903,6 @@ namespace TransportManagmentInfrustructure.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("ApplicationUserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("CreatedById")
                         .IsRequired()
@@ -2018,7 +1932,7 @@ namespace TransportManagmentInfrustructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ApplicationUserId");
+                    b.HasIndex("CreatedById");
 
                     b.HasIndex("GivenZoneId");
 
@@ -2035,10 +1949,6 @@ namespace TransportManagmentInfrustructure.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("ApplicationUserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("CreatedById")
                         .IsRequired()
@@ -2078,7 +1988,7 @@ namespace TransportManagmentInfrustructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ApplicationUserId");
+                    b.HasIndex("CreatedById");
 
                     b.HasIndex("VehicleId");
 
@@ -2090,10 +2000,6 @@ namespace TransportManagmentInfrustructure.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("ApplicationUserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
 
                     b.Property<bool>("ChangeOwner")
                         .HasColumnType("bit");
@@ -2153,7 +2059,7 @@ namespace TransportManagmentInfrustructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ApplicationUserId");
+                    b.HasIndex("CreatedById");
 
                     b.HasIndex("FromZoneId");
 
@@ -2172,9 +2078,6 @@ namespace TransportManagmentInfrustructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("ApplicationUserId")
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<int>("Category")
                         .HasColumnType("int");
 
@@ -2185,8 +2088,8 @@ namespace TransportManagmentInfrustructure.Migrations
 
                     b.Property<string>("CreatedById")
                         .IsRequired()
-                        .HasMaxLength(45)
-                        .HasColumnType("nvarchar(45)");
+                        .HasMaxLength(450)
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
@@ -2206,10 +2109,10 @@ namespace TransportManagmentInfrustructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ApplicationUserId");
-
                     b.HasIndex("Code")
                         .IsUnique();
+
+                    b.HasIndex("CreatedById");
 
                     b.HasIndex("Name")
                         .IsUnique();
@@ -2225,16 +2128,13 @@ namespace TransportManagmentInfrustructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("ApplicationUserId")
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<int>("BanBodyCategory")
                         .HasColumnType("int");
 
                     b.Property<string>("CreatedById")
                         .IsRequired()
-                        .HasMaxLength(45)
-                        .HasColumnType("nvarchar(45)");
+                        .HasMaxLength(450)
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
@@ -2254,7 +2154,7 @@ namespace TransportManagmentInfrustructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ApplicationUserId");
+                    b.HasIndex("CreatedById");
 
                     b.HasIndex("Name")
                         .IsUnique();
@@ -2270,13 +2170,10 @@ namespace TransportManagmentInfrustructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("ApplicationUserId")
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<string>("CreatedById")
                         .IsRequired()
-                        .HasMaxLength(45)
-                        .HasColumnType("nvarchar(45)");
+                        .HasMaxLength(450)
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
@@ -2299,7 +2196,7 @@ namespace TransportManagmentInfrustructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ApplicationUserId");
+                    b.HasIndex("CreatedById");
 
                     b.HasIndex("Name")
                         .IsUnique();
@@ -2315,13 +2212,10 @@ namespace TransportManagmentInfrustructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("ApplicationUserId")
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<string>("CreatedById")
                         .IsRequired()
-                        .HasMaxLength(45)
-                        .HasColumnType("nvarchar(45)");
+                        .HasMaxLength(450)
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
@@ -2345,7 +2239,7 @@ namespace TransportManagmentInfrustructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ApplicationUserId");
+                    b.HasIndex("CreatedById");
 
                     b.HasIndex("FileName")
                         .IsUnique();
@@ -2361,13 +2255,10 @@ namespace TransportManagmentInfrustructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("ApplicationUserId")
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<string>("CreatedById")
                         .IsRequired()
-                        .HasMaxLength(45)
-                        .HasColumnType("nvarchar(45)");
+                        .HasMaxLength(450)
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
@@ -2383,7 +2274,7 @@ namespace TransportManagmentInfrustructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ApplicationUserId");
+                    b.HasIndex("CreatedById");
 
                     b.HasIndex("MarkId");
 
@@ -2398,13 +2289,10 @@ namespace TransportManagmentInfrustructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("ApplicationUserId")
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<string>("CreatedById")
                         .IsRequired()
-                        .HasMaxLength(45)
-                        .HasColumnType("nvarchar(45)");
+                        .HasMaxLength(450)
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
@@ -2427,7 +2315,7 @@ namespace TransportManagmentInfrustructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ApplicationUserId");
+                    b.HasIndex("CreatedById");
 
                     b.HasIndex("Name")
                         .IsUnique();
@@ -2443,13 +2331,10 @@ namespace TransportManagmentInfrustructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("ApplicationUserId")
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<string>("CreatedById")
                         .IsRequired()
-                        .HasMaxLength(45)
-                        .HasColumnType("nvarchar(45)");
+                        .HasMaxLength(450)
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
@@ -2477,7 +2362,7 @@ namespace TransportManagmentInfrustructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ApplicationUserId");
+                    b.HasIndex("CreatedById");
 
                     b.HasIndex("Name")
                         .IsUnique();
@@ -2493,9 +2378,6 @@ namespace TransportManagmentInfrustructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("ApplicationUserId")
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<string>("Code")
                         .IsRequired()
                         .HasMaxLength(5)
@@ -2503,8 +2385,8 @@ namespace TransportManagmentInfrustructure.Migrations
 
                     b.Property<string>("CreatedById")
                         .IsRequired()
-                        .HasMaxLength(45)
-                        .HasColumnType("nvarchar(45)");
+                        .HasMaxLength(450)
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
@@ -2535,7 +2417,7 @@ namespace TransportManagmentInfrustructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ApplicationUserId");
+                    b.HasIndex("CreatedById");
 
                     b.HasIndex("MajorId");
 
@@ -2555,13 +2437,10 @@ namespace TransportManagmentInfrustructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("ApplicationUserId")
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<string>("CreatedById")
                         .IsRequired()
-                        .HasMaxLength(45)
-                        .HasColumnType("nvarchar(45)");
+                        .HasMaxLength(450)
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
@@ -2584,7 +2463,7 @@ namespace TransportManagmentInfrustructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ApplicationUserId");
+                    b.HasIndex("CreatedById");
 
                     b.HasIndex("Name")
                         .IsUnique();
@@ -2600,13 +2479,10 @@ namespace TransportManagmentInfrustructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("ApplicationUserId")
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<string>("CreatedById")
                         .IsRequired()
-                        .HasMaxLength(45)
-                        .HasColumnType("nvarchar(45)");
+                        .HasMaxLength(450)
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
@@ -2639,7 +2515,7 @@ namespace TransportManagmentInfrustructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ApplicationUserId");
+                    b.HasIndex("CreatedById");
 
                     b.HasIndex("Name")
                         .IsUnique();
@@ -2655,13 +2531,10 @@ namespace TransportManagmentInfrustructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("ApplicationUserId")
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<string>("CreatedById")
                         .IsRequired()
-                        .HasMaxLength(45)
-                        .HasColumnType("nvarchar(45)");
+                        .HasMaxLength(450)
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
@@ -2683,7 +2556,7 @@ namespace TransportManagmentInfrustructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ApplicationUserId");
+                    b.HasIndex("CreatedById");
 
                     b.HasIndex("VehicleTypeId");
 
@@ -2698,17 +2571,16 @@ namespace TransportManagmentInfrustructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("ApplicationUserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<string>("CreatedById")
                         .IsRequired()
-                        .HasMaxLength(45)
-                        .HasColumnType("nvarchar(45)");
+                        .HasMaxLength(450)
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
 
                     b.Property<bool>("IsOwnershipPayment")
                         .HasColumnType("bit");
@@ -2724,14 +2596,11 @@ namespace TransportManagmentInfrustructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("RowStatus")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("ApplicationUserId");
+                    b.HasIndex("CreatedById");
 
-                    b.ToTable("ValuationReason");
+                    b.ToTable("ValuationReasons");
                 });
 
             modelBuilder.Entity("TransportManagmentInfrustructure.Model.Vehicle.Configuration.VehicleBodyType", b =>
@@ -2742,14 +2611,10 @@ namespace TransportManagmentInfrustructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("ApplicationUserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<string>("CreatedById")
                         .IsRequired()
-                        .HasMaxLength(45)
-                        .HasColumnType("nvarchar(45)");
+                        .HasMaxLength(450)
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
@@ -2775,7 +2640,7 @@ namespace TransportManagmentInfrustructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ApplicationUserId");
+                    b.HasIndex("CreatedById");
 
                     b.HasIndex("Name")
                         .IsUnique();
@@ -2793,14 +2658,10 @@ namespace TransportManagmentInfrustructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("ApplicationUserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<string>("CreatedById")
                         .IsRequired()
-                        .HasMaxLength(45)
-                        .HasColumnType("nvarchar(45)");
+                        .HasMaxLength(450)
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
@@ -2823,7 +2684,7 @@ namespace TransportManagmentInfrustructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ApplicationUserId");
+                    b.HasIndex("CreatedById");
 
                     b.HasIndex("Name")
                         .IsUnique();
@@ -2839,14 +2700,10 @@ namespace TransportManagmentInfrustructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("ApplicationUserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<string>("CreatedById")
                         .IsRequired()
-                        .HasMaxLength(45)
-                        .HasColumnType("nvarchar(45)");
+                        .HasMaxLength(450)
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
@@ -2873,7 +2730,7 @@ namespace TransportManagmentInfrustructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ApplicationUserId");
+                    b.HasIndex("CreatedById");
 
                     b.HasIndex("MarkId");
 
@@ -2891,14 +2748,10 @@ namespace TransportManagmentInfrustructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("ApplicationUserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<string>("CreatedById")
                         .IsRequired()
-                        .HasMaxLength(45)
-                        .HasColumnType("nvarchar(45)");
+                        .HasMaxLength(450)
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
@@ -2920,7 +2773,7 @@ namespace TransportManagmentInfrustructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ApplicationUserId");
+                    b.HasIndex("CreatedById");
 
                     b.HasIndex("VehicleSerialType")
                         .IsUnique();
@@ -2938,14 +2791,10 @@ namespace TransportManagmentInfrustructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("ApplicationUserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<string>("CreatedById")
                         .IsRequired()
-                        .HasMaxLength(45)
-                        .HasColumnType("nvarchar(45)");
+                        .HasMaxLength(450)
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
@@ -2961,7 +2810,7 @@ namespace TransportManagmentInfrustructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ApplicationUserId");
+                    b.HasIndex("CreatedById");
 
                     b.HasIndex("VehicleSettingType")
                         .IsUnique();
@@ -2977,14 +2826,10 @@ namespace TransportManagmentInfrustructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("ApplicationUserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<string>("CreatedById")
                         .IsRequired()
-                        .HasMaxLength(45)
-                        .HasColumnType("nvarchar(45)");
+                        .HasMaxLength(450)
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
@@ -3007,7 +2852,7 @@ namespace TransportManagmentInfrustructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ApplicationUserId");
+                    b.HasIndex("CreatedById");
 
                     b.HasIndex("Name")
                         .IsUnique();
@@ -3030,11 +2875,13 @@ namespace TransportManagmentInfrustructure.Migrations
 
             modelBuilder.Entity("TransportManagmentInfrustructure.Model.Authentication.PasswordChangeRequest", b =>
                 {
-                    b.HasOne("TransportManagmentInfrustructure.Model.Authentication.ApplicationUser", "ApplicationUser")
+                    b.HasOne("TransportManagmentInfrustructure.Model.Authentication.ApplicationUser", "CreatedBy")
                         .WithMany()
-                        .HasForeignKey("ApplicationUserId");
+                        .HasForeignKey("CreatedById")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
 
-                    b.Navigation("ApplicationUser");
+                    b.Navigation("CreatedBy");
                 });
 
             modelBuilder.Entity("TransportManagmentInfrustructure.Model.Authentication.PasswordHistory", b =>
@@ -3050,9 +2897,11 @@ namespace TransportManagmentInfrustructure.Migrations
 
             modelBuilder.Entity("TransportManagmentInfrustructure.Model.Common.CommonCodes", b =>
                 {
-                    b.HasOne("TransportManagmentInfrustructure.Model.Authentication.ApplicationUser", "ApplicationUser")
+                    b.HasOne("TransportManagmentInfrustructure.Model.Authentication.ApplicationUser", "CreatedBy")
                         .WithMany()
-                        .HasForeignKey("ApplicationUserId");
+                        .HasForeignKey("CreatedById")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
 
                     b.HasOne("TransportManagmentInfrustructure.Model.Common.ZoneList", "Zone")
                         .WithMany()
@@ -3060,66 +2909,74 @@ namespace TransportManagmentInfrustructure.Migrations
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.Navigation("ApplicationUser");
+                    b.Navigation("CreatedBy");
 
                     b.Navigation("Zone");
                 });
 
             modelBuilder.Entity("TransportManagmentInfrustructure.Model.Common.CompanyProfile", b =>
                 {
-                    b.HasOne("TransportManagmentInfrustructure.Model.Authentication.ApplicationUser", "ApplicationUser")
+                    b.HasOne("TransportManagmentInfrustructure.Model.Authentication.ApplicationUser", "CreatedBy")
                         .WithMany()
-                        .HasForeignKey("ApplicationUserId");
+                        .HasForeignKey("CreatedById")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
 
-                    b.Navigation("ApplicationUser");
+                    b.Navigation("CreatedBy");
                 });
 
             modelBuilder.Entity("TransportManagmentInfrustructure.Model.Common.Country", b =>
                 {
-                    b.HasOne("TransportManagmentInfrustructure.Model.Authentication.ApplicationUser", "ApplicationUser")
+                    b.HasOne("TransportManagmentInfrustructure.Model.Authentication.ApplicationUser", "CreatedBy")
                         .WithMany()
-                        .HasForeignKey("ApplicationUserId");
+                        .HasForeignKey("CreatedById")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
 
-                    b.Navigation("ApplicationUser");
+                    b.Navigation("CreatedBy");
                 });
 
             modelBuilder.Entity("TransportManagmentInfrustructure.Model.Common.DeviceList", b =>
                 {
-                    b.HasOne("TransportManagmentInfrustructure.Model.Authentication.ApplicationUser", "ApplicationUser")
-                        .WithMany()
-                        .HasForeignKey("ApplicationUserId");
-
                     b.HasOne("TransportManagmentInfrustructure.Model.Authentication.ApplicationUser", "Approver")
                         .WithMany()
                         .HasForeignKey("ApproverId");
 
-                    b.Navigation("ApplicationUser");
+                    b.HasOne("TransportManagmentInfrustructure.Model.Authentication.ApplicationUser", "CreatedBy")
+                        .WithMany()
+                        .HasForeignKey("CreatedById")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
 
                     b.Navigation("Approver");
+
+                    b.Navigation("CreatedBy");
                 });
 
             modelBuilder.Entity("TransportManagmentInfrustructure.Model.Common.Region", b =>
                 {
-                    b.HasOne("TransportManagmentInfrustructure.Model.Authentication.ApplicationUser", "ApplicationUser")
-                        .WithMany()
-                        .HasForeignKey("ApplicationUserId");
-
                     b.HasOne("TransportManagmentInfrustructure.Model.Common.Country", "Country")
                         .WithMany()
                         .HasForeignKey("CountryId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.Navigation("ApplicationUser");
+                    b.HasOne("TransportManagmentInfrustructure.Model.Authentication.ApplicationUser", "CreatedBy")
+                        .WithMany()
+                        .HasForeignKey("CreatedById")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
 
                     b.Navigation("Country");
+
+                    b.Navigation("CreatedBy");
                 });
 
             modelBuilder.Entity("TransportManagmentInfrustructure.Model.Common.Woreda", b =>
                 {
-                    b.HasOne("TransportManagmentInfrustructure.Model.Authentication.ApplicationUser", "ApplicationUser")
+                    b.HasOne("TransportManagmentInfrustructure.Model.Authentication.ApplicationUser", "CreatedBy")
                         .WithMany()
-                        .HasForeignKey("ApplicationUserId")
+                        .HasForeignKey("CreatedById")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
@@ -3129,16 +2986,18 @@ namespace TransportManagmentInfrustructure.Migrations
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.Navigation("ApplicationUser");
+                    b.Navigation("CreatedBy");
 
                     b.Navigation("Zone");
                 });
 
             modelBuilder.Entity("TransportManagmentInfrustructure.Model.Common.ZoneList", b =>
                 {
-                    b.HasOne("TransportManagmentInfrustructure.Model.Authentication.ApplicationUser", "ApplicationUser")
+                    b.HasOne("TransportManagmentInfrustructure.Model.Authentication.ApplicationUser", "CreatedBy")
                         .WithMany()
-                        .HasForeignKey("ApplicationUserId");
+                        .HasForeignKey("CreatedById")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
 
                     b.HasOne("TransportManagmentInfrustructure.Model.Common.Region", "Region")
                         .WithMany()
@@ -3146,16 +3005,16 @@ namespace TransportManagmentInfrustructure.Migrations
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.Navigation("ApplicationUser");
+                    b.Navigation("CreatedBy");
 
                     b.Navigation("Region");
                 });
 
             modelBuilder.Entity("TransportManagmentInfrustructure.Model.Organizations.OrganizationList", b =>
                 {
-                    b.HasOne("TransportManagmentInfrustructure.Model.Authentication.ApplicationUser", "ApplicationUser")
+                    b.HasOne("TransportManagmentInfrustructure.Model.Authentication.ApplicationUser", "CreatedBy")
                         .WithMany()
-                        .HasForeignKey("ApplicationUserId")
+                        .HasForeignKey("CreatedById")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
@@ -3169,7 +3028,7 @@ namespace TransportManagmentInfrustructure.Migrations
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.Navigation("ApplicationUser");
+                    b.Navigation("CreatedBy");
 
                     b.Navigation("Woreda");
 
@@ -3178,9 +3037,9 @@ namespace TransportManagmentInfrustructure.Migrations
 
             modelBuilder.Entity("TransportManagmentInfrustructure.Model.TrainingCenter.TrainingCenterList", b =>
                 {
-                    b.HasOne("TransportManagmentInfrustructure.Model.Authentication.ApplicationUser", "ApplicationUser")
+                    b.HasOne("TransportManagmentInfrustructure.Model.Authentication.ApplicationUser", "CreatedBy")
                         .WithMany()
-                        .HasForeignKey("ApplicationUserId")
+                        .HasForeignKey("CreatedById")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
@@ -3202,7 +3061,7 @@ namespace TransportManagmentInfrustructure.Migrations
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.Navigation("ApplicationUser");
+                    b.Navigation("CreatedBy");
 
                     b.Navigation("ServiceZone");
 
@@ -3213,9 +3072,11 @@ namespace TransportManagmentInfrustructure.Migrations
 
             modelBuilder.Entity("TransportManagmentInfrustructure.Model.Vehicle.Action.AIS", b =>
                 {
-                    b.HasOne("TransportManagmentInfrustructure.Model.Authentication.ApplicationUser", "ApplicationUser")
+                    b.HasOne("TransportManagmentInfrustructure.Model.Authentication.ApplicationUser", "CreatedBy")
                         .WithMany()
-                        .HasForeignKey("ApplicationUserId");
+                        .HasForeignKey("CreatedById")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
 
                     b.HasOne("TransportManagmentInfrustructure.Model.Common.ZoneList", "GivenZone")
                         .WithMany()
@@ -3235,7 +3096,7 @@ namespace TransportManagmentInfrustructure.Migrations
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.Navigation("ApplicationUser");
+                    b.Navigation("CreatedBy");
 
                     b.Navigation("GivenZone");
 
@@ -3246,9 +3107,11 @@ namespace TransportManagmentInfrustructure.Migrations
 
             modelBuilder.Entity("TransportManagmentInfrustructure.Model.Vehicle.Action.AisStock", b =>
                 {
-                    b.HasOne("TransportManagmentInfrustructure.Model.Authentication.ApplicationUser", "ApplicationUser")
+                    b.HasOne("TransportManagmentInfrustructure.Model.Authentication.ApplicationUser", "CreatedBy")
                         .WithMany()
-                        .HasForeignKey("ApplicationUserId");
+                        .HasForeignKey("CreatedById")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
 
                     b.HasOne("TransportManagmentInfrustructure.Model.Common.Region", "Region")
                         .WithMany()
@@ -3266,7 +3129,7 @@ namespace TransportManagmentInfrustructure.Migrations
                         .WithMany()
                         .HasForeignKey("ToZoneId");
 
-                    b.Navigation("ApplicationUser");
+                    b.Navigation("CreatedBy");
 
                     b.Navigation("Region");
 
@@ -3277,13 +3140,15 @@ namespace TransportManagmentInfrustructure.Migrations
 
             modelBuilder.Entity("TransportManagmentInfrustructure.Model.Vehicle.Action.FieldInspection", b =>
                 {
-                    b.HasOne("TransportManagmentInfrustructure.Model.Authentication.ApplicationUser", "ApplicationUser")
-                        .WithMany()
-                        .HasForeignKey("ApplicationUserId");
-
                     b.HasOne("TransportManagmentInfrustructure.Model.Vehicle.Configuration.VehicleLookups", "BackPlateSize")
                         .WithMany()
                         .HasForeignKey("BackPlateSizeId");
+
+                    b.HasOne("TransportManagmentInfrustructure.Model.Authentication.ApplicationUser", "CreatedBy")
+                        .WithMany()
+                        .HasForeignKey("CreatedById")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
 
                     b.HasOne("TransportManagmentInfrustructure.Model.Vehicle.Configuration.VehicleLookups", "FrontPlateSize")
                         .WithMany()
@@ -3307,9 +3172,9 @@ namespace TransportManagmentInfrustructure.Migrations
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.Navigation("ApplicationUser");
-
                     b.Navigation("BackPlateSize");
+
+                    b.Navigation("CreatedBy");
 
                     b.Navigation("FrontPlateSize");
 
@@ -3322,9 +3187,11 @@ namespace TransportManagmentInfrustructure.Migrations
 
             modelBuilder.Entity("TransportManagmentInfrustructure.Model.Vehicle.Action.ORC", b =>
                 {
-                    b.HasOne("TransportManagmentInfrustructure.Model.Authentication.ApplicationUser", "ApplicationUser")
+                    b.HasOne("TransportManagmentInfrustructure.Model.Authentication.ApplicationUser", "CreatedBy")
                         .WithMany()
-                        .HasForeignKey("ApplicationUserId");
+                        .HasForeignKey("CreatedById")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
 
                     b.HasOne("TransportManagmentInfrustructure.Model.Common.ZoneList", "GivenZone")
                         .WithMany()
@@ -3344,7 +3211,7 @@ namespace TransportManagmentInfrustructure.Migrations
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.Navigation("ApplicationUser");
+                    b.Navigation("CreatedBy");
 
                     b.Navigation("GivenZone");
 
@@ -3355,9 +3222,11 @@ namespace TransportManagmentInfrustructure.Migrations
 
             modelBuilder.Entity("TransportManagmentInfrustructure.Model.Vehicle.Action.ORCStock", b =>
                 {
-                    b.HasOne("TransportManagmentInfrustructure.Model.Authentication.ApplicationUser", "ApplicationUser")
+                    b.HasOne("TransportManagmentInfrustructure.Model.Authentication.ApplicationUser", "CreatedBy")
                         .WithMany()
-                        .HasForeignKey("ApplicationUserId");
+                        .HasForeignKey("CreatedById")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
 
                     b.HasOne("TransportManagmentInfrustructure.Model.Common.Region", "Region")
                         .WithMany()
@@ -3375,7 +3244,7 @@ namespace TransportManagmentInfrustructure.Migrations
                         .WithMany()
                         .HasForeignKey("ToZoneId");
 
-                    b.Navigation("ApplicationUser");
+                    b.Navigation("CreatedBy");
 
                     b.Navigation("Region");
 
@@ -3386,9 +3255,11 @@ namespace TransportManagmentInfrustructure.Migrations
 
             modelBuilder.Entity("TransportManagmentInfrustructure.Model.Vehicle.Action.OwnerList", b =>
                 {
-                    b.HasOne("TransportManagmentInfrustructure.Model.Authentication.ApplicationUser", "ApplicationUser")
+                    b.HasOne("TransportManagmentInfrustructure.Model.Authentication.ApplicationUser", "CreatedBy")
                         .WithMany()
-                        .HasForeignKey("ApplicationUserId");
+                        .HasForeignKey("CreatedById")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
 
                     b.HasOne("TransportManagmentInfrustructure.Model.Common.Woreda", "Woreda")
                         .WithMany()
@@ -3400,7 +3271,7 @@ namespace TransportManagmentInfrustructure.Migrations
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.Navigation("ApplicationUser");
+                    b.Navigation("CreatedBy");
 
                     b.Navigation("Woreda");
 
@@ -3409,13 +3280,15 @@ namespace TransportManagmentInfrustructure.Migrations
 
             modelBuilder.Entity("TransportManagmentInfrustructure.Model.Vehicle.Action.PlateStock", b =>
                 {
-                    b.HasOne("TransportManagmentInfrustructure.Model.Authentication.ApplicationUser", "ApplicationUser")
-                        .WithMany()
-                        .HasForeignKey("ApplicationUserId");
-
                     b.HasOne("TransportManagmentInfrustructure.Model.Vehicle.Configuration.VehicleLookups", "BackPlateSize")
                         .WithMany()
                         .HasForeignKey("BackPlateSizeId");
+
+                    b.HasOne("TransportManagmentInfrustructure.Model.Authentication.ApplicationUser", "CreatedBy")
+                        .WithMany()
+                        .HasForeignKey("CreatedById")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
 
                     b.HasOne("TransportManagmentInfrustructure.Model.Vehicle.Configuration.VehicleLookups", "FrontPlateSize")
                         .WithMany()
@@ -3439,9 +3312,9 @@ namespace TransportManagmentInfrustructure.Migrations
                         .WithMany()
                         .HasForeignKey("ToZoneId");
 
-                    b.Navigation("ApplicationUser");
-
                     b.Navigation("BackPlateSize");
+
+                    b.Navigation("CreatedBy");
 
                     b.Navigation("FrontPlateSize");
 
@@ -3454,9 +3327,11 @@ namespace TransportManagmentInfrustructure.Migrations
 
             modelBuilder.Entity("TransportManagmentInfrustructure.Model.Vehicle.Action.ServiceChange", b =>
                 {
-                    b.HasOne("TransportManagmentInfrustructure.Model.Authentication.ApplicationUser", "ApplicationUser")
+                    b.HasOne("TransportManagmentInfrustructure.Model.Authentication.ApplicationUser", "CreatedBy")
                         .WithMany()
-                        .HasForeignKey("ApplicationUserId");
+                        .HasForeignKey("CreatedById")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
 
                     b.HasOne("TransportManagmentInfrustructure.Model.Common.ZoneList", "GivingZone")
                         .WithMany()
@@ -3476,7 +3351,7 @@ namespace TransportManagmentInfrustructure.Migrations
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.Navigation("ApplicationUser");
+                    b.Navigation("CreatedBy");
 
                     b.Navigation("GivingZone");
 
@@ -3487,13 +3362,15 @@ namespace TransportManagmentInfrustructure.Migrations
 
             modelBuilder.Entity("TransportManagmentInfrustructure.Model.Vehicle.Action.TechnicalInspection", b =>
                 {
-                    b.HasOne("TransportManagmentInfrustructure.Model.Authentication.ApplicationUser", "ApplicationUser")
-                        .WithMany()
-                        .HasForeignKey("ApplicationUserId");
-
                     b.HasOne("TransportManagmentInfrustructure.Model.Vehicle.Configuration.VehicleLookups", "Color")
                         .WithMany()
                         .HasForeignKey("ColorId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("TransportManagmentInfrustructure.Model.Authentication.ApplicationUser", "CreatedBy")
+                        .WithMany()
+                        .HasForeignKey("CreatedById")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
@@ -3519,9 +3396,9 @@ namespace TransportManagmentInfrustructure.Migrations
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.Navigation("ApplicationUser");
-
                     b.Navigation("Color");
+
+                    b.Navigation("CreatedBy");
 
                     b.Navigation("FieldInspection");
 
@@ -3538,9 +3415,11 @@ namespace TransportManagmentInfrustructure.Migrations
                         .WithMany()
                         .HasForeignKey("ActivatedById");
 
-                    b.HasOne("TransportManagmentInfrustructure.Model.Authentication.ApplicationUser", "ApplicationUser")
+                    b.HasOne("TransportManagmentInfrustructure.Model.Authentication.ApplicationUser", "CreatedBy")
                         .WithMany()
-                        .HasForeignKey("ApplicationUserId");
+                        .HasForeignKey("CreatedById")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
 
                     b.HasOne("TransportManagmentInfrustructure.Model.Vehicle.Action.VehicleList", "Vehicle")
                         .WithMany()
@@ -3550,16 +3429,16 @@ namespace TransportManagmentInfrustructure.Migrations
 
                     b.Navigation("ActivatedBy");
 
-                    b.Navigation("ApplicationUser");
+                    b.Navigation("CreatedBy");
 
                     b.Navigation("Vehicle");
                 });
 
             modelBuilder.Entity("TransportManagmentInfrustructure.Model.Vehicle.Action.Valuation", b =>
                 {
-                    b.HasOne("TransportManagmentInfrustructure.Model.Authentication.ApplicationUser", "ApplicationUser")
+                    b.HasOne("TransportManagmentInfrustructure.Model.Authentication.ApplicationUser", "CreatedBy")
                         .WithMany()
-                        .HasForeignKey("ApplicationUserId")
+                        .HasForeignKey("CreatedById")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
@@ -3605,7 +3484,7 @@ namespace TransportManagmentInfrustructure.Migrations
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.Navigation("ApplicationUser");
+                    b.Navigation("CreatedBy");
 
                     b.Navigation("DepreciationCost");
 
@@ -3624,9 +3503,9 @@ namespace TransportManagmentInfrustructure.Migrations
 
             modelBuilder.Entity("TransportManagmentInfrustructure.Model.Vehicle.Action.ValuationDetail", b =>
                 {
-                    b.HasOne("TransportManagmentInfrustructure.Model.Authentication.ApplicationUser", "ApplicationUser")
+                    b.HasOne("TransportManagmentInfrustructure.Model.Authentication.ApplicationUser", "CreatedBy")
                         .WithMany()
-                        .HasForeignKey("ApplicationUserId")
+                        .HasForeignKey("CreatedById")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
@@ -3642,7 +3521,7 @@ namespace TransportManagmentInfrustructure.Migrations
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.Navigation("ApplicationUser");
+                    b.Navigation("CreatedBy");
 
                     b.Navigation("Owner");
 
@@ -3651,12 +3530,6 @@ namespace TransportManagmentInfrustructure.Migrations
 
             modelBuilder.Entity("TransportManagmentInfrustructure.Model.Vehicle.Action.VehicleBan", b =>
                 {
-                    b.HasOne("TransportManagmentInfrustructure.Model.Authentication.ApplicationUser", "ApplicationUser")
-                        .WithMany()
-                        .HasForeignKey("ApplicationUserId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
                     b.HasOne("TransportManagmentInfrustructure.Model.Vehicle.Configuration.BanBody", "BanBody")
                         .WithMany()
                         .HasForeignKey("BanBodyId")
@@ -3666,6 +3539,12 @@ namespace TransportManagmentInfrustructure.Migrations
                     b.HasOne("TransportManagmentInfrustructure.Model.Vehicle.Configuration.VehicleLookups", "BanCase")
                         .WithMany()
                         .HasForeignKey("BanCaseId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("TransportManagmentInfrustructure.Model.Authentication.ApplicationUser", "CreatedBy")
+                        .WithMany()
+                        .HasForeignKey("CreatedById")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
@@ -3679,11 +3558,11 @@ namespace TransportManagmentInfrustructure.Migrations
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.Navigation("ApplicationUser");
-
                     b.Navigation("BanBody");
 
                     b.Navigation("BanCase");
+
+                    b.Navigation("CreatedBy");
 
                     b.Navigation("LiftedBy");
 
@@ -3692,10 +3571,6 @@ namespace TransportManagmentInfrustructure.Migrations
 
             modelBuilder.Entity("TransportManagmentInfrustructure.Model.Vehicle.Action.VehicleList", b =>
                 {
-                    b.HasOne("TransportManagmentInfrustructure.Model.Authentication.ApplicationUser", "ApplicationUser")
-                        .WithMany()
-                        .HasForeignKey("ApplicationUserId");
-
                     b.HasOne("TransportManagmentInfrustructure.Model.Authentication.ApplicationUser", "ApprovedBy")
                         .WithMany()
                         .HasForeignKey("ApprovedById");
@@ -3712,6 +3587,12 @@ namespace TransportManagmentInfrustructure.Migrations
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
+                    b.HasOne("TransportManagmentInfrustructure.Model.Authentication.ApplicationUser", "CreatedBy")
+                        .WithMany()
+                        .HasForeignKey("CreatedById")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
                     b.HasOne("TransportManagmentInfrustructure.Model.Vehicle.Configuration.VehicleModel", "Model")
                         .WithMany()
                         .HasForeignKey("ModelId")
@@ -3724,13 +3605,13 @@ namespace TransportManagmentInfrustructure.Migrations
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.Navigation("ApplicationUser");
-
                     b.Navigation("ApprovedBy");
 
                     b.Navigation("AssembledCountry");
 
                     b.Navigation("ChassisMade");
+
+                    b.Navigation("CreatedBy");
 
                     b.Navigation("Model");
 
@@ -3739,9 +3620,9 @@ namespace TransportManagmentInfrustructure.Migrations
 
             modelBuilder.Entity("TransportManagmentInfrustructure.Model.Vehicle.Action.VehicleOwner", b =>
                 {
-                    b.HasOne("TransportManagmentInfrustructure.Model.Authentication.ApplicationUser", "ApplicationUser")
+                    b.HasOne("TransportManagmentInfrustructure.Model.Authentication.ApplicationUser", "CreatedBy")
                         .WithMany()
-                        .HasForeignKey("ApplicationUserId")
+                        .HasForeignKey("CreatedById")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
@@ -3759,7 +3640,7 @@ namespace TransportManagmentInfrustructure.Migrations
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.Navigation("ApplicationUser");
+                    b.Navigation("CreatedBy");
 
                     b.Navigation("Owner");
 
@@ -3770,9 +3651,9 @@ namespace TransportManagmentInfrustructure.Migrations
 
             modelBuilder.Entity("TransportManagmentInfrustructure.Model.Vehicle.Action.VehiclePlate", b =>
                 {
-                    b.HasOne("TransportManagmentInfrustructure.Model.Authentication.ApplicationUser", "ApplicationUser")
+                    b.HasOne("TransportManagmentInfrustructure.Model.Authentication.ApplicationUser", "CreatedBy")
                         .WithMany()
-                        .HasForeignKey("ApplicationUserId")
+                        .HasForeignKey("CreatedById")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
@@ -3794,7 +3675,7 @@ namespace TransportManagmentInfrustructure.Migrations
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.Navigation("ApplicationUser");
+                    b.Navigation("CreatedBy");
 
                     b.Navigation("GivenZone");
 
@@ -3805,9 +3686,9 @@ namespace TransportManagmentInfrustructure.Migrations
 
             modelBuilder.Entity("TransportManagmentInfrustructure.Model.Vehicle.Action.VehicleReplacement", b =>
                 {
-                    b.HasOne("TransportManagmentInfrustructure.Model.Authentication.ApplicationUser", "ApplicationUser")
+                    b.HasOne("TransportManagmentInfrustructure.Model.Authentication.ApplicationUser", "CreatedBy")
                         .WithMany()
-                        .HasForeignKey("ApplicationUserId")
+                        .HasForeignKey("CreatedById")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
@@ -3817,16 +3698,16 @@ namespace TransportManagmentInfrustructure.Migrations
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.Navigation("ApplicationUser");
+                    b.Navigation("CreatedBy");
 
                     b.Navigation("Vehicle");
                 });
 
             modelBuilder.Entity("TransportManagmentInfrustructure.Model.Vehicle.Action.VehicleTransfer", b =>
                 {
-                    b.HasOne("TransportManagmentInfrustructure.Model.Authentication.ApplicationUser", "ApplicationUser")
+                    b.HasOne("TransportManagmentInfrustructure.Model.Authentication.ApplicationUser", "CreatedBy")
                         .WithMany()
-                        .HasForeignKey("ApplicationUserId")
+                        .HasForeignKey("CreatedById")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
@@ -3848,7 +3729,7 @@ namespace TransportManagmentInfrustructure.Migrations
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.Navigation("ApplicationUser");
+                    b.Navigation("CreatedBy");
 
                     b.Navigation("FromZone");
 
@@ -3859,45 +3740,55 @@ namespace TransportManagmentInfrustructure.Migrations
 
             modelBuilder.Entity("TransportManagmentInfrustructure.Model.Vehicle.Configuration.AISORCStockType", b =>
                 {
-                    b.HasOne("TransportManagmentInfrustructure.Model.Authentication.ApplicationUser", "ApplicationUser")
+                    b.HasOne("TransportManagmentInfrustructure.Model.Authentication.ApplicationUser", "CreatedBy")
                         .WithMany()
-                        .HasForeignKey("ApplicationUserId");
+                        .HasForeignKey("CreatedById")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
 
-                    b.Navigation("ApplicationUser");
+                    b.Navigation("CreatedBy");
                 });
 
             modelBuilder.Entity("TransportManagmentInfrustructure.Model.Vehicle.Configuration.BanBody", b =>
                 {
-                    b.HasOne("TransportManagmentInfrustructure.Model.Authentication.ApplicationUser", "ApplicationUser")
+                    b.HasOne("TransportManagmentInfrustructure.Model.Authentication.ApplicationUser", "CreatedBy")
                         .WithMany()
-                        .HasForeignKey("ApplicationUserId");
+                        .HasForeignKey("CreatedById")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
 
-                    b.Navigation("ApplicationUser");
+                    b.Navigation("CreatedBy");
                 });
 
             modelBuilder.Entity("TransportManagmentInfrustructure.Model.Vehicle.Configuration.DepreciationCost", b =>
                 {
-                    b.HasOne("TransportManagmentInfrustructure.Model.Authentication.ApplicationUser", "ApplicationUser")
+                    b.HasOne("TransportManagmentInfrustructure.Model.Authentication.ApplicationUser", "CreatedBy")
                         .WithMany()
-                        .HasForeignKey("ApplicationUserId");
+                        .HasForeignKey("CreatedById")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
 
-                    b.Navigation("ApplicationUser");
+                    b.Navigation("CreatedBy");
                 });
 
             modelBuilder.Entity("TransportManagmentInfrustructure.Model.Vehicle.Configuration.DocumentType", b =>
                 {
-                    b.HasOne("TransportManagmentInfrustructure.Model.Authentication.ApplicationUser", "ApplicationUser")
+                    b.HasOne("TransportManagmentInfrustructure.Model.Authentication.ApplicationUser", "CreatedBy")
                         .WithMany()
-                        .HasForeignKey("ApplicationUserId");
+                        .HasForeignKey("CreatedById")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
 
-                    b.Navigation("ApplicationUser");
+                    b.Navigation("CreatedBy");
                 });
 
             modelBuilder.Entity("TransportManagmentInfrustructure.Model.Vehicle.Configuration.FactoryPoint", b =>
                 {
-                    b.HasOne("TransportManagmentInfrustructure.Model.Authentication.ApplicationUser", "ApplicationUser")
+                    b.HasOne("TransportManagmentInfrustructure.Model.Authentication.ApplicationUser", "CreatedBy")
                         .WithMany()
-                        .HasForeignKey("ApplicationUserId");
+                        .HasForeignKey("CreatedById")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
 
                     b.HasOne("TransportManagmentInfrustructure.Model.Vehicle.Configuration.VehicleLookups", "Mark")
                         .WithMany()
@@ -3905,34 +3796,40 @@ namespace TransportManagmentInfrustructure.Migrations
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.Navigation("ApplicationUser");
+                    b.Navigation("CreatedBy");
 
                     b.Navigation("Mark");
                 });
 
             modelBuilder.Entity("TransportManagmentInfrustructure.Model.Vehicle.Configuration.InitialPrice", b =>
                 {
-                    b.HasOne("TransportManagmentInfrustructure.Model.Authentication.ApplicationUser", "ApplicationUser")
+                    b.HasOne("TransportManagmentInfrustructure.Model.Authentication.ApplicationUser", "CreatedBy")
                         .WithMany()
-                        .HasForeignKey("ApplicationUserId");
+                        .HasForeignKey("CreatedById")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
 
-                    b.Navigation("ApplicationUser");
+                    b.Navigation("CreatedBy");
                 });
 
             modelBuilder.Entity("TransportManagmentInfrustructure.Model.Vehicle.Configuration.ManufacturingCountry", b =>
                 {
-                    b.HasOne("TransportManagmentInfrustructure.Model.Authentication.ApplicationUser", "ApplicationUser")
+                    b.HasOne("TransportManagmentInfrustructure.Model.Authentication.ApplicationUser", "CreatedBy")
                         .WithMany()
-                        .HasForeignKey("ApplicationUserId");
+                        .HasForeignKey("CreatedById")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
 
-                    b.Navigation("ApplicationUser");
+                    b.Navigation("CreatedBy");
                 });
 
             modelBuilder.Entity("TransportManagmentInfrustructure.Model.Vehicle.Configuration.PlateType", b =>
                 {
-                    b.HasOne("TransportManagmentInfrustructure.Model.Authentication.ApplicationUser", "ApplicationUser")
+                    b.HasOne("TransportManagmentInfrustructure.Model.Authentication.ApplicationUser", "CreatedBy")
                         .WithMany()
-                        .HasForeignKey("ApplicationUserId");
+                        .HasForeignKey("CreatedById")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
 
                     b.HasOne("TransportManagmentInfrustructure.Model.Vehicle.Configuration.VehicleLookups", "Major")
                         .WithMany()
@@ -3942,7 +3839,7 @@ namespace TransportManagmentInfrustructure.Migrations
                         .WithMany()
                         .HasForeignKey("MinorId");
 
-                    b.Navigation("ApplicationUser");
+                    b.Navigation("CreatedBy");
 
                     b.Navigation("Major");
 
@@ -3951,27 +3848,33 @@ namespace TransportManagmentInfrustructure.Migrations
 
             modelBuilder.Entity("TransportManagmentInfrustructure.Model.Vehicle.Configuration.SalvageValue", b =>
                 {
-                    b.HasOne("TransportManagmentInfrustructure.Model.Authentication.ApplicationUser", "ApplicationUser")
+                    b.HasOne("TransportManagmentInfrustructure.Model.Authentication.ApplicationUser", "CreatedBy")
                         .WithMany()
-                        .HasForeignKey("ApplicationUserId");
+                        .HasForeignKey("CreatedById")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
 
-                    b.Navigation("ApplicationUser");
+                    b.Navigation("CreatedBy");
                 });
 
             modelBuilder.Entity("TransportManagmentInfrustructure.Model.Vehicle.Configuration.ServiceType", b =>
                 {
-                    b.HasOne("TransportManagmentInfrustructure.Model.Authentication.ApplicationUser", "ApplicationUser")
+                    b.HasOne("TransportManagmentInfrustructure.Model.Authentication.ApplicationUser", "CreatedBy")
                         .WithMany()
-                        .HasForeignKey("ApplicationUserId");
+                        .HasForeignKey("CreatedById")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
 
-                    b.Navigation("ApplicationUser");
+                    b.Navigation("CreatedBy");
                 });
 
             modelBuilder.Entity("TransportManagmentInfrustructure.Model.Vehicle.Configuration.ServiceYearSetting", b =>
                 {
-                    b.HasOne("TransportManagmentInfrustructure.Model.Authentication.ApplicationUser", "ApplicationUser")
+                    b.HasOne("TransportManagmentInfrustructure.Model.Authentication.ApplicationUser", "CreatedBy")
                         .WithMany()
-                        .HasForeignKey("ApplicationUserId");
+                        .HasForeignKey("CreatedById")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
 
                     b.HasOne("TransportManagmentInfrustructure.Model.Vehicle.Configuration.VehicleType", "VehicleType")
                         .WithMany()
@@ -3979,27 +3882,27 @@ namespace TransportManagmentInfrustructure.Migrations
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.Navigation("ApplicationUser");
+                    b.Navigation("CreatedBy");
 
                     b.Navigation("VehicleType");
                 });
 
             modelBuilder.Entity("TransportManagmentInfrustructure.Model.Vehicle.Configuration.ValuationReason", b =>
                 {
-                    b.HasOne("TransportManagmentInfrustructure.Model.Authentication.ApplicationUser", "ApplicationUser")
+                    b.HasOne("TransportManagmentInfrustructure.Model.Authentication.ApplicationUser", "CreatedBy")
                         .WithMany()
-                        .HasForeignKey("ApplicationUserId")
+                        .HasForeignKey("CreatedById")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.Navigation("ApplicationUser");
+                    b.Navigation("CreatedBy");
                 });
 
             modelBuilder.Entity("TransportManagmentInfrustructure.Model.Vehicle.Configuration.VehicleBodyType", b =>
                 {
-                    b.HasOne("TransportManagmentInfrustructure.Model.Authentication.ApplicationUser", "ApplicationUser")
+                    b.HasOne("TransportManagmentInfrustructure.Model.Authentication.ApplicationUser", "CreatedBy")
                         .WithMany()
-                        .HasForeignKey("ApplicationUserId")
+                        .HasForeignKey("CreatedById")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
@@ -4009,27 +3912,27 @@ namespace TransportManagmentInfrustructure.Migrations
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.Navigation("ApplicationUser");
+                    b.Navigation("CreatedBy");
 
                     b.Navigation("VehicleType");
                 });
 
             modelBuilder.Entity("TransportManagmentInfrustructure.Model.Vehicle.Configuration.VehicleLookups", b =>
                 {
-                    b.HasOne("TransportManagmentInfrustructure.Model.Authentication.ApplicationUser", "ApplicationUser")
+                    b.HasOne("TransportManagmentInfrustructure.Model.Authentication.ApplicationUser", "CreatedBy")
                         .WithMany()
-                        .HasForeignKey("ApplicationUserId")
+                        .HasForeignKey("CreatedById")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.Navigation("ApplicationUser");
+                    b.Navigation("CreatedBy");
                 });
 
             modelBuilder.Entity("TransportManagmentInfrustructure.Model.Vehicle.Configuration.VehicleModel", b =>
                 {
-                    b.HasOne("TransportManagmentInfrustructure.Model.Authentication.ApplicationUser", "ApplicationUser")
+                    b.HasOne("TransportManagmentInfrustructure.Model.Authentication.ApplicationUser", "CreatedBy")
                         .WithMany()
-                        .HasForeignKey("ApplicationUserId")
+                        .HasForeignKey("CreatedById")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
@@ -4039,16 +3942,16 @@ namespace TransportManagmentInfrustructure.Migrations
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.Navigation("ApplicationUser");
+                    b.Navigation("CreatedBy");
 
                     b.Navigation("Mark");
                 });
 
             modelBuilder.Entity("TransportManagmentInfrustructure.Model.Vehicle.Configuration.VehicleSerialSetting", b =>
                 {
-                    b.HasOne("TransportManagmentInfrustructure.Model.Authentication.ApplicationUser", "ApplicationUser")
+                    b.HasOne("TransportManagmentInfrustructure.Model.Authentication.ApplicationUser", "CreatedBy")
                         .WithMany()
-                        .HasForeignKey("ApplicationUserId")
+                        .HasForeignKey("CreatedById")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
@@ -4058,27 +3961,27 @@ namespace TransportManagmentInfrustructure.Migrations
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.Navigation("ApplicationUser");
+                    b.Navigation("CreatedBy");
 
                     b.Navigation("Zone");
                 });
 
             modelBuilder.Entity("TransportManagmentInfrustructure.Model.Vehicle.Configuration.VehicleSettings", b =>
                 {
-                    b.HasOne("TransportManagmentInfrustructure.Model.Authentication.ApplicationUser", "ApplicationUser")
+                    b.HasOne("TransportManagmentInfrustructure.Model.Authentication.ApplicationUser", "CreatedBy")
                         .WithMany()
-                        .HasForeignKey("ApplicationUserId")
+                        .HasForeignKey("CreatedById")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.Navigation("ApplicationUser");
+                    b.Navigation("CreatedBy");
                 });
 
             modelBuilder.Entity("TransportManagmentInfrustructure.Model.Vehicle.Configuration.VehicleType", b =>
                 {
-                    b.HasOne("TransportManagmentInfrustructure.Model.Authentication.ApplicationUser", "ApplicationUser")
+                    b.HasOne("TransportManagmentInfrustructure.Model.Authentication.ApplicationUser", "CreatedBy")
                         .WithMany()
-                        .HasForeignKey("ApplicationUserId")
+                        .HasForeignKey("CreatedById")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
@@ -4088,7 +3991,7 @@ namespace TransportManagmentInfrustructure.Migrations
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.Navigation("ApplicationUser");
+                    b.Navigation("CreatedBy");
 
                     b.Navigation("VehicleCategory");
                 });

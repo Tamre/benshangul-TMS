@@ -13,7 +13,7 @@ namespace TransportManagmentImplementation.Interfaces.Vehicle.Configuration
     {
         public Task<ResponseMessage> Add(AISORCStockTypePostDto AISORCStockTypePost);
         public Task<ResponseMessage> Update(AISORCStockTypeGetDto AISORCStockTypeGet);
-        public Task<List<AISORCStockTypeGetDto>> GetAll();
+        public Task<List<AISORCStockTypeGetDto>> GetAll(RequestParameter requestParameter);
 
     }
 }

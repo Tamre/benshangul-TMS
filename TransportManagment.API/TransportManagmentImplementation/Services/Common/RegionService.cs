@@ -19,13 +19,14 @@ namespace TransportManagmentImplementation.Services.Common
     {
         private readonly ApplicationDbContext _dbContext;
         private readonly IMapper _mapper;
+        private readonly ILoggerManagerService _logger;
 
-        public RegionService(ApplicationDbContext dbContext, IMapper mapper)
+        public RegionService(ApplicationDbContext dbContext, IMapper mapper, ILoggerManagerService logger)
         {
 
             _dbContext = dbContext;
             _mapper = mapper;
-
+            _logger = logger;
         }
 
         public async Task<ResponseMessage> Add(RegionPostDto RegionPost)
@@ -47,6 +48,10 @@ namespace TransportManagmentImplementation.Services.Common
                 await _dbContext.Regions.AddAsync(Region);
                 await _dbContext.SaveChangesAsync();
 
+
+                _logger.LogCreate("COMMON", RegionPost.CreatedById, $"Region Added Successfully on {DateTime.Now}");
+
+
                 return new ResponseMessage
                 {
                     Success = true,
@@ -58,6 +63,8 @@ namespace TransportManagmentImplementation.Services.Common
             catch (Exception ex)
             {
 
+                _logger.LogExcption("COOMON", RegionPost.CreatedById, ex.Message);
+
                 return new ResponseMessage
                 {
                     Success = false,
@@ -68,11 +75,14 @@ namespace TransportManagmentImplementation.Services.Common
 
         }
 
-        public async Task<List<RegionGetDto>> GetAll()
+        public async Task<List<RegionGetDto>> GetAll(RequestParameter requestParameter)
         {
 
 
-            var regions = await _dbContext.Regions.Include(x=>x.Country).AsNoTracking().ToListAsync();
+            var regions = await _dbContext.Regions.Include(x=>x.Country).AsNoTracking().OrderBy(e => e.Id)
+ .Skip((requestParameter.PageNumber - 1) * requestParameter.PageSize)
+ .Take(requestParameter.PageSize)
+ .ToListAsync(); ;
 
             var RegionDtos = _mapper.Map<List<RegionGetDto>>(regions);
 
@@ -103,6 +113,9 @@ namespace TransportManagmentImplementation.Services.Common
 
                     // Save the changes to the database
                     await _dbContext.SaveChangesAsync();
+                    _logger.LogUpdate("COMMON", RegionGet.CreatedById, $"Region Updated Successfully on {DateTime.Now}");
+
+
 
                     return new ResponseMessage
                     {
@@ -112,6 +125,7 @@ namespace TransportManagmentImplementation.Services.Common
                 }
                 else
                 {
+                   
                     return new ResponseMessage
                     {
                         Success = false,
@@ -122,6 +136,7 @@ namespace TransportManagmentImplementation.Services.Common
             }
             catch (Exception ex)
             {
+                _logger.LogExcption("COMMON", RegionGet.CreatedById, ex.Message);
                 return new ResponseMessage
                 {
                     Success = false,

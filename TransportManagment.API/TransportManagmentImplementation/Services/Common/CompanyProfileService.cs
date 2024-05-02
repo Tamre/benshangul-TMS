@@ -13,6 +13,7 @@ using TransportManagmentImplementation.Helper;
 using TransportManagmentImplementation.Interfaces.Common;
 using TransportManagmentInfrustructure.Data;
 using TransportManagmentInfrustructure.Model.Common;
+using TransportManagmentInfrustructure.Model.Vehicle.Configuration;
 
 namespace TransportManagmentImplementation.Services.Common
 {
@@ -22,16 +23,18 @@ namespace TransportManagmentImplementation.Services.Common
         private readonly ApplicationDbContext _dbContext;
         private readonly IMapper _mapper;
         private readonly IGeneralConfigService _generalConfig;
+        private readonly ILoggerManagerService _logger;
         public CompanyProfileService(
             ApplicationDbContext dbContext, 
             IMapper mapper,
-            IGeneralConfigService generalConfig)
+            IGeneralConfigService generalConfig,
+            ILoggerManagerService logger)
         {
 
             _generalConfig = generalConfig;
             _mapper = mapper;
             _dbContext = dbContext;
-
+            _logger = logger;
         }
         public async Task<CompanyProfileGetDto> Get()
         {
@@ -74,6 +77,10 @@ namespace TransportManagmentImplementation.Services.Common
                     await _dbContext.CompanyProfiles.AddAsync(companyProfile);
                     await _dbContext.SaveChangesAsync();
 
+                    _logger.LogCreate("COMMON", companyProfileGet.CreatedById, $"Company Profile Updated Successfully on {DateTime.Now}");
+
+
+
                     return new ResponseMessage
                     {
                         Success = true,
@@ -92,8 +99,12 @@ namespace TransportManagmentImplementation.Services.Common
                     currentCompanyProfile.Description = companyProfileGet.Description;
                     currentCompanyProfile.Email = companyProfileGet.Email;
                     currentCompanyProfile.Address = companyProfileGet.Address;
-
                     await _dbContext.SaveChangesAsync();
+
+
+                    _logger.LogUpdate("COMMON", companyProfileGet.CreatedById, $"Company Profile Updated Successfully on {DateTime.Now}");
+
+
 
                     return new ResponseMessage
                     {
@@ -106,6 +117,10 @@ namespace TransportManagmentImplementation.Services.Common
             }
             catch (Exception ex)
             {
+
+                _logger.LogExcption("COMMMON", companyProfileGet.CreatedById, ex.Message);
+
+
                 return new ResponseMessage
                 {
                     Success = false,
