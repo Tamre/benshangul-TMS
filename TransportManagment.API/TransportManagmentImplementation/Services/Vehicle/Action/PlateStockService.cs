@@ -37,7 +37,6 @@ namespace TransportManagmentImplementation.Services.Vehicle.Action
                 var plateTypeName = _dbContext.PlateTypes.Where(x => x.Id == PlateStockPost.PlateTypeId).Select(x => x.Code).SingleOrDefault();
 
 
-
                 for (int plateNo = PlateStockPost.FromPlateNo; plateNo <= PlateStockPost.ToPlateNo; plateNo++)
                 {
                     var length = plateNo.ToString().Count();
@@ -70,6 +69,7 @@ namespace TransportManagmentImplementation.Services.Vehicle.Action
                             CreatedDate = DateTime.Now,
                             IsActive = true
                         };
+
 
                         if (PlateStockPost.BackPlateSizeId > 0)
                         {
