@@ -40,6 +40,7 @@ import { ServiceYearComponent } from './vehicle-config/valuation/service-year/se
 import { InitialPriceComponent } from './vehicle-config/valuation/initial-price/initial-price.component';
 import { SalvageValueComponent } from './vehicle-config/valuation/salvage-value/salvage-value.component';
 import { StockManagementComponent } from './stock-management/stock-management.component';
+import { PlateStockComponent } from './stock-management/plate-stock/plate-stock.component';
 
 
 
@@ -68,7 +69,8 @@ import { StockManagementComponent } from './stock-management/stock-management.co
     ServiceYearComponent,
     InitialPriceComponent,
     SalvageValueComponent,
-    StockManagementComponent
+    StockManagementComponent,
+    PlateStockComponent
     
 
   ],

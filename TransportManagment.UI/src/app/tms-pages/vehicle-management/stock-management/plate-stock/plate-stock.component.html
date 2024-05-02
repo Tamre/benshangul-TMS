@@ -4,37 +4,25 @@
             <div class="card-header">
                 <div class="d-flex align-items-center flex-wrap gap-2">
                     <div class="flex-grow-1">
-                        <button class="btn btn-info add-btn" data-bs-toggle="modal" data-bs-target="#showModal" (click)="openModal(content)">
-                            <i class="ri-add-fill me-1 align-bottom"></i> {{ 'Add Document Type' | translate }}
-                        </button>
+                        
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <!--end col-->
+
     <div class="col-xxl-12">
         <div class="card" id="contactList">
             <div class="card-header">
                 <div class="row g-3">
                     <div class="col-md-4">
                         <div class="search-box">
-                            <input type="text" name="searchTerm" class="form-control" placeholder="{{ 'Search for Document Type...' | translate }}" [(ngModel)]="searchTerm" (ngModelChange)="performSearch()">
+                            <input type="text" name="searchTerm" class="form-control"
+                                placeholder="{{ 'Search for Plate...' | translate }}" [(ngModel)]="searchTerm">
                             <i class="ri-search-line search-icon"></i>
                         </div>
                     </div>
-                    <div class="col-md-auto ms-auto">
-                        <div class="d-flex align-items-center gap-2">
-                            <span class="text-muted text-nowrap">{{ 'Sort by' | translate }}: </span>
-                            <select class="form-control mb-0" data-choices data-choices-search-false id="choices-single-default" (click)="SortFilter();">
-                                <option value="DfileName">{{ 'File Name' | translate }}</option>
-                                <option value="DfileExtentions">{{ 'File Extentions' | translate }}</option>
-                                <option value="DisPermanentRequired">{{ 'Permanent Required' | translate }}</option>
-                                <option value="DisTemporaryRequired">{{ 'Temporary Required' | translate }}</option>
-                                <option value="DisActive">{{ 'Status' | translate }}</option>
-                            </select>
-                        </div>
-                    </div>
+                   
                 </div>
             </div>
             <div class="card-body">
@@ -42,53 +30,67 @@
                     <div class="table-responsive table-card mb-2">
                         <table class="table">
                             <thead>
+                                
                                 <tr class="bg-light">
                                     <th scope="col" style="width: 50px;"></th>
-                                    <th class="sort" (click)="onSort('fileName')">{{ 'File Name' | translate }}</th>
-                                    <th class="sort" (click)="onSort('fileExtentions')">{{ 'File Extentions' | translate }}</th>
-                                    <th class="sort" (click)="onSort('isPermanentRequired')">{{ 'Permanent Required' | translate }}</th>
-                                    <th class="sort" (click)="onSort('isTemporaryRequired')">{{ 'Temporary Required' | translate }}</th>
-                                    <th class="sort" (click)="onSort('isActive')">{{ 'Status' | translate }}</th>
+                                    <th>{{ 'Plate Type Name' | translate }}</th>
+                                    <th>{{ 'Plate Number' | translate }}</th>
+                                    <th>{{ 'Registration Type' | translate }}</th>
+                                    <th>{{ 'Front Plate Size' | translate }}</th>
+                                    <th>{{ 'From' | translate }}</th>
+                                    <th>{{ 'To' | translate }}</th>
+                                    <th>{{ 'Status' | translate }}</th>
                                     <th>{{ 'Edit' | translate }}</th>
                                 </tr>
                             </thead>
-                            <tbody>
-                                @for (data of docTypes | sortBy:sortBy:sortField; track $index) {
-                                <tr id="c_{{data.id}}">
-                                    <th scope="row">{{ $index + 1 }}</th>
-                                    <td class="name">
-                                        <ngb-highlight [result]="data.fileName" [term]="searchTerm"></ngb-highlight>
-                                    </td>
-                                    <td>
-                                        <ngb-highlight [result]="data.fileExtentions" [term]="searchTerm"></ngb-highlight>
-                                    </td>
-                                    <td>
-                                        <ngb-highlight [result]="data.isPermanentRequired" [term]="searchTerm"></ngb-highlight>
-                                    </td>
-                                    <td>
-                                        <ngb-highlight [result]="data.isTemporaryRequired" [term]="searchTerm"></ngb-highlight>
-                                    </td>
-                                    <td>
-                                        <ngb-highlight [result]="data.isActive" [term]="searchTerm"></ngb-highlight>
-                                    </td>
-                                    <td>
-                                        <button class="btn btn-soft-secondary btn-sm edit-item-btn" type="button" data-bs-toggle="modal" (click)="editDataGet($index,content)">
-                                            <i class="ri-pencil-fill align-middle"></i>
-                                        </button>
-                                    </td>
-                                </tr>
-                                }
+                            <tbody *ngIf="plateStocks?.length > 0; else noData">
+                                <ng-container *ngFor="let data of plateStocks; let i=index">
+                                    <tr id="c_{{data.id}}">
+                                        <th scope="row">{{ i + 1 }}</th>
+                                        <td class="name">
+                                            <ngb-highlight [result]="data.plateTypeId"
+                                                [term]="searchTerm"></ngb-highlight>
+                                        </td>
+                                        <td>
+                                            <ngb-highlight [result]="data.plateNo" [term]="searchTerm"></ngb-highlight>
+                                        </td>
+                                        <td>
+                                            <ngb-highlight [result]="data.plateNo" [term]="searchTerm"></ngb-highlight>
+                                        </td>
+                                        <td>
+                                            <ngb-highlight [result]="data.plateNo" [term]="searchTerm"></ngb-highlight>
+                                        </td>
+                                        <td>
+                                            <ngb-highlight [result]="data.plateNo" [term]="searchTerm"></ngb-highlight>
+                                        </td>
+                                        <td>
+                                            <ngb-highlight [result]="data.plateNo" [term]="searchTerm"></ngb-highlight>
+                                        </td>
+                                        <td>
+                                            <ngb-highlight [result]="data.isActive" [term]="searchTerm"></ngb-highlight>
+                                        </td>
+                                        <td>
+                                            
+                                        </td>
+                                    </tr>
+                                </ng-container>
                             </tbody>
+                            <ng-template #noData>
+                                <tr>
+                                    <td colspan="2">No data available</td>
+                                </tr>
+                            </ng-template>
                         </table>
                     </div>
-                    <div class="d-flex justify-content-end mt-3">
-                        <!-- Pagination -->
-                        <ngb-pagination [collectionSize]="allDocTypes?.length" [(page)]="service.page" [pageSize]="service.pageSize" (pageChange)="changePage()"></ngb-pagination>
-                    </div>
+                    <!-- <div class="d-flex justify-content-end mt-3">
+                        
+                        <ngb-pagination [collectionSize]="allPlateStocks?.length" [(page)]="service.page" [pageSize]="service.pageSize" (pageChange)="changePage()"></ngb-pagination>
+                    </div> -->
+
                 </div>
 
                 <!-- Contacts Create Model -->
-                <ng-template #content role="document" let-modal>
+                <!-- <ng-template #content role="document" let-modal>
                     <div class="modal-header bg-info-subtle p-3">
                         <h5 class="modal-title" id="exampleModalLabel">{{ 'Add Document Type' | translate }}</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal" (click)="modal.dismiss('Cross click')"></button>
@@ -154,15 +156,14 @@
                         <div class="modal-footer">
                             <div class="hstack gap-2 justify-content-end">
                                 <button type="button" class="btn btn-light" data-bs-dismiss="modal" (click)="closeModal()">{{ 'Close' | translate }}</button>
-                                <button type="submit" class="btn btn-success" id="add-btn" >{{ 'Add' | translate }}</button>
+                                <button type="submit" class="btn btn-success" id="add-btn" [disabled]="!dataForm.valid">{{ 'Add' | translate }}</button>
                             </div>
                         </div>
                     </form>
-                </ng-template>
+                </ng-template> -->
             </div>
         </div>
-        <!--end card-->
+        
     </div>
-    <!--end col-->
+    
 </div>
-<!--end row-->
