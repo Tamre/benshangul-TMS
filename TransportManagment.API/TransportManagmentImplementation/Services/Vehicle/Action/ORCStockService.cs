@@ -3,6 +3,9 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+
+using System.Linq.Expressions;
+
 using System.Text;
 using System.Threading.Tasks;
 using TransportManagmentImplementation.DTOS.Vehicle.Action;
@@ -33,7 +36,7 @@ namespace TransportManagmentImplementation.Services.Vehicle.Action
                 
                 for (int orcNo = ORCStockPost.FromORCNo; orcNo <= ORCStockPost.ToORCNo; orcNo++)
                 {
-                    var checkORCExistance = _dbContext.ORCStocks.Any(x => x.ORCNo == orcNo.ToString());
+                    var checkORCExistance = _dbContext.ORCStocks.Any(x => x.ORCNo == orcNo.ToString()&& x.StockTypeId == ORCStockPost.StockTypeId);
 
                     if (!checkORCExistance)
                     {
@@ -84,6 +87,16 @@ namespace TransportManagmentImplementation.Services.Vehicle.Action
             }
 
 
+            if (filterData.Criteria != null && filterData.Criteria.Count() > 0)
+            {
+                foreach(var criteria in filterData.Criteria)
+                {
+                    orcStockQuery = orcStockQuery.Where(GetFilterProperty(criteria));
+                }
+            }
+
+
+
 
             var pagedOrcStocks = await PagedList<ORCStock>.ToPagedListAsync(orcStockQuery, filterData.PageNumber, filterData.PageSize);
            
@@ -92,6 +105,19 @@ namespace TransportManagmentImplementation.Services.Vehicle.Action
             
             return new PagedList<ORCStockGetDto>(orcStockDtos, pagedOrcStocks.MetaData);
         }
+
+        private static Expression<Func<ORCStock, bool>> GetFilterProperty(FilterCriteria criteria)
+        {
+            return criteria.ColumnName?.ToLower() switch
+            {
+                "orc_type" => ORCStock => ORCStock.StockTypeId == Convert.ToInt32(criteria.FilterValue),
+                "zone" => ORCStock => ORCStock.ToZoneId == Convert.ToInt32(criteria.FilterValue),
+                "status" => ORCStock => ORCStock.IsActive == Convert.ToBoolean(criteria.FilterValue),
+
+            };
+        }
+
+
 
         public async Task<ResponseMessage> TransferToZone(TransferORCToZoneDto TransferToZone)
         {

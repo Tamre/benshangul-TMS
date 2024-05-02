@@ -94,7 +94,7 @@ namespace TransportManagmentImplementation.Datas
 
             CreateMap<PlateStock, PlateStockGetDto>()
                 .ForMember(a => a.PlateDigit, e => e.MapFrom(mfg => mfg.PlateDigit.ToString()))
-                .ForMember(a => a.GivenStatus, e => e.MapFrom(mfg => mfg.GivenStatus.ToString()))
+                .ForMember(a => a.PlateTypeName, e => e.MapFrom(mfg => mfg.PlateType.Name))
                 .ForMember(a => a.IssuanceType, e => e.MapFrom(mfg => mfg.IssuanceType.ToString()));
 
             #endregion

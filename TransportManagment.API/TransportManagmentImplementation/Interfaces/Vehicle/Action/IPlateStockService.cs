@@ -13,6 +13,7 @@ namespace TransportManagmentImplementation.Interfaces.Vehicle.Action
         Task<ResponseMessage> Add(PlateStockPostDto PlateStockPost);
         Task<PagedList<PlateStockGetDto>> GetAll(FilterDetail filterData);
         Task<ResponseMessage> TransferToZone(TransferToZoneDto TransferToZone);
+        Task<ResponseMessage> Delete(DeletePlateStockDto plateIds);
 
 
     }
