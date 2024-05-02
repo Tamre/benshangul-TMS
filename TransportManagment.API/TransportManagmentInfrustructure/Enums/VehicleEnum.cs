@@ -248,5 +248,13 @@ namespace TransportManagmentInfrustructure.Enums
             Defect,
             Other
         }
+
+        public enum VehicleFileteParameter
+        {
+            RegistrationNo,
+            PlateNo,
+            ChessisNo,
+            EngineNo
+        }
     }
 }
