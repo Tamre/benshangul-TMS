@@ -104,5 +104,18 @@ export const MENU: MenuItem[] = [
       
     // ],
   },
-  
+  {
+    id: 9,
+    label: "MENUITEMS.VEHICLE.TEXT",
+    icon: "ri-apps-2-line",
+    isCollapsed: true,
+    subItems: [
+      {
+        id: 10,
+        label: "MENUITEMS.VEHICLE.LIST.REGISTER",
+        link: "/vehicle/add",
+        parentId: 3,
+      }
+    ],
+  },
 ];
