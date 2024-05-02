@@ -11,6 +11,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using TransportManagmentImplementation.DTOS.Configuration;
+using TransportManagmentImplementation.DTOS.Vehicle.Configuration;
 using TransportManagmentInfrustructure.Data;
 using TransportManagmentInfrustructure.Model.Vehicle.Configuration;
 using static TransportManagmentInfrustructure.Enums.CommonEnum;
@@ -29,17 +30,31 @@ namespace TransportManagmentImplementation.Services.Configuration
             _mapper = mapper;
         }
 
-        public async Task<string> GenerateCode(GeneralCodeDto GeneralCodeType)
-        {
-            //var curentCode = await _dbContext.GeneralCodes.FirstOrDefaultAsync(x => x.GeneralCodeType == GeneralCodeType);
-            //if (curentCode != null)
-            //{
-            //    var generatedCode = $"{curentCode.InitialName}/{curentCode.CurrentNumber.ToString().PadLeft(curentCode.Pad, '0')}/{DateTime.Now.Year}";
+        //public async Task<string> GenerateCode(GeneralCodeDto GeneralCodeType)
+        //{
+        //    //var curentCode = await _dbContext..FirstOrDefaultAsync(x => x.GeneralCodeType == GeneralCodeType);
+        //    //if (curentCode != null)
+        //    //{
+        //    //    var generatedCode = $"{curentCode.InitialName}/{curentCode.CurrentNumber.ToString().PadLeft(curentCode.Pad, '0')}/{DateTime.Now.Year}";
 
-            //    curentCode.CurrentNumber += 1;
-            //    await _dbContext.SaveChangesAsync();
-            //    return generatedCode;
-            //}
+        //    //    curentCode.CurrentNumber += 1;
+        //    //    await _dbContext.SaveChangesAsync();
+        //    //    return generatedCode;
+        //    //}
+        //    //return "";
+        //}
+
+        public async Task<string> GenerateVechilceCode(string InitialName , VehicleSerialType VehicleSerialType)
+        {
+            var curentCode = await _dbContext.VehicleSerialSettings.FirstOrDefaultAsync(x => x.VehicleSerialType == VehicleSerialType);
+            if (curentCode != null)
+            {
+                var generatedCode = $"{InitialName}/{curentCode.Value.ToString().PadLeft(curentCode.Pad, '0')}/{DateTime.Now.Year}";
+
+                curentCode.Value += 1;
+                await _dbContext.SaveChangesAsync();
+                return generatedCode;
+            }
             return "";
         }
 
