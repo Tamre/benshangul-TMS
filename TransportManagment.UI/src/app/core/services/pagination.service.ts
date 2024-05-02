@@ -10,11 +10,16 @@ export class PaginationService {
     direction: any = 'asc';
     startIndex: number = 1;
     endIndex: number = 9;
+    //totalItemss: number = 0;//
 
     // Pagination
     changePage(alldata: any[]) {
         const startItem = (this.page - 1) * this.pageSize + 1;
         const endItem = (this.page - 1) * this.pageSize + this.pageSize;
+        //const endItemm = Math.min(this.page * this.pageSize, this.totalItemss); // Use the totalItems property
+        
+  
+        
         this.endIndex = endItem;
         if (this.endIndex > alldata.length) {
             this.endIndex = alldata.length;
