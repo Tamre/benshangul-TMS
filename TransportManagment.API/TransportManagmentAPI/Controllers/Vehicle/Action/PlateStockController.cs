@@ -58,5 +58,11 @@ namespace TransportManagmentAPI.Controllers.Vehicle.Action
             }
         }
 
+        [HttpDelete]
+        [ProducesResponseType(typeof(ResponseMessage), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> Delete(DeletePlateStockDto plateIds)
+        {
+            return Ok(await _plateStockService.Delete(plateIds));
+        }
     }
 }
