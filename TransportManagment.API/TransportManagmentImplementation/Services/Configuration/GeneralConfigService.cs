@@ -12,7 +12,9 @@ using System.Text;
 using System.Threading.Tasks;
 using TransportManagmentImplementation.DTOS.Configuration;
 using TransportManagmentInfrustructure.Data;
+using TransportManagmentInfrustructure.Model.Vehicle.Configuration;
 using static TransportManagmentInfrustructure.Enums.CommonEnum;
+using static TransportManagmentInfrustructure.Enums.VehicleEnum;
 
 namespace TransportManagmentImplementation.Services.Configuration
 {
@@ -38,6 +40,48 @@ namespace TransportManagmentImplementation.Services.Configuration
             //    await _dbContext.SaveChangesAsync();
             //    return generatedCode;
             //}
+            return "";
+        }
+
+        public async Task<string> GenerateVehicleNumber(VehicleSerialType vehicleSerialType, int zoneId, string userId)
+        {
+            var curentCode = await _dbContext.VehicleSerialSettings.Include(x => x.Zone).FirstOrDefaultAsync(x => x.VehicleSerialType == vehicleSerialType);
+            if (curentCode != null)
+            {
+                var generatedCode = $"{curentCode.Zone.Code}-{curentCode.Name}{curentCode.Value.ToString().PadLeft(curentCode.Pad, '0')}";
+
+                curentCode.Value += 1;
+                await _dbContext.SaveChangesAsync();
+                return generatedCode;
+            }
+            else
+            {
+                var currentZone = await _dbContext.Zones.FindAsync(zoneId);
+                if (currentZone == null)
+                {
+                    return "";
+                }
+
+                VehicleSerialSetting vehicleSerial = new VehicleSerialSetting()
+                {
+                    CreatedById = userId,
+                    CreatedDate = DateTime.Now,
+                    IsActive = true,
+                    Name = vehicleSerialType == VehicleSerialType.TRANSFERNO ? "TN" : "RN",
+                    VehicleSerialType = vehicleSerialType,
+                    Pad = 5,
+                    Value = 1,
+                    ZoneId = zoneId,
+                };
+                await _dbContext.VehicleSerialSettings.AddAsync(vehicleSerial);
+                await _dbContext.SaveChangesAsync();
+
+                var generatedCode = $"{currentZone.Code}-{vehicleSerial.Name}{vehicleSerial.Value.ToString().PadLeft(vehicleSerial.Pad, '0')}";
+
+                return generatedCode;
+
+            }
+
             return "";
         }
 

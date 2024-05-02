@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using TransportManagmentImplementation.DTOS.Configuration;
 using static TransportManagmentInfrustructure.Enums.CommonEnum;
+using static TransportManagmentInfrustructure.Enums.VehicleEnum;
 
 
 namespace IntegratedImplementation.Interfaces.Configuration
@@ -17,5 +18,6 @@ namespace IntegratedImplementation.Interfaces.Configuration
         Task<string> GetFiles(string path);
         //Task<List<GeneralCodeDto>> GetGeneralCodes();
         public string GeneratePassword();
+        Task<string> GenerateVehicleNumber(VehicleSerialType vehicleSerialType, int zoneId, string userId);
     }
 }
