@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ResponseMessage } from 'src/app/model/ResponseMessage.Model';
 import { PaginatedResponse, PlateStockGetDto, PlateStockPostDto } from 'src/app/model/stock-management/plate-stock';
@@ -21,9 +21,10 @@ export class PlateStockService {
     'Authorization': `Bearer ${this.tokenStorageService.getToken()}`,
     'Content-Type': 'application/json'
   });
-  getAllPlateStock() {
+  getAllPlateStock(pageNumber: number) {
     var headers = this.headers
-    return this.http.get<PaginatedResponse<PlateStockGetDto>>(`${this.baseUrl}/vech-action/PlateStock/GetAll`,{headers});
+    const params = new HttpParams().set('PageNumber', pageNumber.toString());
+    return this.http.get<PaginatedResponse<PlateStockGetDto>>(`${this.baseUrl}/vech-action/PlateStock/GetAll`,{headers, params});
   }
   updatePlateStock(formData:PlateStockPostDto){
     var headers = this.headers

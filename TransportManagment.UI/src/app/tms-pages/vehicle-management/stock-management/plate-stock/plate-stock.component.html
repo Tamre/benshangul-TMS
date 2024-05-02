@@ -1,10 +1,57 @@
+<!-- <div class="row g-3">
+    <div class="col-lg-2">
+        <label for="plateType-field" class="form-label">{{ 'Plate Type Name' | translate }}</label>
+        <ng-select [items]="allPlates" bindLabel="name" bindValue="id" [(ngModel)]="selectedPlateTypelId"
+            id="plateType-field" name="plateType" formControlName="plateType" [searchable]="true">
+        </ng-select>
+
+    </div>
+    <div class="col-lg-2">
+        <app-dropdown
+          label="Plate Type Name"
+          fieldId="plateType-field"
+          [items]="allPlates"
+          [(ngModel)]="filters.plateType"
+          (valueChanged)="handleFilterChange('plateType', $event)"
+        ></app-dropdown>
+      </div>
+    <div class="col-lg-2">
+        <label for="plateType-field" class="form-label">{{ 'Plate Type Name' | translate }}</label>
+        <ng-select [items]="allPlates" bindLabel="name" bindValue="id" [(ngModel)]="selectedPlateTypelId"
+            id="plateType-field" name="plateType" formControlName="plateType" [searchable]="true">
+        </ng-select>
+
+    </div>
+    <div class="col-lg-2">
+        <label for="plateType-field" class="form-label">{{ 'Plate Type Name' | translate }}</label>
+        <ng-select [items]="allPlates" bindLabel="name" bindValue="id" [(ngModel)]="selectedPlateTypelId"
+            id="plateType-field" name="plateType" formControlName="plateType" [searchable]="true">
+        </ng-select>
+
+    </div>
+    <div class="col-lg-2">
+        <label for="plateType-field" class="form-label">{{ 'Plate Type Name' | translate }}</label>
+        <ng-select [items]="allPlates" bindLabel="name" bindValue="id" [(ngModel)]="selectedPlateTypelId"
+            id="plateType-field" name="plateType" formControlName="plateType" [searchable]="true">
+        </ng-select>
+
+    </div>
+    <div class="col-lg-2">
+        <label for="plateType-field" class="form-label">{{ 'Plate Type Name' | translate }}</label>
+        <ng-select [items]="allPlates" bindLabel="name" bindValue="id" [(ngModel)]="selectedPlateTypelId"
+            id="plateType-field" name="plateType" formControlName="plateType" [searchable]="true">
+        </ng-select>
+
+    </div>
+</div> -->
+
 <div class="row">
     <div class="col-lg-12">
         <div class="card">
             <div class="card-header">
                 <div class="d-flex align-items-center flex-wrap gap-2">
                     <div class="flex-grow-1">
-                        
+
                     </div>
                 </div>
             </div>
@@ -22,7 +69,7 @@
                             <i class="ri-search-line search-icon"></i>
                         </div>
                     </div>
-                   
+
                 </div>
             </div>
             <div class="card-body">
@@ -30,14 +77,14 @@
                     <div class="table-responsive table-card mb-2">
                         <table class="table">
                             <thead>
-                                
+
                                 <tr class="bg-light">
                                     <th scope="col" style="width: 50px;"></th>
                                     <th>{{ 'Plate Type Name' | translate }}</th>
                                     <th>{{ 'Plate Number' | translate }}</th>
                                     <th>{{ 'Registration Type' | translate }}</th>
                                     <th>{{ 'Front Plate Size' | translate }}</th>
-                                    <th>{{ 'From' | translate }}</th>
+                                    <!-- <th>{{ 'From' | translate }}</th> -->
                                     <th>{{ 'To' | translate }}</th>
                                     <th>{{ 'Status' | translate }}</th>
                                     <th>{{ 'Edit' | translate }}</th>
@@ -48,7 +95,7 @@
                                     <tr id="c_{{data.id}}">
                                         <th scope="row">{{ i + 1 }}</th>
                                         <td class="name">
-                                            <ngb-highlight [result]="data.plateTypeId"
+                                            <ngb-highlight [result]="data.plateTypeName"
                                                 [term]="searchTerm"></ngb-highlight>
                                         </td>
                                         <td>
@@ -57,9 +104,9 @@
                                         <td>
                                             <ngb-highlight [result]="data.plateNo" [term]="searchTerm"></ngb-highlight>
                                         </td>
-                                        <td>
+                                        <!-- <td>
                                             <ngb-highlight [result]="data.plateNo" [term]="searchTerm"></ngb-highlight>
-                                        </td>
+                                        </td> -->
                                         <td>
                                             <ngb-highlight [result]="data.plateNo" [term]="searchTerm"></ngb-highlight>
                                         </td>
@@ -70,7 +117,7 @@
                                             <ngb-highlight [result]="data.isActive" [term]="searchTerm"></ngb-highlight>
                                         </td>
                                         <td>
-                                            
+
                                         </td>
                                     </tr>
                                 </ng-container>
@@ -86,6 +133,11 @@
                         
                         <ngb-pagination [collectionSize]="allPlateStocks?.length" [(page)]="service.page" [pageSize]="service.pageSize" (pageChange)="changePage()"></ngb-pagination>
                     </div> -->
+                    <div class="d-flex justify-content-end mt-3">
+                        <ngb-pagination *ngIf="metaData" [collectionSize]="metaData.totalCount"
+                            [(page)]="metaData.currentPage" [pageSize]="metaData.pageSize"
+                            (pageChange)="changePage()"></ngb-pagination>
+                    </div>
 
                 </div>
 
@@ -163,7 +215,7 @@
                 </ng-template> -->
             </div>
         </div>
-        
+
     </div>
-    
+
 </div>

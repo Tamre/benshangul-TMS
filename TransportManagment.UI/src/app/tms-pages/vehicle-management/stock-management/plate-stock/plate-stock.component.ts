@@ -12,6 +12,8 @@ import { fetchCrmContactData } from 'src/app/store/CRM/crm_action';
 import { selectCRMLoading } from 'src/app/store/CRM/crm_selector';
 import { PlateStockService } from 'src/app/core/services/stock-management/plate-stock.service';
 import { cloneDeep } from 'lodash';
+import { Pagination1Service } from 'src/app/core/services/pagination1.service';
+import { PlateTypeService } from 'src/app/core/services/vehicle-config-services/plate-type.service';
 
 @Component({
   selector: 'app-plate-stock',
@@ -26,6 +28,16 @@ export class PlateStockComponent implements OnInit {
   searchTerm: any;
   searchResults: any;
 
+  allPlates?:any;
+  plates?: any;
+  selectedPlateTypelId: any;
+
+  selectedFilters: { [key: string]: any } = {};
+  filters = {
+    plateType: null,
+    region: null,
+    // Declare properties for other filters
+  };
   
   allPlateStocks?: any;
   plateStocks?: any;
@@ -35,10 +47,11 @@ export class PlateStockComponent implements OnInit {
     private formBuilder: UntypedFormBuilder,
     private tokenStorageService: TokenStorageService,
     private modalService: NgbModal,
-    public service: PaginationService,
+    public service: Pagination1Service,
     public translate: TranslateService,
     private store: Store<{ data: RootReducerState }>,
-    public plateStocService: PlateStockService
+    public plateStocService: PlateStockService,
+    public plateTypeService:PlateTypeService
 
   ) { }
   ngOnInit(): void {
@@ -66,27 +79,46 @@ export class PlateStockComponent implements OnInit {
       }
     });
   }
+
   refreshData() {
-    debugger
-    this.plateStocService.getAllPlateStock().subscribe({
+    const pageNumber = this.metaData ? this.metaData.currentPage : 1;
+    this.plateStocService.getAllPlateStock(pageNumber).subscribe({
+      
       next: (res) => {
         if (res) {
-          this.plateStocks = res.data
+          this.plateStocks = res.data || [];
+          //this.plateStocks = res.data
           this.metaData = res.metaData;
           this.allPlateStocks = cloneDeep(res);
           
 
-          this.service.pageSize = this.metaData.pageSize;
-          this.service.page = this.metaData.currentPage;
+          //this.service.pageSize = this.metaData.pageSize;
+          //this.service.page = this.metaData.currentPage;
           //this.service.totalItemss = this.metaData.totalCount;
 
           //this.plateStocks = this.service.changePage(this.allPlateStocks)
-          console.log("ps",this.plateStocks)
-          console.log("as",this.allPlateStocks)
+        } else {
+          this.plateStocks = [];
+          this.metaData = null;
+          this.allPlateStocks = null;
         }
       },
       error: (err) => {
 
+      },
+    });
+    this.plateTypeService.getAllPlateType().subscribe({
+      next: (res) => {
+        if (res) 
+          {
+            this.plates = res
+            this.allPlates = cloneDeep(res);
+            //this.plates = this.service.changePage(this.allPlates)
+            //console.log(this.allPlates)
+          }
+      },
+      error: (err) => {
+        
       },
     });
   }
@@ -94,7 +126,8 @@ export class PlateStockComponent implements OnInit {
   
 
   changePage() {
-    this.plateStocks = this.service.changePage(this.allPlateStocks);
+    this.plateStocks = this.service.changePage(this.allPlateStocks, this.metaData);
+    this.refreshData();
   }
 
 }

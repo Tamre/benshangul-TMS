@@ -3,6 +3,7 @@ export interface PlateStockGetDto {
     plateNo: string,
     isActive: boolean,
     plateTypeId: number,
+    plateTypeName:string,
     regionId: number,
     frontPlateSizeId: number,
     backPlateSizeId: number,
