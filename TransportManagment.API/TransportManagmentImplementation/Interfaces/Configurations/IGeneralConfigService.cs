@@ -19,5 +19,6 @@ namespace IntegratedImplementation.Interfaces.Configuration
         Task<string> GetFiles(string path);
         //Task<List<GeneralCodeDto>> GetGeneralCodes();
         public string GeneratePassword();
+        Task<string> GenerateVehicleNumber(VehicleSerialType vehicleSerialType, int zoneId, string userId);
     }
 }
