@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AbstractControl, UntypedFormBuilder, UntypedFormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { UserView } from 'src/app/model/user';
@@ -27,10 +27,13 @@ import { PlateStockPostDto } from 'src/app/model/stock-management/plate-stock';
   styleUrl: './plate-stock.component.scss'
 })
 export class PlateStockComponent implements OnInit {
+  //@ViewChild('content1', { static: true }) content1: TemplateRef<any>;
   submitted = false;
   isEditing: Boolean = false;
   dataForm!: UntypedFormGroup;
+  dataForm1!: UntypedFormGroup;
   currentUser!: UserView | null;
+  masterSelected!: boolean;
 
   searchResults: any;
 
@@ -45,6 +48,9 @@ export class PlateStockComponent implements OnInit {
 
   allRegion?: any;
   regions?: any;
+
+  allZones?:any;
+  zones?:any;
 
   frontPlateSize: number = 2;
   allFrontPlate?: any;
@@ -78,6 +84,9 @@ export class PlateStockComponent implements OnInit {
   //regionNameIdMap: { [name: string]: number } = {};
   selectedRegion: { id: number; name: string } | null = null;
 
+  zoneNames: string[] = [];
+  selectedZone: { id: number; name: string } | null = null;
+
   //frontPlateNameIdMap: { [name: string]: number } = {};
   frontPlateNames: string[] = [];
   //backPlateNameIdMap: { [name: string]: number } = {};
@@ -92,7 +101,9 @@ export class PlateStockComponent implements OnInit {
     { label: '25', value: 25 },
     { label: '30', value: 30 },
   ];
-  selectedPageSize = this.pageSizeOptions[0].value; // Initial page size
+  selectedPageSize = this.pageSizeOptions[0].value;
+
+  selectedPlateStockIds: string[] = [];
 
   constructor(
     private formBuilder: UntypedFormBuilder,
@@ -110,7 +121,7 @@ export class PlateStockComponent implements OnInit {
   ) {
     this.searchTermSubject
       .pipe(
-        debounceTime(1000), // Adjust the debounce time as needed
+        debounceTime(500), // Adjust the debounce time as needed
         distinctUntilChanged()
       )
       .subscribe(term => {
@@ -136,6 +147,10 @@ export class PlateStockComponent implements OnInit {
       toPlateNo: ["", [Validators.required], this.patternValidator],
       createdById: [this.currentUser?.userId, [Validators.required]],
     });
+    this.dataForm1 = this.formBuilder.group({
+      zoneId: ['', Validators.required],
+      //createdById: [this.currentUser?.userId, [Validators.required]],
+    });
     /**
      * fetches data
      */
@@ -145,6 +160,37 @@ export class PlateStockComponent implements OnInit {
         document.getElementById("elmLoader")?.classList.add("d-none");
       }
     });
+  }
+  // checkUncheckAll(ev: any) {
+  //   this.plateStocks.forEach((x: { state: any; }) => x.state = ev.target.checked)
+  // }
+  // checkUncheckAll(ev: any, id: string | null ) {
+  //   const isChecked = ev.target.checked;
+  //   if (isChecked) {
+  //     this.selectedPlateStockIds.push(id);
+  //   } else {
+  //     this.selectedPlateStockIds = this.selectedPlateStockIds.filter(stockId => stockId !== id);
+  //   }
+  // }
+  checkUncheckAll(ev: any, id: string | null) {
+    const isChecked = ev.target.checked;
+  
+    if (id === null) {
+      // Handle the case when the header checkbox is checked or unchecked
+      this.plateStocks.forEach((x: { state: any }) => (x.state = isChecked));
+      this.selectedPlateStockIds = isChecked
+        ? this.plateStocks.map((data:any) => data.id)
+        : [];
+    } else {
+      // Handle the case when an individual checkbox is checked or unchecked
+      if (isChecked) {
+        this.selectedPlateStockIds.push(id);
+      } else {
+        this.selectedPlateStockIds = this.selectedPlateStockIds.filter(
+          (stockId) => stockId !== id
+        );
+      }
+    }
   }
 
   patternValidator: ValidatorFn = (control: AbstractControl): Observable<ValidationErrors | null> => {
@@ -236,6 +282,22 @@ export class PlateStockComponent implements OnInit {
 
       },
     });
+    this.addressService.getAllZone().subscribe({
+      next: (res) => {
+        if (res) 
+          {
+            this.zones = res
+            this.allZones = cloneDeep(res);
+            this.zoneNames = this.allZones.map((veh: any) => ({
+              id: veh.id,
+              name: veh.name,
+            }));
+          }
+      },
+      error: (err) => {
+        
+      },
+    });
 
   }
 
@@ -250,6 +312,47 @@ export class PlateStockComponent implements OnInit {
     this.dataForm.reset();
     this.dataForm.controls["createdById"].setValue(this.currentUser?.userId);
     this.modalService.open(content, { size: "lg", centered: true });
+  }
+  openModal1(content1: any) {
+    if (this.selectedPlateStockIds.length === 0) {
+      // Display an error message or notification
+      console.log('Please select one or more items');
+      return;
+    }
+  
+    this.dataForm1.reset();
+    this.modalService.open(content1, {
+      size: "md",
+      centered: true,
+      ariaLabelledBy: 'modal-basic-title'
+    });
+  }
+  transferData(){
+    this.submitted = true;
+
+    if (this.dataForm1.valid) {
+      const selectedZoneId = this.dataForm1.controls['zoneId'].value;
+
+      // Call the service method to transfer the plate stocks
+      this.plateStocService.transferPlateStock({
+        plateStockIds: this.selectedPlateStockIds,
+        toZoneId: selectedZoneId
+      }).subscribe(
+        (response) => {
+          this.successAddMessage = response.message;
+          this.closeModal();
+          successToast(this.successAddMessage);
+          // Handle the successful response
+          console.log(response);
+          // Close the modal or perform any other necessary actions
+          this.modalService.dismissAll();
+        },
+        (error) => {
+          // Handle the error
+          console.error(error);
+        }
+      );
+    }
   }
   saveData() {
     const newData: PlateStockPostDto = this.dataForm.value;
@@ -272,6 +375,9 @@ export class PlateStockComponent implements OnInit {
     });
   }
   closeModal() {
+    this.modalService.dismissAll();
+  }
+  closeModal1() {
     this.modalService.dismissAll();
   }
   /**

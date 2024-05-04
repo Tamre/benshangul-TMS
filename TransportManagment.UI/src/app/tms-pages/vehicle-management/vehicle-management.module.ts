@@ -42,6 +42,7 @@ import { SalvageValueComponent } from './vehicle-config/valuation/salvage-value/
 import { StockManagementComponent } from './stock-management/stock-management.component';
 import { PlateStockComponent } from './stock-management/plate-stock/plate-stock.component';
 import { FilterFieldsComponent } from './stock-management/plate-stock/filter-fields/filter-fields.component';
+import { OrcStockComponent } from './stock-management/orc-stock/orc-stock.component';
 
 
 
@@ -72,8 +73,8 @@ import { FilterFieldsComponent } from './stock-management/plate-stock/filter-fie
     SalvageValueComponent,
     StockManagementComponent,
     PlateStockComponent,
-    FilterFieldsComponent
-    
+    FilterFieldsComponent,
+    OrcStockComponent
 
   ],
   imports: [
