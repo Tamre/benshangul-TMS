@@ -1,0 +1,91 @@
+<!-- <div class="row g-3">
+    <div class="col-lg-2">
+        <label for="plateType-field" class="form-label">{{ 'Plate Type Name' | translate }}</label>
+        <ng-select [items]="allPlates" bindLabel="name" bindValue="id" id="plateType-field" name="plateType"
+            [searchable]="true" (change)="onPlateTypeChange($event)">
+        </ng-select>
+
+    </div>
+
+    <div class="col-lg-2">
+        <label for="region-field" class="form-label">{{ 'region Name' | translate }}</label>
+        <ng-select [items]="allists" bindLabel="name" bindValue="id" id="region-field" name="region" [searchable]="true"
+            (change)="onRegionChange($event)">
+        </ng-select>
+
+    </div>
+    <div class="col-lg-2">
+        <label for="frontPlate-field" class="form-label">{{ 'Front Plate Size' | translate }}</label>
+        <ng-select [items]="allFrontPlate" bindLabel="name" bindValue="id" id="frontPlate-field" name="frontPlate"
+            [searchable]="true" (change)="onFrontPlateSizeChange($event)">
+        </ng-select>
+
+    </div>
+    <div class="col-lg-2">
+        <label for="BackPlate-field" class="form-label">{{ 'Back Plate Size' | translate }}</label>
+        <ng-select [items]="allBackPlate" bindLabel="name" bindValue="id" id="BackPlate-field" name="BackPlate"
+            [searchable]="true" (change)="onBackPlateSizeChange($event)">
+        </ng-select>
+
+    </div>
+    <div class="col-lg-2">
+        <label for="zone-field" class="form-label">{{ 'Zone' | translate }}</label>
+        <ng-select [items]="allZone" bindLabel="name" bindValue="id" id="zone-field" name="zone" [searchable]="true"
+            (change)="onZoneChange($event)">
+        </ng-select>
+
+    </div>
+    <div class="col-lg-1">
+        <label for="status-field" class="form-label">{{ 'Status' | translate }}</label>
+        <ng-select [items]="statusOptions" bindLabel="label" bindValue="value" id="status-field" name="status"
+            [searchable]="true" (change)="onStatusChange($event)">
+            <ng-option [value]="null" selected>Select Status</ng-option>
+        </ng-select>
+    </div>
+    <div class="col-lg-1">
+        <label for="show-field" class="form-label"></label>
+        <div class="flex-grow-1">
+            <button class="btn btn-success add-btn" (click)="saveCriteria()">
+                <i class="ri-filter-3-line "></i> Show
+            </button>
+        </div>
+    </div>
+</div> -->
+<div class="row g-3 align-items-end">
+    <div class="col-lg-2">
+      <label for="plateType-field" class="form-label">{{ 'Plate Type Name' | translate }}</label>
+      <ng-select [items]="allPlates" bindLabel="name" bindValue="id" id="plateType-field" name="plateType" [searchable]="true" (change)="onPlateTypeChange($event)">
+      </ng-select>
+    </div>
+    <div class="col-lg-2">
+      <label for="region-field" class="form-label">{{ 'region Name' | translate }}</label>
+      <ng-select [items]="allists" bindLabel="name" bindValue="id" id="region-field" name="region" [searchable]="true" (change)="onRegionChange($event)">
+      </ng-select>
+    </div>
+    <div class="col-lg-2">
+      <label for="frontPlate-field" class="form-label">{{ 'Front Plate Size' | translate }}</label>
+      <ng-select [items]="allFrontPlate" bindLabel="name" bindValue="id" id="frontPlate-field" name="frontPlate" [searchable]="true" (change)="onFrontPlateSizeChange($event)">
+      </ng-select>
+    </div>
+    <div class="col-lg-2">
+      <label for="BackPlate-field" class="form-label">{{ 'Back Plate Size' | translate }}</label>
+      <ng-select [items]="allBackPlate" bindLabel="name" bindValue="id" id="BackPlate-field" name="BackPlate" [searchable]="true" (change)="onBackPlateSizeChange($event)">
+      </ng-select>
+    </div>
+    <div class="col-lg-2">
+      <label for="zone-field" class="form-label">{{ 'Zone' | translate }}</label>
+      <ng-select [items]="allZone" bindLabel="name" bindValue="id" id="zone-field" name="zone" [searchable]="true" (change)="onZoneChange($event)">
+      </ng-select>
+    </div>
+    <div class="col-lg-1">
+      <label for="status-field" class="form-label">{{ 'Status' | translate }}</label>
+      <ng-select [items]="statusOptions" bindLabel="label" bindValue="value" id="status-field" name="status" [searchable]="true" (change)="onStatusChange($event)">
+        <ng-option [value]="null" selected>Select Status</ng-option>
+      </ng-select>
+    </div>
+    <div class="col-lg-1 d-flex align-items-end">
+      <button class="btn btn-success add-btn mt-auto" (click)="saveCriteria()">
+        <i class="ri-filter-3-line"></i> Show
+      </button>
+    </div>
+  </div>

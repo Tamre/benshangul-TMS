@@ -21,9 +21,15 @@ export class PlateStockService {
     'Authorization': `Bearer ${this.tokenStorageService.getToken()}`,
     'Content-Type': 'application/json'
   });
-  getAllPlateStock(pageNumber: number) {
+
+  getAllPlateStock(pageNumber: number,pageSize: number, criteria: { columnName: string, filterValue: string }[],searchTerm: string) {
     var headers = this.headers
-    const params = new HttpParams().set('PageNumber', pageNumber.toString());
+    //const encodedCriteria = JSON.stringify(criteria.reduce((acc, curr) => ({ ...acc, [curr.columnName]: curr.filterValue }), {}));
+    const encodedCriteria = criteria.map(c => JSON.stringify({ columnName: c.columnName, filterValue: c.filterValue }));
+    const params = new HttpParams().set('PageNumber', pageNumber.toString())
+    .set('PageSize', pageSize.toString())
+    .set('Criteria', encodedCriteria.join('&Criteria='))
+    .set('SearchTerm', searchTerm);
     return this.http.get<PaginatedResponse<PlateStockGetDto>>(`${this.baseUrl}/vech-action/PlateStock/GetAll`,{headers, params});
   }
   updatePlateStock(formData:PlateStockPostDto){

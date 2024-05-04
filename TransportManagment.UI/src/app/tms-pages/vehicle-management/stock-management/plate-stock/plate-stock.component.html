@@ -1,72 +1,69 @@
-<!-- <div class="row g-3">
-    <div class="col-lg-2">
-        <label for="plateType-field" class="form-label">{{ 'Plate Type Name' | translate }}</label>
-        <ng-select [items]="allPlates" bindLabel="name" bindValue="id" [(ngModel)]="selectedPlateTypelId"
-            id="plateType-field" name="plateType" formControlName="plateType" [searchable]="true">
-        </ng-select>
-
-    </div>
-    <div class="col-lg-2">
-        <app-dropdown
-          label="Plate Type Name"
-          fieldId="plateType-field"
-          [items]="allPlates"
-          [(ngModel)]="filters.plateType"
-          (valueChanged)="handleFilterChange('plateType', $event)"
-        ></app-dropdown>
-      </div>
-    <div class="col-lg-2">
-        <label for="plateType-field" class="form-label">{{ 'Plate Type Name' | translate }}</label>
-        <ng-select [items]="allPlates" bindLabel="name" bindValue="id" [(ngModel)]="selectedPlateTypelId"
-            id="plateType-field" name="plateType" formControlName="plateType" [searchable]="true">
-        </ng-select>
-
-    </div>
-    <div class="col-lg-2">
-        <label for="plateType-field" class="form-label">{{ 'Plate Type Name' | translate }}</label>
-        <ng-select [items]="allPlates" bindLabel="name" bindValue="id" [(ngModel)]="selectedPlateTypelId"
-            id="plateType-field" name="plateType" formControlName="plateType" [searchable]="true">
-        </ng-select>
-
-    </div>
-    <div class="col-lg-2">
-        <label for="plateType-field" class="form-label">{{ 'Plate Type Name' | translate }}</label>
-        <ng-select [items]="allPlates" bindLabel="name" bindValue="id" [(ngModel)]="selectedPlateTypelId"
-            id="plateType-field" name="plateType" formControlName="plateType" [searchable]="true">
-        </ng-select>
-
-    </div>
-    <div class="col-lg-2">
-        <label for="plateType-field" class="form-label">{{ 'Plate Type Name' | translate }}</label>
-        <ng-select [items]="allPlates" bindLabel="name" bindValue="id" [(ngModel)]="selectedPlateTypelId"
-            id="plateType-field" name="plateType" formControlName="plateType" [searchable]="true">
-        </ng-select>
-
-    </div>
-</div> -->
-
 <div class="row">
+
+
     <div class="col-lg-12">
         <div class="card">
             <div class="card-header">
                 <div class="d-flex align-items-center flex-wrap gap-2">
                     <div class="flex-grow-1">
-
+                        <button class="btn btn-info add-btn" data-bs-toggle="modal" data-bs-target="#showModal"
+                            (click)="openModal(content)">
+                            <i class="ri-add-fill me-1 align-bottom"></i> {{ 'Add Plate Stock' | translate }}
+                        </button>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
+    <app-filter-fields (criteriaSaved)="receiveCriteria($event)">
+    </app-filter-fields>
+    <hr>
     <div class="col-xxl-12">
         <div class="card" id="contactList">
             <div class="card-header">
-                <div class="row g-3">
-                    <div class="col-md-4">
+                <div class="row g-4 mb-3">
+                    <!-- <div class="col-md-4">
                         <div class="search-box">
                             <input type="text" name="searchTerm" class="form-control"
-                                placeholder="{{ 'Search for Plate...' | translate }}" [(ngModel)]="searchTerm">
+                                placeholder="{{ 'Search for Plate Number...' | translate }}" [(ngModel)]="searchTerm"
+                                (ngModelChange)="searchTermSubject.next($event)">
                             <i class="ri-search-line search-icon"></i>
+                        </div>
+                        <div>
+                            <ng-select [(ngModel)]="selectedPageSize" (ngModelChange)="refreshData()"
+                                [items]="pageSizeOptions" bindLabel="label" bindValue="value">
+                            </ng-select>
+                        </div>
+                    </div> -->
+                    <!-- <div class="col-sm-auto">
+                        <div class="d-flex gap-2">
+                            Show:
+                            <ng-select [(ngModel)]="selectedPageSize" (ngModelChange)="refreshData()"
+                                [items]="pageSizeOptions" bindLabel="label" bindValue="value">
+                            </ng-select>
+                        </div>
+                    </div> -->
+                    <div class="col-sm-auto d-flex align-items-center">
+                        <span class="me-2">Show:</span>
+                        <ng-select
+                          [(ngModel)]="selectedPageSize"
+                          (ngModelChange)="refreshData()"
+                          [items]="pageSizeOptions"
+                          bindLabel="label"
+                          bindValue="value"
+                          class="custom-ng-select"
+                          [clearable]="false"
+                        ></ng-select>
+                        <span class="ms-2">Entries</span>
+                      </div>
+                    <div class="col-sm">
+                        <div class="d-flex justify-content-sm-end">
+                            <div class="search-box">
+                                <input type="text" name="searchTerm" class="form-control"
+                                    placeholder="{{ 'Search for Plate Number...' | translate }}"
+                                    [(ngModel)]="searchTerm" (ngModelChange)="searchTermSubject.next($event)">
+                                <i class="ri-search-line search-icon"></i>
+                            </div>
                         </div>
                     </div>
 
@@ -84,7 +81,6 @@
                                     <th>{{ 'Plate Number' | translate }}</th>
                                     <th>{{ 'Registration Type' | translate }}</th>
                                     <th>{{ 'Front Plate Size' | translate }}</th>
-                                    <!-- <th>{{ 'From' | translate }}</th> -->
                                     <th>{{ 'To' | translate }}</th>
                                     <th>{{ 'Status' | translate }}</th>
                                     <th>{{ 'Edit' | translate }}</th>
@@ -95,26 +91,23 @@
                                     <tr id="c_{{data.id}}">
                                         <th scope="row">{{ i + 1 }}</th>
                                         <td class="name">
-                                            <ngb-highlight [result]="data.plateTypeName"
-                                                [term]="searchTerm"></ngb-highlight>
+                                            <ngb-highlight [result]="data.plateTypeName" [term]="''"></ngb-highlight>
                                         </td>
                                         <td>
-                                            <ngb-highlight [result]="data.plateNo" [term]="searchTerm"></ngb-highlight>
+                                            <ngb-highlight [result]="data.plateNo" [term]="''"></ngb-highlight>
                                         </td>
                                         <td>
-                                            <ngb-highlight [result]="data.plateNo" [term]="searchTerm"></ngb-highlight>
+                                            <ngb-highlight [result]="data.plateNo" [term]="''"></ngb-highlight>
                                         </td>
-                                        <!-- <td>
-                                            <ngb-highlight [result]="data.plateNo" [term]="searchTerm"></ngb-highlight>
-                                        </td> -->
+
                                         <td>
-                                            <ngb-highlight [result]="data.plateNo" [term]="searchTerm"></ngb-highlight>
+                                            <ngb-highlight [result]="data.plateNo" [term]="''"></ngb-highlight>
                                         </td>
                                         <td>
-                                            <ngb-highlight [result]="data.plateNo" [term]="searchTerm"></ngb-highlight>
+                                            <ngb-highlight [result]="data.plateNo" [term]="''"></ngb-highlight>
                                         </td>
                                         <td>
-                                            <ngb-highlight [result]="data.isActive" [term]="searchTerm"></ngb-highlight>
+                                            <ngb-highlight [result]="data.isActive" [term]="''"></ngb-highlight>
                                         </td>
                                         <td>
 
@@ -129,10 +122,6 @@
                             </ng-template>
                         </table>
                     </div>
-                    <!-- <div class="d-flex justify-content-end mt-3">
-                        
-                        <ngb-pagination [collectionSize]="allPlateStocks?.length" [(page)]="service.page" [pageSize]="service.pageSize" (pageChange)="changePage()"></ngb-pagination>
-                    </div> -->
                     <div class="d-flex justify-content-end mt-3">
                         <ngb-pagination *ngIf="metaData" [collectionSize]="metaData.totalCount"
                             [(page)]="metaData.currentPage" [pageSize]="metaData.pageSize"
@@ -142,24 +131,158 @@
                 </div>
 
                 <!-- Contacts Create Model -->
-                <!-- <ng-template #content role="document" let-modal>
+                <ng-template #content role="document" let-modal>
                     <div class="modal-header bg-info-subtle p-3">
                         <h5 class="modal-title" id="exampleModalLabel">{{ 'Add Document Type' | translate }}</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal" (click)="modal.dismiss('Cross click')"></button>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                            id="close-modal" (click)="modal.dismiss('Cross click')"></button>
                     </div>
                     <form (ngSubmit)="saveData()" [formGroup]="dataForm" class="tablelist-form" autocomplete="off">
                         <div class="modal-body">
                             <input type="hidden" id="id-field" />
                             <div class="row g-3">
-                                <div class="col-lg-12">
-                                    <input type="hidden" fileName="id" value="" formControlName="id" />
+
+                                <div class="col-lg-6">
+
+                                    <label for="plateTypeId-field" class="form-label">{{ 'Plate Type' | translate
+                                        }}</label>
+
+                                    <!-- <select id="plateType-field" class="form-control" formControlName="plateType"
+                                            [ngClass]="{ 'is-invalid': submitted && form['plateType'].errors }">
+                                            <option value="" disabled>{{ 'Select Plate Type' | translate }}</option>
+                                            <option *ngFor="let plateTypeName of plateTypeNames"
+                                                [value]="plateTypeNameIdMap[plateTypeName]">{{ plateTypeName }}</option>
+                                        </select> -->
+                                    <ng-select [items]="plateTypeNames" bindLabel="name" bindValue="id"
+                                        [(ngModel)]="selectedPlateType" id="plateTypeId-field" name="plateTypeId"
+                                        formControlName="plateTypeId" [searchable]="true" required>
+                                    </ng-select>
+                                    @if (submitted && form['plateTypeId'].errors) {
+                                    <div class="invalid-feedback" align="left">
+                                        @if (form['plateTypeId'].errors['required']) {s
+                                        <div>{{ 'Plate Type is required' | translate }}</div>
+                                        }
+                                    </div>
+                                    }
+
+                                </div>
+                                <div class="col-lg-6">
+
+                                    <label for="regionId-field" class="form-label">{{ 'Region' | translate
+                                        }}</label>
+                                    <ng-select [items]="regionNames" bindLabel="name" bindValue="id"
+                                        [(ngModel)]="selectedRegion" id="regionId-field" name="regionId"
+                                        formControlName="regionId" [searchable]="true" required>
+                                    </ng-select>
+                                    @if (submitted && form['regionId'].errors) {
+                                    <div class="invalid-feedback" align="left">
+                                        @if (form['regionId'].errors['required']) {s
+                                        <div>{{ 'Region is required' | translate }}</div>
+                                        }
+                                    </div>
+                                    }
+
+                                </div>
+                                <div class="col-lg-6">
+
+                                    <label for="frontPlateSizeId-field" class="form-label">{{ 'Front Plate Size Size' |
+                                        translate
+                                        }}</label>
+                                    <ng-select [items]="frontPlateNames" bindLabel="name" bindValue="id"
+                                        [(ngModel)]="selectedFrontPlateSize" id="frontPlateSizeId-field"
+                                        name="frontPlateSizeId" formControlName="frontPlateSizeId" [searchable]="true"
+                                        required>
+                                    </ng-select>
+                                    @if (submitted && form['frontPlateSizeId'].errors) {
+                                    <div class="invalid-feedback" align="left">
+                                        @if (form['frontPlateSizeId'].errors['required']) {s
+                                        <div>{{ 'Front Plate Size is required' | translate }}</div>
+                                        }
+                                    </div>
+                                    }
+
+                                </div>
+                                <div class="col-lg-6">
+
+                                    <label for="backPlateSizeId-field" class="form-label">{{ 'Back Plate Size' |
+                                        translate
+                                        }}</label>
+                                    <ng-select [items]="backPlateNames" bindLabel="name" bindValue="id"
+                                        [(ngModel)]="selectedBackPlateSize" id="backPlateSizeId-field"
+                                        name="backPlateSizeId" formControlName="backPlateSizeId" [searchable]="true"
+                                        required>
+                                    </ng-select>
+                                    @if (submitted && form['backPlateSizeId'].errors) {
+                                    <div class="invalid-feedback" align="left">
+                                        @if (form['backPlateSizeId'].errors['required']) {s
+                                        <div>{{ 'Back Plate Size is required' | translate }}</div>
+                                        }
+                                    </div>
+                                    }
+
+                                </div>
+                                <div class="col-lg-6">
                                     <div>
-                                        <label for="fileName-field" class="form-label">{{ 'File Name' | translate }}</label>
-                                        <input type="text" id="fileName-field" class="form-control" placeholder="{{ 'Enter File Name' | translate }}" required formControlName="fileName" [ngClass]="{ 'is-invalid': submitted && form['fileName'].errors }" />
-                                        @if (submitted && form['fileName'].errors) {
+                                        <label for="plateDigit-field" class="form-label">{{ 'Plate Digit' | translate
+                                            }}</label>
+                                        <!-- <select id="plateDigit-field" class="form-control" name="choices-single-default"
+                                            data-choices data-choices-search-false formControlName="plateDigit"
+                                            [ngClass]="{ 'is-invalid': submitted && dataForm.controls['plateDigit'].errors }">
+                                            <option value="" disabled>{{ 'Select Plate Digit' | translate }}</option>
+                                            <option *ngFor="let item of plateDigitEnum" [value]="item.code">
+                                                {{item.name}} </option>
+                                        </select> -->
+                                        <ng-select [items]="plateDigitEnum" bindLabel="name" bindValue="code"
+                                            id="plateDigit-field" name="plateDigit" formControlName="plateDigit"
+                                            [ngClass]="{ 'is-invalid': submitted && dataForm.controls['plateDigit'].errors }"
+                                            [searchable]="false" required>
+                                            <ng-option value="" disabled>{{ 'Select Plate Digit' | translate
+                                                }}</ng-option>
+                                        </ng-select>
+                                        <div *ngIf="submitted && dataForm.controls['plateDigit'].errors"
+                                            class="invalid-feedback" align="left">
+                                            <div *ngIf="dataForm.controls['plateDigit'].errors['required']">{{ 'Plate
+                                                Digit is required' | translate }}</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div>
+                                        <label for="issuranceType-field" class="form-label">{{ 'IssurancenType' |
+                                            translate }}</label>
+                                        <!-- <select id="issuranceType-field" class="form-control"
+                                            name="choices-single-default" data-choices data-choices-search-false
+                                            formControlName="issuranceType"
+                                            [ngClass]="{ 'is-invalid': submitted && dataForm.controls['issuranceType'].errors }">
+                                            <option value="" disabled>{{ 'Select Issurance Type' | translate }}</option>
+                                            <option *ngFor="let item of issuranceTypeEnum" [value]="item.code">
+                                                {{item.name}} </option>
+                                            </select> -->
+                                        <ng-select [items]="issuranceTypeEnum" bindLabel="name" bindValue="code"
+                                            id="issuanceType-field" name="issuanceType" formControlName="issuanceType"
+                                            [ngClass]="{ 'is-invalid': submitted && dataForm.controls['issuanceType'].errors }"
+                                            [searchable]="false" required>
+                                            <ng-option value="" disabled>{{ 'Select Issurance Type' | translate
+                                                }}</ng-option>
+                                        </ng-select>
+                                        <div *ngIf="submitted && dataForm.controls['issuanceType'].errors"
+                                            class="invalid-feedback" align="left">
+                                            <div *ngIf="dataForm.controls['issuanceType'].errors['required']">{{
+                                                'Issurance Type is required' | translate }}</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div>
+                                        <label for="aToZ-field" class="form-label">{{ 'A To Z' | translate }}</label>
+                                        <input type="text" id="aToZ-field" class="form-control"
+                                            placeholder="{{ 'Enter A To Z' | translate }}" required
+                                            formControlName="aToZ"
+                                            [ngClass]="{ 'is-invalid': submitted && form['aToZ'].errors }" />
+                                        @if (submitted && form['aToZ'].errors) {
                                         <div class="invalid-feedback" align="left">
-                                            @if (form['fileName'].errors['required']) {
-                                            <div>{{ 'File Name is required' | translate }}</div>
+                                            @if (form['aToZ'].errors['required']) {
+                                            <div>{{ 'A To Z is required' | translate }}</div>
                                             }
                                         </div>
                                         }
@@ -167,39 +290,46 @@
                                 </div>
                                 <div class="col-lg-6">
                                     <div>
-                                        <label for="fileExtentions-field" class="form-label">{{ 'File Extentions' | translate }}</label>
-                                            <select id="fileExtentions-field" class="form-control" name="choices-single-default" data-choices data-choices-search-false formControlName="fileExtentions"
-                                                [ngClass]="{ 'is-invalid': submitted && dataForm.controls['fileExtentions'].errors }">
-                                                <option value="" disabled>{{ 'Select File Extentions' | translate }}</option>
-                                                <option *ngFor="let item of fileExtentionsDropDownItem" [value]="item.code" > {{item.name}} </option>
-                                            </select>
-                                        <div *ngIf="submitted && dataForm.controls['fileExtentions'].errors" class="invalid-feedback" align="left">
-                                            <div *ngIf="dataForm.controls['fileExtentions'].errors['required']">{{ 'File Extentions is required' | translate }}</div>
+                                        <label for="fromPlateNo-field" class="form-label">{{ 'From PlateNo' | translate
+                                            }}</label>
+                                        <input type="text" id="fromPlateNo-field" class="form-control"
+                                            placeholder="{{ 'Enter From PlateNo' | translate }}" required
+                                            formControlName="fromPlateNo"
+                                            [ngClass]="{ 'is-invalid': submitted && form['fromPlateNo'].errors }" />
+                                        @if (submitted && form['fromPlateNo'].errors) {
+                                        <div class="invalid-feedback" align="left">
+                                            @if (form['fromPlateNo'].errors['required']) {
+                                            <div>{{ 'From Plate Number is required' | translate }}</div>
+                                            }
                                         </div>
+                                        }
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div>
-                                        <label for="isPermanentRequired-field" class="form-label">{{ 'Permanent Required' | translate }}</label>
-                                        <div class="form-check form-switch">
-                                            <input  id="isPermanentRequired-field" class="form-check-input" type="checkbox" role="switch"  formControlName="isPermanentRequired" [defaultValue]="false" />
+                                        <label for="toPlateNo-field" class="form-label">{{ 'To Plate No' | translate
+                                            }}</label>
+                                        <input type="text" id="to-field" class="form-control"
+                                            placeholder="{{ 'Enter To PlateNo' | translate }}" required
+                                            formControlName="toPlateNo"
+                                            [ngClass]="{ 'is-invalid': submitted && form['toPlateNo'].errors }" />
+                                        @if (submitted && form['toPlateNo'].errors) {
+                                        <div class="invalid-feedback" align="left">
+                                            @if (form['toPlateNo'].errors['required']) {
+                                            <div>{{ 'To Plate Number is required' | translate }}</div>
+                                            }
                                         </div>
+                                        }
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
-                                    <div>
-                                        <label for="isTemporaryRequired-field" class="form-label">{{ 'Temporary Required' | translate }}</label>
-                                        <div class="form-check form-switch">
-                                            <input  id="isTemporaryRequired-field" class="form-check-input" type="checkbox" role="switch"  formControlName="isTemporaryRequired" />
-                                        </div>
-                                    </div>
-                                    
-                                </div>
+
                                 <div *ngIf="isEditing" class="col-lg-6">
                                     <div>
-                                        <label for="isActive-field" class="form-label">{{ 'Status' | translate }}</label>
+                                        <label for="isActive-field" class="form-label">{{ 'Status' | translate
+                                            }}</label>
                                         <div class="form-check form-switch">
-                                            <input  id="isActive-field" class="form-check-input" type="checkbox" role="switch"  formControlName="isActive" />
+                                            <input id="isActive-field" class="form-check-input" type="checkbox"
+                                                role="switch" formControlName="isActive" />
                                         </div>
                                     </div>
                                 </div>
@@ -207,12 +337,15 @@
                         </div>
                         <div class="modal-footer">
                             <div class="hstack gap-2 justify-content-end">
-                                <button type="button" class="btn btn-light" data-bs-dismiss="modal" (click)="closeModal()">{{ 'Close' | translate }}</button>
-                                <button type="submit" class="btn btn-success" id="add-btn" [disabled]="!dataForm.valid">{{ 'Add' | translate }}</button>
+                                <button type="button" class="btn btn-light" data-bs-dismiss="modal"
+                                    (click)="closeModal()">{{
+                                    'Close' | translate }}</button>
+                                <button type="submit" class="btn btn-success" id="add-btn">{{ 'Add' | translate
+                                    }}</button>
                             </div>
                         </div>
                     </form>
-                </ng-template> -->
+                </ng-template>
             </div>
         </div>
 
