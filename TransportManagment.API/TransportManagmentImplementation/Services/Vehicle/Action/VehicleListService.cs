@@ -146,5 +146,18 @@ namespace TransportManagmentImplementation.Services.Vehicle.Action
 
 
         }
+
+        public async Task<VehicleDetailDto> GetVehicleDetail(VehicleGetParameterDto vehicleGet)
+        {
+            VehicleDetailDto vehicleDetail = new VehicleDetailDto();
+
+            if (vehicleGet.VehicleFileteParameter == VehicleFileteParameter.PlateNo)
+            {
+             // vehicleDetail  = await  _dbContext.PlateStocks.Include(x => x.PlateType)
+            }
+
+
+            return vehicleDetail;
+        }
     }
 }

@@ -1,0 +1,276 @@
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-header">
+                <div class="d-flex justify-content-end gap-2">
+                    <button class="btn btn-info" data-bs-toggle="modal" data-bs-target="#showModal"
+                        (click)="openModal(content)">
+                        <i class="ri-add-fill me-1 align-bottom"></i> {{ 'Add AIS Stock' | translate }}
+                    </button>
+                    <button class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#showModal"
+                        (click)="openModal1(content1)">
+                        <i class="ri-file-transfer-line me-1 align-bottom"></i> {{ 'Transfer To Zone' | translate }}
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- filter criteria -->
+    <div class="row g-3 align-items-end">
+        <div class="col-lg-2">
+            <label for="stockType-field" class="form-label">{{ 'Stock Type Name' | translate }}</label>
+            <ng-select [items]="aisStock" bindLabel="name" bindValue="id" id="stockType-field" name="stockType"
+                [searchable]="true" (change)="onStockTypeChange($event)">
+            </ng-select>
+        </div>
+        <div class="col-lg-2">
+            <label for="zone-field" class="form-label">{{ 'Zone' | translate }}</label>
+            <ng-select [items]="allZone" bindLabel="name" bindValue="id" id="zone-field" name="zone" [searchable]="true"
+                (change)="onZoneChange($event)">
+            </ng-select>
+        </div>
+        <div class="col-lg-2">
+            <label for="status-field" class="form-label">{{ 'Status' | translate }}</label>
+            <ng-select [items]="statusOptions" bindLabel="label" bindValue="value" id="status-field" name="status"
+                [searchable]="true" (change)="onStatusChange($event)">
+                <ng-option [value]="null" selected>Select Status</ng-option>
+            </ng-select>
+        </div>
+        <div class="col-lg-1 d-flex align-items-end">
+            <button class="btn btn-success add-btn mt-auto" (click)="saveCriteria()">
+                <i class="ri-filter-3-line"></i> Show
+            </button>
+        </div>
+    </div>
+    <!-- <hr> -->
+    <div class="col-xxl-12">
+        <div class="card" id="contactList">
+            <div class="card-header">
+                <div class="row g-4 mb-3">
+                    <div class="col-sm-auto d-flex align-items-center">
+                        <span class="me-2">Show:</span>
+                        <ng-select [(ngModel)]="selectedPageSize" (ngModelChange)="refreshData()"
+                            [items]="pageSizeOptions" bindLabel="label" bindValue="value" class="custom-ng-select"
+                            [clearable]="false"></ng-select>
+                        <span class="ms-2">Entries</span>
+                    </div>
+                    <div class="col-sm">
+                        <div class="d-flex justify-content-sm-end">
+                            <div class="search-box">
+                                <input type="text" name="searchTerm" class="form-control"
+                                    placeholder="{{ 'Search for AIS Number...' | translate }}" [(ngModel)]="searchTerm"
+                                    (ngModelChange)="searchTermSubject.next($event)">
+                                <i class="ri-search-line search-icon"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body">
+                <div>
+                    <div class="table-responsive table-card mb-2">
+                        <table class="table">
+                            <thead>
+                                <tr class="bg-light">
+                                    <th scope="col" style="width: 50px;">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" id="checkAll" value="option"
+                                                [(ngModel)]="masterSelected" (change)="checkUncheckAll($event, null)" />
+                                        </div>
+                                    </th>
+                                    <th scope="col" style="width: 50px;">
+                                        No.
+                                    </th>
+                                    <th>{{ 'AIS Type Name' | translate }}</th>
+                                    <th>{{ 'AIS Number' | translate }}</th>
+                                    <th>{{ 'To Zone' | translate }}</th>
+                                    <th>{{ 'Status' | translate }}</th>
+                                </tr>
+                            </thead>
+                            <tbody *ngIf="aisStocks?.length > 0; else noData">
+                                <ng-container *ngFor="let data of aisStocks; let i=index">
+                                    <tr id="c_{{data.id}}">
+                                        <th scope="row">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" name="checkAll"
+                                                    value="{{ data.id }}" [(ngModel)]="data.state"
+                                                    (change)="checkUncheckAll($event, data.id)" />
+                                            </div>
+                                        </th>
+                                        <th scope="row">{{ i + 1 }}
+
+                                        </th>
+                                        <td class="name">
+                                            <ngb-highlight [result]="data.aisTypeName" [term]="''"></ngb-highlight>
+                                        </td>
+                                        <td>
+                                            <ngb-highlight [result]="data.aisNo" [term]="''"></ngb-highlight>
+                                        </td>
+                                        <td>
+                                            <ngb-highlight [result]="data.aisNo" [term]="''"></ngb-highlight>
+                                        </td>
+                                        <td>
+                                            <ngb-highlight [result]="data.isActive" [term]="''"></ngb-highlight>
+                                        </td>
+                                    </tr>
+                                </ng-container>
+                            </tbody>
+                            <ng-template #noData>
+                                <tr>
+                                    <td colspan="2">No data available</td>
+                                </tr>
+                            </ng-template>
+                        </table>
+                    </div>
+                    <div class="d-flex justify-content-end mt-3">
+                        <ngb-pagination *ngIf="metaData" [collectionSize]="metaData.totalCount"
+                            [(page)]="metaData.currentPage" [pageSize]="metaData.pageSize"
+                            (pageChange)="changePage()"></ngb-pagination>
+                    </div>
+                </div>
+                <!-- Contacts Create Model -->
+                <ng-template #content role="document" let-modal>
+                    <div class="modal-header bg-info-subtle p-3">
+                        <h5 class="modal-title" id="exampleModalLabel">{{ 'Add AIS Stocks' | translate }}</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                            id="close-modal" (click)="modal.dismiss('Cross click')"></button>
+                    </div>
+                    <form (ngSubmit)="saveData()" [formGroup]="dataForm" class="tablelist-form" autocomplete="off">
+                        <div class="modal-body">
+                            <input type="hidden" id="id-field" />
+                            <div class="row g-3">
+                                <div class="col-lg-6">
+
+                                    <label for="stockTypeId-field" class="form-label">{{ 'AIS Type' | translate
+                                        }}</label>
+
+                                    <ng-select [items]="stocksNames" bindLabel="name" bindValue="id"
+                                        [(ngModel)]="selectedAisType" id="stockTypeId-field" name="stockTypeId"
+                                        formControlName="stockTypeId" [searchable]="true" required>
+                                    </ng-select>
+                                    
+                                    <div *ngIf="submitted && form['stockTypeId'].errors" class="invalid-feedback" align="left">
+                                        <div>{{ 'AIS Type ID is required' | translate }}</div>
+                                    </div>
+
+                                </div>
+                                <div class="col-lg-6">
+
+                                    <label for="regionId-field" class="form-label">{{ 'Region' | translate
+                                        }}</label>
+                                    <ng-select [items]="regionNames" bindLabel="name" bindValue="id"
+                                        [(ngModel)]="selectedRegion" id="regionId-field" name="regionId"
+                                        formControlName="regionId" [searchable]="true" required>
+                                    </ng-select>
+                                    
+                                    <div *ngIf="submitted && dataForm1.get('regionId')?.errors" class="invalid-feedback"
+                                        align="left">
+                                        <div *ngIf="dataForm1.get('regionId')?.errors?.['required']">{{ 'Region is
+                                            required'
+                                            | translate }}</div>
+                                    </div>
+
+                                </div>
+                                <div class="col-lg-6">
+                                    <div>
+                                        <label for="fromAISNo-field" class="form-label">{{ 'From AIS No' | translate
+                                            }}</label>
+                                        <input type="text" id="fromAISNo-field" class="form-control"
+                                            placeholder="{{ 'Enter From PlateNo' | translate }}" required
+                                            formControlName="fromAISNo"
+                                            [ngClass]="{ 'is-invalid': submitted && form['fromAISNo'].errors }" />
+                                        <!-- @if (submitted && form['fromAISNo'].errors) {
+                                        <div class="invalid-feedback" align="left">
+                                            @if (form['fromAISNo'].errors['required']) {
+                                            <div>{{ 'From AIS Number is required' | translate }}</div>
+                                            }
+                                        </div>
+                                        } -->
+                                        <div *ngIf="submitted && dataForm1.get('fromAISNo')?.errors"
+                                            class="invalid-feedback" align="left">
+                                            <div *ngIf="dataForm1.get('fromAISNo')?.errors?.['required']">{{ 'From AIS
+                                                Number is required'
+                                                | translate }}</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div>
+                                        <label for="toAISNo-field" class="form-label">{{ 'To AIS No' | translate
+                                            }}</label>
+                                        <input type="text" id="toAISNo-field" class="form-control"
+                                            placeholder="{{ 'Enter From PlateNo' | translate }}" required
+                                            formControlName="toAISNo"
+                                            [ngClass]="{ 'is-invalid': submitted && form['toAISNo'].errors }" />
+                                        <!-- @if (submitted && form['toAISNo'].errors) {
+                                        <div class="invalid-feedback" align="left">
+                                            @if (form['toAISNo'].errors['required']) {
+                                            <div>{{ 'To AIS Number is required' | translate }}</div>
+                                            }
+                                        </div>
+                                        } -->
+                                        <div *ngIf="submitted && dataForm1.get('toAISNo')?.errors"
+                                            class="invalid-feedback" align="left">
+                                            <div *ngIf="dataForm1.get('toAISNo')?.errors?.['required']">{{ 'To AIS
+                                                Number is required'
+                                                | translate }}</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <div class="hstack gap-2 justify-content-end">
+                                <button type="button" class="btn btn-light" data-bs-dismiss="modal"
+                                    (click)="closeModal()">{{
+                                    'Close' | translate }}</button>
+                                <button type="submit" class="btn btn-success" id="add-btn">{{ 'Add' | translate
+                                    }}</button>
+                            </div>
+                        </div>
+                    </form>
+                </ng-template>
+                <ng-template #content1 role="document" let-modal>
+                    <div class="modal-header bg-info-subtle p-3">
+                        <h5 class="modal-title" id="exampleModalLabel">{{ 'Transfer Plate Stocks To Zone' | translate }}
+                        </h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                            id="close-modal" (click)="modal.dismiss('Cross click')"></button>
+                    </div>
+                    <form (ngSubmit)="transferData()" [formGroup]="dataForm1" class="tablelist-form" autocomplete="off">
+                        <div class="modal-body">
+                            <input type="hidden" id="id-field" />
+                            <div class="row g-3">
+                                <div class="col-lg-12">
+
+                                    <label for="zoneId-field" class="form-label">{{ 'Zone' | translate
+                                        }}</label>
+                                    <ng-select [items]="zoneNames" bindLabel="name" bindValue="id"
+                                        [(ngModel)]="selectedZone" id="zoneId-field" name="zoneId"
+                                        formControlName="zoneId" [searchable]="true" required>
+                                    </ng-select>
+                                    <div *ngIf="submitted && dataForm1.get('zoneId')?.errors" class="invalid-feedback"
+                                        align="left">
+                                        <div *ngIf="dataForm1.get('zoneId')?.errors?.['required']">{{ 'Zone is required'
+                                            | translate }}</div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <div class="hstack gap-2 justify-content-end">
+                                <button type="button" class="btn btn-light" data-bs-dismiss="modal"
+                                    (click)="closeModal()">{{
+                                    'Close' | translate }}</button>
+                                <button type="submit" class="btn btn-success" id="add-btn">{{ 'Transfer' | translate
+                                    }}</button>
+                            </div>
+                        </div>
+
+                    </form>
+                </ng-template>
+            </div>
+        </div>
+    </div>
+</div>

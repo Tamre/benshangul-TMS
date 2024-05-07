@@ -1,14 +1,15 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ResponseMessage } from 'src/app/model/ResponseMessage.Model';
-import { PaginatedResponse, PlateStockGetDto, PlateStockPostDto } from 'src/app/model/stock-management/plate-stock';
+import { OrcStockGetDto, OrcStockPostDto } from 'src/app/model/stock-management/orc-stock';
+import { PaginatedResponse } from 'src/app/model/stock-management/plate-stock';
 import { environment } from 'src/environments/environment';
 import { TokenStorageService } from '../token-storage.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class PlateStockService {
+export class OrcStockService {
 
   baseUrl: string = environment.baseUrl;
   
@@ -22,7 +23,7 @@ export class PlateStockService {
     'Content-Type': 'application/json'
   });
 
-  getAllPlateStock(pageNumber: number,pageSize: number, criteria: { columnName: string, filterValue: string }[],searchTerm: string) {
+  getAllOrcStock(pageNumber: number,pageSize: number, criteria: { columnName: string, filterValue: string }[],searchTerm: string) {
     var headers = this.headers
     //const encodedCriteria = JSON.stringify(criteria.reduce((acc, curr) => ({ ...acc, [curr.columnName]: curr.filterValue }), {}));
     const encodedCriteria = criteria.map(c => JSON.stringify({ columnName: c.columnName, filterValue: c.filterValue }));
@@ -30,35 +31,24 @@ export class PlateStockService {
     .set('PageSize', pageSize.toString())
     .set('Criteria', encodedCriteria.join('&Criteria='))
     .set('SearchTerm', searchTerm);
-    return this.http.get<PaginatedResponse<PlateStockGetDto>>(`${this.baseUrl}/vech-action/PlateStock/GetAll`,{headers, params});
+    return this.http.get<PaginatedResponse<OrcStockGetDto>>(`${this.baseUrl}/vech-action/ORCStock/GetAll`,{headers, params});
   }
-  transferPlateStock(data: { plateStockIds: string[], toZoneId: number }){
+  transferOrcStock(data: { orcStockIds: string[], toZoneId: number }){
     var headers = this.headers
     const requestBody = {
-      plateStockIds: data.plateStockIds,
+      orcStockIds: data.orcStockIds,
       toZoneId: data.toZoneId
     };
     return this.http.put<ResponseMessage>(
-      `${this.baseUrl}/vech-action/PlateStock/TransferToZone`,requestBody,
+      `${this.baseUrl}/vech-action/ORCStock/TransferToZone`,requestBody,
       {headers:headers}
     );
   }
-  addPlateStock(formData:PlateStockPostDto){
+  addOrcStock(formData:OrcStockPostDto){
     var headers = this.headers
     return this.http.post<ResponseMessage>(
-      `${this.baseUrl}/vech-action/PlateStock/Add`,
+      `${this.baseUrl}/vech-action/ORCStock/Add`,
       formData,{headers:headers}
     );
-  }
-  deletePlateStock(plateStockIds: string[]) {
-    const headers = this.headers;
-    const requestBody = {
-      plateStockIds: plateStockIds
-    };
-  
-    return this.http.delete(`${this.baseUrl}/vech-action/PlateStock/Delete`, {
-      headers: headers,
-      body: requestBody
-    });
   }
 }

@@ -96,4 +96,13 @@ namespace TransportManagmentImplementation.DTOS.Vehicle.Action
         public string TransferStatus { get; set; } = null!;
 
     }
+
+
+    public record VehicleGetParameterDto
+    {
+        public VehicleFileteParameter VehicleFileteParameter { get; set; }
+        public string Value { get; set; } = null!;
+        public bool RegionalUser { get; set; } 
+
+    }
 }
