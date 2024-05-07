@@ -58,6 +58,7 @@ namespace TransportManagmentInfrustructure.Data
         public DbSet<ValuationReason> ValuationReasons { get; set; }
 
         public DbSet<VehicleList> VehicleLists { get; set; }
+        public DbSet<VehicleDocument> VehicleDocuments { get; set; }
         public DbSet<VehicleOwner> VehicleOwners { get; set; }
         public DbSet<AIS> AisLists { get; set; }
         public DbSet<AisStock> AisStocks { get; set; }
@@ -228,7 +229,12 @@ namespace TransportManagmentInfrustructure.Data
                 entity.HasIndex(t =>  t.ChassisNo).IsUnique();
                 entity.HasIndex(t => t.EngineNumber).IsUnique();
             });
-            
+
+            modelBuilder.Entity<VehicleDocument>(entity =>
+            {
+                entity.HasIndex(t => new { t.DocumentTypeId, t.VehicleId }).IsUnique();
+            });
+
 
             #region commonNames
             modelBuilder.Entity<RoleCategory>().ToTable("RoleCategories", schema: "UserMgt");
@@ -282,6 +288,7 @@ namespace TransportManagmentInfrustructure.Data
             modelBuilder.Entity <VehicleOwner>().ToTable("VehicleOwners", schema: "VRMS");
             modelBuilder.Entity <VehicleReplacement>().ToTable("VehicleReplacements", schema: "VRMS");
             modelBuilder.Entity <VehicleTransfer>().ToTable("VehicleTransfers", schema: "VRMS");
+            modelBuilder.Entity <VehicleDocument>().ToTable("VehicleDocuments", schema: "VRMS");
 
 
             #endregion
