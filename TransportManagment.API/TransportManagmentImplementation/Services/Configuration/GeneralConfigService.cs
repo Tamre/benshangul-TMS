@@ -46,10 +46,10 @@ namespace TransportManagmentImplementation.Services.Configuration
 
         public async Task<string> GenerateVechilceCode(string InitialName , VehicleSerialType VehicleSerialType)
         {
-            var curentCode = await _dbContext.VehicleSerialSettings.FirstOrDefaultAsync(x => x.VehicleSerialType == VehicleSerialType);
+            var curentCode = await _dbContext.VehicleSerialSettings.Include(x=>x.Zone).FirstOrDefaultAsync(x => x.VehicleSerialType == VehicleSerialType);
             if (curentCode != null)
             {
-                var generatedCode = $"{InitialName}/{curentCode.Value.ToString().PadLeft(curentCode.Pad, '0')}/{DateTime.Now.Year}";
+                var generatedCode = $"{curentCode.Zone.Code}-{InitialName}-{curentCode.Value.ToString().PadLeft(curentCode.Pad, '0')}";
 
                 curentCode.Value += 1;
                 await _dbContext.SaveChangesAsync();

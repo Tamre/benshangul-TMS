@@ -36,6 +36,7 @@ namespace TransportManagmentImplementation.Services.Vehicle.Action
 
             try
             {
+<<<<<<< Updated upstream
                 var registrationNo = await _generalConfigService.GenerateVehicleNumber(VehicleSerialType.NEWVEHICLE, vehicleListPostDto.ServiceZoneId, vehicleListPostDto.CreatedById);
 
                 var chessisExists = await _dbContext.VehicleLists.AnyAsync(x => x.ChassisNo == vehicleListPostDto.ChassisNo);
@@ -51,6 +52,19 @@ namespace TransportManagmentImplementation.Services.Vehicle.Action
                     return new ResponseMessage { Success = false, Message = "Engine  Number already exists" };
                 }
 
+=======
+                var registrationNo =await _generalConfigService.GenerateVechilceCode("RN", VehicleSerialType.NEWVEHICLE);
+
+                if (vehicleListPostDto.ChassisNo.Length != 17)
+                {
+                    return new ResponseMessage
+                    {
+                        Success = false,
+                        Message = "Chassis No Length Must be equal to 17 !! "
+                    };
+
+                }
+>>>>>>> Stashed changes
                 var vechicle = new VehicleList
                 {
                     Id = Guid.NewGuid(),
@@ -78,9 +92,13 @@ namespace TransportManagmentImplementation.Services.Vehicle.Action
                     ServiceZoneId = vehicleListPostDto.ServiceZoneId,
                     CreatedById = vehicleListPostDto.CreatedById,
                     CreatedDate = DateTime.Now,
+<<<<<<< Updated upstream
                     TypeOfVehicle = vehicleListPostDto.TypeOfVehicle,
                     TransferStatus = vehicleListPostDto.TransferStatus,
                     VehicleCurrentStatus = vehicleListPostDto.VehicleCurrentStatus,
+=======
+
+>>>>>>> Stashed changes
                 };
 
                 await _dbContext.VehicleLists.AddAsync(vechicle);
