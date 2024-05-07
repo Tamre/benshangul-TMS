@@ -76,8 +76,9 @@ export class AisStockComponent {
   searchTermSubject = new Subject<string>();
   searchTerm = '';
 
-  selectedStatus: string | null = null;
-  criteriaSaved = new EventEmitter<{ columnName: string, filterValue: string }[]>();
+  //selectedStatus: string | null = null;
+  //criteriaSaved = new EventEmitter<{ columnName: string, filterValue: string }[]>();
+  aisStockCriteria: aisStockCriteria = new aisStockCriteria()
 
   aisTypeNames: string[] = [];
   selectedAisType: { id: number; name: string } | null = null;
@@ -262,41 +263,41 @@ export class AisStockComponent {
       ariaLabelledBy: 'modal-basic-title'
     });
   }
-  onStockTypeChange(event: any) {
-    const stockTypeId = event?.id || null;
+  // onStockTypeChange(event: any) {
+  //   const stockTypeId = event?.id || null;
 
-    if (stockTypeId !== null) {
-      this.criteria = [{ columnName: 'ais_type', filterValue: stockTypeId.toString() }];
-    }
-  }
-  onStatusChange(event: any) {
-    const selectedItem = event;
-    this.selectedStatus = selectedItem ? selectedItem.value : null;
+  //   if (stockTypeId !== null) {
+  //     this.criteria = [{ columnName: 'ais_type', filterValue: stockTypeId.toString() }];
+  //   }
+  // }
+  // onStatusChange(event: any) {
+  //   const selectedItem = event;
+  //   this.selectedStatus = selectedItem ? selectedItem.value : null;
   
-    if (this.selectedStatus !== null) {
-      const existingCriteria = this.criteria.filter(c => c.columnName !== 'status');
-      this.criteria = [
-        ...existingCriteria,
-        { columnName: 'status', filterValue: this.selectedStatus }
-      ];
-    }
-  }
-  onZoneChange(event: any) {
-    const zoneId = event?.id || null;
+  //   if (this.selectedStatus !== null) {
+  //     const existingCriteria = this.criteria.filter(c => c.columnName !== 'status');
+  //     this.criteria = [
+  //       ...existingCriteria,
+  //       { columnName: 'status', filterValue: this.selectedStatus }
+  //     ];
+  //   }
+  // }
+  // onZoneChange(event: any) {
+  //   const zoneId = event?.id || null;
 
-    if (zoneId !== null) {
-      const existingCriteria = this.criteria.filter(c => c.columnName !== 'zone');
-      this.criteria = [...existingCriteria, { columnName: 'zone', filterValue: zoneId.toString() }];
-    }
-  }
+  //   if (zoneId !== null) {
+  //     const existingCriteria = this.criteria.filter(c => c.columnName !== 'zone');
+  //     this.criteria = [...existingCriteria, { columnName: 'zone', filterValue: zoneId.toString() }];
+  //   }
+  // }
   changePage() {
     this.aisStocks = this.service.changePage(this.allAisStocks, this.metaData);
     this.refreshData();
   }
   saveCriteria() {
-    this.criteriaSaved.emit(this.criteria);
-
-    //this.criteria = criteria;
+    this.criteria = Object.entries(this.aisStockCriteria)
+    .filter(([key, value]) => value !== undefined && value !== null)
+    .map(([columnName, filterValue]) => ({ columnName, filterValue: filterValue.toString() }));
     this.refreshData();
 
   }
@@ -358,4 +359,9 @@ export class AisStockComponent {
     this.modalService.dismissAll();
   }
 
+}
+export class aisStockCriteria {
+  ais_type!: string
+  zone!: string
+  status!: string
 }

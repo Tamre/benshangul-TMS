@@ -19,12 +19,14 @@ import { VehicleLookupService } from 'src/app/core/services/vehicle-config-servi
 export class FilterFieldsComponent implements OnInit {
 
   criteria: { columnName: string, filterValue: string }[] = [];
-  @Output() criteriaSaved = new EventEmitter<{ columnName: string, filterValue: string }[]>();
+  @Output() criteriaSaved = new EventEmitter();
 
   currentUser!: UserView | null;
   allPlates?: any;
   plates?: any;
   selectedPlateTypelId: any;
+  
+  plateStockCriteria: plateStockCriteria = new plateStockCriteria()
 
   allists?: any;
   lists?: any;
@@ -71,60 +73,8 @@ export class FilterFieldsComponent implements OnInit {
     });
   }
 
-  onPlateTypeChange(event: any) {
-    const plateTypeId = event?.id || null;
-
-    if (plateTypeId !== null) {
-      this.criteria = [{ columnName: 'plate_code', filterValue: plateTypeId.toString() }];
-    }
-  }
-
-  onRegionChange(event: any) {
-    const regionId = event?.id || null;
-
-    if (regionId !== null) {
-      const existingCriteria = this.criteria.filter(c => c.columnName !== 'region');
-      this.criteria = [...existingCriteria, { columnName: 'region', filterValue: regionId.toString() }];
-    }
-  }
-  onFrontPlateSizeChange(event: any) {
-    const frontPlateSizeId = event?.id || null;
-
-    if (frontPlateSizeId !== null) {
-      const existingCriteria = this.criteria.filter(c => c.columnName !== 'front_plate_size');
-      this.criteria = [...existingCriteria, { columnName: 'front_plate_size', filterValue: frontPlateSizeId.toString() }];
-    }
-  }
-  onBackPlateSizeChange(event: any) {
-    const backPlateSizeId = event?.id || null;
-
-    if (backPlateSizeId !== null) {
-      const existingCriteria = this.criteria.filter(c => c.columnName !== 'front_plate_size');
-      this.criteria = [...existingCriteria, { columnName: 'front_plate_size', filterValue: backPlateSizeId.toString() }];
-    }
-  }
-  onZoneChange(event: any) {
-    const zoneId = event?.id || null;
-
-    if (zoneId !== null) {
-      const existingCriteria = this.criteria.filter(c => c.columnName !== 'zone');
-      this.criteria = [...existingCriteria, { columnName: 'zone', filterValue: zoneId.toString() }];
-    }
-  }
-  onStatusChange(event: any) {
-    const selectedItem = event;
-    this.selectedStatus = selectedItem ? selectedItem.value : null;
-  
-    if (this.selectedStatus !== null) {
-      const existingCriteria = this.criteria.filter(c => c.columnName !== 'status');
-      this.criteria = [
-        ...existingCriteria,
-        { columnName: 'status', filterValue: this.selectedStatus }
-      ];
-    }
-  }
   saveCriteria() {
-    this.criteriaSaved.emit(this.criteria);
+    this.criteriaSaved.emit(this.plateStockCriteria);
   }
 
 
@@ -181,4 +131,13 @@ export class FilterFieldsComponent implements OnInit {
       },
     });
   }
+}
+
+export class plateStockCriteria {
+  plate_code!: string
+  region!: string
+  front_plate_size!: string
+  back_plate_size!: string
+  zone!: string
+  status!: string
 }

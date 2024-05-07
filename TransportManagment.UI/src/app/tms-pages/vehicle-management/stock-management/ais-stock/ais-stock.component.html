@@ -19,20 +19,20 @@
     <div class="row g-3 align-items-end">
         <div class="col-lg-2">
             <label for="stockType-field" class="form-label">{{ 'Stock Type Name' | translate }}</label>
-            <ng-select [items]="aisStock" bindLabel="name" bindValue="id" id="stockType-field" name="stockType"
-                [searchable]="true" (change)="onStockTypeChange($event)">
+            <ng-select [items]="aisStock" [(ngModel)] = "aisStockCriteria.ais_type" bindLabel="name" bindValue="id" id="stockType-field" name="stockType"
+                [searchable]="true" >
             </ng-select>
         </div>
         <div class="col-lg-2">
             <label for="zone-field" class="form-label">{{ 'Zone' | translate }}</label>
-            <ng-select [items]="allZone" bindLabel="name" bindValue="id" id="zone-field" name="zone" [searchable]="true"
-                (change)="onZoneChange($event)">
+            <ng-select [items]="allZone" [(ngModel)] = "aisStockCriteria.zone" bindLabel="name" bindValue="id" id="zone-field" name="zone" [searchable]="true"
+                >
             </ng-select>
         </div>
         <div class="col-lg-2">
             <label for="status-field" class="form-label">{{ 'Status' | translate }}</label>
-            <ng-select [items]="statusOptions" bindLabel="label" bindValue="value" id="status-field" name="status"
-                [searchable]="true" (change)="onStatusChange($event)">
+            <ng-select [items]="statusOptions" [(ngModel)] = "aisStockCriteria.status" bindLabel="label" bindValue="value" id="status-field" name="status"
+                [searchable]="true" >
                 <ng-option [value]="null" selected>Select Status</ng-option>
             </ng-select>
         </div>
