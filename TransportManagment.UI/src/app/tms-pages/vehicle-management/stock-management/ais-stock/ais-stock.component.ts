@@ -1,34 +1,35 @@
 import { Component, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { AbstractControl, UntypedFormBuilder, UntypedFormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
-import { UserView } from 'src/app/model/user';
-import { fetchCrmContactData } from 'src/app/store/CRM/crm_action';
-import { selectCRMLoading } from 'src/app/store/CRM/crm_selector';
+import { AbstractControl, UntypedFormBuilder, UntypedFormGroup, ValidationErrors, Validators } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Store } from '@ngrx/store';
 import { TranslateService } from '@ngx-translate/core';
+import { cloneDeep } from 'lodash';
 import { Observable, Subject, debounceTime, distinctUntilChanged, map, of } from 'rxjs';
 import { AddressService } from 'src/app/core/services/address.service';
 import { Pagination1Service } from 'src/app/core/services/pagination1.service';
+
 import { PlateStockService } from 'src/app/core/services/stock-management/plate-stock.service';
 import { TokenStorageService } from 'src/app/core/services/token-storage.service';
 import { PlateTypeService } from 'src/app/core/services/vehicle-config-services/plate-type.service';
+import { StockTypeService } from 'src/app/core/services/vehicle-config-services/stock-type.service';
 import { VehicleLookupService } from 'src/app/core/services/vehicle-config-services/vehicle-lookup.service';
 import { RootReducerState } from 'src/app/store';
-import { StockTypeService } from 'src/app/core/services/vehicle-config-services/stock-type.service';
-import { cloneDeep } from 'lodash';
-import { OrcStockPostDto } from 'src/app/model/stock-management/orc-stock';
-import { OrcStockService } from 'src/app/core/services/stock-management/orc-stock.service';
+import { UserView } from 'src/app/model/user';
+import { fetchCrmContactData } from 'src/app/store/CRM/crm_action';
+import { selectCRMLoading } from 'src/app/store/CRM/crm_selector';
+import { AisStockService } from 'src/app/core/services/stock-management/ais-stock.service';
 import { successToast } from 'src/app/core/services/toast.service';
 import { ResponseMessage } from 'src/app/model/ResponseMessage.Model';
+import { AisStockPostDto } from 'src/app/model/stock-management/ais-stock';
 import Swal from 'sweetalert2';
 
 @Component({
-  selector: 'app-orc-stock',
-  templateUrl: './orc-stock.component.html',
-  styleUrl: './orc-stock.component.scss'
+  selector: 'app-ais-stock',
+  templateUrl: './ais-stock.component.html',
+  styleUrl: './ais-stock.component.scss'
 })
-export class OrcStockComponent {
+export class AisStockComponent {
   submitted = false;
   isEditing: Boolean = false;
   dataForm!: UntypedFormGroup;
@@ -36,24 +37,9 @@ export class OrcStockComponent {
   currentUser!: UserView | null;
   masterSelected!: boolean;
 
-  searchTermSubject = new Subject<string>();
-  searchTerm = '';
-
-  allStocks?:any;
-  stocks?: any;
-  orcStock?: any;
-  stocksNames: string[] = [];
-
-  orcStocks?:any;
-  allOrcStocks?:any;
+  aisStocks?:any;
+  allAisStocks?:any;
   metaData: any;
-
-  allRegion?: any;
-  regions?: any;
-  regionNames: string[] = [];
-
-  allZone?:any;
-  zones?:any;
 
 
   criteria: { columnName: string, filterValue: string }[] = [];
@@ -61,8 +47,6 @@ export class OrcStockComponent {
     { label: 'Active', value: 'true' },
     { label: 'Inactive', value: 'false' },
   ];
-  selectedStatus: string | null = null;
-  criteriaSaved = new EventEmitter<{ columnName: string, filterValue: string }[]>();
 
   pageSizeOptions = [
     { label: '10', value: 10 },
@@ -73,17 +57,34 @@ export class OrcStockComponent {
   ];
   selectedPageSize = this.pageSizeOptions[0].value;
 
-  selectedOrcStockIds: string[] = [];
+  selectedAisStockIds: string[] = [];
 
-  orcTypeNames: string[] = [];
-  selectedOrcType: { id: number; name: string } | null = null;
+  allStocks?:any;
+  stocks?: any;
+  aisStock?: any;
+  stocksNames: string[] = [];
 
-  selectedRegion: { id: number; name: string } | null = null;
-  successAddMessage: string = "";
+  allRegion?: any;
+  regions?: any;
+  regionNames: string[] = [];
 
+  allZone?:any;
+  zones?:any;
   zoneNames: string[] = [];
   selectedZone: { id: number; name: string } | null = null;
 
+  searchTermSubject = new Subject<string>();
+  searchTerm = '';
+
+  selectedStatus: string | null = null;
+  criteriaSaved = new EventEmitter<{ columnName: string, filterValue: string }[]>();
+
+  aisTypeNames: string[] = [];
+  selectedAisType: { id: number; name: string } | null = null;
+
+  selectedRegion: { id: number; name: string } | null = null;
+  successAddMessage: string = "";
+  
   constructor(
     private formBuilder: UntypedFormBuilder,
     private tokenStorageService: TokenStorageService,
@@ -96,7 +97,7 @@ export class OrcStockComponent {
     private addressService: AddressService,
     public vehicleLookupService: VehicleLookupService,
     public stockTypeService: StockTypeService,
-    public orcStocService:OrcStockService
+    public aisStocService:AisStockService
 
   ) {
     this.searchTermSubject
@@ -112,7 +113,7 @@ export class OrcStockComponent {
   ngOnInit(): void {
     this.currentUser = this.tokenStorageService.getCurrentUser();
     this.refreshData()
-    this.getDatasforAddOrcStock()
+    this.getDatasforAddAisStock()
     /**
      * Form Validation
      */
@@ -121,8 +122,8 @@ export class OrcStockComponent {
       regionId: ["", [Validators.required]],
       toZoneId: ["", [Validators.required]],
 
-      fromORCNo: ["", [Validators.required], this.patternValidator],
-      toORCNo: ["", [Validators.required], this.patternValidator],
+      fromAISNo: ["", [Validators.required], this.patternValidator],
+      toAISNo: ["", [Validators.required], this.patternValidator],
       createdById: [this.currentUser?.userId, [Validators.required]],
     });
     this.dataForm1 = this.formBuilder.group({
@@ -138,33 +139,7 @@ export class OrcStockComponent {
       }
     });
   }
-  
-  refreshData() {
-    const pageNumber = this.metaData ? this.metaData.currentPage : 1;
-    //const pageSize = this.metaData ? this.metaData.pageSize : 10;
-    const pageSize =this.selectedPageSize;
-
-    this.orcStocService.getAllOrcStock(pageNumber, pageSize, this.criteria, this.searchTerm).subscribe({
-
-      next: (res) => {
-        if (res) {
-          this.orcStocks = res.data || [];
-          this.metaData = res.metaData;
-          this.allOrcStocks = cloneDeep(res);
-          console.log('allorcstock',this.allOrcStocks);
-          console.log('orcstock',this.orcStocks);
-
-        } else {
-          this.orcStocks = [];
-          this.metaData = null;
-          this.allOrcStocks = null;
-        }
-      },
-      error: (err) => {
-
-      },
-    });}
-  patternValidator: ValidatorFn = (control: AbstractControl): Observable<ValidationErrors | null> => {
+  patternValidator: Validators = (control: AbstractControl): Observable<ValidationErrors | null> => {
     const pattern = /^-?\d+$/;
     const value = control.value;
   
@@ -172,38 +147,65 @@ export class OrcStockComponent {
       map((error: ValidationErrors | null) => error)
     );
   };
-  openModal(content: any) {
-    this.dataForm.reset();
-    this.dataForm.controls["createdById"].setValue(this.currentUser?.userId);
-    this.modalService.open(content, { size: "lg", centered: true });
-  }
-  openModal1(content1: any) {
-    if (this.selectedOrcStockIds.length === 0) {
-      Swal.fire({ text: 'Please select at least one checkbox', confirmButtonColor: '#299cdb', });
-      return;
-    }
+  checkUncheckAll(ev: any, id: string | null) {
+    const isChecked = ev.target.checked;
   
-    this.dataForm1.reset();
-    this.modalService.open(content1, {
-      size: "md",
-      centered: true,
-      ariaLabelledBy: 'modal-basic-title'
-    });
+    if (id === null) {
+      // Handle the case when the header checkbox is checked or unchecked
+      this.aisStocks.forEach((x: { state: any }) => (x.state = isChecked));
+      this.selectedAisStockIds = isChecked
+        ? this.aisStocks.map((data:any) => data.id)
+        : [];
+    } else {
+      // Handle the case when an individual checkbox is checked or unchecked
+      if (isChecked) {
+        this.selectedAisStockIds.push(id);
+      } else {
+        this.selectedAisStockIds = this.selectedAisStockIds.filter(
+          (stockId) => stockId !== id
+        );
+      }
+    }
   }
-  getDatasforAddOrcStock() {
+  refreshData() {
+    const pageNumber = this.metaData ? this.metaData.currentPage : 1;
+    //const pageSize = this.metaData ? this.metaData.pageSize : 10;
+    const pageSize = this.selectedPageSize;
+
+    this.aisStocService.getAllAisStock(pageNumber, pageSize, this.criteria, this.searchTerm).subscribe({
+
+      next: (res) => {
+        if (res) {
+          this.aisStocks = res.data || [];
+          this.metaData = res.metaData;
+          this.allAisStocks = cloneDeep(res);
+          console.log('allaisstock',this.allAisStocks);
+          console.log('aisstock',this.aisStocks);
+
+        } else {
+          this.aisStocks = [];
+          this.metaData = null;
+          this.allAisStocks = null;
+        }
+      },
+      error: (err) => {
+
+      },
+    });}
+  getDatasforAddAisStock() {
     this.stockTypeService.getAllStockType().subscribe({
       next: (res) => {
         if (res) 
           {
             this.stocks = res
             this.allStocks = cloneDeep(res);
-            this.orcStock = this.allStocks.filter((stock: { category: string }) => stock.category === 'ORC');
+            this.aisStock = this.allStocks.filter((stock: { category: string }) => stock.category === 'AIS');
             // this.stocksNames = this.orcStock.map((veh: any) => ({
             //   id: veh.id,
             //   name: veh.name,
             // }));
             // this.stocksNames = orcStock.map((stock: any) => stock.name);
-            this.stocksNames = this.orcStock.map((stock: any) => ({ id: stock.id, name: stock.name }));
+            this.stocksNames = this.aisStock.map((stock: any) => ({ id: stock.id, name: stock.name }));
             
           }
       },
@@ -242,11 +244,29 @@ export class OrcStockComponent {
     });
     
   }
+  openModal(content: any) {
+    this.dataForm.reset();
+    this.dataForm.controls["createdById"].setValue(this.currentUser?.userId);
+    this.modalService.open(content, { size: "lg", centered: true });
+  }
+  openModal1(content1: any) {
+    if (this.selectedAisStockIds.length === 0) {
+      Swal.fire({ text: 'Please select at least one checkbox', confirmButtonColor: '#299cdb', });
+      return;
+    }
+  
+    this.dataForm1.reset();
+    this.modalService.open(content1, {
+      size: "md",
+      centered: true,
+      ariaLabelledBy: 'modal-basic-title'
+    });
+  }
   onStockTypeChange(event: any) {
     const stockTypeId = event?.id || null;
 
     if (stockTypeId !== null) {
-      this.criteria = [{ columnName: 'orc_type', filterValue: stockTypeId.toString() }];
+      this.criteria = [{ columnName: 'ais_type', filterValue: stockTypeId.toString() }];
     }
   }
   onStatusChange(event: any) {
@@ -269,6 +289,10 @@ export class OrcStockComponent {
       this.criteria = [...existingCriteria, { columnName: 'zone', filterValue: zoneId.toString() }];
     }
   }
+  changePage() {
+    this.aisStocks = this.service.changePage(this.allAisStocks, this.metaData);
+    this.refreshData();
+  }
   saveCriteria() {
     this.criteriaSaved.emit(this.criteria);
 
@@ -276,35 +300,9 @@ export class OrcStockComponent {
     this.refreshData();
 
   }
-
-  checkUncheckAll(ev: any, id: string | null) {
-    const isChecked = ev.target.checked;
-  
-    if (id === null) {
-      // Handle the case when the header checkbox is checked or unchecked
-      this.orcStocks.forEach((x: { state: any }) => (x.state = isChecked));
-      this.selectedOrcStockIds = isChecked
-        ? this.orcStocks.map((data:any) => data.id)
-        : [];
-    } else {
-      // Handle the case when an individual checkbox is checked or unchecked
-      if (isChecked) {
-        this.selectedOrcStockIds.push(id);
-      } else {
-        this.selectedOrcStockIds = this.selectedOrcStockIds.filter(
-          (stockId) => stockId !== id
-        );
-      }
-    }
-  }
-  changePage() {
-    this.orcStocks = this.service.changePage(this.allOrcStocks, this.metaData);
-    this.refreshData();
-  }
   saveData() {
-    const newData: OrcStockPostDto = this.dataForm.value;
-    //newData.isActive = true;
-    this.orcStocService.addOrcStock(newData).subscribe({
+    const newData: AisStockPostDto = this.dataForm.value;
+    this.aisStocService.addAisStock(newData).subscribe({
       next: (res: ResponseMessage) => {
         if (res.success) {
           this.successAddMessage = res.message;
@@ -322,6 +320,9 @@ export class OrcStockComponent {
     });
     this.submitted = true;
   }
+  get form() {
+    return this.dataForm.controls;
+  }
   transferData(){
     this.submitted = true;
 
@@ -329,8 +330,8 @@ export class OrcStockComponent {
       const selectedZoneId = this.dataForm1.controls['zoneId'].value;
 
       // Call the service method to transfer the plate stocks
-      this.orcStocService.transferOrcStock({
-        orcStockIds: this.selectedOrcStockIds,
+      this.aisStocService.transferAisStock({
+        aisStockIds: this.selectedAisStockIds,
         toZoneId: selectedZoneId
       }).subscribe(
         (response) => {
@@ -349,12 +350,6 @@ export class OrcStockComponent {
       );
     }
   }
-  /**
-   * Form data get
-   */
-  get form() {
-    return this.dataForm.controls;
-  }
 
   closeModal() {
     this.modalService.dismissAll();
@@ -362,4 +357,5 @@ export class OrcStockComponent {
   closeModal1() {
     this.modalService.dismissAll();
   }
+
 }

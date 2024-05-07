@@ -5,7 +5,7 @@
                 <div class="d-flex justify-content-end gap-2">
                     <button class="btn btn-info" data-bs-toggle="modal" data-bs-target="#showModal"
                         (click)="openModal(content)">
-                        <i class="ri-add-fill me-1 align-bottom"></i> {{ 'Add ORC Stock' | translate }}
+                        <i class="ri-add-fill me-1 align-bottom"></i> {{ 'Add AIS Stock' | translate }}
                     </button>
                     <button class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#showModal"
                         (click)="openModal1(content1)">
@@ -19,7 +19,7 @@
     <div class="row g-3 align-items-end">
         <div class="col-lg-2">
             <label for="stockType-field" class="form-label">{{ 'Stock Type Name' | translate }}</label>
-            <ng-select [items]="orcStock" bindLabel="name" bindValue="id" id="stockType-field" name="stockType"
+            <ng-select [items]="aisStock" bindLabel="name" bindValue="id" id="stockType-field" name="stockType"
                 [searchable]="true" (change)="onStockTypeChange($event)">
             </ng-select>
         </div>
@@ -42,7 +42,7 @@
             </button>
         </div>
     </div>
-    <hr>
+    <!-- <hr> -->
     <div class="col-xxl-12">
         <div class="card" id="contactList">
             <div class="card-header">
@@ -58,7 +58,7 @@
                         <div class="d-flex justify-content-sm-end">
                             <div class="search-box">
                                 <input type="text" name="searchTerm" class="form-control"
-                                    placeholder="{{ 'Search for ORC Number...' | translate }}" [(ngModel)]="searchTerm"
+                                    placeholder="{{ 'Search for AIS Number...' | translate }}" [(ngModel)]="searchTerm"
                                     (ngModelChange)="searchTermSubject.next($event)">
                                 <i class="ri-search-line search-icon"></i>
                             </div>
@@ -81,14 +81,14 @@
                                     <th scope="col" style="width: 50px;">
                                         No.
                                     </th>
-                                    <th>{{ 'ORC Type Name' | translate }}</th>
-                                    <th>{{ 'ORC Number' | translate }}</th>
+                                    <th>{{ 'AIS Type Name' | translate }}</th>
+                                    <th>{{ 'AIS Number' | translate }}</th>
                                     <th>{{ 'To Zone' | translate }}</th>
                                     <th>{{ 'Status' | translate }}</th>
                                 </tr>
                             </thead>
-                            <tbody *ngIf="orcStocks?.length > 0; else noData">
-                                <ng-container *ngFor="let data of orcStocks; let i=index">
+                            <tbody *ngIf="aisStocks?.length > 0; else noData">
+                                <ng-container *ngFor="let data of aisStocks; let i=index">
                                     <tr id="c_{{data.id}}">
                                         <th scope="row">
                                             <div class="form-check">
@@ -101,13 +101,13 @@
 
                                         </th>
                                         <td class="name">
-                                            <ngb-highlight [result]="data.orcTypeName" [term]="''"></ngb-highlight>
+                                            <ngb-highlight [result]="data.aisTypeName" [term]="''"></ngb-highlight>
                                         </td>
                                         <td>
-                                            <ngb-highlight [result]="data.orcNo" [term]="''"></ngb-highlight>
+                                            <ngb-highlight [result]="data.aisNo" [term]="''"></ngb-highlight>
                                         </td>
                                         <td>
-                                            <ngb-highlight [result]="data.orcNo" [term]="''"></ngb-highlight>
+                                            <ngb-highlight [result]="data.aisNo" [term]="''"></ngb-highlight>
                                         </td>
                                         <td>
                                             <ngb-highlight [result]="data.isActive" [term]="''"></ngb-highlight>
@@ -131,7 +131,7 @@
                 <!-- Contacts Create Model -->
                 <ng-template #content role="document" let-modal>
                     <div class="modal-header bg-info-subtle p-3">
-                        <h5 class="modal-title" id="exampleModalLabel">{{ 'Add ORC Stocks' | translate }}</h5>
+                        <h5 class="modal-title" id="exampleModalLabel">{{ 'Add AIS Stocks' | translate }}</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
                             id="close-modal" (click)="modal.dismiss('Cross click')"></button>
                     </div>
@@ -141,28 +141,16 @@
                             <div class="row g-3">
                                 <div class="col-lg-6">
 
-                                    <label for="stockTypeId-field" class="form-label">{{ 'ORC Type' | translate
+                                    <label for="stockTypeId-field" class="form-label">{{ 'AIS Type' | translate
                                         }}</label>
 
                                     <ng-select [items]="stocksNames" bindLabel="name" bindValue="id"
-                                        [(ngModel)]="selectedOrcType" id="stockTypeId-field" name="stockTypeId"
+                                        [(ngModel)]="selectedAisType" id="stockTypeId-field" name="stockTypeId"
                                         formControlName="stockTypeId" [searchable]="true" required>
                                     </ng-select>
-                                    <!-- @if (submitted && form['stockTypeId'].errors) {
-                                    <div class="invalid-feedback" align="left">
-                                        @if (form['stockTypeId'].errors['required']) {s
-                                        <div>{{ 'ORC Type is required' | translate }}</div>
-                                        }
-                                    </div>
-                                    } -->
-                                    <!-- <div *ngIf="submitted && dataForm1.get('stockTypeId')?.errors"
-                                        class="invalid-feedback" align="left">
-                                        <div *ngIf="dataForm1.get('stockTypeId')?.errors?.['required']">{{ 'ORC Type is
-                                            required'
-                                            | translate }}</div>
-                                    </div> -->
+                                    
                                     <div *ngIf="submitted && form['stockTypeId'].errors" class="invalid-feedback" align="left">
-                                        <div>{{ 'ORC Type ID is required' | translate }}</div>
+                                        <div>{{ 'AIS Type ID is required' | translate }}</div>
                                     </div>
 
                                 </div>
@@ -174,13 +162,7 @@
                                         [(ngModel)]="selectedRegion" id="regionId-field" name="regionId"
                                         formControlName="regionId" [searchable]="true" required>
                                     </ng-select>
-                                    <!-- @if (submitted && form['regionId'].errors) {
-                                    <div class="invalid-feedback" align="left">
-                                        @if (form['regionId'].errors['required']) {s
-                                        <div>{{ 'Region is required' | translate }}</div>
-                                        }
-                                    </div>
-                                    } -->
+                                    
                                     <div *ngIf="submitted && dataForm1.get('regionId')?.errors" class="invalid-feedback"
                                         align="left">
                                         <div *ngIf="dataForm1.get('regionId')?.errors?.['required']">{{ 'Region is
@@ -191,22 +173,22 @@
                                 </div>
                                 <div class="col-lg-6">
                                     <div>
-                                        <label for="fromORCNo-field" class="form-label">{{ 'From ORC No' | translate
+                                        <label for="fromAISNo-field" class="form-label">{{ 'From AIS No' | translate
                                             }}</label>
-                                        <input type="text" id="fromORCNo-field" class="form-control"
+                                        <input type="text" id="fromAISNo-field" class="form-control"
                                             placeholder="{{ 'Enter From PlateNo' | translate }}" required
-                                            formControlName="fromORCNo"
-                                            [ngClass]="{ 'is-invalid': submitted && form['fromORCNo'].errors }" />
-                                        <!-- @if (submitted && form['fromORCNo'].errors) {
+                                            formControlName="fromAISNo"
+                                            [ngClass]="{ 'is-invalid': submitted && form['fromAISNo'].errors }" />
+                                        <!-- @if (submitted && form['fromAISNo'].errors) {
                                         <div class="invalid-feedback" align="left">
-                                            @if (form['fromORCNo'].errors['required']) {
-                                            <div>{{ 'From ORC Number is required' | translate }}</div>
+                                            @if (form['fromAISNo'].errors['required']) {
+                                            <div>{{ 'From AIS Number is required' | translate }}</div>
                                             }
                                         </div>
                                         } -->
-                                        <div *ngIf="submitted && dataForm1.get('fromORCNo')?.errors"
+                                        <div *ngIf="submitted && dataForm1.get('fromAISNo')?.errors"
                                             class="invalid-feedback" align="left">
-                                            <div *ngIf="dataForm1.get('fromORCNo')?.errors?.['required']">{{ 'From ORC
+                                            <div *ngIf="dataForm1.get('fromAISNo')?.errors?.['required']">{{ 'From AIS
                                                 Number is required'
                                                 | translate }}</div>
                                         </div>
@@ -214,22 +196,22 @@
                                 </div>
                                 <div class="col-lg-6">
                                     <div>
-                                        <label for="toORCNo-field" class="form-label">{{ 'To ORC No' | translate
+                                        <label for="toAISNo-field" class="form-label">{{ 'To AIS No' | translate
                                             }}</label>
-                                        <input type="text" id="toORCNo-field" class="form-control"
+                                        <input type="text" id="toAISNo-field" class="form-control"
                                             placeholder="{{ 'Enter From PlateNo' | translate }}" required
-                                            formControlName="toORCNo"
-                                            [ngClass]="{ 'is-invalid': submitted && form['toORCNo'].errors }" />
-                                        <!-- @if (submitted && form['toORCNo'].errors) {
+                                            formControlName="toAISNo"
+                                            [ngClass]="{ 'is-invalid': submitted && form['toAISNo'].errors }" />
+                                        <!-- @if (submitted && form['toAISNo'].errors) {
                                         <div class="invalid-feedback" align="left">
-                                            @if (form['toORCNo'].errors['required']) {
-                                            <div>{{ 'To ORC Number is required' | translate }}</div>
+                                            @if (form['toAISNo'].errors['required']) {
+                                            <div>{{ 'To AIS Number is required' | translate }}</div>
                                             }
                                         </div>
                                         } -->
-                                        <div *ngIf="submitted && dataForm1.get('toORCNo')?.errors"
+                                        <div *ngIf="submitted && dataForm1.get('toAISNo')?.errors"
                                             class="invalid-feedback" align="left">
-                                            <div *ngIf="dataForm1.get('toORCNo')?.errors?.['required']">{{ 'To ORC
+                                            <div *ngIf="dataForm1.get('toAISNo')?.errors?.['required']">{{ 'To AIS
                                                 Number is required'
                                                 | translate }}</div>
                                         </div>
@@ -288,7 +270,6 @@
 
                     </form>
                 </ng-template>
-
             </div>
         </div>
     </div>

@@ -20,6 +20,7 @@ import { VehicleLookupService } from 'src/app/core/services/vehicle-config-servi
 import { successToast } from 'src/app/core/services/toast.service';
 import { ResponseMessage } from 'src/app/model/ResponseMessage.Model';
 import { PlateStockPostDto } from 'src/app/model/stock-management/plate-stock';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-plate-stock',
@@ -315,8 +316,7 @@ export class PlateStockComponent implements OnInit {
   }
   openModal1(content1: any) {
     if (this.selectedPlateStockIds.length === 0) {
-      // Display an error message or notification
-      console.log('Please select one or more items');
+      Swal.fire({ text: 'Please select at least one checkbox', confirmButtonColor: '#299cdb', });
       return;
     }
   
@@ -328,7 +328,7 @@ export class PlateStockComponent implements OnInit {
     });
   }
   transferData(){
-    this.submitted = true;
+    //this.submitted = true;
 
     if (this.dataForm1.valid) {
       const selectedZoneId = this.dataForm1.controls['zoneId'].value;
@@ -354,9 +354,33 @@ export class PlateStockComponent implements OnInit {
       );
     }
   }
+  deleteSelectedPlates() {
+    if (this.selectedPlateStockIds.length === 0) {
+      Swal.fire({ text: 'Please select at least one checkbox', confirmButtonColor: '#299cdb', });
+      return;
+    }
+  
+    this.plateStocService.deletePlateStock(this.selectedPlateStockIds)
+      .subscribe(
+        response => {
+          console.log('Response from server:', response);
+          // Handle successful delete
+          //console.log('Plates deleted successfully');
+          //this.successAddMessage = response.message;
+          this.closeModal();
+          successToast('Delete Plate Stock Successful!!');
+          // Optionally, you can clear the selectedPlateStockIds array or perform any other necessary actions
+          this.selectedPlateStockIds = [];
+          this.refreshData()
+          this.modalService.dismissAll();
+        },
+        error => {
+          console.error('Error deleting plates:', error);
+        }
+      );
+  }
   saveData() {
     const newData: PlateStockPostDto = this.dataForm.value;
-    //newData.isActive = true;
     this.plateStocService.addPlateStock(newData).subscribe({
       next: (res: ResponseMessage) => {
         if (res.success) {
@@ -373,6 +397,7 @@ export class PlateStockComponent implements OnInit {
         console.error(err);
       },
     });
+    this.submitted = true;
   }
   closeModal() {
     this.modalService.dismissAll();

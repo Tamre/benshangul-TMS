@@ -11,39 +11,24 @@
                         (click)="openModal1(content1)">
                         <i class="ri-file-transfer-line me-1 align-bottom"></i> {{ 'Transfer To Zone' | translate }}
                     </button>
+                    <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#showModal"
+                        (click)="deleteSelectedPlates()">
+                        <i class="ri-delete-bin-2-line"></i> {{ 'Delete Plates' | translate }}
+                    </button>
                 </div>
             </div>
         </div>
     </div>
-
-    <app-filter-fields (criteriaSaved)="receiveCriteria($event)">
-    </app-filter-fields>
-    <hr>
+    <div class="card">
+        <app-filter-fields (criteriaSaved)="receiveCriteria($event)">
+        </app-filter-fields>
+    </div>
+    <!-- <hr> -->
     <div class="col-xxl-12">
         <div class="card" id="contactList">
             <div class="card-header">
                 <div class="row g-4 mb-3">
-                    <!-- <div class="col-md-4">
-                        <div class="search-box">
-                            <input type="text" name="searchTerm" class="form-control"
-                                placeholder="{{ 'Search for Plate Number...' | translate }}" [(ngModel)]="searchTerm"
-                                (ngModelChange)="searchTermSubject.next($event)">
-                            <i class="ri-search-line search-icon"></i>
-                        </div>
-                        <div>
-                            <ng-select [(ngModel)]="selectedPageSize" (ngModelChange)="refreshData()"
-                                [items]="pageSizeOptions" bindLabel="label" bindValue="value">
-                            </ng-select>
-                        </div>
-                    </div> -->
-                    <!-- <div class="col-sm-auto">
-                        <div class="d-flex gap-2">
-                            Show:
-                            <ng-select [(ngModel)]="selectedPageSize" (ngModelChange)="refreshData()"
-                                [items]="pageSizeOptions" bindLabel="label" bindValue="value">
-                            </ng-select>
-                        </div>
-                    </div> -->
+
                     <div class="col-sm-auto d-flex align-items-center">
                         <span class="me-2">Show:</span>
                         <ng-select [(ngModel)]="selectedPageSize" (ngModelChange)="refreshData()"
@@ -175,13 +160,24 @@
                                         [(ngModel)]="selectedPlateType" id="plateTypeId-field" name="plateTypeId"
                                         formControlName="plateTypeId" [searchable]="true" required>
                                     </ng-select>
-                                    @if (submitted && form['plateTypeId'].errors) {
+                                    <div *ngIf="submitted && dataForm.get('plateTypeId')?.errors?.['required']"
+                                        class="invalid-feedback" align="left">
+                                        {{ 'Plate Type is required' | translate }}
+                                    </div>
+                                    <!-- @if (submitted && form['plateTypeId'].errors) {
                                     <div class="invalid-feedback" align="left">
                                         @if (form['plateTypeId'].errors['required']) {s
                                         <div>{{ 'Plate Type is required' | translate }}</div>
                                         }
                                     </div>
-                                    }
+                                    } -->
+                                    <!-- <div *ngIf="submitted && dataForm1.get('plateTypeId')?.errors"
+                                        class="invalid-feedback" align="left">
+                                        <div *ngIf="dataForm1.get('plateTypeId')?.errors?.['required']">{{ 'Plate Type
+                                            is required'
+                                            | translate }}
+                                        </div>
+                                    </div> -->
 
                                 </div>
                                 <div class="col-lg-6">
@@ -192,13 +188,19 @@
                                         [(ngModel)]="selectedRegion" id="regionId-field" name="regionId"
                                         formControlName="regionId" [searchable]="true" required>
                                     </ng-select>
-                                    @if (submitted && form['regionId'].errors) {
+                                    <!-- @if (submitted && form['regionId'].errors) {
                                     <div class="invalid-feedback" align="left">
                                         @if (form['regionId'].errors['required']) {s
                                         <div>{{ 'Region is required' | translate }}</div>
                                         }
                                     </div>
-                                    }
+                                    } -->
+                                    <div *ngIf="submitted && dataForm1.get('regionId')?.errors" class="invalid-feedback"
+                                        align="left">
+                                        <div *ngIf="dataForm1.get('regionId')?.errors?.['required']">{{ 'Region is
+                                            required'
+                                            | translate }}</div>
+                                    </div>
 
                                 </div>
                                 <div class="col-lg-6">
@@ -219,6 +221,7 @@
                                     </div>
                                     }
 
+
                                 </div>
                                 <div class="col-lg-6">
 
@@ -230,13 +233,7 @@
                                         name="backPlateSizeId" formControlName="backPlateSizeId" [searchable]="true"
                                         required>
                                     </ng-select>
-                                    @if (submitted && form['backPlateSizeId'].errors) {
-                                    <div class="invalid-feedback" align="left">
-                                        @if (form['backPlateSizeId'].errors['required']) {s
-                                        <div>{{ 'Back Plate Size is required' | translate }}</div>
-                                        }
-                                    </div>
-                                    }
+
 
                                 </div>
                                 <div class="col-lg-6">
@@ -288,15 +285,8 @@
                                         <label for="aToZ-field" class="form-label">{{ 'A To Z' | translate }}</label>
                                         <input type="text" id="aToZ-field" class="form-control"
                                             placeholder="{{ 'Enter A To Z' | translate }}" required
-                                            formControlName="aToZ"
-                                             />
-                                        @if (submitted && form['aToZ'].errors) {
-                                        <div class="invalid-feedback" align="left">
-                                            @if (form['aToZ'].errors['required']) {
-                                            <div>{{ 'A To Z is required' | translate }}</div>
-                                            }
-                                        </div>
-                                        }
+                                            formControlName="aToZ" />
+
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
@@ -314,6 +304,7 @@
                                             }
                                         </div>
                                         }
+
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
@@ -331,6 +322,8 @@
                                             }
                                         </div>
                                         }
+
+
                                     </div>
                                 </div>
 
