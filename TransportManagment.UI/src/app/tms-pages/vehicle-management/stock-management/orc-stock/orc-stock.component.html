@@ -146,7 +146,7 @@
 
                                     <ng-select [items]="stocksNames" bindLabel="name" bindValue="id"
                                         [(ngModel)]="selectedOrcType" id="stockTypeId-field" name="stockTypeId"
-                                        formControlName="stockTypeId" [searchable]="true" required>
+                                        formControlName="stockTypeId" [searchable]="true" placeholder="Select ORC Type" required>
                                     </ng-select>
                                     <!-- @if (submitted && form['stockTypeId'].errors) {
                                     <div class="invalid-feedback" align="left">
@@ -172,7 +172,7 @@
                                         }}</label>
                                     <ng-select [items]="regionNames" bindLabel="name" bindValue="id"
                                         [(ngModel)]="selectedRegion" id="regionId-field" name="regionId"
-                                        formControlName="regionId" [searchable]="true" required>
+                                        formControlName="regionId" [searchable]="true" placeholder="Select Region" required>
                                     </ng-select>
                                     <!-- @if (submitted && form['regionId'].errors) {
                                     <div class="invalid-feedback" align="left">

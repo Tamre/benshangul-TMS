@@ -39,6 +39,7 @@ export class PlateStockComponent implements OnInit {
 
   searchResults: any;
 
+  plateStockCriteria: plateStockCriteria = new plateStockCriteria()
   criteria: { columnName: string, filterValue: string }[] = [];
 
   allPlateStocks?: any;
@@ -54,6 +55,9 @@ export class PlateStockComponent implements OnInit {
   allZones?: any;
   zones?: any;
 
+  allists?: any;
+  lists?: any;
+
   frontPlateSize: number = 2;
   allFrontPlate?: any;
   frontPlate?: any;
@@ -65,6 +69,10 @@ export class PlateStockComponent implements OnInit {
     { name: 'Five', code: 'FIVE' },
     { name: 'Six', code: 'SIX' },
   ]
+  statusOptions = [
+    { label: 'Active', value: 'true' },
+    { label: 'Inactive', value: 'false' },
+  ];
   issuranceTypeEnum = [
     { name: 'Vehicle', code: 'Vehicle' },
     { name: 'Temporary', code: 'Temporary' },
@@ -129,6 +137,7 @@ export class PlateStockComponent implements OnInit {
   ngOnInit(): void {
     this.currentUser = this.tokenStorageService.getCurrentUser();
     this.refreshData()
+    this.getDatasforAddPlateStock()
     /**
      * Form Validation
      */
@@ -158,17 +167,6 @@ export class PlateStockComponent implements OnInit {
       }
     });
   }
-  // checkUncheckAll(ev: any) {
-  //   this.plateStocks.forEach((x: { state: any; }) => x.state = ev.target.checked)
-  // }
-  // checkUncheckAll(ev: any, id: string | null ) {
-  //   const isChecked = ev.target.checked;
-  //   if (isChecked) {
-  //     this.selectedPlateStockIds.push(id);
-  //   } else {
-  //     this.selectedPlateStockIds = this.selectedPlateStockIds.filter(stockId => stockId !== id);
-  //   }
-  // }
   checkUncheckAll(ev: any, id: string | null) {
     const isChecked = ev.target.checked;
 
@@ -321,17 +319,24 @@ export class PlateStockComponent implements OnInit {
 
       },
     });
+    
 
   }
 
-
+  saveCriteria() {
+    //this.criteriaSaved.emit(this.criteria);
+    this.criteria = Object.entries(this.plateStockCriteria)
+    .filter(([key, value]) => value !== undefined && value !== null)
+    .map(([columnName, filterValue]) => ({ columnName, filterValue: filterValue.toString() }));
+    this.refreshData();
+  }
 
   changePage() {
     this.plateStocks = this.service.changePage(this.allPlateStocks, this.metaData);
     this.refreshData();
   }
   openModal(content: any) {
-    this.getDatasforAddPlateStock()
+    //this.getDatasforAddPlateStock()
     this.dataForm.reset();
     this.dataForm.controls["createdById"].setValue(this.currentUser?.userId);
     this.modalService.open(content, { size: "lg", centered: true });
@@ -408,6 +413,7 @@ export class PlateStockComponent implements OnInit {
     // if (this.dataForm.invalid) {
     //   return; // Don't proceed if the form is invalid
     // }
+    this.dataForm.markAsTouched();
     const newData: PlateStockPostDto = this.dataForm.value;
     this.plateStocService.addPlateStock(newData).subscribe({
       next: (res: ResponseMessage) => {
@@ -425,7 +431,7 @@ export class PlateStockComponent implements OnInit {
         console.error(err);
       },
     });
-    //this.submitted = true;
+    this.submitted = true;
   }
   
   closeModal() {
@@ -441,4 +447,12 @@ export class PlateStockComponent implements OnInit {
     return this.dataForm.controls;
   }
 
+}
+export class plateStockCriteria {
+  plate_code!: string
+  region!: string
+  front_plate_size!: string
+  back_plate_size!: string
+  zone!: string
+  status!: string
 }

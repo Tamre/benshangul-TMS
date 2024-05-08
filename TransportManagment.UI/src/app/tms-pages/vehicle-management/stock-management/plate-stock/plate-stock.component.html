@@ -11,10 +11,6 @@
                         (click)="openModal1(content1)">
                         <i class="ri-file-transfer-line me-1 align-bottom"></i> {{ 'Transfer To Zone' | translate }}
                     </button>
-                    <!-- <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#showModal"
-                        (click)="deleteSelectedPlates()">
-                        <i class="ri-delete-bin-2-line"></i> {{ 'Delete Plates' | translate }}
-                    </button> -->
                     <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#showModal"
                         (click)="confirm(deleteModel)">
                         <i class="ri-delete-bin-2-line"></i> {{ 'Delete Plates' | translate }}
@@ -23,10 +19,55 @@
             </div>
         </div>
     </div>
-    <div class="card">
+    <!-- <div class="card">
         <app-filter-fields (criteriaSaved)="receiveCriteria($event)">
         </app-filter-fields>
+    </div> -->
+    
+<div class="row g-3 align-items-end">
+    <div class="col-lg-2">
+      <label for="plateType-field" class="form-label">{{ 'Plate Type Name' | translate }}</label>
+      <ng-select [items]="allPlates" [(ngModel)] = "plateStockCriteria.plate_code" bindLabel="name" bindValue="id" id="plateType-field" name="plateType"
+        [searchable]="true" >
+      </ng-select>
     </div>
+    <div class="col-lg-2">
+      <label for="region-field" class="form-label">{{ 'region Name' | translate }}</label>
+      <ng-select [items]="allRegion" [(ngModel)] = "plateStockCriteria.region" bindLabel="name" bindValue="id" id="region-field" name="region" [searchable]="true"
+        >
+      </ng-select>
+    </div>
+    <div class="col-lg-2">
+      <label for="frontPlate-field" class="form-label">{{ 'Front Plate Size' | translate }}</label>
+      <ng-select [items]="allFrontPlate" [(ngModel)] = "plateStockCriteria.front_plate_size" bindLabel="name" bindValue="id" id="frontPlate-field" name="frontPlate"
+        [searchable]="true" >
+      </ng-select>
+    </div>
+    <div class="col-lg-2">
+      <label for="BackPlate-field" class="form-label">{{ 'Back Plate Size' | translate }}</label>
+      <ng-select [items]="allBackPlate" [(ngModel)] = "plateStockCriteria.back_plate_size" bindLabel="name" bindValue="id" id="BackPlate-field" name="BackPlate"
+        [searchable]="true" >
+      </ng-select>
+    </div>
+    <div class="col-lg-2">
+      <label for="zone-field" class="form-label">{{ 'Zone' | translate }}</label>
+      <ng-select [items]="allZones" [(ngModel)] = "plateStockCriteria.zone" bindLabel="name" bindValue="id" id="zone-field" name="zone" [searchable]="true"
+        >
+      </ng-select>
+    </div>
+    <div class="col-lg-1">
+      <label for="status-field" class="form-label">{{ 'Status' | translate }}</label>
+      <ng-select [items]="statusOptions" [(ngModel)] = "plateStockCriteria.status" bindLabel="label" bindValue="value" id="status-field" name="status"
+        [searchable]="true" >
+        <ng-option [value]="null" selected>Select Status</ng-option>
+      </ng-select>
+    </div>
+    <div class="col-lg-1 d-flex align-items-end">
+      <button class="btn btn-success add-btn mt-auto" (click)="saveCriteria()">
+        <i class="ri-filter-3-line"></i> Show
+      </button>
+    </div>
+  </div>
     <!-- <hr> -->
     <div class="col-xxl-12">
         <div class="card" id="contactList">
@@ -160,14 +201,22 @@
                                     <label for="plateTypeId-field" class="form-label">{{ 'Plate Type' | translate
                                         }}</label>
 
-                                    <ng-select [items]="plateTypeNames" bindLabel="name" bindValue="id"
+                                    <!-- <ng-select [items]="plateTypeNames" bindLabel="name" bindValue="id"
                                         [(ngModel)]="selectedPlateType" id="plateTypeId-field" name="plateTypeId"
                                         formControlName="plateTypeId" [searchable]="true" required>
                                     </ng-select>
                                     <div *ngIf="submitted && dataForm.get('plateTypeId')?.errors?.['required']"
                                         class="invalid-feedback" align="left">
                                         {{ 'Plate Type is required' | translate }}
-                                    </div>
+                                    </div> -->
+                                    <ng-select [items]="plateTypeNames" bindLabel="name" bindValue="id"
+                                        [(ngModel)]="selectedPlateType" id="plateTypeId-field" name="plateTypeId"
+                                        formControlName="plateTypeId" [searchable]="true" placeholder="Select plate Type Name" required
+                                        [ngClass]="{'ng-select-invalid': dataForm.get('plateTypeId')?.touched && dataForm.get('plateTypeId')?.errors}">
+                                    </ng-select>
+                                    <span *ngIf="dataForm.get('plateTypeId')?.touched && dataForm.get('plateTypeId')?.errors">This field is required!</span>
+                                   
+
                                     <!-- @if (submitted && form['plateTypeId'].errors) {
                                     <div class="invalid-feedback" align="left">
                                         @if (form['plateTypeId'].errors['required']) {s
@@ -190,7 +239,7 @@
                                         }}</label>
                                     <ng-select [items]="regionNames" bindLabel="name" bindValue="id"
                                         [(ngModel)]="selectedRegion" id="regionId-field" name="regionId"
-                                        formControlName="regionId" [searchable]="true" required>
+                                        formControlName="regionId" [searchable]="true" placeholder="Select Region" required>
                                     </ng-select>
                                     <!-- @if (submitted && form['regionId'].errors) {
                                     <div class="invalid-feedback" align="left">
@@ -214,7 +263,7 @@
                                         }}</label>
                                     <ng-select [items]="frontPlateNames" bindLabel="name" bindValue="id"
                                         [(ngModel)]="selectedFrontPlateSize" id="frontPlateSizeId-field"
-                                        name="frontPlateSizeId" formControlName="frontPlateSizeId" [searchable]="true"
+                                        name="frontPlateSizeId" formControlName="frontPlateSizeId" [searchable]="true" placeholder="Select Front Plate Size"
                                         required>
                                     </ng-select>
                                     @if (submitted && form['frontPlateSizeId'].errors) {
@@ -234,7 +283,7 @@
                                         }}</label>
                                     <ng-select [items]="backPlateNames" bindLabel="name" bindValue="id"
                                         [(ngModel)]="selectedBackPlateSize" id="backPlateSizeId-field"
-                                        name="backPlateSizeId" formControlName="backPlateSizeId" [searchable]="true"
+                                        name="backPlateSizeId" formControlName="backPlateSizeId" [searchable]="true" placeholder="Select Back Plate Size"
                                         required>
                                     </ng-select>
 
@@ -247,7 +296,7 @@
                                         <ng-select [items]="plateDigitEnum" bindLabel="name" bindValue="code"
                                             id="plateDigit-field" name="plateDigit" formControlName="plateDigit"
                                             [ngClass]="{ 'is-invalid': submitted && dataForm.controls['plateDigit'].errors }"
-                                            [searchable]="false" required>
+                                            [searchable]="false" placeholder="Select Plate Digit" required>
                                             <ng-option value="" disabled>{{ 'Select Plate Digit' | translate
                                                 }}</ng-option>
                                         </ng-select>
@@ -273,7 +322,7 @@
                                         <ng-select [items]="issuranceTypeEnum" bindLabel="name" bindValue="code"
                                             id="issuanceType-field" name="issuanceType" formControlName="issuanceType"
                                             [ngClass]="{ 'is-invalid': submitted && dataForm.controls['issuanceType'].errors }"
-                                            [searchable]="false" required>
+                                            [searchable]="false" placeholder="Select Issurance Type" required>
                                             <ng-option value="" disabled>{{ 'Select Issurance Type' | translate
                                                 }}</ng-option>
                                         </ng-select>
@@ -329,7 +378,8 @@
                                         @if (submitted && form['toPlateNo'].errors) {
                                         <div class="invalid-feedback" align="left">
                                             @if (form['toPlateNo'].errors['greaterThanOrEqual']) {
-                                            <div>{{ 'To Plate Number must be less than or equal to from plate num' | translate }}</div>
+                                            <div>{{ 'To Plate Number must be less than or equal to from plate num' |
+                                                translate }}</div>
                                             }
                                         </div>
                                         }

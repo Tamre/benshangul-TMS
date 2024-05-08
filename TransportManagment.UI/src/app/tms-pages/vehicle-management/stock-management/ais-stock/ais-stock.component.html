@@ -146,7 +146,7 @@
 
                                     <ng-select [items]="stocksNames" bindLabel="name" bindValue="id"
                                         [(ngModel)]="selectedAisType" id="stockTypeId-field" name="stockTypeId"
-                                        formControlName="stockTypeId" [searchable]="true" required>
+                                        formControlName="stockTypeId" [searchable]="true" placeholder="Select AIS Type" required>
                                     </ng-select>
                                     
                                     <div *ngIf="submitted && form['stockTypeId'].errors" class="invalid-feedback" align="left">
@@ -160,7 +160,7 @@
                                         }}</label>
                                     <ng-select [items]="regionNames" bindLabel="name" bindValue="id"
                                         [(ngModel)]="selectedRegion" id="regionId-field" name="regionId"
-                                        formControlName="regionId" [searchable]="true" required>
+                                        formControlName="regionId" [searchable]="true" placeholder="Select Region" required>
                                     </ng-select>
                                     
                                     <div *ngIf="submitted && dataForm1.get('regionId')?.errors" class="invalid-feedback"
