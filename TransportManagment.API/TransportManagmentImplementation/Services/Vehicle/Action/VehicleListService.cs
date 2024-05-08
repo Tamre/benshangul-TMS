@@ -24,7 +24,7 @@ namespace TransportManagmentImplementation.Services.Vehicle.Action
         private readonly ApplicationDbContext _dbContext;
         private readonly ILoggerManagerService _logger;
         private readonly IGeneralConfigService _generalConfigService;
-        
+
 
         public VehicleListService(ApplicationDbContext dbContext, ILoggerManagerService logger, IGeneralConfigService generalConfigService)
         {
@@ -37,7 +37,7 @@ namespace TransportManagmentImplementation.Services.Vehicle.Action
 
             try
             {
-<<<<<<< Updated upstream
+
                 var registrationNo = await _generalConfigService.GenerateVehicleNumber(VehicleSerialType.NEWVEHICLE, vehicleListPostDto.ServiceZoneId, vehicleListPostDto.CreatedById);
 
                 var chessisExists = await _dbContext.VehicleLists.AnyAsync(x => x.ChassisNo == vehicleListPostDto.ChassisNo);
@@ -46,26 +46,14 @@ namespace TransportManagmentImplementation.Services.Vehicle.Action
                 {
                     return new ResponseMessage { Success = false, Message = "Chessis Number already exists" };
                 }
-                var engineExists = await _dbContext.VehicleLists.AnyAsync(x => !string.IsNullOrEmpty(x.EngineNumber) && x.EngineNumber == vehicleListPostDto.EngineNumber );
+                var engineExists = await _dbContext.VehicleLists.AnyAsync(x => !string.IsNullOrEmpty(x.EngineNumber) && x.EngineNumber == vehicleListPostDto.EngineNumber);
 
                 if (engineExists)
                 {
                     return new ResponseMessage { Success = false, Message = "Engine  Number already exists" };
                 }
 
-=======
-                var registrationNo =await _generalConfigService.GenerateVechilceCode("RN", VehicleSerialType.NEWVEHICLE);
 
-                if (vehicleListPostDto.ChassisNo.Length != 17)
-                {
-                    return new ResponseMessage
-                    {
-                        Success = false,
-                        Message = "Chassis No Length Must be equal to 17 !! "
-                    };
-
-                }
->>>>>>> Stashed changes
                 var vechicle = new VehicleList
                 {
                     Id = Guid.NewGuid(),
@@ -93,20 +81,20 @@ namespace TransportManagmentImplementation.Services.Vehicle.Action
                     ServiceZoneId = vehicleListPostDto.ServiceZoneId,
                     CreatedById = vehicleListPostDto.CreatedById,
                     CreatedDate = DateTime.Now,
-<<<<<<< Updated upstream
+
                     TypeOfVehicle = vehicleListPostDto.TypeOfVehicle,
                     TransferStatus = vehicleListPostDto.TransferStatus,
                     VehicleCurrentStatus = vehicleListPostDto.VehicleCurrentStatus,
-=======
 
->>>>>>> Stashed changes
+
+
                 };
 
                 await _dbContext.VehicleLists.AddAsync(vechicle);
                 await _dbContext.SaveChangesAsync();
 
-              
-                    var transferNo = await _generalConfigService.GenerateVehicleNumber(VehicleSerialType.TRANSFERNO, vehicleListPostDto.ServiceZoneId, vehicleListPostDto.CreatedById);
+
+                var transferNo = await _generalConfigService.GenerateVehicleNumber(VehicleSerialType.TRANSFERNO, vehicleListPostDto.ServiceZoneId, vehicleListPostDto.CreatedById);
 
                 DateTime? TransferDate = null;
                 if (!string.IsNullOrEmpty(vehicleListPostDto.LetterDate))
@@ -166,6 +154,7 @@ namespace TransportManagmentImplementation.Services.Vehicle.Action
 
         }
 
+<<<<<<< Updated upstream
         public async Task<ResponseMessage> AddVehicleDocument(AddVehicleDocumetDto addVehicleDocument)
         {
             
@@ -445,5 +434,10 @@ namespace TransportManagmentImplementation.Services.Vehicle.Action
 
             return new ResponseMessage { Success = true, Message = "Updated Vehicle Succesfully!!" };
         }
+=======
+
+
+
+>>>>>>> Stashed changes
     }
 }

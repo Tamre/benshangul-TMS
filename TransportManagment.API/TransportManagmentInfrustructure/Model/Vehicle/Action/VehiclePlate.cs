@@ -9,6 +9,7 @@ using TransportManagmentInfrustructure.Model.Authentication;
 using TransportManagmentInfrustructure.Model.Common;
 using TransportManagmentInfrustructure.Model.Vehicle.Configuration;
 using static TransportManagmentInfrustructure.Enums.CommonEnum;
+using static TransportManagmentInfrustructure.Enums.VehicleEnum;
 
 namespace TransportManagmentInfrustructure.Model.Vehicle.Action
 {
@@ -25,9 +26,14 @@ namespace TransportManagmentInfrustructure.Model.Vehicle.Action
         [Required]
         public int GivenZoneId { get; set; }
         public virtual ZoneList GivenZone { get; set; } = null!;
+<<<<<<< Updated upstream
         public ServiceModule ServiceModule { get; set; } 
         public ServiceModule PreviousModule { get; set; }
 
+=======
+        public ServiceModule ServiceModule { get; set; }
+        public IssueReason IssueReason { get; set; }
+>>>>>>> Stashed changes
        
     }
 }

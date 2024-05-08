@@ -1,4 +1,5 @@
 ﻿
+
 using Implementation.Interfaces.Authentication;
 using Implementation.Services.Authentication;
 using IntegratedImplementation.Interfaces.Configuration;
@@ -8,6 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+
 using TransportManagmentImplementation.Interfaces.Common;
 using TransportManagmentImplementation.Interfaces.Configuration;
 using TransportManagmentImplementation.Interfaces.Vehicle.Action;
@@ -84,6 +86,8 @@ namespace TransportManagmentImplementation.Datas
             services.AddScoped<IAISStockService, AISStockService>();
             services.AddScoped<IORCStockService, ORCStockService>();
             services.AddScoped<IPlateStockService, PlateStockService>();
+            services.AddScoped<IVehiclePlateService, VehiclePlateService>();
+
 
             #endregion
 
