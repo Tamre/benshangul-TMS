@@ -39,5 +39,48 @@ namespace TransportManagmentAPI.Controllers.Vehicle.Action
             }
         }
 
+        [HttpPost]
+        [ProducesResponseType(typeof(ResponseMessage), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> AddVehicleDocument(AddVehicleDocumetDto addVehicleDocument)
+        {
+            if (ModelState.IsValid)
+            {
+                return Ok(await _vehicleListService.AddVehicleDocument(addVehicleDocument));
+            }
+            else
+            {
+                return BadRequest();
+            }
+        }
+
+
+        [HttpGet]
+        [ProducesResponseType(typeof(VehicleDetailDto), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> GetVehicleDetail(VehicleGetParameterDto vehicleGet)
+        {
+            if (ModelState.IsValid)
+            {
+                return Ok(await _vehicleListService.GetVehicleDetail(vehicleGet));
+            }
+            else
+            {
+                return BadRequest();
+            }
+        }
+
+
+        [HttpPut]
+        [ProducesResponseType(typeof(ResponseMessage), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> Update(UpdateVehicleDto updteVehicle)
+        {
+            if (ModelState.IsValid)
+            {
+                return Ok(await _vehicleListService.Update(updteVehicle));
+            }
+            else
+            {
+                return BadRequest();
+            }
+        }
     }
 }

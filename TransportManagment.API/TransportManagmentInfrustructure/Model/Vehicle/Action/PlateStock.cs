@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Drawing;
 using System.Linq;
 using System.Security.Policy;
@@ -16,6 +17,11 @@ namespace TransportManagmentInfrustructure.Model.Vehicle.Action
 {
     public class PlateStock: ActionIdModel
     {
+        public PlateStock()
+        {
+            Plates = new HashSet<VehiclePlate>();
+        }
+
         [Required]
         public int PlateTypeId { get; set; }
         public virtual PlateType PlateType { get; set; } = null!;
@@ -37,6 +43,9 @@ namespace TransportManagmentInfrustructure.Model.Vehicle.Action
         public IssuanceType IssuanceType { get; set; }
         public bool IsBackLog { get; set; }
         public VehiclePlate VehiclePlate { get; set; } = null!;
+
+        [InverseProperty(nameof(VehiclePlate.PlateStock))]
+        public ICollection<VehiclePlate> Plates { get; set; }
 
     }
 }

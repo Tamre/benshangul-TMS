@@ -9,6 +9,7 @@ using TransportManagmentInfrustructure.Data;
 using TransportManagmentInfrustructure.Model.Authentication;
 using TransportManagmentInfrustructure.Model.Common;
 using TransportManagmentInfrustructure.Model.Vehicle.Configuration;
+using Microsoft.AspNetCore.Http;
 
 namespace TransportManagmentImplementation.DTOS.Vehicle.Action
 {
@@ -64,15 +65,20 @@ namespace TransportManagmentImplementation.DTOS.Vehicle.Action
         public string? LetterDate { get; set; }
     }
 
-    public record IVehicleListGetDto : VehicleListPostDto
+  
+    public record UpdateVehicleDto: VehicleListPostDto
     {
-
+        [Required]
+        public Guid Id { get; set; }
+        public bool ISApproved { get; set; }
+        public RegistrationType RegistrationType { get; set; }
     }
-
 
     public record VehicleDetailDto
     {
+        public Guid Id { get; set; }
         public string Model { get; set; } = null!;
+        public int ModelId { get; set; }
         public string TaxStatus { get; set; } = null!;
         public string? OfficeCode { get; set; }
         public string DeclarationNo { get; set; } = null!;
@@ -83,7 +89,9 @@ namespace TransportManagmentImplementation.DTOS.Vehicle.Action
         public double? InvoicePrice { get; set; }
         public string ChassisNo { get; set; } = null!;
         public string? EngineNumber { get; set; }
+        public int AssembledCountryId { get; set; }
         public string AssembledCountry { get; set; } = null!;
+        public int ChassisMadeId { get; set; }
         public string ChassisMadeCountry { get; set; } = null!;
         public int ManufacturingYear { get; set; }
         public int HorsePower { get; set; }
@@ -96,4 +104,26 @@ namespace TransportManagmentImplementation.DTOS.Vehicle.Action
         public string TransferStatus { get; set; } = null!;
 
     }
+
+
+    public record VehicleGetParameterDto
+    {
+        public VehicleFileteParameter VehicleFileteParameter { get; set; }
+        public string Value { get; set; } = null!;
+        public bool RegionalUser { get; set; } 
+        public RegistrationType? RegistrationType { get; set; }
+
+    }
+
+
+    public record AddVehicleDocumetDto
+    {
+        public Guid VehicleId { get; set; }
+        public string CreatedById { get; set; } = null!;
+        public IFormFile Document { get; set; } = null!;
+        public int DocumentTypeId { get; set; }
+
+    }
+
+    
 }
