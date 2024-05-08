@@ -25,12 +25,14 @@ export class AisStockService {
 
   getAllAisStock(pageNumber: number,pageSize: number, criteria: { columnName: string, filterValue: string }[],searchTerm: string) {
     var headers = this.headers
-    //const encodedCriteria = JSON.stringify(criteria.reduce((acc, curr) => ({ ...acc, [curr.columnName]: curr.filterValue }), {}));
-    const encodedCriteria = criteria.map(c => JSON.stringify({ columnName: c.columnName, filterValue: c.filterValue }));
-    const params = new HttpParams().set('PageNumber', pageNumber.toString())
+    var params = new HttpParams().set('PageNumber', pageNumber.toString())
     .set('PageSize', pageSize.toString())
-    .set('Criteria', encodedCriteria.join('&Criteria='))
     .set('SearchTerm', searchTerm);
+    criteria.forEach((c, index) => {
+      params = params
+        .set(`Criteria[${index}].ColumnName`, c.columnName)
+        .set(`Criteria[${index}].FilterValue`, c.filterValue);
+    });
     return this.http.get<PaginatedResponse<AisStockGetDto>>(`${this.baseUrl}/vech-action/AISStock/GetAll`,{headers, params});
   }
   transferAisStock(data: { aisStockIds: string[], toZoneId: number }){

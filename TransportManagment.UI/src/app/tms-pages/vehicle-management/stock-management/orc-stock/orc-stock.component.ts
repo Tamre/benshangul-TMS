@@ -55,14 +55,14 @@ export class OrcStockComponent {
   allZone?:any;
   zones?:any;
 
-
+  orcStockCriteria: orcStockCriteria = new orcStockCriteria()
   criteria: { columnName: string, filterValue: string }[] = [];
   statusOptions = [
     { label: 'Active', value: 'true' },
     { label: 'Inactive', value: 'false' },
   ];
-  selectedStatus: string | null = null;
-  criteriaSaved = new EventEmitter<{ columnName: string, filterValue: string }[]>();
+  //selectedStatus: string | null = null;
+  //criteriaSaved = new EventEmitter<{ columnName: string, filterValue: string }[]>();
 
   pageSizeOptions = [
     { label: '10', value: 10 },
@@ -198,11 +198,6 @@ export class OrcStockComponent {
             this.stocks = res
             this.allStocks = cloneDeep(res);
             this.orcStock = this.allStocks.filter((stock: { category: string }) => stock.category === 'ORC');
-            // this.stocksNames = this.orcStock.map((veh: any) => ({
-            //   id: veh.id,
-            //   name: veh.name,
-            // }));
-            // this.stocksNames = orcStock.map((stock: any) => stock.name);
             this.stocksNames = this.orcStock.map((stock: any) => ({ id: stock.id, name: stock.name }));
             
           }
@@ -242,39 +237,13 @@ export class OrcStockComponent {
     });
     
   }
-  onStockTypeChange(event: any) {
-    const stockTypeId = event?.id || null;
-
-    if (stockTypeId !== null) {
-      this.criteria = [{ columnName: 'orc_type', filterValue: stockTypeId.toString() }];
-    }
-  }
-  onStatusChange(event: any) {
-    const selectedItem = event;
-    this.selectedStatus = selectedItem ? selectedItem.value : null;
   
-    if (this.selectedStatus !== null) {
-      const existingCriteria = this.criteria.filter(c => c.columnName !== 'status');
-      this.criteria = [
-        ...existingCriteria,
-        { columnName: 'status', filterValue: this.selectedStatus }
-      ];
-    }
-  }
-  onZoneChange(event: any) {
-    const zoneId = event?.id || null;
-
-    if (zoneId !== null) {
-      const existingCriteria = this.criteria.filter(c => c.columnName !== 'zone');
-      this.criteria = [...existingCriteria, { columnName: 'zone', filterValue: zoneId.toString() }];
-    }
-  }
   saveCriteria() {
-    this.criteriaSaved.emit(this.criteria);
-
-    //this.criteria = criteria;
+    //this.criteriaSaved.emit(this.criteria);
+    this.criteria = Object.entries(this.orcStockCriteria)
+    .filter(([key, value]) => value !== undefined && value !== null)
+    .map(([columnName, filterValue]) => ({ columnName, filterValue: filterValue.toString() }));
     this.refreshData();
-
   }
 
   checkUncheckAll(ev: any, id: string | null) {
@@ -362,4 +331,9 @@ export class OrcStockComponent {
   closeModal1() {
     this.modalService.dismissAll();
   }
+}
+export class orcStockCriteria {
+  orc_type!: string
+  zone!: string
+  status!: string
 }

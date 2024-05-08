@@ -21,6 +21,7 @@ import { successToast } from 'src/app/core/services/toast.service';
 import { ResponseMessage } from 'src/app/model/ResponseMessage.Model';
 import { PlateStockPostDto } from 'src/app/model/stock-management/plate-stock';
 import Swal from 'sweetalert2';
+import { orcStockCriteria } from '../orc-stock/orc-stock.component';
 
 @Component({
   selector: 'app-plate-stock',
@@ -38,6 +39,7 @@ export class PlateStockComponent implements OnInit {
 
   searchResults: any;
 
+  plateStockCriteria: plateStockCriteria = new plateStockCriteria()
   criteria: { columnName: string, filterValue: string }[] = [];
 
   allPlateStocks?: any;
@@ -50,8 +52,11 @@ export class PlateStockComponent implements OnInit {
   allRegion?: any;
   regions?: any;
 
-  allZones?:any;
-  zones?:any;
+  allZones?: any;
+  zones?: any;
+
+  allists?: any;
+  lists?: any;
 
   frontPlateSize: number = 2;
   allFrontPlate?: any;
@@ -64,6 +69,10 @@ export class PlateStockComponent implements OnInit {
     { name: 'Five', code: 'FIVE' },
     { name: 'Six', code: 'SIX' },
   ]
+  statusOptions = [
+    { label: 'Active', value: 'true' },
+    { label: 'Inactive', value: 'false' },
+  ];
   issuranceTypeEnum = [
     { name: 'Vehicle', code: 'Vehicle' },
     { name: 'Temporary', code: 'Temporary' },
@@ -77,20 +86,15 @@ export class PlateStockComponent implements OnInit {
   searchTerm = '';
 
   plateTypeNames: string[] = [];
-  //selectedPlateTypeId: number | null = null;
-  //plateTypeNameIdMap: { [name: string]: number } = {};
   selectedPlateType: { id: number; name: string } | null = null;
 
   regionNames: string[] = [];
-  //regionNameIdMap: { [name: string]: number } = {};
   selectedRegion: { id: number; name: string } | null = null;
 
   zoneNames: string[] = [];
   selectedZone: { id: number; name: string } | null = null;
 
-  //frontPlateNameIdMap: { [name: string]: number } = {};
   frontPlateNames: string[] = [];
-  //backPlateNameIdMap: { [name: string]: number } = {};
   backPlateNames: string[] = [];
   selectedFrontPlateSize: { id: number; name: string } | null = null;
   selectedBackPlateSize: { id: number; name: string } | null = null;
@@ -133,6 +137,7 @@ export class PlateStockComponent implements OnInit {
   ngOnInit(): void {
     this.currentUser = this.tokenStorageService.getCurrentUser();
     this.refreshData()
+    this.getDatasforAddPlateStock()
     /**
      * Form Validation
      */
@@ -140,12 +145,12 @@ export class PlateStockComponent implements OnInit {
       plateTypeId: ["", [Validators.required]],
       regionId: ["", [Validators.required]],
       frontPlateSizeId: ["", [Validators.required]],
-      backPlateSizeId: [""],
+      backPlateSizeId: [null],
       plateDigit: ["", [Validators.required]],
       issuanceType: ["", [Validators.required]],
-      aToZ: [""],
+      aToZ: [null],
       fromPlateNo: ["", [Validators.required], this.patternValidator],
-      toPlateNo: ["", [Validators.required], this.patternValidator],
+      toPlateNo: ["", [Validators.required, this.greaterThanOrEqualValidator], this.patternValidator],
       createdById: [this.currentUser?.userId, [Validators.required]],
     });
     this.dataForm1 = this.formBuilder.group({
@@ -162,25 +167,14 @@ export class PlateStockComponent implements OnInit {
       }
     });
   }
-  // checkUncheckAll(ev: any) {
-  //   this.plateStocks.forEach((x: { state: any; }) => x.state = ev.target.checked)
-  // }
-  // checkUncheckAll(ev: any, id: string | null ) {
-  //   const isChecked = ev.target.checked;
-  //   if (isChecked) {
-  //     this.selectedPlateStockIds.push(id);
-  //   } else {
-  //     this.selectedPlateStockIds = this.selectedPlateStockIds.filter(stockId => stockId !== id);
-  //   }
-  // }
   checkUncheckAll(ev: any, id: string | null) {
     const isChecked = ev.target.checked;
-  
+
     if (id === null) {
       // Handle the case when the header checkbox is checked or unchecked
       this.plateStocks.forEach((x: { state: any }) => (x.state = isChecked));
       this.selectedPlateStockIds = isChecked
-        ? this.plateStocks.map((data:any) => data.id)
+        ? this.plateStocks.map((data: any) => data.id)
         : [];
     } else {
       // Handle the case when an individual checkbox is checked or unchecked
@@ -197,17 +191,44 @@ export class PlateStockComponent implements OnInit {
   patternValidator: ValidatorFn = (control: AbstractControl): Observable<ValidationErrors | null> => {
     const pattern = /^-?\d+$/;
     const value = control.value;
-  
+
     return of(pattern.test(value) ? null : { pattern: true }).pipe(
       map((error: ValidationErrors | null) => error)
     );
   };
+  greaterThanOrEqualValidator: ValidatorFn = (control: AbstractControl): { [key: string]: boolean } | null => {
+    if (!control.parent) {
+      return null;
+    }
 
-  receiveCriteria(criteria: { columnName: string, filterValue: string }[]) {
-    this.criteria = criteria;
+    const fromPlateNo = control.parent.get('fromPlateNo');
+    const toPlateNo = control.value;
+
+    if (!fromPlateNo || !toPlateNo) {
+      return null;
+    }
+
+    const fromPlateNoValue = parseInt(fromPlateNo.value, 10);
+    const toPlateNoValue = parseInt(toPlateNo, 10);
+
+    if (isNaN(fromPlateNoValue) || isNaN(toPlateNoValue)) {
+      return null;
+    }
+
+    if (toPlateNoValue < fromPlateNoValue) {
+      return { greaterThanOrEqual: true };
+    }
+
+    return null;
+  };
+
+  receiveCriteria(criteria: any[]) {
+    this.criteria = Object.entries(criteria)
+    .filter(([key, value]) => value !== undefined && value !== null)
+    .map(([columnName, filterValue]) => ({ columnName, filterValue: filterValue.toString() }));
     this.refreshData();
   }
-  
+
   getDatasforAddPlateStock() {
     this.plateTypeService.getAllPlateType().subscribe({
       next: (res) => {
@@ -218,7 +239,7 @@ export class PlateStockComponent implements OnInit {
             id: veh.id,
             name: veh.name,
           }));
-          
+
         }
       },
       error: (err) => {
@@ -263,7 +284,7 @@ export class PlateStockComponent implements OnInit {
   refreshData() {
     const pageNumber = this.metaData ? this.metaData.currentPage : 1;
     //const pageSize = this.metaData ? this.metaData.pageSize : 10;
-    const pageSize =this.selectedPageSize;
+    const pageSize = this.selectedPageSize;
 
     this.plateStocService.getAllPlateStock(pageNumber, pageSize, this.criteria, this.searchTerm).subscribe({
 
@@ -285,31 +306,37 @@ export class PlateStockComponent implements OnInit {
     });
     this.addressService.getAllZone().subscribe({
       next: (res) => {
-        if (res) 
-          {
-            this.zones = res
-            this.allZones = cloneDeep(res);
-            this.zoneNames = this.allZones.map((veh: any) => ({
-              id: veh.id,
-              name: veh.name,
-            }));
-          }
+        if (res) {
+          this.zones = res
+          this.allZones = cloneDeep(res);
+          this.zoneNames = this.allZones.map((veh: any) => ({
+            id: veh.id,
+            name: veh.name,
+          }));
+        }
       },
       error: (err) => {
-        
+
       },
     });
+    
 
   }
 
-
+  saveCriteria() {
+    //this.criteriaSaved.emit(this.criteria);
+    this.criteria = Object.entries(this.plateStockCriteria)
+    .filter(([key, value]) => value !== undefined && value !== null)
+    .map(([columnName, filterValue]) => ({ columnName, filterValue: filterValue.toString() }));
+    this.refreshData();
+  }
 
   changePage() {
     this.plateStocks = this.service.changePage(this.allPlateStocks, this.metaData);
     this.refreshData();
   }
   openModal(content: any) {
-    this.getDatasforAddPlateStock()
+    //this.getDatasforAddPlateStock()
     this.dataForm.reset();
     this.dataForm.controls["createdById"].setValue(this.currentUser?.userId);
     this.modalService.open(content, { size: "lg", centered: true });
@@ -319,7 +346,7 @@ export class PlateStockComponent implements OnInit {
       Swal.fire({ text: 'Please select at least one checkbox', confirmButtonColor: '#299cdb', });
       return;
     }
-  
+
     this.dataForm1.reset();
     this.modalService.open(content1, {
       size: "md",
@@ -327,7 +354,7 @@ export class PlateStockComponent implements OnInit {
       ariaLabelledBy: 'modal-basic-title'
     });
   }
-  transferData(){
+  transferData() {
     //this.submitted = true;
 
     if (this.dataForm1.valid) {
@@ -355,21 +382,12 @@ export class PlateStockComponent implements OnInit {
     }
   }
   deleteSelectedPlates() {
-    if (this.selectedPlateStockIds.length === 0) {
-      Swal.fire({ text: 'Please select at least one checkbox', confirmButtonColor: '#299cdb', });
-      return;
-    }
-  
     this.plateStocService.deletePlateStock(this.selectedPlateStockIds)
       .subscribe(
         response => {
           console.log('Response from server:', response);
-          // Handle successful delete
-          //console.log('Plates deleted successfully');
-          //this.successAddMessage = response.message;
           this.closeModal();
           successToast('Delete Plate Stock Successful!!');
-          // Optionally, you can clear the selectedPlateStockIds array or perform any other necessary actions
           this.selectedPlateStockIds = [];
           this.refreshData()
           this.modalService.dismissAll();
@@ -378,8 +396,24 @@ export class PlateStockComponent implements OnInit {
           console.error('Error deleting plates:', error);
         }
       );
+    
+  }
+  confirm(content: any) {
+    if (this.selectedPlateStockIds.length === 0) {
+      Swal.fire({ text: 'Please select at least one checkbox', confirmButtonColor: '#299cdb', });
+      return;
+    }
+    this.modalService.open(content, { centered: true });
   }
   saveData() {
+    // this.submitted = true; // Move this line before the validation check
+    // console.log('Form value:', this.dataForm.value);
+    // console.log('Form status:', this.dataForm.status);
+    // // Check if the form is invalid
+    // if (this.dataForm.invalid) {
+    //   return; // Don't proceed if the form is invalid
+    // }
+    this.dataForm.markAsTouched();
     const newData: PlateStockPostDto = this.dataForm.value;
     this.plateStocService.addPlateStock(newData).subscribe({
       next: (res: ResponseMessage) => {
@@ -399,6 +433,7 @@ export class PlateStockComponent implements OnInit {
     });
     this.submitted = true;
   }
+  
   closeModal() {
     this.modalService.dismissAll();
   }
@@ -412,4 +447,12 @@ export class PlateStockComponent implements OnInit {
     return this.dataForm.controls;
   }
 
+}
+export class plateStockCriteria {
+  plate_code!: string
+  region!: string
+  front_plate_size!: string
+  back_plate_size!: string
+  zone!: string
+  status!: string
 }

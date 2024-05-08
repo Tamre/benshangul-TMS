@@ -41,7 +41,6 @@ import { InitialPriceComponent } from './vehicle-config/valuation/initial-price/
 import { SalvageValueComponent } from './vehicle-config/valuation/salvage-value/salvage-value.component';
 import { StockManagementComponent } from './stock-management/stock-management.component';
 import { PlateStockComponent } from './stock-management/plate-stock/plate-stock.component';
-import { FilterFieldsComponent } from './stock-management/plate-stock/filter-fields/filter-fields.component';
 import { OrcStockComponent } from './stock-management/orc-stock/orc-stock.component';
 import { AisStockComponent } from './stock-management/ais-stock/ais-stock.component';
 
@@ -74,7 +73,6 @@ import { AisStockComponent } from './stock-management/ais-stock/ais-stock.compon
     SalvageValueComponent,
     StockManagementComponent,
     PlateStockComponent,
-    FilterFieldsComponent,
     OrcStockComponent,
     AisStockComponent
 
