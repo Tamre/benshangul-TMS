@@ -109,6 +109,7 @@ export class PlateStockComponent implements OnInit {
   selectedPageSize = this.pageSizeOptions[0].value;
 
   selectedPlateStockIds: string[] = [];
+  paginationMaxSize = 10;
 
   constructor(
     private formBuilder: UntypedFormBuilder,
@@ -168,7 +169,7 @@ export class PlateStockComponent implements OnInit {
     });
   }
   checkUncheckAll(ev: any, id: string | null) {
-    const isChecked = ev.target.checked;
+    var isChecked = ev.target.checked;
 
     if (id === null) {
       // Handle the case when the header checkbox is checked or unchecked
@@ -186,6 +187,7 @@ export class PlateStockComponent implements OnInit {
         );
       }
     }
+    
   }
 
   patternValidator: ValidatorFn = (control: AbstractControl): Observable<ValidationErrors | null> => {
@@ -336,7 +338,7 @@ export class PlateStockComponent implements OnInit {
     this.refreshData();
   }
   openModal(content: any) {
-    //this.getDatasforAddPlateStock()
+    this.submitted = false;
     this.dataForm.reset();
     this.dataForm.controls["createdById"].setValue(this.currentUser?.userId);
     this.modalService.open(content, { size: "lg", centered: true });
@@ -422,6 +424,7 @@ export class PlateStockComponent implements OnInit {
           this.closeModal();
           successToast(this.successAddMessage);
           this.refreshData()
+          this.dataForm.reset()
         } else {
           console.error(res.message);
         }
@@ -433,6 +436,7 @@ export class PlateStockComponent implements OnInit {
     });
     this.submitted = true;
   }
+ 
   
   closeModal() {
     this.modalService.dismissAll();

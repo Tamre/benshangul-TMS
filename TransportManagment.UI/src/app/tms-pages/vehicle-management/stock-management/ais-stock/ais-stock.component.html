@@ -125,7 +125,7 @@
                     <div class="d-flex justify-content-end mt-3">
                         <ngb-pagination *ngIf="metaData" [collectionSize]="metaData.totalCount"
                             [(page)]="metaData.currentPage" [pageSize]="metaData.pageSize"
-                            (pageChange)="changePage()"></ngb-pagination>
+                            (pageChange)="changePage()" [maxSize]="paginationMaxSize" [boundaryLinks]="true"></ngb-pagination>
                     </div>
                 </div>
                 <!-- Contacts Create Model -->

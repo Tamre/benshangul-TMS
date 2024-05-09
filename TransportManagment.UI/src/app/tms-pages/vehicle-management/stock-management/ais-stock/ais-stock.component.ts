@@ -76,8 +76,6 @@ export class AisStockComponent {
   searchTermSubject = new Subject<string>();
   searchTerm = '';
 
-  //selectedStatus: string | null = null;
-  //criteriaSaved = new EventEmitter<{ columnName: string, filterValue: string }[]>();
   aisStockCriteria: aisStockCriteria = new aisStockCriteria()
 
   aisTypeNames: string[] = [];
@@ -85,6 +83,8 @@ export class AisStockComponent {
 
   selectedRegion: { id: number; name: string } | null = null;
   successAddMessage: string = "";
+
+  paginationMaxSize = 10;
   
   constructor(
     private formBuilder: UntypedFormBuilder,
