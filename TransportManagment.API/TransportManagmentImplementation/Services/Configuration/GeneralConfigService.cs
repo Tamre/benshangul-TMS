@@ -44,19 +44,7 @@ namespace TransportManagmentImplementation.Services.Configuration
         //    //return "";
         //}
 
-        public async Task<string> GenerateVechilceCode(string InitialName , VehicleSerialType VehicleSerialType)
-        {
-            var curentCode = await _dbContext.VehicleSerialSettings.FirstOrDefaultAsync(x => x.VehicleSerialType == VehicleSerialType);
-            if (curentCode != null)
-            {
-                var generatedCode = $"{InitialName}/{curentCode.Value.ToString().PadLeft(curentCode.Pad, '0')}/{DateTime.Now.Year}";
-
-                curentCode.Value += 1;
-                await _dbContext.SaveChangesAsync();
-                return generatedCode;
-            }
-            return "";
-        }
+       
 
         public async Task<string> GenerateVehicleNumber(VehicleSerialType vehicleSerialType, int zoneId, string userId)
         {

@@ -18,7 +18,11 @@ namespace TransportManagmentImplementation.Interfaces.Vehicle.Action
 
         public Task<VehicleDetailDto> GetVehicleDetail(VehicleGetParameterDto vehicleGet);
 
+        Task<PagedList<VehicleDetailDto>> GetAll(FilterDetail filterData);
+
         public Task<ResponseMessage> Update(UpdateVehicleDto updteVehicle);
+
+        public Task<ResponseMessage> VehicleActionStatus(VehicleStatusActionDto vehicleStatusActionDto);
 
 
 

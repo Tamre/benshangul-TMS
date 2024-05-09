@@ -9,12 +9,13 @@ using TransportManagmentInfrustructure.Model.Authentication;
 using TransportManagmentInfrustructure.Model.Common;
 using TransportManagmentInfrustructure.Model.Vehicle.Configuration;
 using static TransportManagmentInfrustructure.Enums.CommonEnum;
+using static TransportManagmentInfrustructure.Enums.VehicleEnum;
 
 namespace TransportManagmentInfrustructure.Model.Vehicle.Action
 {
-    public class VehiclePlate: ActionIdModel
+    public class VehiclePlate : ActionIdModel
     {
-      
+
         [Required]
         public Guid VehicleId { get; set; }
         public virtual VehicleList Vehicle { get; set; } = null!;
@@ -25,9 +26,10 @@ namespace TransportManagmentInfrustructure.Model.Vehicle.Action
         [Required]
         public int GivenZoneId { get; set; }
         public virtual ZoneList GivenZone { get; set; } = null!;
-        public ServiceModule ServiceModule { get; set; } 
-        public ServiceModule PreviousModule { get; set; }
 
-       
+        public ServiceModule ServiceModule { get; set; }
+        public IssueReason IssueReason { get; set; }
+
+
     }
 }

@@ -96,6 +96,8 @@ namespace TransportManagmentImplementation.DTOS.Vehicle.Action
         public int ManufacturingYear { get; set; }
         public int HorsePower { get; set; }
 
+        public string ApprovalStatus { get; set; }= null!;
+
         public string HorsePowerMeasure { get; set; } = null!;
         public int NoCylinder { get; set; }
         public double EngineCapacity { get; set; }
@@ -123,6 +125,16 @@ namespace TransportManagmentImplementation.DTOS.Vehicle.Action
         public IFormFile Document { get; set; } = null!;
         public int DocumentTypeId { get; set; }
 
+    }
+
+
+    public record VehicleStatusActionDto
+    {
+        public Guid VechileId { get; set; }
+
+        public string VehicleAction { get; set; } = null!;
+
+        public string CreatedById { get; set; } = null!;
     }
 
     

@@ -1,9 +1,11 @@
-﻿using IntegratedImplementation.Interfaces.Configuration;
+﻿using AutoMapper;
+using IntegratedImplementation.Interfaces.Configuration;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 using TransportManagmentImplementation.DTOS.Vehicle.Action;
@@ -24,19 +26,23 @@ namespace TransportManagmentImplementation.Services.Vehicle.Action
         private readonly ApplicationDbContext _dbContext;
         private readonly ILoggerManagerService _logger;
         private readonly IGeneralConfigService _generalConfigService;
-        
 
-        public VehicleListService(ApplicationDbContext dbContext, ILoggerManagerService logger, IGeneralConfigService generalConfigService)
+        private readonly IMapper _mapper;
+
+
+        public VehicleListService(ApplicationDbContext dbContext, ILoggerManagerService logger, IGeneralConfigService generalConfigService, IMapper mapper)
         {
             _dbContext = dbContext;
             _logger = logger;
             _generalConfigService = generalConfigService;
+            _mapper = mapper;
         }
         public async Task<ResponseMessage> Add(VehicleListPostDto vehicleListPostDto)
         {
 
             try
             {
+
                 var registrationNo = await _generalConfigService.GenerateVehicleNumber(VehicleSerialType.NEWVEHICLE, vehicleListPostDto.ServiceZoneId, vehicleListPostDto.CreatedById);
 
                 var chessisExists = await _dbContext.VehicleLists.AnyAsync(x => x.ChassisNo == vehicleListPostDto.ChassisNo);
@@ -45,12 +51,13 @@ namespace TransportManagmentImplementation.Services.Vehicle.Action
                 {
                     return new ResponseMessage { Success = false, Message = "Chessis Number already exists" };
                 }
-                var engineExists = await _dbContext.VehicleLists.AnyAsync(x => !string.IsNullOrEmpty(x.EngineNumber) && x.EngineNumber == vehicleListPostDto.EngineNumber );
+                var engineExists = await _dbContext.VehicleLists.AnyAsync(x => !string.IsNullOrEmpty(x.EngineNumber) && x.EngineNumber == vehicleListPostDto.EngineNumber);
 
                 if (engineExists)
                 {
                     return new ResponseMessage { Success = false, Message = "Engine  Number already exists" };
                 }
+
 
                 var vechicle = new VehicleList
                 {
@@ -79,16 +86,20 @@ namespace TransportManagmentImplementation.Services.Vehicle.Action
                     ServiceZoneId = vehicleListPostDto.ServiceZoneId,
                     CreatedById = vehicleListPostDto.CreatedById,
                     CreatedDate = DateTime.Now,
+
                     TypeOfVehicle = vehicleListPostDto.TypeOfVehicle,
                     TransferStatus = vehicleListPostDto.TransferStatus,
                     VehicleCurrentStatus = vehicleListPostDto.VehicleCurrentStatus,
+
+
+
                 };
 
                 await _dbContext.VehicleLists.AddAsync(vechicle);
                 await _dbContext.SaveChangesAsync();
 
-              
-                    var transferNo = await _generalConfigService.GenerateVehicleNumber(VehicleSerialType.TRANSFERNO, vehicleListPostDto.ServiceZoneId, vehicleListPostDto.CreatedById);
+
+                var transferNo = await _generalConfigService.GenerateVehicleNumber(VehicleSerialType.TRANSFERNO, vehicleListPostDto.ServiceZoneId, vehicleListPostDto.CreatedById);
 
                 DateTime? TransferDate = null;
                 if (!string.IsNullOrEmpty(vehicleListPostDto.LetterDate))
@@ -143,29 +154,28 @@ namespace TransportManagmentImplementation.Services.Vehicle.Action
 
 
             }
-
-
-
         }
+
+
 
         public async Task<ResponseMessage> AddVehicleDocument(AddVehicleDocumetDto addVehicleDocument)
         {
-            
+
             var currentVehicle = await _dbContext.VehicleLists.FirstOrDefaultAsync(x => x.Id == addVehicleDocument.VehicleId);
-            if(currentVehicle == null)
+            if (currentVehicle == null)
             {
                 return new ResponseMessage { Success = false, Message = "Vehicle Could not be found" };
             }
 
             var currentDocument = await _dbContext.DocumentTypes.FirstOrDefaultAsync(x => x.Id == addVehicleDocument.DocumentTypeId);
-            if(currentDocument == null)
+            if (currentDocument == null)
             {
                 return new ResponseMessage { Success = false, Message = "Document could not be found" };
             }
 
             var documentExists = await _dbContext.VehicleDocuments.AnyAsync(x => x.VehicleId == addVehicleDocument.VehicleId && x.DocumentTypeId == addVehicleDocument.DocumentTypeId);
 
-            if(documentExists)
+            if (documentExists)
             {
                 return new ResponseMessage { Success = false, Message = "Document Already exists" };
             }
@@ -194,7 +204,46 @@ namespace TransportManagmentImplementation.Services.Vehicle.Action
             await _dbContext.SaveChangesAsync();
 
             return new ResponseMessage { Success = true, Message = "Succesfully Uploaded The file " };
-            
+
+        }
+
+        public async Task<PagedList<VehicleDetailDto>> GetAll(FilterDetail filterData)
+        {
+            IQueryable<VehicleList> vehicleQuery = _dbContext.VehicleLists.AsNoTracking().OrderBy(x => x.CreatedDate);
+
+            /// Do the Sort And Serch Impleentation here
+
+            if (!string.IsNullOrEmpty(filterData.SearchTerm))
+            {
+
+            }
+
+            if (filterData.Criteria != null && filterData.Criteria.Count() > 0)
+            {
+                foreach (var criteria in filterData.Criteria)
+                {
+                    vehicleQuery = vehicleQuery.Where(GetFilterProperty(criteria));
+                }
+            }
+
+
+
+            var pagedVechileList = await PagedList<VehicleList>.ToPagedListAsync(vehicleQuery, filterData.PageNumber, filterData.PageSize);
+
+            var pagedVechileListDtos = _mapper.Map<List<VehicleDetailDto>>(pagedVechileList);
+
+
+            return new PagedList<VehicleDetailDto>(pagedVechileListDtos, pagedVechileList.MetaData);
+        }
+
+        private static Expression<Func<VehicleList, bool>> GetFilterProperty(FilterCriteria criteria)
+        {
+            return criteria.ColumnName?.ToLower() switch
+            {
+                "ApprovalStatus" => vechile => vechile.ApprovalStatus.ToString() == criteria.FilterValue
+
+
+            };
         }
 
         public async Task<VehicleDetailDto> GetVehicleDetail(VehicleGetParameterDto vehicleGet)
@@ -203,37 +252,38 @@ namespace TransportManagmentImplementation.Services.Vehicle.Action
 
             if (vehicleGet.VehicleFileteParameter == VehicleFileteParameter.PlateNo)
             {
-              var currVeh   = await _dbContext.VehiclePlates.Include(x => x.PlateStock).Include(x => x.Vehicle.Model)
-                                      .Include(x => x.Vehicle.AssembledCountry).Include(x => x.Vehicle.ChassisMade)
-                                     .Where(x => x.PlateStock.PlateNo == vehicleGet.Value)
-                                    .Select(x => new VehicleDetailDto
-                                    {
-                                        Id = x.VehicleId,
-                                        AssembledCountry = x.Vehicle.AssembledCountry.Name,
-                                        BillOfLoading = x.Vehicle.BillOfLoading,
-                                        ChassisMadeCountry  = x.Vehicle.ChassisMade.Name,
-                                        ChassisNo = x.Vehicle.ChassisNo,
-                                        DeclarationDate = x.Vehicle.DeclarationDate,
-                                        DeclarationNo = x.Vehicle.DeclarationNo,
-                                        EngineCapacity = x.Vehicle.EngineCapacity,
-                                        EngineNumber = x.Vehicle.EngineNumber,
-                                        HorsePower = x.Vehicle.HorsePower,
-                                        HorsePowerMeasure = x.Vehicle.HorsePowerMeasure.ToString(),
-                                        InvoiceDate = x.Vehicle.InvoiceDate,
-                                        InvoicePrice = x.Vehicle.InvoicePrice,
-                                        ManufacturingYear = x.Vehicle.ManufacturingYear,
-                                        Model = x.Vehicle.Model.Name,
-                                        NoCylinder = x.Vehicle.NoCylinder,
-                                        OfficeCode = x.Vehicle.OfficeCode,
-                                        RemovalNumber = x.Vehicle.RemovalNumber,
-                                        TaxStatus = x.Vehicle.TaxStatus.ToString(),
-                                        TransferStatus = x.Vehicle.TransferStatus.ToString(),
-                                        TypeOfVehicle = x.Vehicle.TypeOfVehicle.ToString(),
-                                        VehicleCurrentStatus = x.Vehicle.VehicleCurrentStatus.ToString()
-                                    })
-                                .FirstOrDefaultAsync();
+                var currVeh = await _dbContext.VehiclePlates.Include(x => x.PlateStock).Include(x => x.Vehicle.Model)
+                                        .Include(x => x.Vehicle.AssembledCountry).Include(x => x.Vehicle.ChassisMade)
+                                       .Where(x => x.PlateStock.PlateNo == vehicleGet.Value)
+                                      .Select(x => new VehicleDetailDto
+                                      {
+                                          Id = x.VehicleId,
+                                          AssembledCountry = x.Vehicle.AssembledCountry.Name,
+                                          BillOfLoading = x.Vehicle.BillOfLoading,
+                                          ChassisMadeCountry = x.Vehicle.ChassisMade.Name,
+                                          ChassisNo = x.Vehicle.ChassisNo,
+                                          DeclarationDate = x.Vehicle.DeclarationDate,
+                                          DeclarationNo = x.Vehicle.DeclarationNo,
+                                          EngineCapacity = x.Vehicle.EngineCapacity,
+                                          EngineNumber = x.Vehicle.EngineNumber,
+                                          HorsePower = x.Vehicle.HorsePower,
+                                          HorsePowerMeasure = x.Vehicle.HorsePowerMeasure.ToString(),
+                                          InvoiceDate = x.Vehicle.InvoiceDate,
+                                          InvoicePrice = x.Vehicle.InvoicePrice,
+                                          ManufacturingYear = x.Vehicle.ManufacturingYear,
+                                          Model = x.Vehicle.Model.Name,
+                                          NoCylinder = x.Vehicle.NoCylinder,
+                                          OfficeCode = x.Vehicle.OfficeCode,
+                                          ApprovalStatus = x.Vehicle.ApprovalStatus.ToString(),
+                                          RemovalNumber = x.Vehicle.RemovalNumber,
+                                          TaxStatus = x.Vehicle.TaxStatus.ToString(),
+                                          TransferStatus = x.Vehicle.TransferStatus.ToString(),
+                                          TypeOfVehicle = x.Vehicle.TypeOfVehicle.ToString(),
+                                          VehicleCurrentStatus = x.Vehicle.VehicleCurrentStatus.ToString()
+                                      })
+                                  .FirstOrDefaultAsync();
 
-                if(currVeh != null)
+                if (currVeh != null)
                 {
                     vehicleDetail = currVeh;
                 }
@@ -262,6 +312,7 @@ namespace TransportManagmentImplementation.Services.Vehicle.Action
                                           Model = x.Model.Name,
                                           NoCylinder = x.NoCylinder,
                                           OfficeCode = x.OfficeCode,
+                                          ApprovalStatus= x.ApprovalStatus.ToString(),
                                           RemovalNumber = x.RemovalNumber,
                                           TaxStatus = x.TaxStatus.ToString(),
                                           TransferStatus = x.TransferStatus.ToString(),
@@ -299,6 +350,7 @@ namespace TransportManagmentImplementation.Services.Vehicle.Action
                                           Model = x.Model.Name,
                                           NoCylinder = x.NoCylinder,
                                           OfficeCode = x.OfficeCode,
+                                          ApprovalStatus = x.ApprovalStatus.ToString(),
                                           RemovalNumber = x.RemovalNumber,
                                           TaxStatus = x.TaxStatus.ToString(),
                                           TransferStatus = x.TransferStatus.ToString(),
@@ -336,6 +388,7 @@ namespace TransportManagmentImplementation.Services.Vehicle.Action
                                           Model = x.Model.Name,
                                           NoCylinder = x.NoCylinder,
                                           OfficeCode = x.OfficeCode,
+                                          ApprovalStatus = x.ApprovalStatus.ToString(),
                                           RemovalNumber = x.RemovalNumber,
                                           TaxStatus = x.TaxStatus.ToString(),
                                           TransferStatus = x.TransferStatus.ToString(),
@@ -358,15 +411,15 @@ namespace TransportManagmentImplementation.Services.Vehicle.Action
         {
             var currentVehicle = await _dbContext.VehicleLists.FirstOrDefaultAsync(x => x.Id == updateVehicle.Id);
 
-            if(currentVehicle == null)
+            if (currentVehicle == null)
             {
                 return new ResponseMessage { Success = false, Message = "Vehicle could not be found" };
             }
 
-            if(currentVehicle.RegistrationType == RegistrationType.PERMANENT )
+            if (currentVehicle.RegistrationType == RegistrationType.PERMANENT)
             {
                 return new ResponseMessage { Success = false, Message = "Vehicle can not be edited " };
-                
+
 
             }
             if (updateVehicle.ISApproved)
@@ -377,10 +430,10 @@ namespace TransportManagmentImplementation.Services.Vehicle.Action
                 }
 
                 var documents = await _dbContext.DocumentTypes.Where(x => x.IsActive).ToListAsync();
-                foreach(var item in documents)
+                foreach (var item in documents)
                 {
                     var esists = await _dbContext.VehicleDocuments.AnyAsync(x => x.DocumentTypeId == item.Id);
-                    if(!esists && ((updateVehicle.RegistrationType == RegistrationType.TEMPORARY && item.IsTemporaryRequired) || (updateVehicle.RegistrationType == RegistrationType.PERMANENT && item.IsPermanentRequired)))
+                    if (!esists && ((updateVehicle.RegistrationType == RegistrationType.TEMPORARY && item.IsTemporaryRequired) || (updateVehicle.RegistrationType == RegistrationType.PERMANENT && item.IsPermanentRequired)))
                     {
                         return new ResponseMessage { Success = false, Message = "Please upload the required files first" };
                     }
@@ -396,7 +449,7 @@ namespace TransportManagmentImplementation.Services.Vehicle.Action
             currentVehicle.AssembledCountryId = updateVehicle.AssembledCountryId;
             currentVehicle.ChassisMadeId = updateVehicle.ChassisMadeId;
             currentVehicle.BillOfLoading = updateVehicle.BillOfLoading;
-            currentVehicle.ChassisNo   = updateVehicle.ChassisNo;
+            currentVehicle.ChassisNo = updateVehicle.ChassisNo;
             currentVehicle.BillOfLoading = updateVehicle.BillOfLoading;
             currentVehicle.ChassisNo = updateVehicle.ChassisNo;
             currentVehicle.DeclarationDate = updateVehicle.DeclarationDate;
@@ -411,11 +464,11 @@ namespace TransportManagmentImplementation.Services.Vehicle.Action
             currentVehicle.NoCylinder = updateVehicle.NoCylinder;
             currentVehicle.OfficeCode = updateVehicle.OfficeCode;
             currentVehicle.RemovalNumber = updateVehicle.RemovalNumber;
-         
-            currentVehicle.TypeOfVehicle = updateVehicle.TypeOfVehicle;
-            
 
-            if(currentVehicle.RegistrationType == RegistrationType.ENCODED && updateVehicle.RegistrationType != RegistrationType.ENCODED)
+            currentVehicle.TypeOfVehicle = updateVehicle.TypeOfVehicle;
+
+
+            if (currentVehicle.RegistrationType == RegistrationType.ENCODED && updateVehicle.RegistrationType != RegistrationType.ENCODED)
             {
                 VehicleSerialType newVehicleSerial = updateVehicle.RegistrationType == RegistrationType.TEMPORARY ? VehicleSerialType.TEMPORARY : VehicleSerialType.PERMANENT;
 
@@ -427,5 +480,44 @@ namespace TransportManagmentImplementation.Services.Vehicle.Action
 
             return new ResponseMessage { Success = true, Message = "Updated Vehicle Succesfully!!" };
         }
+
+
+        public async Task<ResponseMessage> VehicleActionStatus(VehicleStatusActionDto vehicleStatusActionDto)
+        {
+            try
+            {
+                var vechicle = await _dbContext.VehicleLists.FindAsync(vehicleStatusActionDto.VechileId);
+
+
+                if (vechicle != null)
+                {
+                    var oldSTatus = vechicle.ApprovalStatus.ToString();
+
+                    vechicle.ApprovalStatus = Enum.Parse<VehicleApprovalStatus>(vehicleStatusActionDto.VehicleAction);
+
+                    await _dbContext.SaveChangesAsync();
+
+                    var loggerMessage = $"Vechicle with {vechicle.Id} has been change to status from ={oldSTatus} to ={vechicle.ApprovalStatus.ToString()} by {vehicleStatusActionDto.CreatedById} on {DateTime.Now.ToString()}";
+
+                    _logger.LogExcption("VRMS", vehicleStatusActionDto.CreatedById, loggerMessage);
+
+
+                    return new ResponseMessage { Success = true, Message = loggerMessage };
+                }
+                else
+                {
+                    return new ResponseMessage { Success = false, Message = "Vechicle Not Found !!!" };
+                }
+
+
+            }
+            catch (Exception ex)
+            {
+                _logger.LogExcption("VRMS", vehicleStatusActionDto.CreatedById, ex.Message);
+                return new ResponseMessage { Success = false, Message = ex.Message };
+            }
+        }
+
+
     }
 }
