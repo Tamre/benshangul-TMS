@@ -84,6 +84,8 @@ export class OrcStockComponent {
   zoneNames: string[] = [];
   selectedZone: { id: number; name: string } | null = null;
 
+  paginationMaxSize = 10;
+
   constructor(
     private formBuilder: UntypedFormBuilder,
     private tokenStorageService: TokenStorageService,
