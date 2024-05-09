@@ -150,7 +150,7 @@ namespace TransportManagmentInfrustructure.Enums
         public enum VehicleApprovalStatus
         {
             PENDING,
-            SENDTOREGION,
+            SENDTOADMIN,
             REJECTED,
             APPROVED,
             APPROVEDWITHOUTVALIDATATION
