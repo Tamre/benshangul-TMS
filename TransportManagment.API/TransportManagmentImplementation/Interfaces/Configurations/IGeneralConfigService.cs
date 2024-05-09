@@ -14,10 +14,11 @@ namespace IntegratedImplementation.Interfaces.Configuration
     public interface IGeneralConfigService
     {
         //Task<string> GenerateCode(GeneralCodeDto GeneralCodeType);
-        public Task<string> GenerateVechilceCode(string InitialName, VehicleSerialType VehicleSerialType);
+      
         Task<string> UploadFiles(IFormFile formFile, string Name, string FolderName);
         Task<string> GetFiles(string path);
         //Task<List<GeneralCodeDto>> GetGeneralCodes();
         public string GeneratePassword();
+        Task<string> GenerateVehicleNumber(VehicleSerialType vehicleSerialType, int zoneId, string userId);
     }
 }

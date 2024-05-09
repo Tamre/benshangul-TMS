@@ -40,6 +40,9 @@ import { ServiceYearComponent } from './vehicle-config/valuation/service-year/se
 import { InitialPriceComponent } from './vehicle-config/valuation/initial-price/initial-price.component';
 import { SalvageValueComponent } from './vehicle-config/valuation/salvage-value/salvage-value.component';
 import { StockManagementComponent } from './stock-management/stock-management.component';
+import { PlateStockComponent } from './stock-management/plate-stock/plate-stock.component';
+import { OrcStockComponent } from './stock-management/orc-stock/orc-stock.component';
+import { AisStockComponent } from './stock-management/ais-stock/ais-stock.component';
 
 
 
@@ -68,8 +71,10 @@ import { StockManagementComponent } from './stock-management/stock-management.co
     ServiceYearComponent,
     InitialPriceComponent,
     SalvageValueComponent,
-    StockManagementComponent
-    
+    StockManagementComponent,
+    PlateStockComponent,
+    OrcStockComponent,
+    AisStockComponent
 
   ],
   imports: [
@@ -94,6 +99,7 @@ import { StockManagementComponent } from './stock-management/stock-management.co
     NgbProgressbarModule,
     NgPipesModule,
     NgbModule,
+    
     
   ],
   providers: [

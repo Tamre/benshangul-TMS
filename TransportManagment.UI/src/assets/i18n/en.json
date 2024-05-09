@@ -27,6 +27,15 @@
         "ADDRESS": "Address"
       }
     },
+    "VEHICLE": {
+      "TEXT": "Vehicle",
+      "LIST": {
+        "REGISTER": "Register Vehicle"
+      }
+    },
+
+
+
     "VEHICLE-CONFIGURATION": {
       "TEXT": "Vehicle Configurations",
       "LIST": {

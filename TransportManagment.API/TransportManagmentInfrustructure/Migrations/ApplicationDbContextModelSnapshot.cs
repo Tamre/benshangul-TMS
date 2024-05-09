@@ -1918,11 +1918,11 @@ namespace TransportManagmentInfrustructure.Migrations
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
 
+                    b.Property<int>("IssueReason")
+                        .HasColumnType("int");
+
                     b.Property<Guid>("PlateStockId")
                         .HasColumnType("uniqueidentifier");
-
-                    b.Property<int>("PreviousModule")
-                        .HasColumnType("int");
 
                     b.Property<int>("ServiceModule")
                         .HasColumnType("int");
@@ -2758,6 +2758,9 @@ namespace TransportManagmentInfrustructure.Migrations
 
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Pad")
                         .HasColumnType("int");

@@ -44,17 +44,47 @@ namespace TransportManagmentImplementation.Services.Configuration
         //    //return "";
         //}
 
-        public async Task<string> GenerateVechilceCode(string InitialName , VehicleSerialType VehicleSerialType)
+       
+
+        public async Task<string> GenerateVehicleNumber(VehicleSerialType vehicleSerialType, int zoneId, string userId)
         {
-            var curentCode = await _dbContext.VehicleSerialSettings.FirstOrDefaultAsync(x => x.VehicleSerialType == VehicleSerialType);
+            var curentCode = await _dbContext.VehicleSerialSettings.Include(x => x.Zone).FirstOrDefaultAsync(x => x.VehicleSerialType == vehicleSerialType);
             if (curentCode != null)
             {
-                var generatedCode = $"{InitialName}/{curentCode.Value.ToString().PadLeft(curentCode.Pad, '0')}/{DateTime.Now.Year}";
+                var generatedCode = $"{curentCode.Zone.Code}-{curentCode.Name}{curentCode.Value.ToString().PadLeft(curentCode.Pad, '0')}";
 
                 curentCode.Value += 1;
                 await _dbContext.SaveChangesAsync();
                 return generatedCode;
             }
+            else
+            {
+                var currentZone = await _dbContext.Zones.FindAsync(zoneId);
+                if (currentZone == null)
+                {
+                    return "";
+                }
+
+                VehicleSerialSetting vehicleSerial = new VehicleSerialSetting()
+                {
+                    CreatedById = userId,
+                    CreatedDate = DateTime.Now,
+                    IsActive = true,
+                    Name = vehicleSerialType == VehicleSerialType.TRANSFERNO ? "TN" : "RN",
+                    VehicleSerialType = vehicleSerialType,
+                    Pad = 5,
+                    Value = 1,
+                    ZoneId = zoneId,
+                };
+                await _dbContext.VehicleSerialSettings.AddAsync(vehicleSerial);
+                await _dbContext.SaveChangesAsync();
+
+                var generatedCode = $"{currentZone.Code}-{vehicleSerial.Name}{vehicleSerial.Value.ToString().PadLeft(vehicleSerial.Pad, '0')}";
+
+                return generatedCode;
+
+            }
+
             return "";
         }
 

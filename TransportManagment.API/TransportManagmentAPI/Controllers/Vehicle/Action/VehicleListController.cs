@@ -7,6 +7,7 @@ using TransportManagmentImplementation.DTOS.Vehicle.Configuration;
 using TransportManagmentImplementation.Helper;
 using TransportManagmentImplementation.Interfaces.Vehicle.Action;
 using TransportManagmentImplementation.Interfaces.Vehicle.Configuration;
+using TransportManagmentImplementation.Services.Vehicle.Action;
 
 namespace TransportManagmentAPI.Controllers.Vehicle.Action
 {
@@ -39,5 +40,72 @@ namespace TransportManagmentAPI.Controllers.Vehicle.Action
             }
         }
 
+        [HttpPost]
+        [ProducesResponseType(typeof(ResponseMessage), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> AddVehicleDocument(AddVehicleDocumetDto addVehicleDocument)
+        {
+            if (ModelState.IsValid)
+            {
+                return Ok(await _vehicleListService.AddVehicleDocument(addVehicleDocument));
+            }
+            else
+            {
+                return BadRequest();
+            }
+        }
+
+
+        [HttpGet]
+        [ProducesResponseType(typeof(VehicleDetailDto), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> GetVehicleDetail(VehicleGetParameterDto vehicleGet)
+        {
+            if (ModelState.IsValid)
+            {
+                return Ok(await _vehicleListService.GetVehicleDetail(vehicleGet));
+            }
+            else
+            {
+                return BadRequest();
+            }
+        }
+
+
+        [HttpGet]
+        [ProducesResponseType(typeof(PagedList<PlateStockGetDto>), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> GetPendingVehicle([FromQuery] FilterDetail filterData)
+        {
+            var pagedList = await _vehicleListService.GetAll(filterData);
+            return Ok(new { data = pagedList, metaData = pagedList.MetaData });
+        }
+
+
+        [HttpPut]
+        [ProducesResponseType(typeof(ResponseMessage), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> Update(UpdateVehicleDto updteVehicle)
+        {
+            if (ModelState.IsValid)
+            {
+                return Ok(await _vehicleListService.Update(updteVehicle));
+            }
+            else
+            {
+                return BadRequest();
+            }
+        }
+
+
+        [HttpPut]
+        [ProducesResponseType(typeof(ResponseMessage), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> ChangeVechicleActionStatus(VehicleStatusActionDto updteVehicle)
+        {
+            if (ModelState.IsValid)
+            {
+                return Ok(await _vehicleListService.VehicleActionStatus(updteVehicle));
+            }
+            else
+            {
+                return BadRequest();
+            }
+        }
     }
 }

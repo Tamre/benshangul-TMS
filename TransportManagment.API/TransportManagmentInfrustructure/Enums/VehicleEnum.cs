@@ -53,7 +53,7 @@ namespace TransportManagmentInfrustructure.Enums
             ANNUAL_iNSPECTION_MONTH_sTART,
             ANNUAL_iNSPECTION_MONTH_END,
             ET_INSPECTION_MONTH_START,
-            EN_INSPECTION_MONTH_END,
+            ET_INSPECTION_MONTH_END,
             TEMPORARY_PLATE_EXPIREDATE,
             TEMPORARY_PLATE_EXTENDDATE,
             ORGANIZATION_DAYS_PER_VEHICLE,
@@ -150,7 +150,7 @@ namespace TransportManagmentInfrustructure.Enums
         public enum VehicleApprovalStatus
         {
             PENDING,
-            SENDTOREGION,
+            SENDTOADMIN,
             REJECTED,
             APPROVED,
             APPROVEDWITHOUTVALIDATATION
@@ -247,6 +247,14 @@ namespace TransportManagmentInfrustructure.Enums
             Loss,
             Defect,
             Other
+        }
+
+        public enum VehicleFileteParameter
+        {
+            RegistrationNo,
+            PlateNo,
+            ChessisNo,
+            EngineNo
         }
     }
 }

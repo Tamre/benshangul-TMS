@@ -97,7 +97,17 @@ namespace TransportManagmentImplementation.Datas
                 .ForMember(a => a.PlateTypeName, e => e.MapFrom(mfg => mfg.PlateType.Name))
                 .ForMember(a => a.IssuanceType, e => e.MapFrom(mfg => mfg.IssuanceType.ToString()));
 
-            #endregion
-        }
+
+            CreateMap<VehiclePlate, VehiclePlateGetDto>()
+                    .ForMember(a => a.PlateNo, e => e.MapFrom(mfg => mfg.PlateStock.PlateNo))
+                    .ForMember(a => a.PlateType, e => e.MapFrom(mfg => mfg.PlateStock.PlateType.Name))
+                    .ForMember(a => a.Region, e => e.MapFrom(mfg => mfg.PlateStock.Region.Name))
+                    .ForMember(a => a.GivenZone, e => e.MapFrom(mfg => mfg.GivenZone.Name))
+                    .ForMember(a => a.IssueReason, e => e.MapFrom(mfg => mfg.IssueReason.ToString()));
+
+
+
+        #endregion
+    }
     }
 }
