@@ -85,7 +85,8 @@ export class PlateStockComponent implements OnInit {
   searchTermSubject = new Subject<string>();
   searchTerm = '';
 
-  plateTypeNames: string[] = [];
+  //plateTypeNames: string[] = [];
+  plateTypeCode: string[] = [];
   selectedPlateType: { id: number; name: string } | null = null;
 
   regionNames: string[] = [];
@@ -155,8 +156,7 @@ export class PlateStockComponent implements OnInit {
       createdById: [this.currentUser?.userId, [Validators.required]],
     });
     this.dataForm1 = this.formBuilder.group({
-      zoneId: ['', Validators.required],
-      //createdById: [this.currentUser?.userId, [Validators.required]],
+      zoneId: ['', Validators.required]
     });
     /**
      * fetches data
@@ -237,9 +237,9 @@ export class PlateStockComponent implements OnInit {
         if (res) {
           this.plates = res
           this.allPlates = cloneDeep(res);
-          this.plateTypeNames = this.allPlates.map((veh: any) => ({
+          this.plateTypeCode = this.allPlates.map((veh: any) => ({
             id: veh.id,
-            name: veh.name,
+            name: veh.code,
           }));
 
         }

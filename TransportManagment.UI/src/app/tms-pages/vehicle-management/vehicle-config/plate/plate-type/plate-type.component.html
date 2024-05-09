@@ -130,7 +130,7 @@
                                         <input type="text" id="code-field" class="form-control" placeholder="{{ 'Enter Code' | translate }}" required formControlName="code" [ngClass]="{ 'is-invalid': submitted && form['code'].errors }" />
                                         @if (submitted && form['code'].errors) {
                                         <div class="invalid-feedback" align="left">
-                                            @if (form['code'].errors['required']) {s
+                                            @if (form['code'].errors['required']) {
                                             <div>{{ 'Code is required' | translate }}</div>
                                             }
                                             @if (form['code'].errors['maxlength']) {

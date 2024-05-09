@@ -26,7 +26,7 @@
 
     <div class="row g-3 align-items-end">
         <div class="col-lg-2">
-            <label for="plateType-field" class="form-label">{{ 'Plate Type Name' | translate }}</label>
+            <label for="plateType-field" class="form-label">{{ 'Plate Code' | translate }}</label>
             <ng-select [items]="allPlates" [(ngModel)]="plateStockCriteria.plate_code" bindLabel="name" bindValue="id"
                 id="plateType-field" name="plateType" [searchable]="true">
             </ng-select>
@@ -151,11 +151,11 @@
                                             <ngb-highlight [result]="data.plateNo" [term]="''"></ngb-highlight>
                                         </td>
                                         <td>
-                                            <ngb-highlight [result]="data.plateNo" [term]="''"></ngb-highlight>
+                                            <ngb-highlight [result]="data.issuanceType" [term]="''"></ngb-highlight>
                                         </td>
 
                                         <td>
-                                            <ngb-highlight [result]="data.plateNo" [term]="''"></ngb-highlight>
+                                            <ngb-highlight [result]="data.frontPlateSizeId" [term]="''"></ngb-highlight>
                                         </td>
                                         <td>
                                             <ngb-highlight [result]="data.plateNo" [term]="''"></ngb-highlight>
@@ -209,7 +209,7 @@
                                         class="invalid-feedback" align="left">
                                         {{ 'Plate Type is required' | translate }}
                                     </div> -->
-                                    <ng-select [items]="plateTypeNames" bindLabel="name" bindValue="id"
+                                    <ng-select [items]="plateTypeCode" bindLabel="name" bindValue="id"
                                         [(ngModel)]="selectedPlateType" id="plateTypeId-field" name="plateTypeId"
                                         formControlName="plateTypeId" [searchable]="true"
                                         placeholder="Select plate Type Name" required
