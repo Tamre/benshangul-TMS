@@ -5,6 +5,7 @@ export interface VehicleTypeGetDto {
     vehicleCategoryId: number;
     createdById: string;
     rowStatus:number;
+    categoryName:string;
     
 }
 export interface VehicleTypePostDto {
