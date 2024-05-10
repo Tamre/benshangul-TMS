@@ -85,7 +85,8 @@ export class PlateStockComponent implements OnInit {
   searchTermSubject = new Subject<string>();
   searchTerm = '';
 
-  plateTypeNames: string[] = [];
+  //plateTypeNames: string[] = [];
+  plateTypeCode: string[] = [];
   selectedPlateType: { id: number; name: string } | null = null;
 
   regionNames: string[] = [];
@@ -109,6 +110,7 @@ export class PlateStockComponent implements OnInit {
   selectedPageSize = this.pageSizeOptions[0].value;
 
   selectedPlateStockIds: string[] = [];
+  paginationMaxSize = 10;
 
   constructor(
     private formBuilder: UntypedFormBuilder,
@@ -154,8 +156,7 @@ export class PlateStockComponent implements OnInit {
       createdById: [this.currentUser?.userId, [Validators.required]],
     });
     this.dataForm1 = this.formBuilder.group({
-      zoneId: ['', Validators.required],
-      //createdById: [this.currentUser?.userId, [Validators.required]],
+      zoneId: ['', Validators.required]
     });
     /**
      * fetches data
@@ -168,7 +169,7 @@ export class PlateStockComponent implements OnInit {
     });
   }
   checkUncheckAll(ev: any, id: string | null) {
-    const isChecked = ev.target.checked;
+    var isChecked = ev.target.checked;
 
     if (id === null) {
       // Handle the case when the header checkbox is checked or unchecked
@@ -186,6 +187,7 @@ export class PlateStockComponent implements OnInit {
         );
       }
     }
+    
   }
 
   patternValidator: ValidatorFn = (control: AbstractControl): Observable<ValidationErrors | null> => {
@@ -235,9 +237,9 @@ export class PlateStockComponent implements OnInit {
         if (res) {
           this.plates = res
           this.allPlates = cloneDeep(res);
-          this.plateTypeNames = this.allPlates.map((veh: any) => ({
+          this.plateTypeCode = this.allPlates.map((veh: any) => ({
             id: veh.id,
-            name: veh.name,
+            name: veh.code,
           }));
 
         }
@@ -336,7 +338,7 @@ export class PlateStockComponent implements OnInit {
     this.refreshData();
   }
   openModal(content: any) {
-    //this.getDatasforAddPlateStock()
+    this.submitted = false;
     this.dataForm.reset();
     this.dataForm.controls["createdById"].setValue(this.currentUser?.userId);
     this.modalService.open(content, { size: "lg", centered: true });
@@ -422,6 +424,7 @@ export class PlateStockComponent implements OnInit {
           this.closeModal();
           successToast(this.successAddMessage);
           this.refreshData()
+          this.dataForm.reset()
         } else {
           console.error(res.message);
         }
@@ -433,6 +436,7 @@ export class PlateStockComponent implements OnInit {
     });
     this.submitted = true;
   }
+ 
   
   closeModal() {
     this.modalService.dismissAll();
