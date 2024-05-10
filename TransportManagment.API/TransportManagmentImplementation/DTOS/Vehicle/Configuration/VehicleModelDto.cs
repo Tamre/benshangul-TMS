@@ -35,6 +35,8 @@ namespace TransportManagmentImplementation.DTOS.Vehicle.Configuration
     {
         public int Id { get; set; }
         public bool IsActive { get; set; }
+
+        public string? MarkName { get; set; }
     }
 
 }
