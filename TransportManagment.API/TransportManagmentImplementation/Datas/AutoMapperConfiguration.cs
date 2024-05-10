@@ -66,13 +66,16 @@ namespace TransportManagmentImplementation.Datas
                 .ForMember(a => a.ServiceModule, e => e.MapFrom(mfg => mfg.ServiceModule.ToString()));
 
             CreateMap<ServiceYearSetting, ServiceYearSettingGetDto>();
-            CreateMap<VehicleBodyType, VehicleBodyTypeGetDto>();
+            CreateMap<VehicleBodyType, VehicleBodyTypeGetDto>()
+                                .ForMember(a => a.TypeName, e => e.MapFrom(mfg => mfg.VehicleType.Name)); ;
+
 
             CreateMap<VehicleLookups, VehicleLookupsGetDto>()
                 .ForMember(a => a.VehicleLookupType, e => e.MapFrom(mfg => mfg.VehicleLookupType.ToString()));
 
             CreateMap<VehicleModel, VehicleModelGetDto>()
-                .ForMember(a => a.HorsePowerMeasure, e => e.MapFrom(mfg => mfg.HorsePowerMeasure.ToString()));
+                .ForMember(a => a.HorsePowerMeasure, e => e.MapFrom(mfg => mfg.HorsePowerMeasure.ToString()))
+                .ForMember(a => a.MarkName, e => e.MapFrom(mfg => mfg.Mark.Name));
 
             CreateMap<VehicleSerialSetting, VehicleSerialSettingGetDto>()
                 .ForMember(a => a.VehicleSerialType, e => e.MapFrom(mfg => mfg.VehicleSerialType.ToString()));
@@ -80,7 +83,9 @@ namespace TransportManagmentImplementation.Datas
             CreateMap<VehicleSettings, VehicleSettingsGetDto>()
                 .ForMember(a => a.VehicleSettingType, e => e.MapFrom(mfg => mfg.VehicleSettingType.ToString()));
 
-            CreateMap<VehicleType, VehicleTypeGetDto>();
+            CreateMap<VehicleType, VehicleTypeGetDto>()
+                .ForMember(a => a.CategoryName, e => e.MapFrom(mfg => mfg.VehicleCategory.Name)); ;
+
             CreateMap<ValuationReason, ValuationReasonGetDto>();
 
             #endregion
@@ -107,7 +112,7 @@ namespace TransportManagmentImplementation.Datas
 
 
 
-        #endregion
-    }
+            #endregion
+        }
     }
 }
