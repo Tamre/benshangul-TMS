@@ -211,6 +211,33 @@ export class VehicleListComponent implements OnInit {
       this.vehicleService.getVehicleList(value).subscribe({
         next: (res) => {
         if(res.chassisNo){
+          data = res;
+          this.vehicleForm.setValue({
+            modelId: data.modelId,
+            officeCode: data.officeCode,
+            declarationNo: data.declarationNo,
+            declarationDate: data.declarationDate,
+            billOfLoading: data.billOfLoading,
+            removalNumber: data.removalNumber,
+            invoiceDate: data.invoiceDate,
+            invoicePrice: data.invoicePrice,
+            taxStatus: data.taxStatus,
+            chassisNo: data.chassisNo,
+            engineNumber: data.engineNumber,
+            assembledCountryId: data.assembledCountryId,
+            chassisMadeId: data.chassisMadeId,
+            manufacturingYear: data.manufacturingYear,
+            horsePower: data.horsePower,
+            horsePowerMeasure: data.horsePowerMeasure,
+            noCylinder: data.noCylinder,
+            engineCapacity: data.engineCapacity,
+            typeOfVehicle: data.typeOfVehicle,
+            vehicleCurrentStatus: data.vehicleCurrentStatus,
+            transferStatus: data.transferStatus,
+            serviceZoneId: "",
+            createdById: this.currentUser?.userId,
+            lastActionTaken: "Endoding"
+          });
 
           successToast("found a vehicle");
         }else{
