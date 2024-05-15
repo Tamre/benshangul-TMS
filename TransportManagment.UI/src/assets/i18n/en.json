@@ -30,7 +30,8 @@
     "VEHICLE": {
       "TEXT": "Vehicle",
       "LIST": {
-        "REGISTER": "Register Vehicle"
+        "REGISTER": "Register Vehicle",
+        "FIND":"Find Vehicle"
       }
     },
 

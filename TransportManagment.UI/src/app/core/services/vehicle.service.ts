@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { User } from "src/app/store/Authentication/auth.models";
 import { ResponseMessage } from "src/app/model/ResponseMessage.Model";
 import { environment } from "src/environments/environment";
@@ -9,7 +9,7 @@ import { Country } from "src/app/model/address/country";
 import { Region } from "src/app/model/address/region";
 import { Zone } from "src/app/model/address/zone";
 import { Woreda } from "src/app/model/address/woreda";
-import { VehicleData } from "src/app/model/vehicle";
+import { GetVehicleDetailRequestDto, VehicleData } from "src/app/model/vehicle";
 @Injectable({ providedIn: "root" })
 
 export class VehicleService {
@@ -32,6 +32,12 @@ export class VehicleService {
       formData,{headers:headers}
     );
   }
-  
-}
+  getVehicleList(formData: GetVehicleDetailRequestDto) {
+    var headers = this.headers
+    return this.http.post<VehicleData>(
+      `${this.baseUrl}/VehicleList/GetVehicleDetail`,
+      formData,{headers:headers}
+    ); 
+  }
 
+}
