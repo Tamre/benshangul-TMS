@@ -1,4 +1,6 @@
+<div class="card">
 <div class="container">
+    <div class="card-body">
     <h2>Vehicle Filter</h2>
     <form (ngSubmit)="submitSearch()" [formGroup]="searchForm" class="tablelist-form" autocomplete="off">
         <div class="modal-body">
@@ -41,13 +43,13 @@
         </div>
         <div class="modal-footer">
             <div class="hstack gap-2 justify-content-end">
-                <button type="button" class="btn btn-light" data-bs-dismiss="modal" (click)="closeModal()">{{ 'Close' |
-                    translate }}</button>
+                
                 <button type="submit" class="btn btn-success" id="add-btn">{{ 'find vehicle' | translate }}</button>
             </div>
         </div>
     </form>
-
+</div>
+</div>
 </div>
 
 <div class="container">
@@ -310,9 +312,7 @@
             </div>
         </div>
         <div class="modal-footer">
-            <div class="hstack gap-2 justify-content-end">
-                <button type="button" class="btn btn-light" data-bs-dismiss="modal" (click)="closeModal()">{{ 'Close' |
-                    translate }}</button>
+            <div class="hstack gap-2 justify-content-end">                
                 <button type="submit" class="btn btn-success" id="add-btn">{{ 'Update' | translate }}</button>
             </div>
         </div>
