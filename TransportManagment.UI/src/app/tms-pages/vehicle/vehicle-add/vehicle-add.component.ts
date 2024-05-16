@@ -11,7 +11,7 @@ import { TranslateService } from "@ngx-translate/core";
 import { cloneDeep } from "lodash";
 import { AddressService } from "src/app/core/services/address.service";
 import { PaginationService } from "src/app/core/services/pagination.service";
-import { successToast } from "src/app/core/services/toast.service";
+import { successToast,errorToast } from "src/app/core/services/toast.service";
 import { TokenStorageService } from "src/app/core/services/token-storage.service";
 import { VehicleLookupService } from "src/app/core/services/vehicle-config-services/vehicle-lookup.service";
 import { VehicleModelService } from "src/app/core/services/vehicle-config-services/vehicle-model.service";
@@ -87,7 +87,8 @@ export class VehicleAdd implements OnInit {
   updateText = "Update";
   countries: any;
   zones: any;
-  
+  showZoneInput = false;
+  showRegionInput = false;
 
   constructor(
     private formBuilder: UntypedFormBuilder,
@@ -165,6 +166,20 @@ export class VehicleAdd implements OnInit {
     return this.vehicleForm.controls;
   }
 
+   onSelectionChange(event :any) {
+        const selectedValue = event.name;
+        if (selectedValue === 'FromZone') {
+            this.showZoneInput = true;
+            this.showRegionInput = false;
+        } else if (selectedValue === 'FromOtherRegion') {
+            this.showZoneInput = false;
+            this.showRegionInput = true;
+        } else {
+            this.showZoneInput = false;
+            this.showRegionInput = false;
+        }
+    }
+
   // Function to submit the form
   submitForm() {
     this.submitted = true;
@@ -189,7 +204,7 @@ export class VehicleAdd implements OnInit {
         }
       },
       error: (err) => {
-        console.log(err)
+        errorToast(err);
       },
       
     });
