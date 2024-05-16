@@ -46,6 +46,7 @@ export class VehicleListComponent implements OnInit {
   markNames: string[] = [];
   markNameIdMap: { [name: string]: number } = {};
 
+
   horsePowerMeasureDropDownItem = [
     { name: "BHP", code: "BHP" },
     { name: "KW", code: "OTHEKWR" },
@@ -82,6 +83,7 @@ export class VehicleListComponent implements OnInit {
   ];
 
   selectedModelId: any;
+  
 
   successAddMessage: string = "";
   successUpdateMessage = "Vehicle Type successfully updated";
@@ -204,6 +206,7 @@ export class VehicleListComponent implements OnInit {
         return;
       }
       var data = this.searchForm.value
+      
       this.searchValueForm.controls["value"].setValue(data.search)
       this.searchValueForm.controls["vehicleFileteParameter"].setValue(data.searchType)
       
@@ -212,6 +215,7 @@ export class VehicleListComponent implements OnInit {
         next: (res) => {
         if(res.chassisNo){
           data = res;
+          this.selectedModelId = data.modelId
           this.vehicleForm.setValue({
             modelId: data.modelId,
             officeCode: data.officeCode,
