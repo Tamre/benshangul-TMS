@@ -64,14 +64,14 @@ export const MENU: MenuItem[] = [
   {
     id: 8,
     label: "MENUITEMS.VEHICLE-CONFIGURATION.TEXT",
-    icon: "ri-settings-4-fill",
+    icon: "ri-settings-4-line",
     link: "/v-management/vehicle-config",
     isCollapsed: true,
   },
   {
     id: 9,
     label: "MENUITEMS.STOCK-MANAGEMENT.TEXT",
-    icon: "ri-settings-4-fill",
+    icon: "ri-stack-line",
     link: "/v-management/stock-management",
     isCollapsed: true,
   },
@@ -85,6 +85,12 @@ export const MENU: MenuItem[] = [
         id: 10,
         label: "MENUITEMS.VEHICLE.LIST.REGISTER",
         link: "/vehicle/add",
+        parentId: 3,
+      },
+      {
+        id: 10,
+        label: "MENUITEMS.VEHICLE.LIST.FIND",
+        link: "/vehicle/list",
         parentId: 3,
       }
     ],

@@ -18,3 +18,20 @@ Swal.fire({
   });
   let timerInterval: any;
 }
+
+
+export function errorToast(message:string){
+  Swal.fire({
+      title: message,
+      icon: 'error',
+      timer: 2000,
+      timerProgressBar: true,
+      willClose: () => {
+        clearInterval(timerInterval);
+      },
+    }).then((result) => {
+      if (result.dismiss === Swal.DismissReason.timer) {
+      }
+    });
+    let timerInterval: any;
+  }
