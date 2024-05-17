@@ -6,6 +6,7 @@ export interface VehicleBodyTypeGetDto {
     value:number;
     createdById: string;
     isActive:boolean;
+    typeName:string;
     
 }
 export interface VehicleBodyTypePostDto {
