@@ -1,10 +1,12 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
-using System.Data.Entity;
+
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TransportManagmentImplementation.DTOS.Common;
+using TransportManagmentImplementation.DTOS.Vehicle.Action;
 using TransportManagmentImplementation.Interfaces.Vehicle.Configuration;
 using TransportManagmentInfrustructure.Data;
 
@@ -29,6 +31,18 @@ namespace TransportManagmentImplementation.Services.Vehicle.Configuration
                             }).ToListAsync();
 
             return documents;
+        }
+
+        public async Task<List<OwnerListDropdownDto>> GetOwnerListDropdown()
+        {
+            var OwnerList = await _dbContext.OwnerLists.Select(x=> new OwnerListDropdownDto
+            {
+                Id = x.Id,
+                OwnerName = $"{x.FirstName} {x.MiddleName} {x.LastName}",
+                OwnerNumber = x.OwnerNumber,
+            }).ToListAsync();
+
+            return OwnerList;
         }
     }
 }

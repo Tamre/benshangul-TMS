@@ -87,6 +87,11 @@ namespace TransportManagmentImplementation.Datas
             services.AddScoped<IORCStockService, ORCStockService>();
             services.AddScoped<IPlateStockService, PlateStockService>();
             services.AddScoped<IVehiclePlateService, VehiclePlateService>();
+            services.AddScoped<IInpsectionService, InspectionService>();
+            services.AddScoped<IAISServicecs, AISService>();
+            services.AddScoped<IORCService, ORCService>();
+            services.AddScoped<IOwnerManagmentService, OwnerManagmentService>();
+            services.AddScoped<IVehicleBanService, VehicleBanService>();
 
 
             #endregion

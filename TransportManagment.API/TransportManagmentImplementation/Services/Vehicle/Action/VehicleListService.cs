@@ -65,7 +65,7 @@ namespace TransportManagmentImplementation.Services.Vehicle.Action
                     RegistrationNo = registrationNo,
                     RegistrationType = RegistrationType.ENCODED,
                     ModelId = vehicleListPostDto.ModelId,
-                    TaxStatus = vehicleListPostDto.TaxStatus,
+                    TaxStatus = Enum.Parse<TaxStatus>( vehicleListPostDto.TaxStatus),
                     IsVehicleComplete = false,
                     OfficeCode = vehicleListPostDto.OfficeCode,
                     DeclarationNo = vehicleListPostDto.DeclarationNo,
@@ -79,7 +79,7 @@ namespace TransportManagmentImplementation.Services.Vehicle.Action
                     AssembledCountryId = vehicleListPostDto.AssembledCountryId,
                     ChassisMadeId = vehicleListPostDto.ChassisMadeId,
                     ManufacturingYear = vehicleListPostDto.ManufacturingYear,
-                    HorsePowerMeasure = vehicleListPostDto.HorsePowerMeasure,
+                    HorsePowerMeasure = Enum.Parse<HorsePowerMeasure>(vehicleListPostDto.HorsePowerMeasure),
                     HorsePower = vehicleListPostDto.HorsePower,
                     NoCylinder = vehicleListPostDto.NoCylinder,
                     EngineCapacity = vehicleListPostDto.EngineCapacity,
@@ -87,9 +87,9 @@ namespace TransportManagmentImplementation.Services.Vehicle.Action
                     CreatedById = vehicleListPostDto.CreatedById,
                     CreatedDate = DateTime.Now,
 
-                    TypeOfVehicle = vehicleListPostDto.TypeOfVehicle,
-                    TransferStatus = vehicleListPostDto.TransferStatus,
-                    VehicleCurrentStatus = vehicleListPostDto.VehicleCurrentStatus,
+                    TypeOfVehicle = Enum.Parse<TypeOfVehicle>(vehicleListPostDto.TypeOfVehicle),
+                    TransferStatus = Enum.Parse<TransferStatus>(vehicleListPostDto.TransferStatus),
+                    VehicleCurrentStatus = Enum.Parse<TransportManagmentInfrustructure.Enums.VehicleEnum.VehicleCurrentStatus>(vehicleListPostDto.VehicleCurrentStatus),
 
 
 
@@ -123,7 +123,7 @@ namespace TransportManagmentImplementation.Services.Vehicle.Action
                     PreviousPlate = vehicleListPostDto.PreviousPlate,
                     ToZoneId = vehicleListPostDto.ServiceZoneId,
                     TransferNumber = transferNo,
-                    TransferStatus = vehicleListPostDto.TransferStatus,
+                    TransferStatus = Enum.Parse<TransferStatus>(vehicleListPostDto.TransferStatus),
                     VehicleId = vechicle.Id
                 };
 
@@ -196,6 +196,7 @@ namespace TransportManagmentImplementation.Services.Vehicle.Action
                 CreatedDate = DateTime.Now,
                 DocumentPath = path,
                 DocumentTypeId = addVehicleDocument.DocumentTypeId,
+                ForVehicleDocument = Enum.Parse<ForVehicleDocument>(addVehicleDocument.ForVehicleDocument),
                 IsActive = true,
                 VehicleId = addVehicleDocument.VehicleId
             };
@@ -312,7 +313,7 @@ namespace TransportManagmentImplementation.Services.Vehicle.Action
                                           Model = x.Model.Name,
                                           NoCylinder = x.NoCylinder,
                                           OfficeCode = x.OfficeCode,
-                                          ApprovalStatus= x.ApprovalStatus.ToString(),
+                                          ApprovalStatus = x.ApprovalStatus.ToString(),
                                           RemovalNumber = x.RemovalNumber,
                                           TaxStatus = x.TaxStatus.ToString(),
                                           TransferStatus = x.TransferStatus.ToString(),
@@ -443,7 +444,7 @@ namespace TransportManagmentImplementation.Services.Vehicle.Action
                 currentVehicle.ApprovedById = updateVehicle.CreatedById;
             }
 
-            currentVehicle.VehicleCurrentStatus = updateVehicle.VehicleCurrentStatus;
+            currentVehicle.VehicleCurrentStatus= Enum.Parse<VehicleCurrentStatus> (updateVehicle.VehicleCurrentStatus);
             currentVehicle.RemovalNumber = updateVehicle.RemovalNumber;
             currentVehicle.EngineNumber = updateVehicle.EngineNumber;
             currentVehicle.AssembledCountryId = updateVehicle.AssembledCountryId;
@@ -456,7 +457,7 @@ namespace TransportManagmentImplementation.Services.Vehicle.Action
             currentVehicle.DeclarationNo = updateVehicle.DeclarationNo;
             currentVehicle.EngineCapacity = updateVehicle.EngineCapacity;
             currentVehicle.HorsePower = updateVehicle.HorsePower;
-            currentVehicle.HorsePowerMeasure = updateVehicle.HorsePowerMeasure;
+            currentVehicle.HorsePowerMeasure =Enum.Parse<HorsePowerMeasure>( updateVehicle.HorsePowerMeasure);
             currentVehicle.InvoiceDate = updateVehicle.InvoiceDate;
             currentVehicle.InvoicePrice = updateVehicle.InvoicePrice;
             currentVehicle.ManufacturingYear = updateVehicle.ManufacturingYear;
@@ -465,7 +466,7 @@ namespace TransportManagmentImplementation.Services.Vehicle.Action
             currentVehicle.OfficeCode = updateVehicle.OfficeCode;
             currentVehicle.RemovalNumber = updateVehicle.RemovalNumber;
 
-            currentVehicle.TypeOfVehicle = updateVehicle.TypeOfVehicle;
+            currentVehicle.TypeOfVehicle = Enum.Parse<TypeOfVehicle>( updateVehicle.TypeOfVehicle);
 
 
             if (currentVehicle.RegistrationType == RegistrationType.ENCODED && updateVehicle.RegistrationType != RegistrationType.ENCODED)

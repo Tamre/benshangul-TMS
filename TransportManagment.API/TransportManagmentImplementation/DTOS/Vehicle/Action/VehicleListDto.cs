@@ -18,7 +18,7 @@ namespace TransportManagmentImplementation.DTOS.Vehicle.Action
         [Required]
         public int ModelId { get; set; }
         [Required]
-        public TaxStatus TaxStatus { get; set; }
+        public string TaxStatus { get; set; } = null!;
         [StringLength(ValidationClasses.MaxNameLength)]
         public string? OfficeCode { get; set; } 
         [Required, StringLength(ValidationClasses.MaxLocalNameLength)]
@@ -44,18 +44,18 @@ namespace TransportManagmentImplementation.DTOS.Vehicle.Action
         public int ManufacturingYear { get; set; }
         [Required]
         public int HorsePower { get; set; }
-        
-        public HorsePowerMeasure HorsePowerMeasure { get; set; }
+
+        public string HorsePowerMeasure { get; set; } = null!;
         [Required]
         public int NoCylinder { get; set; }
         [Required]
         public double EngineCapacity { get; set; }
         [Required]
-        public TypeOfVehicle TypeOfVehicle { get; set; }
+        public string TypeOfVehicle { get; set; }
         [Required]
-        public VehicleCurrentStatus VehicleCurrentStatus { get; set; }
+        public string VehicleCurrentStatus { get; set; }
         [Required]
-        public TransferStatus TransferStatus { get; set; }
+        public string TransferStatus { get; set; }
         public string CreatedById { get; set; } = null!;
         public int ServiceZoneId { get; set; }
         public int? FromZoneId { get; set; }
@@ -95,9 +95,7 @@ namespace TransportManagmentImplementation.DTOS.Vehicle.Action
         public string ChassisMadeCountry { get; set; } = null!;
         public int ManufacturingYear { get; set; }
         public int HorsePower { get; set; }
-
         public string ApprovalStatus { get; set; }= null!;
-
         public string HorsePowerMeasure { get; set; } = null!;
         public int NoCylinder { get; set; }
         public double EngineCapacity { get; set; }
@@ -125,15 +123,15 @@ namespace TransportManagmentImplementation.DTOS.Vehicle.Action
         public IFormFile Document { get; set; } = null!;
         public int DocumentTypeId { get; set; }
 
+        public string ForVehicleDocument { get; set; } = null!;
+
     }
 
 
     public record VehicleStatusActionDto
     {
         public Guid VechileId { get; set; }
-
         public string VehicleAction { get; set; } = null!;
-
         public string CreatedById { get; set; } = null!;
     }
 

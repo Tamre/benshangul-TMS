@@ -67,7 +67,7 @@ namespace TransportManagmentImplementation.Datas
 
             CreateMap<ServiceYearSetting, ServiceYearSettingGetDto>();
             CreateMap<VehicleBodyType, VehicleBodyTypeGetDto>()
-                                .ForMember(a => a.TypeName, e => e.MapFrom(mfg => mfg.VehicleType.Name)); 
+                                .ForMember(a => a.TypeName, e => e.MapFrom(mfg => mfg.VehicleType.Name));
 
             CreateMap<VehicleLookups, VehicleLookupsGetDto>()
                 .ForMember(a => a.VehicleLookupType, e => e.MapFrom(mfg => mfg.VehicleLookupType.ToString()));
@@ -92,9 +92,38 @@ namespace TransportManagmentImplementation.Datas
 
             #region Vechile_Action
 
+            CreateMap<AIS, AISGetDto>()
+                    .ForMember(a => a.GivenZone, e => e.MapFrom(mfg => mfg.GivenZone.Name))
+                    .ForMember(a => a.AISNo, e => e.MapFrom(mfg => mfg.Stock.AISNo))
+                    .ForMember(a => a.VehicleRegistrationNo, e => e.MapFrom(mfg => mfg.Vehicle.RegistrationNo))
+                    .ForMember(a => a.IssueReason, e => e.MapFrom(mfg => mfg.IssueReason.ToString()))
+                    .ForMember(a => a.PreviousReason, e => e.MapFrom(mfg => mfg.PreviousReason.ToString()));
+
+            CreateMap<ORC, ORCGetDto>()
+                 .ForMember(a => a.GivenZone, e => e.MapFrom(mfg => mfg.GivenZone.Name))
+                 .ForMember(a => a.AISNo, e => e.MapFrom(mfg => mfg.Stock.ORCNo))
+                 .ForMember(a => a.VehicleRegistrationNo, e => e.MapFrom(mfg => mfg.Vehicle.RegistrationNo))
+                 .ForMember(a => a.IssueReason, e => e.MapFrom(mfg => mfg.IssueReason.ToString()))
+                 .ForMember(a => a.PreviousReason, e => e.MapFrom(mfg => mfg.PreviousReason.ToString()));
+
+
+            CreateMap<OwnerList, OwnerListGetDto>()
+              .ForMember(a => a.Woreda, e => e.MapFrom(mfg => $"{mfg.Woreda.Name} {mfg.Woreda.LocalName}"))
+              .ForMember(a => a.Zone, e => e.MapFrom(mfg => $"{mfg.Zone.Name} {mfg.Zone.LocalName}"));
+
+
+            CreateMap<VehicleBan, VehicleBanGetDto>()
+                .ForMember(a => a.VehicleChesisNo, e => e.MapFrom(mfg => mfg.Vehicle.ChassisNo))
+                .ForMember(a => a.VehicleRegistrationNo, e => e.MapFrom(mfg => mfg.Vehicle.RegistrationNo))
+                .ForMember(a => a.BanBody, e => e.MapFrom(mfg => mfg.BanBody.Name))
+                .ForMember(a => a.BanCase, e => e.MapFrom(mfg => mfg.BanCase.Name));
+
+
+
             CreateMap<AisStock, AISStockGetDto>();
 
             CreateMap<ORCStock, ORCStockGetDto>();
+
 
             CreateMap<PlateStock, PlateStockGetDto>()
                 .ForMember(a => a.PlateDigit, e => e.MapFrom(mfg => mfg.PlateDigit.ToString()))
@@ -115,7 +144,7 @@ namespace TransportManagmentImplementation.Datas
                       .ForMember(a => a.FrontPlateSize, e => e.MapFrom(mfg => mfg.FrontPlateSize.Name))
                       .ForMember(a => a.BackPlateSize, e => e.MapFrom(mfg => mfg.BackPlateSize.Name));
 
-            CreateMap<TechnicalInspection, TechnicalInspectionGetDto>()                  
+            CreateMap<TechnicalInspection, TechnicalInspectionGetDto>()
 
                     .ForMember(a => a.VehicleBodyTypeName, e => e.MapFrom(mfg => mfg.VehicleBodyType.Name))
                     .ForMember(a => a.ServiceType, e => e.MapFrom(mfg => mfg.ServiceType.Name))
@@ -126,7 +155,7 @@ namespace TransportManagmentImplementation.Datas
 
 
 
-        #endregion
-    }
+            #endregion
+        }
     }
 }
