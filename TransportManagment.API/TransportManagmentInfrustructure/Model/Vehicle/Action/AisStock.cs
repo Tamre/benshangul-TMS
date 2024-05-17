@@ -20,6 +20,7 @@ namespace TransportManagmentInfrustructure.Model.Vehicle.Action
         [Required]
         public int StockTypeId { get; set; }
         public virtual AISORCStockType StockType { get; set; } = null!;
+
         [Required]
         public int RegionId { get; set; }
         public virtual Common.Region Region { get; set; } = null!;

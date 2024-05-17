@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using TransportManagmentInfrustructure.Data;
 using TransportManagmentInfrustructure.Model.Authentication;
 using TransportManagmentInfrustructure.Model.Vehicle.Configuration;
+using static TransportManagmentInfrustructure.Enums.VehicleEnum;
 
 namespace TransportManagmentInfrustructure.Model.Vehicle.Action
 {
@@ -18,5 +19,9 @@ namespace TransportManagmentInfrustructure.Model.Vehicle.Action
         public virtual DocumentType DocumentType { get; set; } = null!;
         [StringLength(ValidationClasses.MaxSettingRemarkLength)]
         public string DocumentPath { get; set; } = null!;
+
+        public ForVehicleDocument ForVehicleDocument { get; set; }
+
+
     }
 }

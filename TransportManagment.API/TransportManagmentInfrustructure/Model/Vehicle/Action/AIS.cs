@@ -24,7 +24,7 @@ namespace TransportManagmentInfrustructure.Model.Vehicle.Action
         public DateTime? PrintedDate { get; set; }
         [Required]
         [StringLength(ValidationClasses.CodeLength)]
-        public string AISYear { get; set; } = null!;
+        public int AISYear { get; set; } 
         [Required]
         [StringLength(ValidationClasses.CodeLength)]
         public string RegionCode { get; set; } = null!;
