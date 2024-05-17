@@ -67,8 +67,7 @@ namespace TransportManagmentImplementation.Datas
 
             CreateMap<ServiceYearSetting, ServiceYearSettingGetDto>();
             CreateMap<VehicleBodyType, VehicleBodyTypeGetDto>()
-                                .ForMember(a => a.TypeName, e => e.MapFrom(mfg => mfg.VehicleType.Name)); ;
-
+                                .ForMember(a => a.TypeName, e => e.MapFrom(mfg => mfg.VehicleType.Name)); 
 
             CreateMap<VehicleLookups, VehicleLookupsGetDto>()
                 .ForMember(a => a.VehicleLookupType, e => e.MapFrom(mfg => mfg.VehicleLookupType.ToString()));
@@ -110,9 +109,24 @@ namespace TransportManagmentImplementation.Datas
                     .ForMember(a => a.GivenZone, e => e.MapFrom(mfg => mfg.GivenZone.Name))
                     .ForMember(a => a.IssueReason, e => e.MapFrom(mfg => mfg.IssueReason.ToString()));
 
+            CreateMap<FieldInspection, FieldInspectionGetDto>()
+                      .ForMember(a => a.GivenZoneName, e => e.MapFrom(mfg => mfg.GivenZone.Name))
+
+                      .ForMember(a => a.FrontPlateSize, e => e.MapFrom(mfg => mfg.FrontPlateSize.Name))
+                      .ForMember(a => a.BackPlateSize, e => e.MapFrom(mfg => mfg.BackPlateSize.Name));
+
+            CreateMap<TechnicalInspection, TechnicalInspectionGetDto>()                  
+
+                    .ForMember(a => a.VehicleBodyTypeName, e => e.MapFrom(mfg => mfg.VehicleBodyType.Name))
+                    .ForMember(a => a.ServiceType, e => e.MapFrom(mfg => mfg.ServiceType.Name))
+                    .ForMember(a => a.LoadMeasurment, e => e.MapFrom(mfg => mfg.LoadMesurement.Name))
+                    .ForMember(a => a.Color, e => e.MapFrom(mfg => mfg.Color.Name))
+                    ;
 
 
-            #endregion
-        }
+
+
+        #endregion
+    }
     }
 }

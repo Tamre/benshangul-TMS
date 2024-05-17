@@ -10,7 +10,7 @@ import { VehicleListComponent } from './vehicle-list/vehicle-list.component';
 const routes: Routes = [
 
   {
-    path: "",
+    path: "list",
     component: VehicleListComponent
   },
   {
