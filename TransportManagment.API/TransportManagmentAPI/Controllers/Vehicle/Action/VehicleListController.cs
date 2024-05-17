@@ -72,7 +72,7 @@ namespace TransportManagmentAPI.Controllers.Vehicle.Action
 
         [HttpGet]
         [ProducesResponseType(typeof(PagedList<PlateStockGetDto>), (int)HttpStatusCode.OK)]
-        public async Task<IActionResult> GetPendingVehicle([FromQuery] FilterDetail filterData)
+        public async Task<IActionResult> GetFilterdVehicles([FromQuery] FilterDetail filterData)
         {
             var pagedList = await _vehicleListService.GetAll(filterData);
             return Ok(new { data = pagedList, metaData = pagedList.MetaData });

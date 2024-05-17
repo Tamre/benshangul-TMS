@@ -94,9 +94,24 @@
                     <div>
                         <label for="transferStatus-field" class="form-label">{{ 'Transfer Status' | translate }}</label>
                         <ng-select [items]="transferStatusOption" bindLabel="name" bindValue="name"
-                            formControlName="transferStatus" [searchable]="true" required>
+                            formControlName="transferStatus" [searchable]="true" required (change)="onSelectionChange($event)">
                         </ng-select>
 
+                    </div>
+                </div>
+                
+                
+                <div class="col-lg-3" *ngIf="showZoneInput">
+                    <div>
+                        <label for="zone-field" class="form-label">{{ 'Zone' | translate }}</label>
+                        <input type="text" class="form-control" id="zone-field" name="zone" formControlName="zone">
+                    </div>
+                </div>
+                
+                <div class="col-lg-3" *ngIf="showRegionInput">
+                    <div>
+                        <label for="region-field" class="form-label">{{ 'Region' | translate }}</label>
+                        <input type="text" class="form-control" id="region-field" name="region" formControlName="region">
                     </div>
                 </div>
                 <div class="col-lg-3">
@@ -141,7 +156,7 @@
                     <div>
                         <label for="declarationDate-field" class="form-label">{{ 'Declaration Date' | translate
                             }}</label>
-                        <input type="date" id="declarationDate-field" class="form-control"
+                        <input type="text" id="declarationDate-field" class="form-control"
                             formControlName="declarationDate" />
                     </div>
                 </div>
@@ -162,7 +177,7 @@
                 <div class="col-lg-3">
                     <div>
                         <label for="invoiceDate-field" class="form-label">{{ 'Invoice Date' | translate }}</label>
-                        <input type="date" id="invoiceDate-field" class="form-control" formControlName="invoiceDate" />
+                        <input type="text" id="invoiceDate-field" class="form-control" formControlName="invoiceDate" />
                     </div>
                 </div>
                 <div class="col-lg-3">

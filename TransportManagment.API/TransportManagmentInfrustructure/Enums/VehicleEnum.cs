@@ -68,7 +68,7 @@ namespace TransportManagmentInfrustructure.Enums
             PERMANENT,
             TEMPORARY,
             TRANSFERNO,
-
+            OWNER
         }
 
 
@@ -256,5 +256,14 @@ namespace TransportManagmentInfrustructure.Enums
             ChessisNo,
             EngineNo
         }
+
+        public enum ForVehicleDocument { 
+
+           AnnualInspection,
+
+        
+        
+        }
+
     }
 }

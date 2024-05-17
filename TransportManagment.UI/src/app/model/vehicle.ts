@@ -25,3 +25,20 @@ export interface VehicleData {
     createdById: string;
   }
   
+
+
+  export interface GetVehicleDetailRequestDto{
+    vehicleFileteParameter: number,
+    value: string,
+    regionalUser: boolean,
+    registrationType: number
+  }
+
+
+  // public enum VehicleFileteParameter
+  // {
+  //     RegistrationNo,4
+  //     PlateNo, 1
+  //     ChessisNo, 3
+  //     EngineNo 2
+  // }

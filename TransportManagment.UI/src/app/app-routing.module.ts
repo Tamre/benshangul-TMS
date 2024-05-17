@@ -27,13 +27,7 @@ const routes: Routes = [
         (m) => m.ExtraspagesModule
       ),
     canActivate: [AuthGuard],
-  },
-  {
-    path: "landing",
-    loadChildren: () =>
-      import("./landing/landing.module").then((m) => m.LandingModule),
-    canActivate: [AuthGuard],
-  },
+  }
 ];
 
 @NgModule({

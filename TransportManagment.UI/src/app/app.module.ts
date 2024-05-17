@@ -8,7 +8,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
 import { LayoutsModule } from "./layouts/layouts.module";
-import { PagesModule } from "./pages/pages.module";
 
 // Auth
 import { HttpClientModule, HttpClient, HTTP_INTERCEPTORS } from '@angular/common/http';
@@ -42,6 +41,7 @@ import { ApikeyEffects } from './store/APIKey/apikey_effect';
 import { AuthenticationEffects } from './store/Authentication/authentication.effects';
 import { AuthHeaderIneterceptor } from './http-interceptors/auth-header-interceptor';
 import { SpinnerComponent } from './components/spinner/spinner.component';
+import { SharedModule } from './shared/shared.module';
 
 export function createTranslateLoader(http: HttpClient): any {
   return new TranslateHttpLoader(http, 'assets/i18n/', '.json');
@@ -85,8 +85,8 @@ export function createTranslateLoader(http: HttpClient): any {
       TodoEffects,
       ApplicationEffects,
       ApikeyEffects]),
-    PagesModule,
-    NgPipesModule
+    NgPipesModule,
+    SharedModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },

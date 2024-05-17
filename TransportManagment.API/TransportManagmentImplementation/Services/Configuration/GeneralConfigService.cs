@@ -19,11 +19,11 @@ using static TransportManagmentInfrustructure.Enums.VehicleEnum;
 
 namespace TransportManagmentImplementation.Services.Configuration
 {
-    public class GeneralConfigService :IGeneralConfigService
+    public class GeneralConfigService : IGeneralConfigService
     {
         private readonly ApplicationDbContext _dbContext;
         private readonly IMapper _mapper;
-        
+
         public GeneralConfigService(ApplicationDbContext dbContext, IMapper mapper)
         {
             _dbContext = dbContext;
@@ -44,11 +44,11 @@ namespace TransportManagmentImplementation.Services.Configuration
         //    //return "";
         //}
 
-       
+
 
         public async Task<string> GenerateVehicleNumber(VehicleSerialType vehicleSerialType, int zoneId, string userId)
         {
-            var curentCode = await _dbContext.VehicleSerialSettings.Include(x => x.Zone).FirstOrDefaultAsync(x => x.VehicleSerialType == vehicleSerialType);
+            var curentCode = await _dbContext.VehicleSerialSettings.Include(x => x.Zone).FirstOrDefaultAsync(x => x.VehicleSerialType == vehicleSerialType && x.ZoneId == zoneId);
             if (curentCode != null)
             {
                 var generatedCode = $"{curentCode.Zone.Code}-{curentCode.Name}{curentCode.Value.ToString().PadLeft(curentCode.Pad, '0')}";
@@ -65,12 +65,32 @@ namespace TransportManagmentImplementation.Services.Configuration
                     return "";
                 }
 
+
+                string vehicleSerialTypeShortCode = "";
+
+                switch (vehicleSerialType)
+                {
+                    case VehicleSerialType.TRANSFERNO:
+                        vehicleSerialTypeShortCode = "TN";
+                        break;
+                    case VehicleSerialType.OWNER:
+
+                        vehicleSerialTypeShortCode = "ON";
+                        break;
+
+                    default:
+                        vehicleSerialTypeShortCode = "RN";
+                        break;
+
+
+                };
+
                 VehicleSerialSetting vehicleSerial = new VehicleSerialSetting()
                 {
                     CreatedById = userId,
                     CreatedDate = DateTime.Now,
                     IsActive = true,
-                    Name = vehicleSerialType == VehicleSerialType.TRANSFERNO ? "TN" : "RN",
+                    Name = vehicleSerialTypeShortCode,
                     VehicleSerialType = vehicleSerialType,
                     Pad = 5,
                     Value = 1,
@@ -137,12 +157,12 @@ namespace TransportManagmentImplementation.Services.Configuration
         //    return generalCodeList;
         //}
 
-        public  string GeneratePassword()
+        public string GeneratePassword()
         {
             int length = 8;
             string Letters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!@#$%^&*()_-+=<>?0123456789";
             RandomNumberGenerator Rng = RandomNumberGenerator.Create();
-           
+
             var data = new byte[length];
             Rng.GetBytes(data);
 
