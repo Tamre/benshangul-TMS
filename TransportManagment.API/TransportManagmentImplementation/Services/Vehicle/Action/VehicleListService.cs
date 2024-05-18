@@ -98,40 +98,42 @@ namespace TransportManagmentImplementation.Services.Vehicle.Action
                 await _dbContext.VehicleLists.AddAsync(vechicle);
                 await _dbContext.SaveChangesAsync();
 
+                if (vehicleListPostDto.TransferStatus != TransferStatus.New.ToString()) {
 
-                var transferNo = await _generalConfigService.GenerateVehicleNumber(VehicleSerialType.TRANSFERNO, vehicleListPostDto.ServiceZoneId, vehicleListPostDto.CreatedById);
+                    var transferNo = await _generalConfigService.GenerateVehicleNumber(VehicleSerialType.TRANSFERNO, vehicleListPostDto.ServiceZoneId, vehicleListPostDto.CreatedById);
 
-                DateTime? TransferDate = null;
-                if (!string.IsNullOrEmpty(vehicleListPostDto.LetterDate))
-                {
-                    string[] date = vehicleListPostDto.LetterDate.Split('/');
-                    TransferDate = Helper.EthiopicDateTime.GetGregorianDate(Convert.ToInt32(date[0]), Convert.ToInt32(date[1]), Convert.ToInt32(date[2]));
+                    DateTime? TransferDate = null;
+                    if (!string.IsNullOrEmpty(vehicleListPostDto.LetterDate))
+                    {
+                        string[] date = vehicleListPostDto.LetterDate.Split('/');
+                        TransferDate = Helper.EthiopicDateTime.GetGregorianDate(Convert.ToInt32(date[0]), Convert.ToInt32(date[1]), Convert.ToInt32(date[2]));
+                    }
+
+                    VehicleTransfer transfer = new VehicleTransfer()
+                    {
+                        Id = Guid.NewGuid(),
+                        CreatedById = vehicleListPostDto.CreatedById,
+                        CreatedDate = DateTime.Now,
+                        ChangeOwner = false,
+                        ChangePlate = false,
+                        ChangeServiceType = false,
+                        FromZoneId = (Int32)vehicleListPostDto.FromZoneId,
+                        IsActive = true,
+                        IsVehicleRejected = false,
+                        LetterNo = vehicleListPostDto.LetterNo,
+                        PreviousPlate = vehicleListPostDto.PreviousPlate,
+                        ToZoneId = vehicleListPostDto.ServiceZoneId,
+                        TransferNumber = transferNo,
+                        TransferStatus = Enum.Parse<TransferStatus>(vehicleListPostDto.TransferStatus),
+                        VehicleId = vechicle.Id
+                    };
+
+                    if (TransferDate != null)
+                    {
+                        transfer.TransferedDate = Convert.ToDateTime(TransferDate);
+                    }
+
                 }
-
-                VehicleTransfer transfer = new VehicleTransfer()
-                {
-                    Id = Guid.NewGuid(),
-                    CreatedById = vehicleListPostDto.CreatedById,
-                    CreatedDate = DateTime.Now,
-                    ChangeOwner = false,
-                    ChangePlate = false,
-                    ChangeServiceType = false,
-                    FromZoneId = (Int32)vehicleListPostDto.FromZoneId,
-                    IsActive = true,
-                    IsVehicleRejected = false,
-                    LetterNo = vehicleListPostDto.LetterNo,
-                    PreviousPlate = vehicleListPostDto.PreviousPlate,
-                    ToZoneId = vehicleListPostDto.ServiceZoneId,
-                    TransferNumber = transferNo,
-                    TransferStatus = Enum.Parse<TransferStatus>(vehicleListPostDto.TransferStatus),
-                    VehicleId = vechicle.Id
-                };
-
-                if (TransferDate != null)
-                {
-                    transfer.TransferedDate = Convert.ToDateTime(TransferDate);
-                }
-
                 _logger.LogCreate("VRMS", vehicleListPostDto.CreatedById, $"Vehicle with id {vechicle.Id} Added Successfully on {DateTime.Now}");
 
                 return new ResponseMessage

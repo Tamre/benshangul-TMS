@@ -29,6 +29,8 @@ export class TokenStorageService {
   getCurrentUser(): UserView | null {
     const token = this.getToken();
     var payLoad = JSON.parse(window.atob(token!.split('.')[1]));
+
+    console.log("payload",payLoad)
     let user: UserView = {
       userId: payLoad.userId,
       email: payLoad.email,

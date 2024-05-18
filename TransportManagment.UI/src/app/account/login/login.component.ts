@@ -36,6 +36,8 @@ export class LoginComponent implements OnInit {
   returnUrl!: string;
   toast!: false;
 
+  errorMessage:string="";
+
   // set the current year
   year: number = new Date().getFullYear();
 
@@ -79,6 +81,7 @@ export class LoginComponent implements OnInit {
    * Form submit
    */
   onSubmit() {
+    this.errorMessage=""
     if (this.loginForm.valid) {
       this.userService
         .login({
@@ -89,8 +92,8 @@ export class LoginComponent implements OnInit {
           next: (res) => {
             if (res.success) {
               this.toastService.show(res.message, {
-                classname: "bg-success text-white",
-                delay: 15000,
+                classname: "success text-white",
+                delay: 2000,
               });
               this.tokenStorageService.saveToken(res.data)
               console.log("my token",this.tokenStorageService.getToken())
@@ -98,16 +101,30 @@ export class LoginComponent implements OnInit {
               sessionStorage.setItem("token",res.data)
               this.router.navigate(["/"]);
             } else {
+
+              this.errorMessage=res.message;
               this.toastService.show(res.message, {
-                classname: "bg-danger text-white",
-                delay: 15000,
+                classname: "error text-white",
+                delay: 2000,
               });
             }
           },
           error: (err) => {
+
+            this.errorMessage=err.message;
             console.log(err);
           },
         });
+    }
+    else{
+
+      this.errorMessage = "Please Check your Form!!!";
+
+      this.toastService.show("Please Check your Form !!!", {
+        classname: "error text-white",
+        delay: 2000,
+      });
+
     }
 
     //  // Login Api
