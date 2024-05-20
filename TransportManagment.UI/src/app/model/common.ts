@@ -91,3 +91,9 @@ export interface TerminatedEmployeeReplacmentDto
     terminatedEmployee?:SelectList
 
 }
+
+export interface MacAddressServiceDto {
+    PCName: string
+    MacAddress: string
+    IPAddress: string
+}

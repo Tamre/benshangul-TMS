@@ -51,7 +51,7 @@ export class TopbarComponent implements OnInit {
   ngOnInit(): void {
     this.userData = this.TokenStorageService.getCurrentUser();
 
-    console.log("user",this.userData)
+
     this.element = document.documentElement;
 
     // Cookies wise Language set

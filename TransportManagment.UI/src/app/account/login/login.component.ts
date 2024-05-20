@@ -17,6 +17,8 @@ import { login } from "src/app/store/Authentication/authentication.actions";
 import { UserProfileService } from "src/app/core/services/user.service";
 import { TokenStorageService } from "src/app/core/services/token-storage.service";
 import { caesarCipherEncrypt } from "src/app/core/helpers/cipher";
+import { MacAddressServiceDto } from "src/app/model/common";
+import { DeviceRequestDto } from "src/app/model/user";
 
 @Component({
   selector: "app-login",
@@ -36,7 +38,12 @@ export class LoginComponent implements OnInit {
   returnUrl!: string;
   toast!: false;
 
-  errorMessage:string="";
+  macAddressDetails!: MacAddressServiceDto;
+
+  errorMessage: string = "";
+  userId: string = "";
+
+  requestVissible: boolean = false;
 
   // set the current year
   year: number = new Date().getFullYear();
@@ -48,7 +55,7 @@ export class LoginComponent implements OnInit {
     private userService: UserProfileService,
     private route: ActivatedRoute,
     public toastService: ToastService,
-    private tokenStorageService:TokenStorageService,
+    private tokenStorageService: TokenStorageService,
     private store: Store
   ) {
     // redirect to home if already logged in
@@ -81,85 +88,118 @@ export class LoginComponent implements OnInit {
    * Form submit
    */
   onSubmit() {
-    this.errorMessage=""
+    this.errorMessage = "";
     if (this.loginForm.valid) {
-      this.userService
-        .login({
-          username: this.loginForm.value.email,
-          password: caesarCipherEncrypt(this.loginForm.value.password,3),
-        })
-        .subscribe({
-          next: (res) => {
-            if (res.success) {
-              this.toastService.show(res.message, {
-                classname: "success text-white",
-                delay: 2000,
-              });
-              this.tokenStorageService.saveToken(res.data)
-              console.log("my token",this.tokenStorageService.getToken())
-              sessionStorage.setItem("currentUser", res.data);
-              sessionStorage.setItem("token",res.data)
-              this.router.navigate(["/"]);
-            } else {
-
-              this.errorMessage=res.message;
-              this.toastService.show(res.message, {
-                classname: "error text-white",
-                delay: 2000,
-              });
-            }
-          },
-          error: (err) => {
-
-            this.errorMessage=err.message;
-            console.log(err);
-          },
-        });
-    }
-    else{
-
+      this.userService.getMacAddress().subscribe({
+        next: (res) => {
+          this.macAddressDetails = res;
+          if (this.macAddressDetails) {
+            this.afterGettingMac();
+          } else {
+            this.toastService.show("MAC Service Is Not Runing ...", {
+              classname: "error text-white",
+              delay: 2000,
+            });
+          }
+        },
+        error: (res) => {
+          this.toastService.show("MAC Service Is Not Runing ...", {
+            classname: "error text-white",
+            delay: 2000,
+          });
+        },
+      });
+    } else {
       this.errorMessage = "Please Check your Form!!!";
 
       this.toastService.show("Please Check your Form !!!", {
         classname: "error text-white",
         delay: 2000,
       });
+    }
+  }
 
+  afterGettingMac() {
+    this.userService
+      .login({
+        username: this.loginForm.value.email,
+        password: caesarCipherEncrypt(this.loginForm.value.password, 3),
+        macAddress: this.macAddressDetails.MacAddress,
+      })
+      .subscribe({
+        next: (res) => {
+          if (res.success) {
+            this.toastService.show(res.message, {
+              classname: "success text-white",
+              delay: 2000,
+            });
+            this.tokenStorageService.saveToken(res.data);
+            console.log("my token", this.tokenStorageService.getToken());
+            sessionStorage.setItem("currentUser", res.data);
+            sessionStorage.setItem("token", res.data);
+            this.router.navigate(["/"]);
+          } else {
+            this.errorMessage = res.message;
+            if (
+              this.errorMessage === "Device Not Registerd Please Request !!!"
+            ) {
+              this.requestVissible = true;
+              this.userId = res.data;
+            }
+            this.toastService.show(res.message, {
+              classname: "error text-white",
+              delay: 2000,
+            });
+          }
+        },
+        error: (err) => {
+          this.errorMessage = err.message;
+          console.log(err);
+        },
+      });
+  }
+
+  requestDevicePermission(){
+
+    var DeviceRequest:DeviceRequestDto={
+      PCNAme :this.macAddressDetails.PCName,
+      MACAddress :this.macAddressDetails.MacAddress,
+      IpAddress :this.macAddressDetails.IPAddress,
+      CreatedById :this.userId
     }
 
-    //  // Login Api
-    //  this.store.dispatch(login({ email: this.f['email'].value, password: this.f['password'].value }));
-    // // this.authenticationService.login(this.f['email'].value, this.f['password'].value).subscribe((data:any) => {
-    // //   if(data.status == 'success'){
-    // //     sessionStorage.setItem('toast', 'true');
-    // //     sessionStorage.setItem('currentUser', JSON.stringify(data.data));
-    // //     sessionStorage.setItem('token', data.token);
-    // //     this.router.navigate(['/']);
-    // //   } else {
-    // //     this.toastService.show(data.data, { classname: 'bg-danger text-white', delay: 15000 });
-    // //   }
-    // // });
+    this.userService.devicePermissionRequest(DeviceRequest).subscribe({
+      next:(res)=>{
+        if(res.success){
 
-    // // stop here if form is invalid
-    // // if (this.loginForm.invalid) {
-    // //   return;
-    // // } else {
-    // //   if (environment.defaultauth === 'firebase') {
-    // //     this.authenticationService.login(this.f['email'].value, this.f['password'].value).then((res: any) => {
-    // //       this.router.navigate(['/']);
-    // //     })
-    // //       .catch(error => {
-    // //         this.error = error ? error : '';
-    // //       });
-    // //   } else {
-    // //     this.authFackservice.login(this.f['email'].value, this.f['password'].value).pipe(first()).subscribe(data => {
-    // //           this.router.navigate(['/']);
-    // //         },
-    // //         error => {
-    // //           this.error = error ? error : '';
-    // //         });
-    // //   }
-    // // }
+          this.requestVissible=false;
+          this.userId = ""
+
+          this.toastService.show(res.message, {
+            classname: "success text-white",
+            delay: 2000,
+          });
+
+
+
+
+        }else{
+
+          this.toastService.show(res.message, {
+            classname: "error text-white",
+            delay: 2000,
+          });
+
+        }
+
+      },error:(err)=>{
+
+        this.toastService.show(err.message, {
+          classname: "error text-white",
+          delay: 2000,
+        });
+      }
+    });
   }
 
   /**

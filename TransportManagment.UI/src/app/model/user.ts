@@ -37,3 +37,25 @@ export interface UserPost {
     password:string
  
 }
+
+export interface DeviceRequestDto {
+
+    PCNAme:string
+    IpAddress:string
+    MACAddress:string
+    CreatedById:string
+}
+
+export interface DeviceGetDto {
+    id?:number
+    requesterUser? :string 
+    approverUser?: string
+    isActive?:boolean
+    pcnAme?:string 
+    ipAddress? :string
+    macAddress?:String
+    approverId?:string
+    approvedFor?:string
+    createdById?:string
+
+}

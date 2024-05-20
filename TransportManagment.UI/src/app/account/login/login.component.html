@@ -28,10 +28,13 @@
                     <input type="text" placeholder="Username" formControlName="email" />
                     <input type="password" placeholder="Password" formControlName="password" />
                     <a href="#">Forgot your password?</a>
-                    <button type="submit" [disabled]="!loginForm.valid">Sign In</button>
+                    <button *ngIf="!requestVissible" type="submit" [disabled]="!loginForm.valid">Sign In</button>
+
+                    <button *ngIf="requestVissible" (click)="requestDevicePermission()" >Request Device Permission</button>
 
 
                 </form>
+              
             </div>
             <div class="overlay-container">
                 <div class="overlay">

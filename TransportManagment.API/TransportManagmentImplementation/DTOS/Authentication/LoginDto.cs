@@ -9,6 +9,7 @@ namespace Implementation.DTOS.Authentication
 {
     public class LoginDto
     {
+        public string MacAddress { get; set; } = null!;
         [Required]
         public string Username { get; set; } = null!;
 

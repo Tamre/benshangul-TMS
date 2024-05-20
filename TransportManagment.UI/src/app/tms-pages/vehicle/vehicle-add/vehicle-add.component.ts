@@ -51,6 +51,12 @@ export class VehicleAdd implements OnInit {
   markNames: string[] = [];
   markNameIdMap: { [name: string]: number } = {};
 
+
+  breadCrumbItems = [
+    { label: "VRMS" },
+    { label: "Registration", active: true },
+  ];
+
   horsePowerMeasureDropDownItem = [
     { name: "BHP", code: "BHP" },
     { name: "KW", code: "OTHEKWR" },

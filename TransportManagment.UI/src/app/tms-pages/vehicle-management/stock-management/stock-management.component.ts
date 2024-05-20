@@ -8,4 +8,8 @@ import { CommonModule } from '@angular/common';
 })
 export class StockManagementComponent {
 
+  breadCrumbItems = [
+    { label: "VRMS" },
+    { label: "Stock Managemnet", active: true },
+  ];
 }
