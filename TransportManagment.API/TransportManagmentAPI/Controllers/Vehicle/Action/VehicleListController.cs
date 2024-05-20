@@ -55,7 +55,7 @@ namespace TransportManagmentAPI.Controllers.Vehicle.Action
         }
 
 
-        [HttpGet]
+        [HttpPost]
         [ProducesResponseType(typeof(VehicleDetailDto), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> GetVehicleDetail(VehicleGetParameterDto vehicleGet)
         {
