@@ -46,6 +46,7 @@ export class VehicleListComponent implements OnInit {
   markId: number = 0;
   markNames: string[] = [];
   markNameIdMap: { [name: string]: number } = {};
+  isvehicleFound?:boolean = false;
 
 
   breadCrumbItems = [
@@ -143,7 +144,7 @@ export class VehicleListComponent implements OnInit {
     });
 
     this.searchForm = this.formBuilder.group({
-      searchType:[0,Validators.required],
+      searchType:["",Validators.required],
       search:["",Validators.required]
     })
     this.searchValueForm = this.formBuilder.group({
@@ -224,14 +225,14 @@ export class VehicleListComponent implements OnInit {
       this.searchValueForm.controls["vehicleFileteParameter"].setValue(data.searchType)
       
       var value = this.searchValueForm.value 
-      this.vehicleService.getVehicleList({
-        value:this.search,
-        vehicleFileteParameter:this.searchType
-      }).subscribe({
+    
+      this.vehicleService.getVehicleList(value).subscribe({
         next: (res) => {
         if(res.chassisNo){
+          this.isvehicleFound = true
           data = res;
           this.selectedModelId = data.modelId
+
           this.vehicleForm.setValue({
             modelId: data.modelId,
             officeCode: data.officeCode,
