@@ -62,9 +62,9 @@ export class VehicleListComponent implements OnInit {
   ];
   searchDropDownItem = [
     { name: "PlateNo", code: 1},
-    { name: "EngineNo", code: 2 },
-    { name: "ChessisNo", code: 3 },
-    { name: "RegistrationNo", code: 4 },
+    { name: "EngineNo", code: 3 },
+    { name: "ChessisNo", code: 2 },
+    { name: "RegistrationNo", code: 0 },
 
   ];
   modelOptions: any[] = [
