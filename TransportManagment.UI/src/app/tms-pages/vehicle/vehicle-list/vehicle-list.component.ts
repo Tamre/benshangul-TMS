@@ -7,7 +7,7 @@ import { number } from "echarts";
 import { cloneDeep } from "lodash";
 import { ToastService } from "src/app/account/login/toast-service";
 
-import { projectDocument, ProjectTeam } from "src/app/core/data";
+import { groupData, projectDocument, ProjectTeam } from "src/app/core/data";
 import { AddressService } from "src/app/core/services/address.service";
 import { PaginationService } from "src/app/core/services/pagination.service";
 import { successToast, errorToast } from "src/app/core/services/toast.service";
@@ -121,7 +121,7 @@ export class VehicleListComponent implements OnInit {
 
   vehicleId : string = "";
   vehicleRegistrationNo:string=""
-
+  groupData = groupData;
 
 
   constructor(
@@ -174,6 +174,8 @@ export class VehicleListComponent implements OnInit {
 
     })
 
+    
+
     this.vehicleForm = this.formBuilder.group({
       // Required field
       modelId: ["", Validators.required],
@@ -210,6 +212,12 @@ export class VehicleListComponent implements OnInit {
         document.getElementById("elmLoader")?.classList.add("d-none");
       }
     });
+  }
+  activeTab: string = 'Details';
+
+  vehicleActionList : string[] = ['Details','Documents','Owner'];
+  setActiveTab(tab: string) {
+    this.activeTab = tab;
   }
   // Convenience getter for easy access to form fields
   get f() {
