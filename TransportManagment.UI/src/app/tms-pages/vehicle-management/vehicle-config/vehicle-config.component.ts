@@ -7,6 +7,11 @@ import { Observable } from 'rxjs';
   templateUrl: './vehicle-config.component.html',
   styleUrl: './vehicle-config.component.scss'
 })
-export class VehicleConfigComponent {
+export class VehicleConfigComponent  {
+
+  breadCrumbItems = [
+    { label: "VRMS" },
+    { label: "Configuration", active: true },
+  ];
   
 }

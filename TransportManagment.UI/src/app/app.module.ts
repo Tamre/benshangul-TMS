@@ -42,6 +42,8 @@ import { AuthenticationEffects } from './store/Authentication/authentication.eff
 import { AuthHeaderIneterceptor } from './http-interceptors/auth-header-interceptor';
 import { SpinnerComponent } from './components/spinner/spinner.component';
 import { SharedModule } from './shared/shared.module';
+import { ToastsContainer } from './account/login/toasts-container.component';
+import { NgbToastModule } from '@ng-bootstrap/ng-bootstrap';
 
 export function createTranslateLoader(http: HttpClient): any {
   return new TranslateHttpLoader(http, 'assets/i18n/', '.json');
@@ -51,7 +53,8 @@ export function createTranslateLoader(http: HttpClient): any {
 @NgModule({
   declarations: [
     AppComponent,
-    SpinnerComponent
+    SpinnerComponent,
+    ToastsContainer
   ],
   imports: [
     TranslateModule.forRoot({
@@ -67,6 +70,7 @@ export function createTranslateLoader(http: HttpClient): any {
     BrowserModule,
     AppRoutingModule, 
     LayoutsModule,
+    NgbToastModule,
     StoreModule.forRoot(rootReducer),
     StoreDevtoolsModule.instrument({
       maxAge: 25, // Retains last 25 states

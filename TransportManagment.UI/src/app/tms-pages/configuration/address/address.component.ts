@@ -16,6 +16,11 @@ export class AddressComponent {
   teamOverviewList: any;
   submitted = false;
   currentUser!: UserView | null;
+
+  breadCrumbItems = [
+    { label: "Admin" },
+    { label: "Address", active: true },
+  ];
   constructor(
     private modalService: NgbModal,
     private tokenStorageService:TokenStorageService,  

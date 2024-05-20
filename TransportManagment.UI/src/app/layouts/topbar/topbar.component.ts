@@ -49,7 +49,9 @@ export class TopbarComponent implements OnInit {
     private router: Router, private TokenStorageService: TokenStorageService) { }
 
   ngOnInit(): void {
-    this.userData = this.TokenStorageService.getUser();
+    this.userData = this.TokenStorageService.getCurrentUser();
+
+
     this.element = document.documentElement;
 
     // Cookies wise Language set

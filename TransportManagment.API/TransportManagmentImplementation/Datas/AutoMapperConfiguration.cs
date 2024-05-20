@@ -37,6 +37,7 @@ namespace TransportManagmentImplementation.Datas
             CreateMap<DeviceList, DeviceListGetDto>()
                 .ForMember(a => a.ApprovedFor, e => e.MapFrom(mfg => mfg.ApprovedFor.ToString()))
                 .ForMember(a => a.ApproverUser, e => e.MapFrom(mfg => mfg.Approver.FullName))
+                .ForMember(a => a.RequesterUser, e => e.MapFrom(mfg => mfg.CreatedBy.FullName));
         ;
             #endregion
 
