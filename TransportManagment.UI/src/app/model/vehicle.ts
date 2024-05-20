@@ -1,4 +1,6 @@
 export interface VehicleData {
+    id?:string;
+    registrationNumber?:string
     modelId: number;
     taxStatus: string;
     officeCode: string;
@@ -28,10 +30,10 @@ export interface VehicleData {
 
 
   export interface GetVehicleDetailRequestDto{
-    vehicleFileteParameter: number,
+    vehicleFileteParameter: string,
     value: string,
     regionalUser?: boolean,
-    registrationType?: number
+    registrationType?: string
   }
 
 

@@ -261,6 +261,7 @@ namespace TransportManagmentImplementation.Services.Vehicle.Action
                                       .Select(x => new VehicleDetailDto
                                       {
                                           Id = x.VehicleId,
+                                          RegistrationNumber = x.Vehicle.RegistrationNo,
                                           AssembledCountry = x.Vehicle.AssembledCountry.Name,
                                           BillOfLoading = x.Vehicle.BillOfLoading,
                                           ChassisMadeCountry = x.Vehicle.ChassisMade.Name,
@@ -299,6 +300,7 @@ namespace TransportManagmentImplementation.Services.Vehicle.Action
                                       .Select(x => new VehicleDetailDto
                                       {
                                           Id = x.Id,
+                                          RegistrationNumber = x.RegistrationNo,
                                           AssembledCountry = x.AssembledCountry.Name,
                                           BillOfLoading = x.BillOfLoading,
                                           ChassisMadeCountry = x.ChassisMade.Name,
@@ -337,6 +339,7 @@ namespace TransportManagmentImplementation.Services.Vehicle.Action
                                       .Select(x => new VehicleDetailDto
                                       {
                                           Id = x.Id,
+                                          RegistrationNumber = x.RegistrationNo,
                                           AssembledCountry = x.AssembledCountry.Name,
                                           BillOfLoading = x.BillOfLoading,
                                           ChassisMadeCountry = x.ChassisMade.Name,
@@ -375,6 +378,8 @@ namespace TransportManagmentImplementation.Services.Vehicle.Action
                                       .Select(x => new VehicleDetailDto
                                       {
                                           Id = x.Id,
+                                          
+                                          RegistrationNumber = x.RegistrationNo,
                                           AssembledCountry = x.AssembledCountry.Name,
                                           BillOfLoading = x.BillOfLoading,
                                           ChassisMadeCountry = x.ChassisMade.Name,

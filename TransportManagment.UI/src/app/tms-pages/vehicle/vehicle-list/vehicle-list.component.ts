@@ -5,6 +5,7 @@ import { Store } from "@ngrx/store";
 import { TranslateService } from "@ngx-translate/core";
 import { number } from "echarts";
 import { cloneDeep } from "lodash";
+import { ToastService } from "src/app/account/login/toast-service";
 
 import { projectDocument, ProjectTeam } from "src/app/core/data";
 import { AddressService } from "src/app/core/services/address.service";
@@ -67,6 +68,16 @@ export class VehicleListComponent implements OnInit {
     { name: "RegistrationNo", code: 0 },
 
   ];
+
+  searchDropDown2Item = [
+    { name: "PERMANENT", code: 2},
+    { name: "TEMPORARY", code: 1 },
+    { name: "ENCODED", code: 0 },
+
+  ];
+
+
+  
   modelOptions: any[] = [
     { modelName: "Model 1", modelId: 1 },
     { modelName: "Model 2", modelId: 2 },
@@ -104,8 +115,13 @@ export class VehicleListComponent implements OnInit {
   showRegionInput = false;
 
   
-  searchType:number=0
+  searchType:string=""
   search:string=''
+  searchregistrationType:string="";
+
+  vehicleId : string = "";
+  vehicleRegistrationNo:string=""
+
 
 
   constructor(
@@ -118,7 +134,8 @@ export class VehicleListComponent implements OnInit {
     public vehicleLookupService: VehicleLookupService,
     public vehicleModelService: VehicleModelService,
     private addressService: AddressService,
-    public vehicleService:VehicleService
+    public vehicleService:VehicleService,
+    private toastService : ToastService
   ) {
 
   }
@@ -145,7 +162,8 @@ export class VehicleListComponent implements OnInit {
 
     this.searchForm = this.formBuilder.group({
       searchType:["",Validators.required],
-      search:["",Validators.required]
+      search:["",Validators.required],
+      searchregistrationType:["",Validators.required]
     })
     this.searchValueForm = this.formBuilder.group({
       vehicleFileteParameter:[2,Validators.required],
@@ -223,6 +241,8 @@ export class VehicleListComponent implements OnInit {
       
       this.searchValueForm.controls["value"].setValue(data.search)
       this.searchValueForm.controls["vehicleFileteParameter"].setValue(data.searchType)
+      this.searchValueForm.controls["registrationType"].setValue(data.searchregistrationType)
+      
       
       var value = this.searchValueForm.value 
     
@@ -260,9 +280,21 @@ export class VehicleListComponent implements OnInit {
             lastActionTaken: "Endoding"
           });
 
-          successToast("found a vehicle");
+
+          this.vehicleRegistrationNo = res.registrationNumber!;
+          this.vehicleId = res.id!
+          
+
+          this.toastService.show('found a vehicle', {
+            classname: "success text-white",
+            delay: 2000,
+          });
         }else{
-          errorToast("vehicle not found");
+          this.toastService.show('vehicle not found', {
+            classname: "error text-white",
+            delay: 2000,
+          });
+         
         }       
     }  , error: (err) => {
       errorToast(err);

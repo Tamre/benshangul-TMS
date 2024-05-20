@@ -6,18 +6,24 @@
         <form (ngSubmit)="submitSearch()" [formGroup]="searchForm" class="tablelist-form" autocomplete="off">
         <div class="row g-3 align-items-end">
 
-            <div class="col-lg-3">
+            <div class="col-lg-2">
                 <label for="plateType-field" class="form-label">{{ 'Search Type' | translate }}</label>
-                <ng-select [items]="searchDropDownItem"
-                 bindLabel="name" bindValue="code"
-                    id="searchType-field" name="searchType"
-                    formControlName="searchType"
-                    [searchable]="true">
+                <ng-select [items]="searchDropDownItem" formControlName="searchType" bindLabel="name" bindValue="code"
+               
+                    id="plateType-field" name="searchType" [searchable]="true">
+                </ng-select>
+
+            </div>
+            <div class="col-lg-2">
+                <label for="plateType-field" class="form-label">{{ 'Registration Type' | translate }}</label>
+                <ng-select [items]="searchDropDown2Item" formControlName="searchregistrationType" bindLabel="name" bindValue="code"
+               
+                    id="plateType-field" name="plateType" [searchable]="true">
                 </ng-select>
 
             </div>
 
-            <div class="col-lg-3">
+            <div class="col-lg-2">
                 <label for="plateType-field" class="form-label">{{ 'Value' | translate }}</label>
                 <input type="text" id="search-field" class="form-control" placeholder="{{ 'value' | translate }}"
                     required [(ngModel)]="search" 
@@ -27,7 +33,7 @@
 
             <div class="col-lg-2 d-flex align-items-end">
                 <button class="btn btn-success add-btn mt-auto" 
-                    type="submit">
+                    (click)="submitSearch()" type="submit">
                     <i class="ri-filter-3-line"></i> {{ 'find vehicle' | translate }}
                 </button>
             </div>
@@ -67,6 +73,11 @@
                                 <a href="javascript:void(0);" class="active">
                                     <i class="ri-mail-fill me-3 align-middle fw-medium"></i>
                                     <span class="mail-list-link">Vehicle Details</span>
+
+                                </a>
+                                <a href="javascript:void(0);" class="active">
+                                    <i class="ri-mail-fill me-3 align-middle fw-medium"></i>
+                                    <span class="mail-list-link">Vechicle Documents</span>
 
                                 </a>
                                 <a href="javascript:void(0);">
@@ -120,14 +131,14 @@
     <!-- end col -->
 
 
-    <div  *ngIf="isvehicleFound" class="col-xl-9">
+    <div   class="col-xl-9">
         <div>
             <div class="card">
                 <div class="card-header border-0">
 
                 </div>
 
-                <div class="card-body">
+                <div class="card-body" *ngIf="isvehicleFound">
                     <div class="row align-items-center">
                         <form (ngSubmit)="submitForm()" [formGroup]="vehicleForm" class="tablelist-form" autocomplete="off">
                             <div class="modal-body">
