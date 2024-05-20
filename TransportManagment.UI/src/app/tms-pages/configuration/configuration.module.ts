@@ -32,6 +32,7 @@ import { LanguageService } from 'src/app/core/services/language.service';
 import { RegionComponent } from './region/region.component';
 import { ZoneComponent } from './zone/zone.component';
 import { WoredaComponent } from './woreda/woreda.component';
+import { DeviceListComponent } from './device-list/device-list.component';
 
 @NgModule({
   declarations: [
@@ -40,7 +41,8 @@ import { WoredaComponent } from './woreda/woreda.component';
     AddressComponent,
     RegionComponent,
     ZoneComponent,
-    WoredaComponent
+    WoredaComponent,
+    DeviceListComponent
   ],
   imports: [
     CommonModule,

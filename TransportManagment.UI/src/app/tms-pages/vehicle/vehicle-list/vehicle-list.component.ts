@@ -3,6 +3,7 @@ import { UntypedFormGroup, UntypedFormBuilder, Validators } from "@angular/forms
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { Store } from "@ngrx/store";
 import { TranslateService } from "@ngx-translate/core";
+import { number } from "echarts";
 import { cloneDeep } from "lodash";
 
 import { projectDocument, ProjectTeam } from "src/app/core/data";
@@ -45,6 +46,13 @@ export class VehicleListComponent implements OnInit {
   markId: number = 0;
   markNames: string[] = [];
   markNameIdMap: { [name: string]: number } = {};
+
+
+  breadCrumbItems = [
+    { label: "VRMS" },
+    { label: "Vehicle Details", active: true },
+  ];
+
 
 
   horsePowerMeasureDropDownItem = [
@@ -93,6 +101,11 @@ export class VehicleListComponent implements OnInit {
   zones: any;
   showZoneInput = false;
   showRegionInput = false;
+
+  
+  searchType:number=0
+  search:string=''
+
 
   constructor(
     private formBuilder: UntypedFormBuilder,
@@ -202,7 +215,7 @@ export class VehicleListComponent implements OnInit {
       
      
  
-      if (this.searchForm.invalid) {
+      if (this.search==null) {
         return;
       }
       var data = this.searchForm.value
@@ -211,7 +224,10 @@ export class VehicleListComponent implements OnInit {
       this.searchValueForm.controls["vehicleFileteParameter"].setValue(data.searchType)
       
       var value = this.searchValueForm.value 
-      this.vehicleService.getVehicleList(value).subscribe({
+      this.vehicleService.getVehicleList({
+        value:this.search,
+        vehicleFileteParameter:this.searchType
+      }).subscribe({
         next: (res) => {
         if(res.chassisNo){
           data = res;

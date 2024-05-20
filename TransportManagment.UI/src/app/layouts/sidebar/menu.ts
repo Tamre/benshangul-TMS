@@ -41,8 +41,8 @@ export const MENU: MenuItem[] = [
       },
       {
         id: 6,
-        label: "MENUITEMS.CONFIGURATION.LIST.USER",
-        link: "/config/users",
+        label: "Devices",
+        link: "/config/devices",
         parentId: 3,
       },
       {

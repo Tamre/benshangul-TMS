@@ -11,10 +11,10 @@ namespace TransportManagmentInfrustructure.Model.Common
 {
     public class DeviceList: SettingIdModel
     {
-        [StringLength(10)]
+        [StringLength(20)]
         public string PCNAme { get; set; } = null!;
 
-        [StringLength(10)]
+        [StringLength(20)]
         public string IpAddress { get; set; } = null!;
 
         [StringLength(100)]

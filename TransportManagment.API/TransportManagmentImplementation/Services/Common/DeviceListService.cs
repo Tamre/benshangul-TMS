@@ -47,11 +47,11 @@ namespace TransportManagmentImplementation.Services.Common
                     PCNAme = DeviceListPost.PCNAme,
                     IpAddress = DeviceListPost.IpAddress,
                     MACAddress = DeviceListPost.MACAddress,
-                    ApprovedFor = Enum.Parse<ApprovedFor>(DeviceListPost.ApprovedFor),
+                    //ApprovedFor = Enum.Parse<ApprovedFor>(DeviceListPost.ApprovedFor),
                     // ApproverId = DeviceListPost.ApproverId,
                     CreatedById = DeviceListPost.CreatedById,
                     CreatedDate = DateTime.Now,
-                    IsActive = true
+                    IsActive = false
                 };
                 await _dbContext.DeviceLists.AddAsync(DeviceList);
                 await _dbContext.SaveChangesAsync();
@@ -88,20 +88,15 @@ namespace TransportManagmentImplementation.Services.Common
         {
 
 
-            var DeviceLists = await _dbContext.DeviceLists.Include(x => x.Approver).AsNoTracking()
+            var DeviceLists = await _dbContext.DeviceLists.Include(x => x.Approver).Include(x => x.CreatedBy).AsNoTracking()
                  .OrderBy(e => e.Id)
- .Skip((requestParameter.PageNumber - 1) * requestParameter.PageSize)
- .Take(requestParameter.PageSize)
- .ToListAsync();
-
-                
+                 .Skip((requestParameter.PageNumber - 1) * requestParameter.PageSize)
+                 .Take(requestParameter.PageSize)
+                 .ToListAsync();
 
             var DeviceListsDtos = _mapper.Map<List<DeviceListGetDto>>(DeviceLists);
 
             return DeviceListsDtos;
-
-
-
 
         }
 
@@ -114,17 +109,10 @@ namespace TransportManagmentImplementation.Services.Common
 
                 if (DeviceList != null)
                 {
-                    // Update the properties of the DeviceList entity
-                    DeviceList.PCNAme = DeviceListGet.PCNAme;
-                    DeviceList.IpAddress = DeviceListGet.IpAddress;
-                    DeviceList.MACAddress = DeviceListGet.MACAddress;
+                   
                     DeviceList.ApproverId = DeviceListGet.ApproverId;
                     DeviceList.ApprovedFor = Enum.Parse<ApprovedFor>(DeviceListGet.ApprovedFor);
-
-
-                    DeviceList.IsActive = DeviceListGet.IsActive;
-
-
+                    DeviceList.IsActive =  DeviceListGet.IsActive;
 
                     // Save the changes to the database
                     await _dbContext.SaveChangesAsync();

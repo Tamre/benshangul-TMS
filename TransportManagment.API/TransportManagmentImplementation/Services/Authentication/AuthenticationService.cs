@@ -84,6 +84,39 @@ namespace Implementation.Services.Authentication
                     };
                 }
 
+
+                var isDeviceActivated = await _dbContext.DeviceLists.Where(x => x.MACAddress.ToLower() == login.MacAddress.ToLower() && x.CreatedById == user.Id && x.IsActive).FirstOrDefaultAsync();
+
+                if (isDeviceActivated == null)
+                {
+
+                    var isDeviceActivated2 = await _dbContext.DeviceLists.Where(x => x.MACAddress.ToLower() == login.MacAddress.ToLower() && x.CreatedById == user.Id && !x.IsActive).FirstOrDefaultAsync();
+
+                    if (isDeviceActivated2 == null)
+                    {
+                        return new ResponseMessage()
+                        {
+                            Success = false,
+                            Message = "Device Not Registerd Please Request !!!",
+                            Data = user.Id
+
+                        };
+
+                    }
+                    else
+                    {
+                        return new ResponseMessage()
+                        {
+                            Success = false,
+                            Message = "Device Permission Request Has been sent Already !!"
+                        };
+                    }
+                   
+
+                }
+
+
+
                 var roleList = await _userManager.GetRolesAsync(user);
                 var str = string.Join(",", roleList);
 

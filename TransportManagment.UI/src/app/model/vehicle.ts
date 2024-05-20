@@ -30,8 +30,8 @@ export interface VehicleData {
   export interface GetVehicleDetailRequestDto{
     vehicleFileteParameter: number,
     value: string,
-    regionalUser: boolean,
-    registrationType: number
+    regionalUser?: boolean,
+    registrationType?: number
   }
 
 

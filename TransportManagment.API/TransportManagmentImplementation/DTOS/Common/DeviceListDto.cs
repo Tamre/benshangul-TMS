@@ -11,10 +11,10 @@ namespace TransportManagmentImplementation.DTOS.Common
 {
     public record DeviceListPostDto
     {
-        [StringLength(10)]
+        [StringLength(20)]
         public string PCNAme { get; set; } = null!;
 
-        [StringLength(10)]
+        [StringLength(20)]
         public string IpAddress { get; set; } = null!;
 
         [StringLength(100)]
@@ -23,10 +23,8 @@ namespace TransportManagmentImplementation.DTOS.Common
         [StringLength(450)]
         public string? ApproverId { get; set; }
 
-        public string ApprovedFor { get; set; }
-
-
-        public string CreatedById { get; set; }
+        public string? ApprovedFor { get; set; }
+        public string CreatedById { get; set; } = null!;
     }
 
     public record DeviceListGetDto : DeviceListPostDto
@@ -35,6 +33,8 @@ namespace TransportManagmentImplementation.DTOS.Common
         public int Id { get; set; }
 
         public string? ApproverUser { get; set; }
+
+        public string ? RequesterUser { get; set; }
 
         public bool IsActive { get; set; }
     }
