@@ -95,4 +95,19 @@ export const MENU: MenuItem[] = [
       }
     ],
   },
+  {
+    id: 10,
+    label: "MENUITEMS.VEHICLE-ACTIONS.TEXT",
+    icon: "ri-apps-2-line",
+    isCollapsed: true,
+    subItems: [
+      {
+        id: 11,
+        label: "MENUITEMS.VEHICLE-ACTIONS.LIST.ACTIONS",
+        link: "/v-management/Vehicle-Actions",
+        parentId: 10,
+      },
+      
+    ],
+  },
 ];
