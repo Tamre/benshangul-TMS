@@ -198,7 +198,7 @@ namespace TransportManagmentImplementation.Services.Vehicle.Action
                 CreatedDate = DateTime.Now,
                 DocumentPath = path,
                 DocumentTypeId = addVehicleDocument.DocumentTypeId,
-                ForVehicleDocument = Enum.Parse<ForVehicleDocument>(addVehicleDocument.ForVehicleDocument),
+                ForVehicleDocument = addVehicleDocument.ForVehicleDocument,
                 IsActive = true,
                 VehicleId = addVehicleDocument.VehicleId
             };
