@@ -108,12 +108,17 @@
                                 <div class="col-lg-6">
                                     <div>
                                         <label for="markId-field" class="form-label">{{ 'Mark' | translate }}</label>
-                                        <select id="markId-field" class="form-control" formControlName="markId"
+                                        <!-- <select id="markId-field" class="form-control" formControlName="markId"
                                             [ngClass]="{ 'is-invalid': submitted && form['markId'].errors }">
                                             <option value="" disabled selected>{{ 'Select Mark' | translate }}</option>
                                             <option *ngFor="let markName of markNames"
                                                 [value]="markNameIdMap[markName]">{{ markName }}</option>
-                                        </select>
+                                        </select> -->
+                                        <ng-select [items]="markName" bindLabel="name" bindValue="id"
+                                            [(ngModel)]="selectedMarkName" id="markId-field"
+                                            name="markId" formControlName="markId"
+                                            [searchable]="true" placeholder="Select Mark Name" required>
+                                        </ng-select>
 
                                         @if (submitted && form['markId'].errors) {
                                         <div class="invalid-feedback" align="left">
