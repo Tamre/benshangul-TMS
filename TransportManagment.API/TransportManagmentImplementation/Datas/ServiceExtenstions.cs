@@ -69,6 +69,7 @@ namespace TransportManagmentImplementation.Datas
             services.AddScoped<IVehicleTypeService, VehicleTypeService>();
             services.AddScoped<IValuationReasonService, ValuationReasonService>();
             services.AddScoped<ILoggerManagerService, LoggerManagerService>();
+            services.AddScoped<IvehicleDropDownService, VehicleDropDownService>();
 
 
 

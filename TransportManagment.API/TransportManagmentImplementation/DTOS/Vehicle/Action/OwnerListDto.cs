@@ -71,7 +71,7 @@ namespace TransportManagmentImplementation.DTOS.Vehicle.Action
         public Guid? OwnerId { get; set; }
         public Guid? TrainingCenterId { get; set; }
         public OwnerState OwnerState { get; set; }
-
+        public OwnerGroup OwnerGroup { get; set; }
         public string CreatedById { get; set; } = null!;
     }
 

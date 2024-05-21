@@ -10,6 +10,7 @@ import { Region } from "src/app/model/address/region";
 import { Zone } from "src/app/model/address/zone";
 import { Woreda } from "src/app/model/address/woreda";
 import { GetVehicleDetailRequestDto, VehicleData } from "src/app/model/vehicle";
+import { IVehicleOwnerGetDto } from "src/app/tms-pages/vehicle/vehicle-owners/IVehicleOwnersDto";
 @Injectable({ providedIn: "root" })
 
 export class VehicleService {
@@ -47,6 +48,14 @@ export class VehicleService {
       `${this.baseUrl}/VehicleList/AddVehicleDocument`,
       formData,{headers:headers}
     );
+  }
+
+
+  //vech owners 
+
+  getVehicleOwnerByVehicleId(vehicleId:string) {
+    var headers = this.headers
+    return this.http.get<IVehicleOwnerGetDto[]>(  `${this.baseUrl}/OwnerList/GetOwnerByVechicleId?vehicleId=${vehicleId}`,{headers:headers})
   }
 
 }

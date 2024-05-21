@@ -27,5 +27,11 @@ namespace TransportManagmentAPI.Controllers.Vehicle.Configuration
         {
             return Ok(await _vehicleDropDownService.GetDocumentTypeDropdown());
         }
+
+        [HttpGet]
+        public async Task<IActionResult> GetOwnerListDropdown()
+        {
+            return Ok(await _vehicleDropDownService.GetOwnerListDropdown());
+        }
     }
 }

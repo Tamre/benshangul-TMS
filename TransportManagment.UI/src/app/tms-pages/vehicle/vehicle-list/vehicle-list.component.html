@@ -68,8 +68,8 @@
 
                             <div class="chat-message-list">
                                 <ul class="list-unstyled chat-list chat-user-list mb-0" id="channelList">
-                                    <li *ngFor="let item of vehicleActionList " [class.active]="activeTab ==item"
-                                        (click)="setActiveTab(item)" style="cursor: pointer;">
+                                    <li *ngFor="let item of vehicleActionList " [class.active]="activeTab ==item.code"
+                                        (click)="setActiveTab(item.code)" style="cursor: pointer;">
                                         <a class="unread-msg-user">
                                             <div class="d-flex align-items-center">
                                                 <div
@@ -81,7 +81,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="flex-grow-1 overflow-hidden">
-                                                    <p class="text-truncate mb-0">Vehicle {{item}}</p>
+                                                    <p class="text-truncate mb-0">Vehicle {{item.name}}</p>
                                                 </div>
                                                 <div class="flex-shrink-0">
 
@@ -112,7 +112,7 @@
 
 
             <div class="card-body" *ngIf="isvehicleFound">
-                <div class="row align-items-center " *ngIf="activeTab === 'Details'">
+                <div class="row align-items-center " *ngIf="activeTab === 1">
                     <form (ngSubmit)="submitForm()" [formGroup]="vehicleForm" class="tablelist-form" autocomplete="off">
                         <div class="modal-body">
                            
@@ -430,15 +430,12 @@
                     </form>
                 </div>
 
-                <div class="row align-items-center " *ngIf="activeTab === 'Documents'">
-
+                <div class="row align-items-center " *ngIf="activeTab === 2">
                     <app-vehicle-documents></app-vehicle-documents>
-
                 </div>
 
-                <div class="row align-items-center " *ngIf="activeTab === 'Owner'">
-
-                    <app-vehicle-owners></app-vehicle-owners>
+                <div class="row align-items-center " *ngIf="activeTab === 3">
+                    <app-vehicle-owners [vehicleId]="vehicleId"></app-vehicle-owners>
 
                 </div>
 

@@ -11,8 +11,8 @@ namespace TransportManagmentImplementation.Interfaces.Vehicle.Configuration
     public interface IvehicleDropDownService
     {
         Task<List<SettingDropDownsDto>> GetNotAddedDocuments(Guid VehicleId);
-
         Task<List<OwnerListDropdownDto>> GetOwnerListDropdown();
         Task<List<SettingDropDownsDto>> GetDocumentTypeDropdown();
+      
     }
 }

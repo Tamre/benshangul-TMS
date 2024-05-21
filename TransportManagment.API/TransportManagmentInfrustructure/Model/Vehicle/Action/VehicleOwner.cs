@@ -20,6 +20,7 @@ namespace TransportManagmentInfrustructure.Model.Vehicle.Action
         public Guid? TrainingCenterId { get; set; }
         public virtual TrainingCenterList TrainingCenter { get; set; } = null!;
         public OwnerState OwnerState { get; set; }
+        public OwnerGroup OwnerGroup { get; set; }
 
     }
 }
