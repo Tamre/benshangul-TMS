@@ -1,47 +1,57 @@
 
-<form [formGroup]="vehicleDocumentForm" (ngSubmit)="onSubmit()">
-    <div>
-      <label for="vehicleId">Vehicle ID:</label>
-      <input id="vehicleId" formControlName="vehicleId" type="text">
-      <div *ngIf="vehicleDocumentForm.get('vehicleId')?.invalid && (vehicleDocumentForm.get('vehicleId')?.dirty || vehicleDocumentForm.get('vehicleId')?.touched)">
-        Vehicle ID is required.
-      </div>
-    </div>
-  
-    <div>
-      <label for="createdById">Created By ID:</label>
-      <input id="createdById" formControlName="createdById" type="text">
-      <div *ngIf="vehicleDocumentForm.get('createdById')?.invalid && (vehicleDocumentForm.get('createdById')?.dirty || vehicleDocumentForm.get('createdById')?.touched)">
-        Created By ID is required.
-      </div>
-    </div>
-  
-    <div>
-      <label for="document">Document:</label>
-      <input id="document" type="file" (change)="onFileChange($event)">
-      <div *ngIf="vehicleDocumentForm.get('document')?.invalid && (vehicleDocumentForm.get('document')?.dirty || vehicleDocumentForm.get('document')?.touched)">
-        Document is required.
-      </div>
-    </div>
-  
-    <div>
-      <label for="documentTypeId">Document Type ID:</label>
-      <input id="documentTypeId" formControlName="documentTypeId" type="number">
-      <div *ngIf="vehicleDocumentForm.get('documentTypeId')?.invalid && (vehicleDocumentForm.get('documentTypeId')?.dirty || vehicleDocumentForm.get('documentTypeId')?.touched)">
-        Document Type ID is required.
-      </div>
-    </div>
-  
-    <div>
-      <label for="forVehicleDocument">For Vehicle Document:</label>
-      <input id="forVehicleDocument" formControlName="forVehicleDocument" type="text">
-      <div *ngIf="vehicleDocumentForm.get('forVehicleDocument')?.invalid && (vehicleDocumentForm.get('forVehicleDocument')?.dirty || vehicleDocumentForm.get('forVehicleDocument')?.touched)">
-        For Vehicle Document is required.
-      </div>
-    </div>
-  
-    <button type="submit" [disabled]="vehicleDocumentForm.invalid">Submit</button>
-  </form>
-  
+<form (ngSubmit)="onSubmit()" [formGroup]="vehicleDocumentForm" class="tablelist-form" autocomplete="off">
+  <div class="modal-body">                           
+      <div class="row g-3">
 
 
+        <div class="col-lg-6">
+          <div class="mb-3">
+              <label for="documentTypeId-field" class="form-label">{{ 'Document Type' | translate
+                  }}</label>
+              <ng-select [items]="documentTypes" bindLabel="name" bindValue="id"
+                  id="documentTypeId-field" name="documentTypeId"
+                  formControlName="documentTypeId" [searchable]="true" required>
+              </ng-select>
+              <div *ngIf="vehicleDocumentForm.get('document')?.invalid && (vehicleDocumentForm.get('document')?.dirty || vehicleDocumentForm.get('document')?.touched)">
+                Document is required.
+              </div>
+          </div>
+          </div>
+          
+
+          
+        <div class="col-lg-6">
+          <div class="mb-3">
+              <label for="forVehicleDocument-field" class="form-label">{{ 'For Vehicle Document' | translate
+                  }}</label>
+              <ng-select [items]="forVehicleDocumentOption" bindLabel="name" bindValue="code"
+                  id="forVehicleDocument-field" name="forVehicleDocument"
+                  formControlName="forVehicleDocument" [searchable]="true" required>
+              </ng-select>
+              <div *ngIf="vehicleDocumentForm.get('forVehicleDocument')?.invalid && (vehicleDocumentForm.get('forVehicleDocument')?.dirty || vehicleDocumentForm.get('forVehicleDocument')?.touched)">
+                For Vehicle Document is required.
+              </div>
+          </div>
+      </div>
+      <div class="col-lg-6">
+        <div class="mb-3">
+            <label for="formFile" class="form-label">Document</label>
+            <input class="form-control" type="file" id="formFile" (change)="onFileChange($event)">
+            <div *ngIf="vehicleDocumentForm.get('document')?.invalid && (vehicleDocumentForm.get('document')?.dirty || vehicleDocumentForm.get('document')?.touched)">
+              Document is required.
+            </div>
+        </div>
+    </div>
+        </div>
+        </div>
+        <div class="modal-footer">
+          <div class="hstack gap-2 justify-content-end">
+              <!-- <button type="button" class="btn btn-light" data-bs-dismiss="modal" (click)="closeModal()">{{
+                      'Close' |
+                      translate }}</button> -->
+              <button type="submit" [disabled]="vehicleDocumentForm.invalid" class="btn btn-success"
+                  id="add-btn">{{
+                  'Add document' | translate }}</button>
+          </div>
+      </div>
+</form>

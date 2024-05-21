@@ -1,9 +1,15 @@
-import { Component, OnInit } from "@angular/core";
+
+
+import { Component, Input, OnInit } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { VehicleDropdownService } from "src/app/core/services/vehicle-dropdown.service";
 import { ISettingDropDownsDto } from "src/app/model/common";
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { VehicleService } from "src/app/core/services/vehicle.service";
+import { UserView } from "src/app/model/user";
+import { TokenStorageService } from "src/app/core/services/token-storage.service";
+import { ToastService } from "src/app/account/login/toast-service";
+
 
 @Component({
   selector: "app-vehicle-documents",
@@ -12,34 +18,42 @@ import { VehicleService } from "src/app/core/services/vehicle.service";
   styleUrl: "./vehicle-documents.component.scss",
 })
 export class VehicleDocumentsComponent implements OnInit {
+  @Input() vehicleId: any;
   documentTypes: ISettingDropDownsDto[] = [];
 
   vehicleDocumentForm!: FormGroup;
-
+  currentUser!: UserView | null;
   constructor(
     private vehcDropDownService: VehicleDropdownService,
     private fb: FormBuilder,
-    private vehicleService: VehicleService
+    private vehicleService: VehicleService,
+    private tokenStorageService: TokenStorageService,
+    private toastService: ToastService
   ) {}
-
+  forVehicleDocumentOption = [
+    { name: "AnnualInspection", code: 0 },
+  ];
+ 
   ngOnInit(): void {
-    this.getDocumentTypes();
+    this.currentUser = this.tokenStorageService.getCurrentUser();
     this.vehicleDocumentForm = this.fb.group({
-      vehicleId: ["F2C9050E-38A9-4C67-A14A-054F134E2A2C", Validators.required],
-      createdById: [
-        "18eef146-fc48-4074-94e7-e5dd4a3be236",
-        Validators.required,
-      ],
       document: [null, Validators.required],
-      documentTypeId: [1, Validators.required],
-      forVehicleDocument: [0, Validators.required],
+      documentTypeId: [null, Validators.required],
+      forVehicleDocument: [null, Validators.required],
     });
+
+    this.getDocumentTypes()
   }
 
   getDocumentTypes() {
     this.vehcDropDownService.getDocumentTypeDropdown().subscribe({
       next: (res) => {
-        this.documentTypes = res;
+        if (res) 
+          {
+            this.documentTypes = res  
+          }
+      },
+      error: (err) => {        
       },
     });
   }
@@ -47,13 +61,15 @@ export class VehicleDocumentsComponent implements OnInit {
   onSubmit() {
     if (this.vehicleDocumentForm.valid) {
       const formData = new FormData();
+      let userId =  this?.currentUser?.userId;
+      console.log("vehicle",this.vehicleId)
       formData.append(
-        "VehicleId",
-        this.vehicleDocumentForm.get("vehicleId")?.value
+        "VehicleId",this.vehicleId
       );
+     if(userId)
       formData.append(
         "CreatedById",
-        this.vehicleDocumentForm.get("createdById")?.value
+        userId
       );
       formData.append(
         "Document",
@@ -67,16 +83,18 @@ export class VehicleDocumentsComponent implements OnInit {
         "ForVehicleDocument",
         this.vehicleDocumentForm.get("forVehicleDocument")?.value
       );
-
-      // Use formData to submit the form
-      console.log(formData);
-
       this.vehicleService.addVehicleDoc(formData).subscribe({
         next: (res) => {
-          console.log(res);
+          this.toastService.show(res.message, {
+            classname: "success text-white",
+            delay: 2000,
+          });
         },
         error: (err) => {
-          console.log(err);
+          this.toastService.show("unable to add document", {
+            classname: "error text-white",
+            delay: 2000,
+          });
         },
       });
     }
@@ -91,3 +109,5 @@ export class VehicleDocumentsComponent implements OnInit {
     }
   }
 }
+
+
