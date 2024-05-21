@@ -14,6 +14,8 @@ namespace TransportManagmentImplementation.Interfaces.Vehicle.Action
         public Task<ResponseMessage> CreateOwner(OwnerListPostDto ownerListPostDto);
         public Task<ResponseMessage> AssignOwner(VehicleOwnerDto vehicleOwnerDto);
 
+        public Task<PagedList<OwnerListGetDto>> GetAllOwners(FilterDetail filterData);
+
         Task<ResponseMessage> UpdateOwner(OwnerListGetDto ownerListGetDto);
     }
 }

@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 using TransportManagmentImplementation.DTOS.Vehicle.Action;
@@ -259,5 +260,49 @@ namespace TransportManagmentImplementation.Services.Vehicle.Action
 
 
 }
+
+        public async  Task<PagedList<OwnerListGetDto>> GetAllOwners(FilterDetail filterData)
+        {
+            IQueryable<OwnerList> ownerQuery = _dbContext.OwnerLists.AsNoTracking().OrderBy(x => x.CreatedDate);
+
+            /// Do the Sort And Serch Impleentation here
+
+            if (!string.IsNullOrEmpty(filterData.SearchTerm))
+            {
+                ownerQuery = ownerQuery.Where(p =>
+               p.FirstName.Contains(filterData.SearchTerm));
+            }
+
+            if (filterData.Criteria != null && filterData.Criteria.Count() > 0)
+            {
+                foreach (var criteria in filterData.Criteria)
+                {
+                    ownerQuery = ownerQuery.Where(GetFilterProperty(criteria));
+                }
+            }
+
+
+
+            var pagedOwnerList = await PagedList<OwnerList>.ToPagedListAsync(ownerQuery, filterData.PageNumber, filterData.PageSize);
+
+            var pagedOwnerListDtos = _mapper.Map<List<OwnerListGetDto>>(pagedOwnerList);
+
+
+            return new PagedList<OwnerListGetDto>(pagedOwnerListDtos, pagedOwnerList.MetaData);
+        }
+
+        private static Expression<Func<OwnerList, bool>> GetFilterProperty(FilterCriteria criteria)
+        {
+            return criteria.ColumnName?.ToLower() switch
+            {
+                "FirstName" => owner => owner.FirstName.Contains(criteria.FilterValue),
+                "LastName" => owner => owner.LastName.Contains(criteria.FilterValue),
+                "MiddleName" => owner => owner.MiddleName.Contains(criteria.FilterValue),
+                "OwnerNumber" => owner => owner.OwnerNumber.Contains(criteria.FilterValue),
+                "PhoneNumber" => owner => owner.PhoneNumber.Contains(criteria.FilterValue),
+               
+            };
+        }
+
     }
 }
