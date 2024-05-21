@@ -49,7 +49,6 @@
 </div>
 
 
-
 <div class="email-wrapper d-lg-flex gap-1 mx-n4 mt-n4 p-1" *ngIf="isvehicleFound">
     <div class="email-menu-sidebar minimal-border" id="menusidebar">
         <div class="py-4 px-1 d-flex flex-column h-100">
@@ -69,8 +68,8 @@
 
                             <div class="chat-message-list">
                                 <ul class="list-unstyled chat-list chat-user-list mb-0" id="channelList">
-                                    <li *ngFor="let item of vehicleActionList" [class.active]="activeTab === item"
-                                        (onClick)="setActiveTab(item)" style="cursor: pointer;">
+                                    <li *ngFor="let item of vehicleActionList " [class.active]="activeTab ==item"
+                                        (click)="setActiveTab(item)" style="cursor: pointer;">
                                         <a class="unread-msg-user">
                                             <div class="d-flex align-items-center">
                                                 <div
@@ -91,7 +90,6 @@
                                         </a>
                                     </li>
                                 </ul>
-
                             </div>
 
 
@@ -117,7 +115,7 @@
                 <div class="row align-items-center " *ngIf="activeTab === 'Details'">
                     <form (ngSubmit)="submitForm()" [formGroup]="vehicleForm" class="tablelist-form" autocomplete="off">
                         <div class="modal-body">
-                            <input type="hidden" id="id-field" formControlName="id" />
+                           
                             <div class="row g-3">
                                 <div class="col-lg-3">
                                     <div class="mb-3">

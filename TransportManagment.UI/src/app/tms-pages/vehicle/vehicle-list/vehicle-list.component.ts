@@ -1,5 +1,9 @@
 import { Component, OnInit } from "@angular/core";
-import { UntypedFormGroup, UntypedFormBuilder, Validators } from "@angular/forms";
+import {
+  UntypedFormGroup,
+  UntypedFormBuilder,
+  Validators,
+} from "@angular/forms";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { Store } from "@ngrx/store";
 import { TranslateService } from "@ngx-translate/core";
@@ -30,8 +34,8 @@ import { selectCRMLoading } from "src/app/store/CRM/crm_selector";
 export class VehicleListComponent implements OnInit {
   submitted = false;
   vehicleForm!: UntypedFormGroup;
-  searchForm!:UntypedFormGroup;
-  searchValueForm!:UntypedFormGroup;
+  searchForm!: UntypedFormGroup;
+  searchValueForm!: UntypedFormGroup;
   isEditing: Boolean = false;
   dataForm!: UntypedFormGroup;
   currentUser!: UserView | null;
@@ -47,37 +51,30 @@ export class VehicleListComponent implements OnInit {
   markId: number = 0;
   markNames: string[] = [];
   markNameIdMap: { [name: string]: number } = {};
-  isvehicleFound?:boolean = false;
-
+  isvehicleFound?: boolean = false;
 
   breadCrumbItems = [
     { label: "VRMS" },
     { label: "Vehicle Details", active: true },
   ];
 
-
-
   horsePowerMeasureDropDownItem = [
     { name: "BHP", code: "BHP" },
     { name: "KW", code: "OTHEKWR" },
   ];
   searchDropDownItem = [
-    { name: "PlateNo", code: 1},
+    { name: "PlateNo", code: 1 },
     { name: "EngineNo", code: 3 },
     { name: "ChessisNo", code: 2 },
     { name: "RegistrationNo", code: 0 },
-
   ];
 
   searchDropDown2Item = [
-    { name: "PERMANENT", code: 2},
+    { name: "PERMANENT", code: 2 },
     { name: "TEMPORARY", code: 1 },
     { name: "ENCODED", code: 0 },
-
   ];
 
-
-  
   modelOptions: any[] = [
     { modelName: "Model 1", modelId: 1 },
     { modelName: "Model 2", modelId: 2 },
@@ -97,13 +94,9 @@ export class VehicleListComponent implements OnInit {
     { name: "ToZone" },
     { name: "ToOtherRegion" },
   ];
-  taxStatusOption: any[] = [
-    { name: "TAX_PAID" },
-    { name: "FREE" },
-  ];
+  taxStatusOption: any[] = [{ name: "TAX_PAID" }, { name: "FREE" }];
 
   selectedModelId: any;
-  
 
   successAddMessage: string = "";
   successUpdateMessage = "Vehicle Type successfully updated";
@@ -114,15 +107,13 @@ export class VehicleListComponent implements OnInit {
   showZoneInput = false;
   showRegionInput = false;
 
-  
-  searchType:string=""
-  search:string=''
-  searchregistrationType:string="";
+  searchType: string = "";
+  search: string = "";
+  searchregistrationType: string = "";
 
-  vehicleId : string = "";
-  vehicleRegistrationNo:string=""
+  vehicleId: string = "";
+  vehicleRegistrationNo: string = "";
   groupData = groupData;
-
 
   constructor(
     private formBuilder: UntypedFormBuilder,
@@ -134,11 +125,9 @@ export class VehicleListComponent implements OnInit {
     public vehicleLookupService: VehicleLookupService,
     public vehicleModelService: VehicleModelService,
     private addressService: AddressService,
-    public vehicleService:VehicleService,
-    private toastService : ToastService
-  ) {
-
-  }
+    public vehicleService: VehicleService,
+    private toastService: ToastService
+  ) {}
   ngOnInit(): void {
     this.currentUser = this.tokenStorageService.getCurrentUser();
     this.refreshData();
@@ -161,20 +150,16 @@ export class VehicleListComponent implements OnInit {
     });
 
     this.searchForm = this.formBuilder.group({
-      searchType:["",Validators.required],
-      search:["",Validators.required],
-      searchregistrationType:["",Validators.required]
-    })
+      searchType: ["", Validators.required],
+      search: ["", Validators.required],
+      searchregistrationType: ["", Validators.required],
+    });
     this.searchValueForm = this.formBuilder.group({
-      vehicleFileteParameter:[2,Validators.required],
-      value:["",Validators.required],
-      regionalUser:[true],
-      registrationType:[0]
-
-
-    })
-
-    
+      vehicleFileteParameter: [2, Validators.required],
+      value: ["", Validators.required],
+      regionalUser: [true],
+      registrationType: [0],
+    });
 
     this.vehicleForm = this.formBuilder.group({
       // Required field
@@ -186,7 +171,7 @@ export class VehicleListComponent implements OnInit {
       removalNumber: [""], // No validators
       invoiceDate: [""],
       invoicePrice: [""],
-      taxStatus:["", Validators.required],
+      taxStatus: ["", Validators.required],
       chassisNo: ["", Validators.required], // Required field
       engineNumber: [""], // No validators
       assembledCountryId: ["", Validators.required],
@@ -200,8 +185,8 @@ export class VehicleListComponent implements OnInit {
       vehicleCurrentStatus: ["", Validators.required],
       transferStatus: ["", Validators.required],
       serviceZoneId: ["", Validators.required],
-      createdById:[""],
-      lastActionTaken:["Endoding"]
+      createdById: [""],
+      lastActionTaken: ["Endoding"],
     });
     /**
      * fetches data
@@ -213,53 +198,54 @@ export class VehicleListComponent implements OnInit {
       }
     });
   }
-  activeTab: string = 'Details';
+  activeTab: string = "Details";
 
-  vehicleActionList : string[] = ['Details','Documents','Owner'];
+  vehicleActionList: string[] = ["Details", "Documents", "Owner"];
   setActiveTab(tab: string) {
     this.activeTab = tab;
+    
   }
   // Convenience getter for easy access to form fields
   get f() {
     return this.vehicleForm.controls;
   }
 
-   onSelectionChange(event :any) {
-        const selectedValue = event.name;
-        if (selectedValue === 'FromZone') {
-            this.showZoneInput = true;
-            this.showRegionInput = false;
-        } else if (selectedValue === 'FromOtherRegion') {
-            this.showZoneInput = false;
-            this.showRegionInput = true;
-        } else {
-            this.showZoneInput = false;
-            this.showRegionInput = false;
-        }
+  onSelectionChange(event: any) {
+    const selectedValue = event.name;
+    if (selectedValue === "FromZone") {
+      this.showZoneInput = true;
+      this.showRegionInput = false;
+    } else if (selectedValue === "FromOtherRegion") {
+      this.showZoneInput = false;
+      this.showRegionInput = true;
+    } else {
+      this.showZoneInput = false;
+      this.showRegionInput = false;
     }
+  }
 
-    submitSearch(){
-      
-     
- 
-      if (this.search==null) {
-        return;
-      }
-      var data = this.searchForm.value
-      
-      this.searchValueForm.controls["value"].setValue(data.search)
-      this.searchValueForm.controls["vehicleFileteParameter"].setValue(data.searchType)
-      this.searchValueForm.controls["registrationType"].setValue(data.searchregistrationType)
-      
-      
-      var value = this.searchValueForm.value 
-    
-      this.vehicleService.getVehicleList(value).subscribe({
-        next: (res) => {
-        if(res.chassisNo){
-          this.isvehicleFound = true
+  submitSearch() {
+    if (this.search == null) {
+      return;
+    }
+    var data = this.searchForm.value;
+
+    this.searchValueForm.controls["value"].setValue(data.search);
+    this.searchValueForm.controls["vehicleFileteParameter"].setValue(
+      data.searchType
+    );
+    this.searchValueForm.controls["registrationType"].setValue(
+      data.searchregistrationType
+    );
+
+    var value = this.searchValueForm.value;
+
+    this.vehicleService.getVehicleList(value).subscribe({
+      next: (res) => {
+        if (res.chassisNo) {
+          this.isvehicleFound = true;
           data = res;
-          this.selectedModelId = data.modelId
+          this.selectedModelId = data.modelId;
 
           this.vehicleForm.setValue({
             modelId: data.modelId,
@@ -285,38 +271,35 @@ export class VehicleListComponent implements OnInit {
             transferStatus: data.transferStatus,
             serviceZoneId: "",
             createdById: this.currentUser?.userId,
-            lastActionTaken: "Endoding"
+            lastActionTaken: "Endoding",
           });
 
-
           this.vehicleRegistrationNo = res.registrationNumber!;
-          this.vehicleId = res.id!
-          
+          this.vehicleId = res.id!;
 
-          this.toastService.show('found a vehicle', {
+          this.toastService.show("found a vehicle", {
             classname: "success text-white",
             delay: 2000,
           });
-        }else{
-          this.toastService.show('vehicle not found', {
+        } else {
+          this.toastService.show("vehicle not found", {
             classname: "error text-white",
             delay: 2000,
           });
-         
-        }       
-    }  , error: (err) => {
-      errorToast(err);
-    },
-    })
+        }
+      },
+      error: (err) => {
+        errorToast(err);
+      },
+    });
   }
 
-    
   // Function to submit the form
   submitForm() {
     this.submitted = true;
     this.vehicleForm.controls["createdById"].setValue(this.currentUser?.userId);
     this.vehicle = this.vehicleForm.value;
-    console.log(this.vehicle);
+   
     // Stop here if form is invalid
     if (this.vehicleForm.invalid) {
       return;
@@ -324,20 +307,19 @@ export class VehicleListComponent implements OnInit {
 
     // Populate vehicle object with form values
     this.vehicle = this.vehicleForm.value;
-    console.log(this.vehicle);
+
     // // Call the service to add the vehicle
     this.vehicleService.addVehicleList(this.vehicle).subscribe({
       next: (res) => {
         if (res.success) {
-          console.log(res)
+         
           successToast(res.message);
-          this.refreshData()
+          this.refreshData();
         }
       },
       error: (err) => {
         errorToast(err);
       },
-      
     });
   }
 
@@ -351,7 +333,7 @@ export class VehicleListComponent implements OnInit {
           this.vehLookups = res;
           this.allVehLookups = cloneDeep(res);
           this.vehLookups = this.service.changePage(this.allVehLookups);
-          console.log(this.allVehLookups);
+      
 
           // Populate the markNames array with names from vehLookups
           this.markNames = this.vehLookups.map((veh: any) => veh.name);
@@ -438,21 +420,32 @@ export class VehicleListComponent implements OnInit {
 
     if (this.dataForm.valid) {
       if (this.dataForm.get("id")?.value) {
-        console.log(this.currentUser?.userId);
+        
         const newData: VehicleModelPostDto = this.dataForm.value;
         this.vehicleModelService.updateVehicleModel(newData).subscribe({
           next: (res: ResponseMessage) => {
             if (res.success) {
               this.successAddMessage = res.message;
               this.closeModal();
-              successToast(this.successAddMessage);
+             
+              this.toastService.show(this.successAddMessage, {
+                classname: "success text-white",
+                delay: 2000,
+              });
               this.refreshData();
             } else {
-              console.error(res.message);
+              this.toastService.show("vehicle update not working !!", {
+                classname: "error text-white",
+                delay: 2000,
+              });
+             
             }
           },
           error: (err) => {
-            console.error(err);
+            this.toastService.show(err.message, {
+              classname: "error text-white",
+              delay: 2000,
+            });
           },
         });
       } else {
