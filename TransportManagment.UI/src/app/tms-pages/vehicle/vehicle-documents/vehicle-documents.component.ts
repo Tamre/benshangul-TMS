@@ -48,23 +48,23 @@ export class VehicleDocumentsComponent implements OnInit {
     if (this.vehicleDocumentForm.valid) {
       const formData = new FormData();
       formData.append(
-        "vehicleId",
+        "VehicleId",
         this.vehicleDocumentForm.get("vehicleId")?.value
       );
       formData.append(
-        "createdById",
+        "CreatedById",
         this.vehicleDocumentForm.get("createdById")?.value
       );
       formData.append(
-        "document",
+        "Document",
         this.vehicleDocumentForm.get("document")?.value
       );
       formData.append(
-        "documentTypeId",
+        "DocumentTypeId",
         this.vehicleDocumentForm.get("documentTypeId")?.value
       );
       formData.append(
-        "forVehicleDocument",
+        "ForVehicleDocument",
         this.vehicleDocumentForm.get("forVehicleDocument")?.value
       );
 

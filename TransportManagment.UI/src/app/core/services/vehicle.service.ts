@@ -21,8 +21,7 @@ export class VehicleService {
    * Get All User
    */
   headers = new HttpHeaders({
-    'Authorization': `Bearer ${this.tokenStorageService.getToken()}`,
-    'Content-Type': 'application/json'
+    'Authorization': `Bearer ${this.tokenStorageService.getToken()}`
   });
 
   addVehicleList(formData:VehicleData){
