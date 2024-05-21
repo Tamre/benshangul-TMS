@@ -77,7 +77,7 @@ namespace TransportManagmentAPI.Controllers.Vehicle.Action
 
         [HttpGet]
         [ProducesResponseType(typeof(OwnerListGetDto), (int)HttpStatusCode.OK)]
-        public async Task<IActionResult> GetAllOwners(FilterDetail filterDetail)
+        public async Task<IActionResult> GetAllOwners([FromQuery] FilterDetail filterDetail)
         {
             if (ModelState.IsValid)
             {
