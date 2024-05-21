@@ -13,5 +13,6 @@ namespace TransportManagmentImplementation.Interfaces.Vehicle.Configuration
         Task<List<SettingDropDownsDto>> GetNotAddedDocuments(Guid VehicleId);
 
         Task<List<OwnerListDropdownDto>> GetOwnerListDropdown();
+        Task<List<SettingDropDownsDto>> GetDocumentTypeDropdown();
     }
 }

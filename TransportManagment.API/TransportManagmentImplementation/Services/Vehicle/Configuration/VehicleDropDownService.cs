@@ -43,5 +43,18 @@ namespace TransportManagmentImplementation.Services.Vehicle.Configuration
 
             return OwnerList;
         }
+
+        public async Task<List<SettingDropDownsDto>> GetDocumentTypeDropdown()
+        {
+
+            var DocumentTypes = await _dbContext.DocumentTypes.Select(x => new SettingDropDownsDto
+            {
+                Id = x.Id,
+                Name = x.FileName 
+            }).ToListAsync();
+
+
+            return DocumentTypes; 
+        }
     }
 }

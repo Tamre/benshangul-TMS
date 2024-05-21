@@ -97,3 +97,13 @@ export interface MacAddressServiceDto {
     MacAddress: string
     IPAddress: string
 }
+
+export interface ISettingDropDownsDto {
+    id : number 
+    name: string
+}
+export interface IActionDropDownDto {
+    id : string 
+    name: string
+}
+

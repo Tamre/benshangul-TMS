@@ -10,9 +10,11 @@ import { Region } from "src/app/model/address/region";
 import { Zone } from "src/app/model/address/zone";
 import { Woreda } from "src/app/model/address/woreda";
 import { GetVehicleDetailRequestDto, VehicleData } from "src/app/model/vehicle";
+import { ISettingDropDownsDto } from "src/app/model/common";
+
 @Injectable({ providedIn: "root" })
 
-export class VehicleService {
+export class VehicleDropdownService {
   baseUrl: string = environment.baseUrl;
   
 
@@ -25,29 +27,11 @@ export class VehicleService {
     'Content-Type': 'application/json'
   });
 
-  addVehicleList(formData:VehicleData){
+  getDocumentTypeDropdown() {
     var headers = this.headers
-    return this.http.post<ResponseMessage>(
-      `${this.baseUrl}/VehicleList/Add`,
-      formData,{headers:headers}
-    );
-  }
-  getVehicleList(formData: GetVehicleDetailRequestDto) {
-    var headers = this.headers
-    return this.http.post<VehicleData>(
-      `${this.baseUrl}/VehicleList/GetVehicleDetail`,
-      formData,{headers:headers}
+    return this.http.get<ISettingDropDownsDto[]>(
+      `${this.baseUrl}/VehicleDropDown/GetDocumentTypeDropdown`,{headers:headers}
     ); 
-  }
-
-  //vehc doc
-
-  addVehicleDoc(formData:FormData){
-    var headers = this.headers
-    return this.http.post<ResponseMessage>(
-      `${this.baseUrl}/VehicleList/AddVehicleDocument`,
-      formData,{headers:headers}
-    );
   }
 
 }

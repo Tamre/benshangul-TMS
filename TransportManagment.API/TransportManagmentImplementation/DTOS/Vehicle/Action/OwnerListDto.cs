@@ -81,4 +81,6 @@ namespace TransportManagmentImplementation.DTOS.Vehicle.Action
         public string OwnerName { get; set; } = null!;
         public string OwnerNumber { get; set; } = null!;
     }
+
+  
 }

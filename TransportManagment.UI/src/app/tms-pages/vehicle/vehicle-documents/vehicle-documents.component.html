@@ -1,0 +1,47 @@
+
+<form [formGroup]="vehicleDocumentForm" (ngSubmit)="onSubmit()">
+    <div>
+      <label for="vehicleId">Vehicle ID:</label>
+      <input id="vehicleId" formControlName="vehicleId" type="text">
+      <div *ngIf="vehicleDocumentForm.get('vehicleId')?.invalid && (vehicleDocumentForm.get('vehicleId')?.dirty || vehicleDocumentForm.get('vehicleId')?.touched)">
+        Vehicle ID is required.
+      </div>
+    </div>
+  
+    <div>
+      <label for="createdById">Created By ID:</label>
+      <input id="createdById" formControlName="createdById" type="text">
+      <div *ngIf="vehicleDocumentForm.get('createdById')?.invalid && (vehicleDocumentForm.get('createdById')?.dirty || vehicleDocumentForm.get('createdById')?.touched)">
+        Created By ID is required.
+      </div>
+    </div>
+  
+    <div>
+      <label for="document">Document:</label>
+      <input id="document" type="file" (change)="onFileChange($event)">
+      <div *ngIf="vehicleDocumentForm.get('document')?.invalid && (vehicleDocumentForm.get('document')?.dirty || vehicleDocumentForm.get('document')?.touched)">
+        Document is required.
+      </div>
+    </div>
+  
+    <div>
+      <label for="documentTypeId">Document Type ID:</label>
+      <input id="documentTypeId" formControlName="documentTypeId" type="number">
+      <div *ngIf="vehicleDocumentForm.get('documentTypeId')?.invalid && (vehicleDocumentForm.get('documentTypeId')?.dirty || vehicleDocumentForm.get('documentTypeId')?.touched)">
+        Document Type ID is required.
+      </div>
+    </div>
+  
+    <div>
+      <label for="forVehicleDocument">For Vehicle Document:</label>
+      <input id="forVehicleDocument" formControlName="forVehicleDocument" type="text">
+      <div *ngIf="vehicleDocumentForm.get('forVehicleDocument')?.invalid && (vehicleDocumentForm.get('forVehicleDocument')?.dirty || vehicleDocumentForm.get('forVehicleDocument')?.touched)">
+        For Vehicle Document is required.
+      </div>
+    </div>
+  
+    <button type="submit" [disabled]="vehicleDocumentForm.invalid">Submit</button>
+  </form>
+  
+
+

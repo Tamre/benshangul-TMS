@@ -22,5 +22,10 @@ namespace TransportManagmentAPI.Controllers.Vehicle.Configuration
         {
             return Ok(await _vehicleDropDownService.GetNotAddedDocuments(vehicleId));
         }
+        [HttpGet]
+        public async Task<IActionResult> GetDocumentTypeDropdown()
+        {
+            return Ok(await _vehicleDropDownService.GetDocumentTypeDropdown());
+        }
     }
 }
