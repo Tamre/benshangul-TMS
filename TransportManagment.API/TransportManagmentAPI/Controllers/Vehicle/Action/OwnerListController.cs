@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Net;
 using TransportManagmentImplementation.DTOS.Vehicle.Action;
 using TransportManagmentImplementation.Helper;
+using TransportManagmentImplementation.Interfaces.Vehicle.Action;
 using TransportManagmentImplementation.Services.Vehicle.Action;
 
 namespace TransportManagmentAPI.Controllers.Vehicle.Action
@@ -71,5 +72,24 @@ namespace TransportManagmentAPI.Controllers.Vehicle.Action
                 return BadRequest();
             }
         }
+
+
+
+        [HttpPost]
+        [ProducesResponseType(typeof(OwnerListGetDto), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> GetAllOwners(FilterDetail filterDetail)
+        {
+            if (ModelState.IsValid)
+            {
+                return Ok(await _ownerService.GetAllOwners(filterDetail));
+            }
+            else
+            {
+                return BadRequest();
+            }
+        }
+
+
+
     }
 }

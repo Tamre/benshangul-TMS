@@ -22,18 +22,16 @@
                 <div class="col-lg-2">
                     <label for="plateType-field" class="form-label">{{ 'Registration Type' | translate
                         }}</label>
-                    <ng-select [items]="searchDropDown2Item" formControlName="searchregistrationType"
-                        bindLabel="name" bindValue="code" id="plateType-field" name="plateType"
-                        [searchable]="true">
+                    <ng-select [items]="searchDropDown2Item" formControlName="searchregistrationType" bindLabel="name"
+                        bindValue="code" id="plateType-field" name="plateType" [searchable]="true">
                     </ng-select>
 
                 </div>
 
                 <div class="col-lg-2">
                     <label for="plateType-field" class="form-label">{{ 'Value' | translate }}</label>
-                    <input type="text" id="search-field" class="form-control"
-                        placeholder="{{ 'value' | translate }}" required [(ngModel)]="search"
-                        formControlName="search"
+                    <input type="text" id="search-field" class="form-control" placeholder="{{ 'value' | translate }}"
+                        required [(ngModel)]="search" formControlName="search"
                         [ngClass]="{ 'is-invalid': submitted && f['search'].errors }" />
                 </div>
 
@@ -70,9 +68,10 @@
 
 
                             <div class="chat-message-list">
-                                <ul class="list-unstyled chat-list chat-user-list mb-0" id="channelList" >
-                                    <li *ngFor="let item of vehicleActionList" [class.active]="activeTab === item">
-                                        <a (click)="setActiveTab(item)" class="unread-msg-user" style="cursor: pointer;">
+                                <ul class="list-unstyled chat-list chat-user-list mb-0" id="channelList">
+                                    <li *ngFor="let item of vehicleActionList" [class.active]="activeTab === item"
+                                        (onClick)="setActiveTab(item)" style="cursor: pointer;">
+                                        <a class="unread-msg-user">
                                             <div class="d-flex align-items-center">
                                                 <div
                                                     class="flex-shrink-0 chat-user-img online align-self-center me-2 ms-0">
@@ -86,12 +85,11 @@
                                                     <p class="text-truncate mb-0">Vehicle {{item}}</p>
                                                 </div>
                                                 <div class="flex-shrink-0">
-                                                   
+
                                                 </div>
                                             </div>
                                         </a>
                                     </li>
-                                
                                 </ul>
 
                             </div>
@@ -112,7 +110,7 @@
     <!-- end email-menu-sidebar -->
 
     <div class="email-content minimal-border">
-        <div class="p-4 pb-0">          
+        <div class="p-4 pb-0">
 
 
             <div class="card-body" *ngIf="isvehicleFound">
@@ -419,12 +417,6 @@
 
 
 
-
-
-
-
-
-
                             </div>
                         </div>
                         <div class="modal-footer">
@@ -444,7 +436,7 @@
 
                     doc
 
-            </div>
+                </div>
 
             </div>
         </div>
