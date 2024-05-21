@@ -22,16 +22,16 @@ import { VehicleLookupService } from 'src/app/core/services/vehicle-config-servi
   templateUrl: './vehicle-type.component.html',
   styleUrl: './vehicle-type.component.scss'
 })
-export class VehicleTypeComponent implements OnInit{
+export class VehicleTypeComponent implements OnInit {
   submitted = false;
-  isEditing:Boolean = false;
+  isEditing: Boolean = false;
   dataForm!: UntypedFormGroup;
   currentUser!: UserView | null;
   searchTerm: any;
   searchResults: any;
   econtent?: any;
 
-  allVehicleTypes?:any;
+  allVehicleTypes?: any;
   vehicleTypes?: any;
 
   allVehLookups?: any;
@@ -39,6 +39,9 @@ export class VehicleTypeComponent implements OnInit{
   markId: number = 0;
   categoryNames: string[] = [];
   CategoryNameIdMap: { [name: string]: number } = {};
+
+  categoryName: string[] = [];
+  selectedcategoryName: { id: number; name: string } | null = null;
 
   successAddMessage: string = "";
   successUpdateMessage = "Vehicle Type successfully updated";
@@ -52,9 +55,9 @@ export class VehicleTypeComponent implements OnInit{
     public service: PaginationService,
     public translate: TranslateService,
     private store: Store<{ data: RootReducerState }>,
-    public vehicleTypeService:VehicleTypeService,
+    public vehicleTypeService: VehicleTypeService,
     public vehicleLookupService: VehicleLookupService,
-  ) {}
+  ) { }
   ngOnInit(): void {
     this.currentUser = this.tokenStorageService.getCurrentUser();
     this.refreshData()
@@ -68,7 +71,7 @@ export class VehicleTypeComponent implements OnInit{
       localName: ["", [Validators.required]],
       vehicleCategoryId: ["", [Validators.required]],
       createdById: [this.currentUser?.userId, [Validators.required]],
-      isActive:[true]
+      isActive: [true]
     });
     /**
      * fetches data
@@ -89,14 +92,13 @@ export class VehicleTypeComponent implements OnInit{
           this.allVehLookups = cloneDeep(res);
           this.vehLookups = this.service.changePage(this.allVehLookups)
           console.log(this.allVehLookups)
-          // Populate the markNames array with names from vehLookups
-        this.categoryNames = this.vehLookups.map((veh:any) => veh.name);
+          this.categoryName = this.allVehLookups.map((veh: any) => ({
+            id: veh.id,
+            name: veh.name,
+          }));
         }
-        // Populate the markNameIdMap with name-ID mapping
-        this.CategoryNameIdMap = this.vehLookups.reduce((map:any, veh:any) => {
-          map[veh.name] = veh.id;
-          return map;
-        }, {});
+        
+
       },
       error: (err) => {
 
@@ -143,26 +145,25 @@ export class VehicleTypeComponent implements OnInit{
     this.allVehicleTypes = this.service.onSort(column, this.allVehicleTypes);
     this.vehicleTypes = this.service.changePage(this.allVehicleTypes)
   }
-  refreshData(){
+  refreshData() {
     this.vehicleTypeService.getAllVehicleType().subscribe({
       next: (res) => {
-        if (res) 
-          {
-            this.vehicleTypes = res
-            this.allVehicleTypes = cloneDeep(res);
-            this.vehicleTypes = this.service.changePage(this.allVehicleTypes)
-            console.log(this.allVehicleTypes)
-          }
+        if (res) {
+          this.vehicleTypes = res
+          this.allVehicleTypes = cloneDeep(res);
+          this.vehicleTypes = this.service.changePage(this.allVehicleTypes)
+          console.log(this.allVehicleTypes)
+        }
       },
       error: (err) => {
-        
+
       },
     });
   }
 
   saveData() {
     const updatedData = this.dataForm.value;
-   
+
     if (this.dataForm.valid) {
       if (this.dataForm.get("id")?.value) {
         console.log(this.currentUser?.userId)
@@ -175,7 +176,7 @@ export class VehicleTypeComponent implements OnInit{
               successToast(this.successAddMessage);
               this.refreshData();
             } else {
-              console.error( res.message);
+              console.error(res.message);
             }
           },
           error: (err) => {
@@ -184,7 +185,7 @@ export class VehicleTypeComponent implements OnInit{
         });
 
       } else {
-        
+
         const newData: VehicleTypePostDto = this.dataForm.value;
         console.log('newData:', newData);
         this.vehicleTypeService.addVehicleType(newData).subscribe({
@@ -196,7 +197,7 @@ export class VehicleTypeComponent implements OnInit{
               successToast(this.successAddMessage);
               this.refreshData();
             } else {
-              console.error( res.message);
+              console.error(res.message);
             }
           },
           error: (err) => {
@@ -224,10 +225,10 @@ export class VehicleTypeComponent implements OnInit{
     this.translate.get("Edit Vehicle Type").subscribe((res: string) => {
       this.editVehicleTypeText = res;
     });
-    modelTitle.innerHTML =this.editVehicleTypeText ;
+    modelTitle.innerHTML = this.editVehicleTypeText;
     var updateBtn = document.getElementById("add-btn") as HTMLAreaElement;
     this.translate.get("Update").subscribe((res: string) => {
-      this.updateText= res;
+      this.updateText = res;
     });
     updateBtn.innerHTML = this.updateText;
     this.isEditing = true;

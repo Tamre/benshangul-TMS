@@ -150,14 +150,22 @@
                                         <label for="serviceModule-field" class="form-label">{{ 'Service Module' |
                                             translate }}</label>
 
-                                        <select id="serviceModule-field" class="form-control"
+                                        <!-- <select id="serviceModule-field" class="form-control"
                                             name="choices-single-default" data-choices data-choices-search-false
                                             formControlName="serviceModule"
                                             [ngClass]="{ 'is-invalid': submitted && dataForm.controls['serviceModule'].errors }">
                                             <option value="" disabled>{{ 'Select Service Module' | translate }}</option>
                                             <option *ngFor="let item of serviceModuleDropDownItem" [value]="item.code">
                                                 {{item.name}} </option>
-                                        </select>
+                                        </select> -->
+                                        <ng-select [items]="serviceModuleDropDownItem" bindLabel="name" bindValue="code"
+                                            id="serviceModule-field" name="serviceModule" formControlName="serviceModule"
+                                            [ngClass]="{ 'is-invalid': submitted && dataForm.controls['serviceModule'].errors }"
+                                            [searchable]="false" placeholder="{{ 'Select Service Module' | translate }}"
+                                            required>
+                                            <ng-option value="" disabled>{{ 'Select Service Module' | translate
+                                                }}</ng-option>
+                                        </ng-select>
                                         @if (submitted && form['serviceModule'].errors) {
                                         <div class="invalid-feedback" align="left">
                                             @if (form['serviceModule'].errors['required']) {s

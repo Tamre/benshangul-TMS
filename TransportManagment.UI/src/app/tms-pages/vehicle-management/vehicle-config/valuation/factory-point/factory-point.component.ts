@@ -40,6 +40,9 @@ export class FactoryPointComponent {
   markNames: string[] = [];
   markNameIdMap: { [name: string]: number } = {};
 
+  markName: string[] = [];
+  selectedMarkName: { id: number; name: string } | null = null;
+
   successAddMessage: string = "";
   editFactoryPointText = "Edit Factory Type";
   updateText = "Update";
@@ -98,17 +101,15 @@ export class FactoryPointComponent {
           this.vehLookups = this.service.changePage(this.allVehLookups)
           console.log(this.allVehLookups)
           
+          this.markName = this.allVehLookups.map((veh: any) => ({
+            id: veh.id,
+            name: veh.name,
+          }));
 
           
-          // Populate the markNames array with names from vehLookups
-        this.markNames = this.vehLookups.map((veh:any) => veh.name);
         }
-        // Populate the markNameIdMap with name-ID mapping
-        this.markNameIdMap = this.vehLookups.reduce((map:any, veh:any) => {
-          map[veh.name] = veh.id;
-          return map;
-        }, {});
-        
+       
+      
       },
       error: (err) => {
 

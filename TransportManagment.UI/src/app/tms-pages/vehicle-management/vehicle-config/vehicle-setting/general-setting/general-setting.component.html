@@ -106,15 +106,14 @@
                                         <label for="vehicleSettingType-field" class="form-label">{{ 'Vehicle Setting
                                             Type' | translate }}</label>
 
-                                        <select id="vehicleSettingType-field" class="form-control"
-                                            name="choices-single-default" data-choices data-choices-search-false
-                                            formControlName="vehicleSettingType"
-                                            [ngClass]="{ 'is-invalid': submitted && dataForm.controls['vehicleSettingType'].errors }">
-                                            <option value="" disabled>{{ 'Select Vehicle Setting Type' | translate }}
-                                            </option>
-                                            <option *ngFor="let item of vehicleSettingTypeDropDownItem"
-                                                [value]="item.code"> {{item.name}} </option>
-                                        </select>
+                                        
+                                        <ng-select [items]="vehicleSettingTypeDropDownItem" bindLabel="name" bindValue="code"
+                                            id="vehicleSettingType-field" name="vehicleSettingType" formControlName="vehicleSettingType"
+                                            [ngClass]="{ 'is-invalid': submitted && dataForm.controls['vehicleSettingType'].errors }"
+                                            [searchable]="false" placeholder="Select Plate Digit" required>
+                                            <ng-option value="" disabled>{{ 'Select Plate Digit' | translate
+                                                }}</ng-option>
+                                        </ng-select>
                                         @if (submitted && form['vehicleSettingType'].errors) {
                                         <div class="invalid-feedback" align="left">
                                             @if (form['vehicleSettingType'].errors['required']) {

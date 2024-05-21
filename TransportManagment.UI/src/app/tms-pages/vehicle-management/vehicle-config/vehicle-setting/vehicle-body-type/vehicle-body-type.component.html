@@ -131,12 +131,17 @@
                                     <div>
                                         <label for="vehicleTypeId-field" class="form-label">{{ 'Vehicle Type' | translate }}</label>
                             
-                                        <select id="vehicleTypeId-field" class="form-control" formControlName="vehicleTypeId"
+                                        <!-- <select id="vehicleTypeId-field" class="form-control" formControlName="vehicleTypeId"
                                             [ngClass]="{ 'is-invalid': submitted && form['vehicleTypeId'].errors }">
                                             <option value="" disabled>{{ 'Select Vehicle Type' | translate }}</option>
                                             <option *ngFor="let categoryName of VehicleTypeNames"
                                                 [value]="VehicleTypeNameIdMap[categoryName]">{{ categoryName }}</option>
-                                        </select>
+                                        </select> -->
+                                        <ng-select [items]="vehicleTypeName" bindLabel="name" bindValue="id"
+                                            [(ngModel)]="selectedvehicleType" id="vehicleTypeId-field"
+                                            name="vehicleTypeId" formControlName="vehicleTypeId"
+                                            [searchable]="true" placeholder="Select Vehicle Type" required>
+                                        </ng-select>
                                         @if (submitted && form['vehicleTypeId'].errors) {
                                         <div class="invalid-feedback" align="left">
                                             @if (form['vehicleTypeId'].errors['required']) {s

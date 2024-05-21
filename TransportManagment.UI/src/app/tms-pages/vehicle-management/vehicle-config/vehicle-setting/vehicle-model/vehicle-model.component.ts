@@ -39,12 +39,16 @@ export class VehicleModelComponent implements OnInit {
   markId: number = 0;
   markNames: string[] = [];
   markNameIdMap: { [name: string]: number } = {};
+  selectedMark: { id: number; name: string } | null = null;
+
+  markName: string[] = [];
+  selectedMarkName: { id: number; name: string } | null = null;
 
   horsePowerMeasureDropDownItem = [
-    { name: 'Brake Horsepower(BPH)', code: 'BHP'},
-    { name: 'Kilowatt(KW)', code: 'KW'}
+    { name: 'Brake Horsepower(BPH)', code: 'BHP' },
+    { name: 'Kilowatt(KW)', code: 'KW' }
   ]
-  
+
 
   successAddMessage: string = "";
   successUpdateMessage = "Vehicle Type successfully updated";
@@ -71,12 +75,12 @@ export class VehicleModelComponent implements OnInit {
     this.dataForm = this.formBuilder.group({
       id: [""],
       name: ["", [Validators.required]],
-      engineCapacity: ["", [Validators.required,Validators.pattern(/^-?\d+$/)]],
-      noOfCylinder: ["", [Validators.required,Validators.pattern(/^-?\d+$/)]],
+      engineCapacity: ["", [Validators.required, Validators.pattern(/^-?\d+$/)]],
+      noOfCylinder: ["", [Validators.required, Validators.pattern(/^-?\d+$/)]],
       horsePowerMeasure: ["", [Validators.required]],
       markId: ["", [Validators.required]],
       createdById: [this.currentUser?.userId, [Validators.required]],
-      isActive:[true]
+      isActive: [true]
     });
     /**
      * fetches data
@@ -101,18 +105,13 @@ export class VehicleModelComponent implements OnInit {
           this.allVehLookups = cloneDeep(res);
           this.vehLookups = this.service.changePage(this.allVehLookups)
           console.log(this.allVehLookups)
-          
 
-          
-          // Populate the markNames array with names from vehLookups
-        this.markNames = this.vehLookups.map((veh:any) => veh.name);
+          this.markName = this.allVehLookups.map((veh: any) => ({
+            id: veh.id,
+            name: veh.name,
+          }));
         }
-        // Populate the markNameIdMap with name-ID mapping
-        this.markNameIdMap = this.vehLookups.reduce((map:any, veh:any) => {
-          map[veh.name] = veh.id;
-          return map;
-        }, {});
-        
+
       },
       error: (err) => {
 
@@ -166,7 +165,7 @@ export class VehicleModelComponent implements OnInit {
           this.allVehicleModels = cloneDeep(res);
           this.vehicleModels = this.service.changePage(this.allVehicleModels)
           console.log(this.allVehicleModels)
-          
+
         }
       },
       error: (err) => {
@@ -199,7 +198,7 @@ export class VehicleModelComponent implements OnInit {
         });
 
       } else {
-        
+
         const newData: VehicleModelPostDto = this.dataForm.value;
         newData.isActive = true;
         this.vehicleModelService.addVehicleModel(newData).subscribe({
