@@ -13,10 +13,10 @@ namespace TransportManagmentAPI.Controllers.Vehicle.Action
     public class OwnerListController : ControllerBase
     {
 
-        private readonly OwnerManagmentService _ownerService;
+        private readonly IOwnerManagmentService _ownerService;
 
 
-        public OwnerListController(OwnerManagmentService ownerService)
+        public OwnerListController(IOwnerManagmentService ownerService)
         {
 
             _ownerService = ownerService;
@@ -81,7 +81,8 @@ namespace TransportManagmentAPI.Controllers.Vehicle.Action
         {
             if (ModelState.IsValid)
             {
-                return Ok(await _ownerService.GetAllOwners(filterDetail));
+                var pagedList= await _ownerService.GetAllOwners(filterDetail);
+                return Ok(new { data = pagedList, metaData = pagedList.MetaData });
             }
             else
             {
