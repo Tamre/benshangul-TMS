@@ -87,6 +87,12 @@ export const MENU: MenuItem[] = [
         label: "MENUITEMS.VEHICLE.LIST.FIND",
         link: "/vehicle/list",
         parentId: 3,
+      },
+      {
+        id: 10,
+        label: "MENUITEMS.VEHICLE.LIST.OWNER",
+        link: "/vehicle/owner",
+        parentId: 3,
       }
     ],
   },

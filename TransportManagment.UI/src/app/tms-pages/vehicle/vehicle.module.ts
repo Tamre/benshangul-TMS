@@ -34,13 +34,15 @@ import { CdkStepperModule } from '@angular/cdk/stepper';
 import { NgStepperModule } from 'angular-ng-stepper';
 import { NgxSliderModule } from 'ngx-slider-v2';
 import { VehicleListComponent } from './vehicle-list/vehicle-list.component';
+import { OwnerComponent } from './owner/owner.component';
 
 
 @NgModule({
   declarations: [
     SortByCrmPipe,
     VehicleAdd,
-    VehicleListComponent
+    VehicleListComponent,
+    OwnerComponent
   ],
   imports: [
     CommonModule,
@@ -64,6 +66,7 @@ import { VehicleListComponent } from './vehicle-list/vehicle-list.component';
     NgxSliderModule,
     CdkStepperModule,
     NgStepperModule,
+    
   ],
   providers: [
     DatePipe,
