@@ -10,6 +10,7 @@ using TransportManagmentInfrustructure.Model.Authentication;
 using TransportManagmentInfrustructure.Model.Common;
 using TransportManagmentInfrustructure.Model.Vehicle.Configuration;
 using Microsoft.AspNetCore.Http;
+using TransportManagmentInfrustructure.Migrations;
 
 namespace TransportManagmentImplementation.DTOS.Vehicle.Action
 {
@@ -77,6 +78,8 @@ namespace TransportManagmentImplementation.DTOS.Vehicle.Action
     public record VehicleDetailDto
     {
         public Guid Id { get; set; }
+
+        public string RegistrationNumber { get; set; }
         public string Model { get; set; } = null!;
         public int ModelId { get; set; }
         public string TaxStatus { get; set; } = null!;
@@ -123,7 +126,7 @@ namespace TransportManagmentImplementation.DTOS.Vehicle.Action
         public IFormFile Document { get; set; } = null!;
         public int DocumentTypeId { get; set; }
 
-        public string ForVehicleDocument { get; set; } = null!;
+        public ForVehicleDocument ForVehicleDocument { get; set; }
 
     }
 

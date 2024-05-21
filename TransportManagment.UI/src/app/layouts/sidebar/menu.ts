@@ -26,12 +26,7 @@ export const MENU: MenuItem[] = [
     icon: "ri-apps-2-line",
     isCollapsed: true,
     subItems: [
-      {
-        id: 4,
-        label: "MENUITEMS.CONFIGURATION.LIST.LOCATION",
-        link: "/config/location",
-        parentId: 3,
-      },
+    
 
       {
         id: 5,

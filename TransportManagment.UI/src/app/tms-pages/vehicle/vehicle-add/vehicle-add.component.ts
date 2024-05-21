@@ -280,6 +280,7 @@ export class VehicleAdd implements OnInit {
     this.vehicleModels = this.service.changePage(this.allVehicleModels);
   }
   refreshData() {
+  
     this.vehicleModelService.getAllVehicleModel().subscribe({
       next: (res) => {
         if (res) {
@@ -318,9 +319,9 @@ export class VehicleAdd implements OnInit {
         this.vehicleModelService.updateVehicleModel(newData).subscribe({
           next: (res: ResponseMessage) => {
             if (res.success) {
-              this.successAddMessage = res.message;
-              this.closeModal();
+              this.successAddMessage = res.message;           
               successToast(this.successAddMessage);
+              this.dataForm.reset();
               this.refreshData();
             } else {
               console.error(res.message);
