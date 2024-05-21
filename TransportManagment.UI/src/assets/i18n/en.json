@@ -51,12 +51,7 @@
       "TEXT": "Stock Management"
     },
 
-    "VEHICLE-ACTIONS": {
-      "TEXT": "Vehicle Actions",
-      "LIST": {
-        "ACTIONS": "Vehicle Actions" 
-      }
-    },
+    
 
     "LAYOUTS": {
       "TEXT": "Layouts",

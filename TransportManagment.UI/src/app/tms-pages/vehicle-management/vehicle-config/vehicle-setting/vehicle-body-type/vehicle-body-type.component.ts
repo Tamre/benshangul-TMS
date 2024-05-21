@@ -40,6 +40,9 @@ export class VehicleBodyTypeComponent implements OnInit {
   VehicleTypeNames: string[] = [];
   VehicleTypeNameIdMap: { [name: string]: number } = {};
 
+  vehicleTypeName: string[] = [];
+  selectedvehicleType: { id: number; name: string } | null = null;
+
   successAddMessage: string = "";
   successUpdateMessage = "Vehicle Type successfully updated";
   editPlateTypeText = "Edit Vehicle Type";
@@ -99,14 +102,11 @@ export class VehicleBodyTypeComponent implements OnInit {
             this.allVehicleTypes = cloneDeep(res);
             this.vehicleTypes = this.service.changePage(this.allVehicleTypes)
             console.log(this.allVehicleTypes)
-          // Populate the markNames array with names from vehLookups
-        this.VehicleTypeNames = this.vehicleTypes.map((veh:any) => veh.name);
+            this.vehicleTypeName = this.allVehicleTypes.map((veh: any) => ({
+              id: veh.id,
+              name: veh.name,
+            }));
       }
-      // Populate the markNameIdMap with name-ID mapping
-      this.VehicleTypeNameIdMap = this.vehicleTypes.reduce((map:any, veh:any) => {
-        map[veh.name] = veh.id;
-        return map;
-      }, {});
       },
       error: (err) => {
         

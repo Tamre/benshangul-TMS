@@ -52,7 +52,8 @@
                                     <th class="sort" (click)="onSort('name')">{{ 'Name' | translate }}</th>
                                     <th class="sort" (click)="onSort('engineCapacity')">{{ 'Engine Capacity' | translate
                                         }}</th>
-                                    <th class="sort" (click)="onSort('noOfCylinder')">{{ 'Num Of Cylinder' | translate }}
+                                    <th class="sort" (click)="onSort('noOfCylinder')">{{ 'Num Of Cylinder' | translate
+                                        }}
                                     </th>
                                     <th class="sort" (click)="onSort('horsePowerMeasure')">{{ 'Horse Power Measure' |
                                         translate }}</th>
@@ -80,14 +81,16 @@
                                             [term]="searchTerm"></ngb-highlight>
                                     </td> -->
                                     <td>
-                                        <ng-container *ngIf="gethorsePowerMeasureName(data.horsePowerMeasure) as horsePowerMeasureName">
-                                          <ngb-highlight [result]="horsePowerMeasureName" [term]="searchTerm"></ngb-highlight>
+                                        <ng-container
+                                            *ngIf="gethorsePowerMeasureName(data.horsePowerMeasure) as horsePowerMeasureName">
+                                            <ngb-highlight [result]="horsePowerMeasureName"
+                                                [term]="searchTerm"></ngb-highlight>
                                         </ng-container>
                                     </td>
-                                    
+
                                     <td>
                                         <ngb-highlight [result]="data.markName" [term]="searchTerm"></ngb-highlight>
-                                        
+
                                     </td>
                                     <td>
                                         <ngb-highlight [result]="data.isActive" [term]="searchTerm"></ngb-highlight>
@@ -157,7 +160,8 @@
                                 </div>
                                 <div class="col-lg-6">
                                     <div>
-                                        <label for="noOfCylinder-field" class="form-label">{{ 'Num Of Cylinder' | translate
+                                        <label for="noOfCylinder-field" class="form-label">{{ 'Num Of Cylinder' |
+                                            translate
                                             }}</label>
                                         <input type="text" id="noOfCylinder-field" class="form-control"
                                             placeholder="{{ 'Enter Num Of Cylinder' | translate }}" required
@@ -174,14 +178,28 @@
                                 </div>
                                 <div class="col-lg-6">
                                     <div>
-                                        <label for="horsePowerMeasure-field" class="form-label">{{ 'Horse Power Measure' |
+                                        <label for="horsePowerMeasure-field" class="form-label">{{ 'Horse Power Measure'
+                                            |
                                             translate }}</label>
-                                        
-                                            <select id="horsePowerMeasure-field" class="form-control" name="choices-single-default" data-choices data-choices-search-false formControlName="horsePowerMeasure"
+
+                                        <!-- <select id="horsePowerMeasure-field" class="form-control"
+                                            name="choices-single-default" data-choices data-choices-search-false
+                                            formControlName="horsePowerMeasure"
                                             [ngClass]="{ 'is-invalid': submitted && dataForm.controls['horsePowerMeasure'].errors }">
-                                            <option value="" disabled>{{ 'Select Horse Power Measure' | translate }}</option>
-                                            <option *ngFor="let item of horsePowerMeasureDropDownItem" [value]="item.code" > {{item.name}} </option>
-                                        </select>
+                                            <option value="" disabled>{{ 'Select Horse Power Measure' | translate }}
+                                            </option>
+                                            <option *ngFor="let item of horsePowerMeasureDropDownItem"
+                                                [value]="item.code"> {{item.name}} </option>
+                                        </select> -->
+                                        <ng-select [items]="horsePowerMeasureDropDownItem" bindLabel="name"
+                                            bindValue="code" id="horsePowerMeasure-field" name="horsePowerMeasure"
+                                            formControlName="horsePowerMeasure"
+                                            [ngClass]="{ 'is-invalid': submitted && dataForm.controls['horsePowerMeasure'].errors }"
+                                            [searchable]="false"
+                                            placeholder="{{ 'Select Horse Power Measure' | translate }}" required>
+                                            <ng-option value="" disabled>{{ 'Select Horse Power Measure' | translate
+                                                }}</ng-option>
+                                        </ng-select>
                                         @if (submitted && form['horsePowerMeasure'].errors) {
                                         <div class="invalid-feedback" align="left">
                                             @if (form['horsePowerMeasure'].errors['required']) {s
@@ -193,15 +211,21 @@
                                 </div>
                                 <div class="col-lg-6">
                                     <div>
-                                        <label for="markId-field" class="form-label">{{ 'Mark Name' | translate }}</label>
-                                        <select id="markId-field" class="form-control" formControlName="markId"
+                                        <label for="markId-field" class="form-label">{{ 'Mark Name' | translate
+                                            }}</label>
+                                        <!-- <select id="markId-field" class="form-control" formControlName="markId"
                                             [ngClass]="{ 'is-invalid': submitted && form['markId'].errors }">
                                             <option value="" disabled selected>{{ 'Select Mark' | translate }}</option>
                                             <option *ngFor="let markName of markNames"
                                                 [value]="markNameIdMap[markName]">{{ markName }}</option>
-                                        </select>
+                                        </select> -->
 
-
+                                    
+                                        <ng-select [items]="markName" bindLabel="name" bindValue="id"
+                                            [(ngModel)]="selectedMarkName" id="markId-field"
+                                            name="markId" formControlName="markId"
+                                            [searchable]="true" placeholder="Select Mark Name" required>
+                                        </ng-select>
 
                                         @if (submitted && form['markId'].errors) {
                                         <div class="invalid-feedback" align="left">
