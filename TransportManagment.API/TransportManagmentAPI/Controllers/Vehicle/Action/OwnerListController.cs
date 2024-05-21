@@ -75,7 +75,7 @@ namespace TransportManagmentAPI.Controllers.Vehicle.Action
 
 
 
-        [HttpPost]
+        [HttpGet]
         [ProducesResponseType(typeof(OwnerListGetDto), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> GetAllOwners(FilterDetail filterDetail)
         {
