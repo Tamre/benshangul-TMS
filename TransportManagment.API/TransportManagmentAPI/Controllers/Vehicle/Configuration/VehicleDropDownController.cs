@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using TransportManagmentImplementation.DTOS.Common;
 using TransportManagmentImplementation.Interfaces.Vehicle.Configuration;
 using TransportManagmentImplementation.Services.Vehicle.Configuration;
+using static TransportManagmentInfrustructure.Enums.VehicleEnum;
 
 namespace TransportManagmentAPI.Controllers.Vehicle.Configuration
 {
@@ -29,9 +30,9 @@ namespace TransportManagmentAPI.Controllers.Vehicle.Configuration
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetOwnerListDropdown()
+        public async Task<IActionResult> GetOwnerListDropdown(OwnerGroup ownerGroup)
         {
-            return Ok(await _vehicleDropDownService.GetOwnerListDropdown());
+            return Ok(await _vehicleDropDownService.GetOwnerListDropdown(ownerGroup));
         }
     }
 }

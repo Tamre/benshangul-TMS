@@ -1,7 +1,7 @@
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { NgbPaginationModule, NgbTypeaheadModule, NgbTooltipModule, NgbDropdownModule, NgbAccordionModule, NgbNavModule, NgbProgressbarModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbPaginationModule, NgbTypeaheadModule, NgbTooltipModule, NgbDropdownModule, NgbAccordionModule, NgbNavModule, NgbProgressbarModule, NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 // Flat Picker
 import { FlatpickrModule } from 'angularx-flatpickr';
@@ -36,6 +36,8 @@ import { NgxSliderModule } from 'ngx-slider-v2';
 import { VehicleListComponent } from './vehicle-list/vehicle-list.component';
 import { VehicleDocumentsComponent } from './vehicle-documents/vehicle-documents.component';
 import { VehicleOwnersComponent } from './vehicle-owners/vehicle-owners.component';
+import { AssignOwnersComponent } from './vehicle-owners/assign-owners/assign-owners.component';
+import { NgPipesModule } from 'ngx-pipes';
 
 
 @NgModule({
@@ -44,7 +46,8 @@ import { VehicleOwnersComponent } from './vehicle-owners/vehicle-owners.componen
     VehicleAdd,
     VehicleListComponent,
     VehicleDocumentsComponent,
-    VehicleOwnersComponent
+    VehicleOwnersComponent,
+    AssignOwnersComponent
   ],
   imports: [
     CommonModule,
@@ -68,6 +71,11 @@ import { VehicleOwnersComponent } from './vehicle-owners/vehicle-owners.componen
     NgxSliderModule,
     CdkStepperModule,
     NgStepperModule,
+
+  
+    NgPipesModule,
+    NgbModule,
+
   
   ],
   providers: [

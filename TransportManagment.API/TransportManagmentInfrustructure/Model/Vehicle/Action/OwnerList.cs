@@ -8,6 +8,7 @@ using TransportManagmentInfrustructure.Data;
 using TransportManagmentInfrustructure.Model.Authentication;
 using TransportManagmentInfrustructure.Model.Common;
 using static TransportManagmentInfrustructure.Enums.CommonEnum;
+using static TransportManagmentInfrustructure.Enums.VehicleEnum;
 
 namespace TransportManagmentInfrustructure.Model.Vehicle.Action
 {
@@ -16,7 +17,7 @@ namespace TransportManagmentInfrustructure.Model.Vehicle.Action
         [Required, StringLength(ValidationClasses.SerialNumberLength)]
         public string OwnerNumber { get; set; } = null!;
 
-        [Required, StringLength(ValidationClasses.MaxNameLength)]
+        [Required, StringLength(30)]
         public string FirstName { get; set; } = null!;
         [Required, StringLength(ValidationClasses.MaxNameLength)]
         public string MiddleName { get; set; } = null!;
@@ -46,6 +47,8 @@ namespace TransportManagmentInfrustructure.Model.Vehicle.Action
         [StringLength(ValidationClasses.MaxNameLength)]
         public string IdNumber { get; set; } = null!;
         [StringLength(ValidationClasses.MaxNameLength)]
-        public string? PoBox { get; set; } 
+        public string? PoBox { get; set; }
+
+        public OwnerGroup OwnerGroup { get; set; }
     }
 }

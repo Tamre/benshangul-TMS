@@ -2,6 +2,7 @@ export interface IVehicleOwnerGetDto {
   id: string; // Assuming Id is a GUID, use string
   vehicleId: string; // Assuming VehicleId is a GUID, use string
   ownerId: string; // Assuming OwnerId is a GUID, use string
+  ownerNumber:string,
   fullName: string;
   amharicName: string;
   vehicleRegistrationNo: string;
@@ -37,6 +38,15 @@ export enum OwnerState {
 export enum OwnerGroup {
     Private_Owner,
     Organization,
-    Government,
-    TainingCenter
+    Government
 }
+
+export interface IOwnerListDropdownDto
+{
+    id :string
+    ownerName : string
+    ownerNumber : string
+    ownerGroup : OwnerGroup
+
+}
+

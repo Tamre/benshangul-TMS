@@ -205,15 +205,13 @@ export class VehicleListComponent implements OnInit {
     { code: 2, name: "Dcouments" },
     { code: 3, name: "Owners" },
     { code: 4, name: "Plates" },
-    { code: 5, name: "ORC" },
-    { code: 6, name: "Sticker & Annual Inspection" },
-    { code: 7, name: "Annual Inspection" },
-    { code: 8, name: "Change Cases" },
-    { code: 9, name: "Valuations" },
-    { code: 10, name: "Transfers" },
-    { code: 11, name: "Ban" },
-    { code: 12, name: "Cancel" },
-    { code: 13, name: "Lost" },
+    { code: 5, name: "ORC" },  
+    { code: 6, name: "Annual Inspection" },
+    { code: 7, name: "Change Cases" },
+    { code: 8, name: "Valuations" },
+    { code: 9, name: "Transfers" },
+    { code: 10, name: "Ban Cancel & Lost" },
+
 
   ];
   setActiveTab(tab: number) {

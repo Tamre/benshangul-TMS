@@ -11,6 +11,8 @@ import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { TokenStorageService } from "src/app/core/services/token-storage.service";
 import { User } from "src/app/store/Authentication/auth.models";
 import { UserView } from "src/app/model/user";
+import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
+import { AssignOwnersComponent } from "./assign-owners/assign-owners.component";
 
 @Component({
   selector: "app-vehicle-owners",
@@ -20,29 +22,15 @@ import { UserView } from "src/app/model/user";
 export class VehicleOwnersComponent implements OnInit {
   @Input() vehicleId!: string;
   vehicleOwners: IVehicleOwnerGetDto[] = [];
-
-  vehicleOwnerForm!: FormGroup;
-
-  ownerStates = OwnerState;
-  ownerGroups = OwnerGroup;
-
-  userView!: UserView;
+ 
 
   constructor(
-    private vehicleService: VehicleService,
-    private fb: FormBuilder,
-    private userService: TokenStorageService
+    private vehicleService: VehicleService,    
+    private modalService:NgbModal
+
   ) {}
   ngOnInit(): void {
-    this.userView = this.userService.getCurrentUser()!;
-    this.vehicleOwnerForm = this.fb.group({
-      vehicleId: [this.vehicleId, Validators.required],
-      ownerId: [null],
-      trainingCenterId: [null],
-      ownerState: [OwnerState.CURRENT_OWNER, Validators.required],
-      ownerGroup: [OwnerGroup.Private_Owner, Validators.required],
-      createdById: [this.userView.userId, Validators.required],
-    });
+  
     this.getVehicleOwnerByVehicleId();
   }
 
@@ -50,15 +38,19 @@ export class VehicleOwnersComponent implements OnInit {
     this.vehicleService.getVehicleOwnerByVehicleId(this.vehicleId).subscribe({
       next: (res) => {
         this.vehicleOwners = res;
+        console.log("res",res);
       },
     });
   }
 
-  onSubmit() {
-    if (this.vehicleOwnerForm.valid) {
-      const vehicleOwnerData: VehicleOwnerPostDto = this.vehicleOwnerForm.value;
-      console.log('Form Data:', vehicleOwnerData);
-      
-    }
+
+
+
+  assignOwners (){
+    let modalRef= this.modalService.open(AssignOwnersComponent, {size:'lg',backdrop:"static"});
+    modalRef.componentInstance.vehicleId = this.vehicleId
+    modalRef.result.then((modal)=> {
+      this.getVehicleOwnerByVehicleId()
+    })
   }
 }
