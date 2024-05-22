@@ -438,6 +438,11 @@
                     <app-vehicle-owners [vehicleId]="vehicleId"></app-vehicle-owners>
 
                 </div>
+                <div class="row align-items-center " *ngIf="activeTab === 6">
+                    <app-field-inspection [vehicleId]="vehicleId"></app-field-inspection>
+
+                </div>
+                
 
             </div>
         </div>

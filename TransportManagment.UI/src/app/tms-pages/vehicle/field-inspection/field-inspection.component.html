@@ -1,0 +1,98 @@
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-header text-end">
+                <div class="d-flex align-items-center flex-wrap gap-2">
+                    <div class="flex-grow-1">
+                        <button class="btn btn-info add-btn" data-bs-toggle="modal" data-bs-target="#showModal">
+                            <i class="ri-add-fill me-1 align-bottom"></i> Add Inspection
+                        </button>
+                    </div>
+                    <div class="flex-shrink-0">
+                        <div class="hstack text-nowrap gap-2">
+                            <button class="btn btn-soft-success">Export</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="col-xxl-12">
+                    <div class="card" id="inspectionList">
+                        <div class="card-header">
+                            <div class="row g-3">
+                                <div class="col-md-4">
+                                    <div class="search-box">
+                                        <input type="text" name="searchTerm" class="form-control" placeholder="Search for inspection...">
+                                        <i class="ri-search-line search-icon"></i>
+                                    </div>
+                                </div>
+                                <div class="col-md-auto ms-auto">
+                                    <div class="d-flex align-items-center gap-2">
+                                        <span class="text-muted text-nowrap">Sort by: </span>
+                                        <select class="form-control mb-0" data-choices data-choices-search-false id="choices-single-default">
+                                            <option value="name">Name</option>
+                                            <option value="localName">Local Name</option>
+                                            <option value="countryCode">Country Code</option>
+                                            <option value="nationalityName">Nationality Name</option>
+                                            <option value="localNationalityName">Local Nationality Name</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div>
+                                <div class="table-responsive table-card mb-2">
+                                    <table class="table">
+                                        <thead>
+                                            <tr class="bg-light">
+                                                <th scope="col" style="width: 50px;"></th>
+                                                <th>Registration Number</th>
+                                                <th>Model</th>
+                                                <th>Tax Status</th>
+                                                <th>Office Code</th>
+                                                <th>Edit</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <!-- Loop through inspection data here -->
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="d-flex justify-content-end mt-3">
+                                    <!-- Pagination -->
+                                </div>
+                            </div>
+
+                            <!-- Inspection Create Modal -->
+                            <div class="modal fade" id="showModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog modal-lg" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header bg-info-subtle p-3">
+                                            <h5 class="modal-title" id="exampleModalLabel">Add Inspection</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <form class="tablelist-form" autocomplete="off">
+                                            <div class="modal-body">
+                                                <!-- Form fields go here -->
+                                            </div>
+                                            <div class="modal-footer">
+                                                <div class="hstack gap-2 justify-content-end">
+                                                    <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
+                                                    <button type="submit" class="btn btn-success">Add</button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--end card-->
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--end col-->
+</div>
+<!--end row-->

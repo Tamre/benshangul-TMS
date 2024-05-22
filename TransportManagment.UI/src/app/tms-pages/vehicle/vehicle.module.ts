@@ -36,6 +36,7 @@ import { NgxSliderModule } from 'ngx-slider-v2';
 import { VehicleListComponent } from './vehicle-list/vehicle-list.component';
 import { VehicleDocumentsComponent } from './vehicle-documents/vehicle-documents.component';
 import { VehicleOwnersComponent } from './vehicle-owners/vehicle-owners.component';
+import { FieldInspectionComponent } from './field-inspection/field-inspection.component';
 
 
 @NgModule({
@@ -44,7 +45,8 @@ import { VehicleOwnersComponent } from './vehicle-owners/vehicle-owners.componen
     VehicleAdd,
     VehicleListComponent,
     VehicleDocumentsComponent,
-    VehicleOwnersComponent
+    VehicleOwnersComponent,
+    FieldInspectionComponent
   ],
   imports: [
     CommonModule,
