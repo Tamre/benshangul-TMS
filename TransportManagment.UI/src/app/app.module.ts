@@ -14,7 +14,7 @@ import { HttpClientModule, HttpClient, HTTP_INTERCEPTORS } from '@angular/common
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { environment } from '../environments/environment';
 
-import { FakeBackendInterceptor } from './core/helpers/fake-backend';
+
 import { ErrorInterceptor } from './core/helpers/error.interceptor';
 import { JwtInterceptor } from './core/helpers/jwt.interceptor';
 
@@ -54,7 +54,8 @@ export function createTranslateLoader(http: HttpClient): any {
   declarations: [
     AppComponent,
     SpinnerComponent,
-    ToastsContainer
+    ToastsContainer,
+    
   ],
   imports: [
     TranslateModule.forRoot({
@@ -95,8 +96,6 @@ export function createTranslateLoader(http: HttpClient): any {
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
-
-
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthHeaderIneterceptor,
