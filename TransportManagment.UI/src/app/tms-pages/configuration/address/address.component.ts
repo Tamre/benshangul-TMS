@@ -2,8 +2,7 @@ import { Component } from "@angular/core";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { TranslateService } from "@ngx-translate/core";
 
-import { projectDocument, ProjectTeam } from "src/app/core/data";
-import { AddressService } from "src/app/core/services/address.service";
+
 import { TokenStorageService } from "src/app/core/services/token-storage.service";
 import { UserView } from "src/app/model/user";
 @Component({
@@ -35,8 +34,8 @@ export class AddressComponent {
      */
     this.currentUser = this.tokenStorageService.getCurrentUser()
     console.log("current user",this.currentUser)
-    this.projectListWidgets = projectDocument;
-    this.teamOverviewList = ProjectTeam;
+    //this.projectListWidgets = projectDocument;
+    //this.teamOverviewList = ProjectTeam;
     
   }
 

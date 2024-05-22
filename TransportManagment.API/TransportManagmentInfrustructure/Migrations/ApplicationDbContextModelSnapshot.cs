@@ -1199,6 +1199,9 @@ namespace TransportManagmentInfrustructure.Migrations
                         .HasMaxLength(10)
                         .HasColumnType("nvarchar(10)");
 
+                    b.Property<int>("OwnerGroup")
+                        .HasColumnType("int");
+
                     b.Property<string>("OwnerNumber")
                         .IsRequired()
                         .HasMaxLength(40)

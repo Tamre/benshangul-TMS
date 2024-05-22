@@ -18,7 +18,6 @@ import { configurationRoutingModule } from './configuration-routing.module';
 import { SharedModule } from '../../shared/shared.module';
 
 
-import { SortByCrmPipe } from "./sort-by.pipe";
 
 import { DatePipe } from '@angular/common';
 import { FeatherModule } from 'angular-feather';
@@ -33,16 +32,17 @@ import { RegionComponent } from './region/region.component';
 import { ZoneComponent } from './zone/zone.component';
 import { WoredaComponent } from './woreda/woreda.component';
 import { DeviceListComponent } from './device-list/device-list.component';
+import { VehicleManagementModule } from '../vehicle-management/vehicle-management.module';
 
 @NgModule({
   declarations: [
     CountryComponent,
-    SortByCrmPipe,
     AddressComponent,
     RegionComponent,
     ZoneComponent,
     WoredaComponent,
-    DeviceListComponent
+    DeviceListComponent,
+    
   ],
   imports: [
     CommonModule,
@@ -63,10 +63,12 @@ import { DeviceListComponent } from './device-list/device-list.component';
     SimplebarAngularModule,
     DropzoneModule,
     TranslateModule,
+    
   ],
   providers: [
     DatePipe,
-    LanguageService
+    LanguageService,
+    
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })

@@ -177,7 +177,7 @@ namespace TransportManagmentInfrustructure.Enums
             Private_Owner,
             Organization,
             Government,
-            TainingCenter,
+           
         }
 
 

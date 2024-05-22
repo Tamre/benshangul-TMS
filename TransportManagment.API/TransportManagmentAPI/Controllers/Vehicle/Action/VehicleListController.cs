@@ -42,7 +42,7 @@ namespace TransportManagmentAPI.Controllers.Vehicle.Action
 
         [HttpPost]
         [ProducesResponseType(typeof(ResponseMessage), (int)HttpStatusCode.OK)]
-        public async Task<IActionResult> AddVehicleDocument(AddVehicleDocumetDto addVehicleDocument)
+        public async Task<IActionResult> AddVehicleDocument([FromForm]AddVehicleDocumetDto addVehicleDocument)
         {
             if (ModelState.IsValid)
             {

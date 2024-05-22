@@ -8,6 +8,7 @@ using TransportManagmentImplementation.DTOS.Common;
 using TransportManagmentImplementation.DTOS.Vehicle.Action;
 using TransportManagmentImplementation.Interfaces.Vehicle.Configuration;
 using TransportManagmentInfrustructure.Data;
+using static TransportManagmentInfrustructure.Enums.VehicleEnum;
 
 namespace TransportManagmentImplementation.Services.Vehicle.Configuration
 {
@@ -28,20 +29,39 @@ namespace TransportManagmentImplementation.Services.Vehicle.Configuration
                                 Id = z.Id,
                                 Name = z.FileName,
                             }).ToListAsync();
-
             return documents;
         }
 
-        public async Task<List<OwnerListDropdownDto>> GetOwnerListDropdown()
+        public async Task<List<OwnerListDropdownDto>> GetOwnerListDropdown(OwnerGroup ownerGroup)
         {
-            var OwnerList = await _dbContext.OwnerLists.Select(x=> new OwnerListDropdownDto
+            var OwnerList = await _dbContext.OwnerLists
+                .Where(x=>x.OwnerGroup == ownerGroup)
+                .Select(x=> new OwnerListDropdownDto
             {
                 Id = x.Id,
                 OwnerName = $"{x.FirstName} {x.MiddleName} {x.LastName}",
                 OwnerNumber = x.OwnerNumber,
+                OwnerGroup = x.OwnerNumber.ToString()
+
             }).ToListAsync();
 
             return OwnerList;
         }
+
+        public async Task<List<SettingDropDownsDto>> GetDocumentTypeDropdown()
+        {
+
+            var DocumentTypes = await _dbContext.DocumentTypes.Select(x => new SettingDropDownsDto
+            {
+                Id = x.Id,
+                Name = x.FileName 
+            }).ToListAsync();
+
+
+            return DocumentTypes; 
+        }
+
+
+       
     }
 }

@@ -88,7 +88,10 @@ namespace TransportManagmentImplementation.Services.Vehicle.Action
             try
             {
 
-                var ownerExist = await _dbContext.OwnerLists.Where(x => x.PhoneNumber == ownerListPostDto.PhoneNumber || x.SecondaryPhoneNumber == ownerListPostDto.PhoneNumber).FirstOrDefaultAsync();
+                var ownerExist = await _dbContext.OwnerLists
+                    .Where(x => x.PhoneNumber == ownerListPostDto.PhoneNumber || x.SecondaryPhoneNumber == ownerListPostDto.PhoneNumber).Select(x=> new { 
+                    x.FirstName, x.LastName,x.MiddleName
+                    }).FirstOrDefaultAsync();
 
 
                 if (ownerExist != null)
@@ -114,7 +117,7 @@ namespace TransportManagmentImplementation.Services.Vehicle.Action
                     AmharicFirstName = ownerListPostDto.AmharicFirstName,
                     AmharicMiddleName = ownerListPostDto.AmharicMiddleName,
                     AmharicLastName = ownerListPostDto.AmharicLastName,
-                    Gender = Enum.Parse<Gender>(ownerListPostDto.Gender),
+                    Gender = ownerListPostDto.Gender,
                     ZoneId = ownerListPostDto.ZoneId,
                     WoredaId = ownerListPostDto?.WoredaId,
                     Town = ownerListPostDto?.Town,
@@ -123,6 +126,7 @@ namespace TransportManagmentImplementation.Services.Vehicle.Action
                     SecondaryPhoneNumber = ownerListPostDto?.SecondaryPhoneNumber,
                     IdNumber = ownerListPostDto.IdNumber,
                     PoBox = ownerListPostDto?.PoBox,
+                    OwnerGroup = ownerListPostDto.OwnerGroup,
 
                     Id = Guid.NewGuid(),
                     CreatedById = ownerListPostDto.CreatedById,
@@ -160,7 +164,7 @@ namespace TransportManagmentImplementation.Services.Vehicle.Action
             try
             {
 
-                var ownerExist = await _dbContext.OwnerLists.FindAsync(ownerListGetDto.OwnerId);
+                var ownerExist = await _dbContext.OwnerLists.FindAsync(ownerListGetDto.Id);
 
 
                 if (ownerExist == null)
@@ -183,7 +187,7 @@ namespace TransportManagmentImplementation.Services.Vehicle.Action
                 ownerExist.AmharicFirstName = ownerListGetDto.AmharicFirstName;
                 ownerExist.AmharicMiddleName = ownerListGetDto.AmharicMiddleName;
                 ownerExist.AmharicLastName = ownerListGetDto.AmharicLastName;
-                ownerExist.Gender = Enum.Parse<Gender>(ownerListGetDto.Gender);
+                ownerExist.Gender = ownerListGetDto.Gender;
                 ownerExist.ZoneId = ownerListGetDto.ZoneId;
                 ownerExist.WoredaId = ownerListGetDto?.WoredaId;
                 ownerExist.Town = ownerListGetDto?.Town;
@@ -221,7 +225,7 @@ namespace TransportManagmentImplementation.Services.Vehicle.Action
 
         }
 
-        public async Task<List<OwnerListGetDto>> GetOwnerByVechicleId(Guid VehicleId)
+        public async Task<List<VehicleOwnerListGetDto>> GetOwnerByVechicleId(Guid VehicleId)
 {
 
 
@@ -232,11 +236,12 @@ namespace TransportManagmentImplementation.Services.Vehicle.Action
         .Include(x => x.Owner.Woreda)
         .Where(x => x.VehicleId == VehicleId).ToListAsync();
 
-    var ownerDtos = owners.Select(x => new OwnerListGetDto
+    var ownerDtos = owners.Select(x => new VehicleOwnerListGetDto
     {
         Id = x.Id,
         VechicleId = x.VehicleId,
-        OwnerId = x.Owner.Id,
+        OwnerId =  x.Owner.Id,
+        OwnerNumber =x.Owner.OwnerNumber,
         FullName = $"{x.Owner.FirstName} {x.Owner.MiddleName} {x.Owner.LastName}",
         AmharicName = $"{x.Owner.AmharicFirstName} {x.Owner.AmharicMiddleName} {x.Owner.AmharicLastName}",
         VehicleRegistrationNo = x.Vehicle.RegistrationNo,
@@ -249,7 +254,7 @@ namespace TransportManagmentImplementation.Services.Vehicle.Action
         PhoneNumber = x.Owner.PhoneNumber,
         SecondaryPhoneNumber = x.Owner.SecondaryPhoneNumber,
         PoBox = x.Owner.PoBox,
-        TrainingCenter = x.TrainingCenter.Name,
+        TrainingCenter = x.TrainingCenterId!=null? x.TrainingCenter.Name:null,
         OwnerState = x.OwnerState.ToString()
 
     }).ToList();
@@ -263,7 +268,7 @@ namespace TransportManagmentImplementation.Services.Vehicle.Action
 
         public async  Task<PagedList<OwnerListGetDto>> GetAllOwners(FilterDetail filterData)
         {
-            IQueryable<OwnerList> ownerQuery = _dbContext.OwnerLists.AsNoTracking().OrderBy(x => x.CreatedDate);
+            IQueryable<OwnerList> ownerQuery = _dbContext.OwnerLists.Include(x=>x.Woreda).Include(x=>x.Zone).AsNoTracking().OrderBy(x => x.CreatedDate);
 
             /// Do the Sort And Serch Impleentation here
 

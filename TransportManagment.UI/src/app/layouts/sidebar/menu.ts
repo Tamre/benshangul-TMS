@@ -51,41 +51,33 @@ export const MENU: MenuItem[] = [
   {
     id: 7,
     label: "MENUITEMS.VRMS.TEXT",
-    isTitle: true,
-    
-  },
-
-
-  {
-    id: 8,
-    label: "MENUITEMS.VEHICLE-CONFIGURATION.TEXT",
-    icon: "ri-settings-4-line",
-    link: "/v-management/vehicle-config",
     isCollapsed: true,
-  },
-  {
-    id: 9,
-    label: "MENUITEMS.STOCK-MANAGEMENT.TEXT",
-    icon: "ri-stack-line",
-    link: "/v-management/stock-management",
-    isCollapsed: true,
-  },
-  {
-    id: 9,
-    label: "MENUITEMS.VEHICLE.TEXT",
-    icon: "ri-apps-2-line",
-    isCollapsed: true,
+    icon:"las la-car-side",
     subItems: [
+      {
+        id: 9,
+        label: "MENUITEMS.STOCK-MANAGEMENT.TEXT",
+        icon: "ri-stack-line",
+        link: "/v-management/stock-management",
+        isCollapsed: true,
+      },
+      {
+        id: 8,
+        label: "MENUITEMS.VEHICLE-CONFIGURATION.TEXT",
+        icon: "ri-settings-4-line",
+        link: "/v-management/vehicle-config",
+        
+      },
       {
         id: 10,
         label: "MENUITEMS.VEHICLE.LIST.REGISTER",
-        link: "/vehicle/add",
+        link: "/v-management/add",
         parentId: 3,
       },
       {
         id: 10,
         label: "MENUITEMS.VEHICLE.LIST.FIND",
-        link: "/vehicle/list",
+        link: "/v-management/list",
         parentId: 3,
       },
       {
@@ -96,5 +88,8 @@ export const MENU: MenuItem[] = [
       }
     ],
   },
+
+
+  
   
 ];

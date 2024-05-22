@@ -1,0 +1,65 @@
+<div class="card">
+
+
+
+    <div class="modal-header bg-info-subtle p-3">
+        <h5 class="modal-title" id="exampleModalLabel">{{ 'Assign Owner' | translate }}</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal"
+            (click)="closeModal()"></button>
+    </div>
+    <form (ngSubmit)="onSubmit()" [formGroup]="vehicleOwnerForm" class="tablelist-form" autocomplete="off">
+        <div class="modal-body">
+            <input type="hidden" id="id-field" />
+            <div class="row g-3">
+
+
+                <div class="col-lg-4">
+                    <label for="ownerGroup-field" class="form-label">{{ 'Owner Group' | translate}}</label>
+                    <ng-select [items]="ownerGroups" formControlName="ownerGroup" bindLabel="name" bindValue="value" id="ownerGroup-field"  (change)="getOwnerLists()"
+                        name="name" [searchable]="true" placeholder="Select Owner Group" required>
+                        <ng-template ng-optgroup-tmp let-item="item">
+                            {{item.name || 'Unnamed group'}}
+                        </ng-template>
+                    </ng-select>
+
+                </div>
+
+                <div class="col-lg-4" >
+                    <label for="regionId-field" class="form-label">{{ 'Owner' | translate }}</label>
+
+
+                <ng-select [items]="ownersLists" bindLabel="ownerName" bindValue="id" formControlName="ownerId">
+                    <ng-template ng-optgroup-tmp let-item="item">
+                        {{item.ownerName  || 'Unnamed group'}}
+                    </ng-template>
+                  </ng-select>
+                  
+                </div>
+
+                <div class="col-lg-4">
+                    <label for="ownerState-field" class="form-label">{{ 'Owner State' | translate}}</label>
+                    <ng-select [items]="ownerStates" formControlName="ownerState" bindLabel="name" bindValue="value" id="ownerState-field"  
+                        name="name" [searchable]="true" placeholder="Select Owner State" required>
+                        <ng-template ng-optgroup-tmp let-item="item">
+                            {{item.name || 'Unnamed group'}}
+                        </ng-template>
+                    </ng-select>
+
+                </div>
+
+                
+
+
+
+            </div>
+        </div>
+        <div class="modal-footer">
+            <div class="hstack gap-2 justify-content-end">
+                <button type="button" class="btn btn-light" data-bs-dismiss="modal" (click)="closeModal()">{{
+                    'Close' | translate }}</button>
+                <button type="submit" class="btn btn-success" id="add-btn">{{ 'Assign Owner' | translate
+                    }}</button>
+            </div>
+        </div>
+    </form>
+</div>
