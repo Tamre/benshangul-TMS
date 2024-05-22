@@ -27,6 +27,7 @@ import { AddressService } from 'src/app/core/services/address.service';
 })
 export class OwnerComponent implements OnInit {
   submitted = false;
+  submitted1 = false;
   currentUser!: UserView | null;
   ownerForm!: UntypedFormGroup;
   searchForm!: UntypedFormGroup;
@@ -64,7 +65,6 @@ export class OwnerComponent implements OnInit {
   searchTerm = '';
 
   criteria: { columnName: string, filterValue: string }[] = [];
-  ownerCriteria: ownerCriteria = new ownerCriteria()
 
 
   breadCrumbItems = [
@@ -137,6 +137,7 @@ export class OwnerComponent implements OnInit {
     });
   }
   submitSearch() {
+    this.submitted1=true;
     const selectedSearchType = this.searchForm.get('searchType')?.value;
     const searchValue = this.searchForm.get('search')?.value;
 
@@ -148,7 +149,7 @@ export class OwnerComponent implements OnInit {
         this.criteria.push({ columnName, filterValue });
         console.log(this.criteria)
 
-        this.searchForm.reset();
+        //this.searchForm.reset();
       }
     }
     
@@ -213,16 +214,16 @@ export class OwnerComponent implements OnInit {
     });
 
   }
-  saveCriteria() {
-    this.criteria = Object.entries(this.ownerCriteria)
-      .filter(([key, value]) => value !== undefined && value !== null)
-      .map(([columnName, filterValue]) => ({ columnName, filterValue: filterValue.toString() }));
-    this.refreshData();
-  }
   onSubmit() {
-    //this.submitted = true;
+    // this.submitted = true;
+    // console.log(this.submitted);
+    // if (this.ownerForm.invalid) {
+    //   return; 
+    // }
+    
     //this.ownerForm.controls["createdById"].setValue(this.currentUser?.userId);
-    this.ownerForm.markAsTouched();
+    //this.ownerForm.markAsTouched();
+    if (this.ownerForm.valid) {
     const newData: OwnerPostDto = this.ownerForm.value;
     this.ownerService.addOwner(newData).subscribe({
       next: (res: ResponseMessage) => {
@@ -240,7 +241,7 @@ export class OwnerComponent implements OnInit {
       error: (err) => {
         console.error(err);
       },
-    });
+    });}
     this.submitted = true;
   }
   get f() {
@@ -259,11 +260,4 @@ export class OwnerComponent implements OnInit {
     this.modalService.dismissAll();
   }
 
-}
-export class ownerCriteria {
-  firstname!: string
-  lastname!: string
-  middlename!: string
-  ownernumber!: string
-  phonenumber!: string
 }

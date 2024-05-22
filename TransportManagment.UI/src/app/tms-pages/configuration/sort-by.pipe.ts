@@ -6,7 +6,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 import { orderBy,sortBy } from 'lodash';
 
 @Pipe({ name: 'sortBy' })
-export class SortByCrmPipe implements PipeTransform {
+export class CrmPipe implements PipeTransform {
 
   transform(value: any[], order:any = '', column: string = ''): any[] {
     if (!value || order === '' || !order) { return value; } // no array
