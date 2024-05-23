@@ -200,6 +200,7 @@ export class VehicleListComponent implements OnInit {
   vehicleActionList: any[] = [
     { code: 1, name: "Profile" },
     { code: 2, name: "Dcouments" },
+    { code: 11, name: "Inspection" },
     { code: 3, name: "Owners" },
     { code: 4, name: "Plates" },
     { code: 5, name: "ORC" },  

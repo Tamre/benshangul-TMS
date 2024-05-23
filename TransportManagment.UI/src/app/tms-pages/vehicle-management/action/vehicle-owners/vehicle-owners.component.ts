@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from "@angular/core";
 import { CommonModule } from "@angular/common";
-import { VehicleService } from "src/app/core/services/vehicle.service";
+
 import {
   IVehicleOwnerGetDto,
   OwnerGroup,
@@ -13,6 +13,7 @@ import { User } from "src/app/store/Authentication/auth.models";
 import { UserView } from "src/app/model/user";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { AssignOwnersComponent } from "./assign-owners/assign-owners.component";
+import { VehicleService } from "src/app/core/services/Vehicle-services/vehicle.service";
 
 @Component({
   selector: "app-vehicle-owners",

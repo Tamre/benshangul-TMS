@@ -45,6 +45,9 @@ import { VehicleConfigComponent } from './configuratuion/vehicle-config/vehicle-
 
 import { VehicleAdd } from './action/vehicle-add/vehicle-add.component';
 import { VehicleListComponent } from './action/vehicle-list/vehicle-list.component';
+import { InspectionComponent } from './action/inspection/inspection.component';
+import { FieldInspectionComponent } from './action/inspection/field-inspection/field-inspection.component';
+import { TechnicalInspectionComponent } from './action/inspection/technical-inspection/technical-inspection.component';
 
 
 
@@ -78,8 +81,9 @@ import { VehicleListComponent } from './action/vehicle-list/vehicle-list.compone
     AisStockComponent,
     VehicleAdd,
     VehicleListComponent,
-    
-  
+    InspectionComponent,
+    FieldInspectionComponent,
+    TechnicalInspectionComponent
   ],
   imports: [
     CommonModule,
