@@ -2,14 +2,14 @@
 
 import { Component, Input, OnInit } from "@angular/core";
 import { CommonModule } from "@angular/common";
-import { VehicleDropdownService } from "src/app/core/services/vehicle-dropdown.service";
 import { ISettingDropDownsDto } from "src/app/model/common";
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
-import { VehicleService } from "src/app/core/services/vehicle.service";
 import { UserView } from "src/app/model/user";
 import { TokenStorageService } from "src/app/core/services/token-storage.service";
 import { ToastService } from "src/app/account/login/toast-service";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
+import { VehicleDropdownService } from "src/app/core/services/Vehicle-services/vehicle-drop-down.service";
+import { VehicleService } from "src/app/core/services/Vehicle-services/vehicle.service";
 
 
 @Component({
