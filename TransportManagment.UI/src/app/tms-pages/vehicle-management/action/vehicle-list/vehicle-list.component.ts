@@ -19,7 +19,7 @@ import { successToast, errorToast } from "src/app/core/services/toast.service";
 import { TokenStorageService } from "src/app/core/services/token-storage.service";
 import { ResponseMessage } from "src/app/model/ResponseMessage.Model";
 import { UserView } from "src/app/model/user";
-import { GetVehicleDetailRequestDto } from "src/app/model/vehicle";
+import { GetVehicleDetailRequestDto, VehicleData } from "src/app/model/vehicle";
 import { VehicleModelPostDto } from "src/app/model/vehicle-configuration/vehicle-model";
 import { RootReducerState } from "src/app/store";
 import { fetchCrmContactData } from "src/app/store/CRM/crm_action";
@@ -40,7 +40,7 @@ export class VehicleListComponent implements OnInit {
   searchTerm: any;
   searchResults: any;
   econtent?: any;
-
+  vehicleDetail!: VehicleData ;
   allVehicleModels?: any;
   vehicleModels?: any;
   vehicle?: any;
@@ -61,10 +61,10 @@ export class VehicleListComponent implements OnInit {
     { name: "KW", code: "OTHEKWR" },
   ];
   searchDropDownItem = [
-    { name: "PlateNo", code: 1 },
-    { name: "EngineNo", code: 3 },
-    { name: "ChessisNo", code: 2 },
     { name: "RegistrationNo", code: 0 },
+    { name: "PlateNo", code: 1 },
+    { name: "ChessisNo", code: 2 },
+    { name: "EngineNo", code: 3 },
   ];
 
   searchDropDown2Item = [
@@ -111,6 +111,7 @@ export class VehicleListComponent implements OnInit {
 
   vehicleId: string = "";
   vehicleRegistrationNo: string = "";
+  isRegistrationType: boolean = false;
  // groupData = groupData;
 
   constructor(
@@ -233,6 +234,13 @@ export class VehicleListComponent implements OnInit {
     }
   }
 
+  changeType(type:any){
+    this.isRegistrationType = false;
+    if(type == 0){
+      this.isRegistrationType = true;
+    }
+  }
+
   submitSearch() {
     if (this.search == null) {
       return;
@@ -251,9 +259,9 @@ export class VehicleListComponent implements OnInit {
 
     this.vehicleService.getVehicleList(value).subscribe({
       next: (res) => {
-        if (res.chassisNo) {
+        if (data.chassisNo) {
           this.isvehicleFound = true;
-          data = res;
+         
           this.selectedModelId = data.modelId;
 
           this.vehicleForm.setValue({
@@ -280,7 +288,7 @@ export class VehicleListComponent implements OnInit {
             transferStatus: data.transferStatus,
             serviceZoneId: "",
             createdById: this.currentUser?.userId,
-            lastActionTaken: "Endoding",
+            lastActionTaken: data.lastActionTaken,
           });
 
           this.vehicleRegistrationNo = res.registrationNumber!;
