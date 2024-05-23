@@ -20,6 +20,7 @@ import { Pagination1Service } from 'src/app/core/services/pagination1.service';
 import { AddressService } from 'src/app/core/services/address.service';
 
 
+
 @Component({
   selector: 'app-owner',
   templateUrl: './owner.component.html',
@@ -54,12 +55,17 @@ export class OwnerComponent implements OnInit {
   ];
   search: string = "";
 
-  genderEnum= [
+  genderEnum = [
     { name: 'Male', code: 'Male' },
     { name: 'Female', code: 'Female' }
   ]
+  ownerGroupEnum = [
+    { name: 'Private_Owner', code: 'Private_Owner' },
+    { name: 'Organization', code: 'Organization' },
+    { name: 'Government', code: 'Government' }
+  ]
 
-  
+
 
   searchTermSubject = new Subject<string>();
   searchTerm = '';
@@ -82,6 +88,13 @@ export class OwnerComponent implements OnInit {
   allWoredas?: any;
   woredaNames: string[] = [];
   selectedWoreda: { id: number; name: string } | null = null;
+
+  editOwnerText = "Edit Owner";
+  updateText = "Update";
+  isEditing: Boolean = false;
+  econtent?: any;
+
+  selectedSearchType!: string;
 
   constructor(private ownerService: OwnerService,
     public translate: TranslateService,
@@ -108,6 +121,7 @@ export class OwnerComponent implements OnInit {
     this.refreshData();
     this.currentUser = this.tokenStorageService.getCurrentUser();
     this.ownerForm = this.formBuilder.group({
+      ownerGroup: ["", Validators.required],
       firstName: ["", Validators.required],
       middleName: ["", Validators.required],
       lastName: ["", Validators.required],
@@ -118,10 +132,10 @@ export class OwnerComponent implements OnInit {
       zoneId: ["", Validators.required],
       woredaId: [""],
       town: [""],
-      houseNo: ["",Validators.required],
-      phoneNumber: ["",Validators.required],
+      houseNo: ["", Validators.required],
+      phoneNumber: ["", Validators.required],
       secondaryPhoneNumber: [""],
-      idNumber: [""],
+      idNumber: ["", Validators.required],
       poBox: [""],
       createdById: [this.currentUser?.userId, [Validators.required]],
     });
@@ -135,9 +149,22 @@ export class OwnerComponent implements OnInit {
         document.getElementById("elmLoader")?.classList.add("d-none");
       }
     });
+    this.searchForm.get('searchType')?.valueChanges.subscribe(value => {
+      this.selectedSearchType = value;
+      this.toggleSearchFieldValidator();
+    });
   }
+  private toggleSearchFieldValidator(): void {
+    if (this.selectedSearchType) {
+      this.searchForm.get('search')?.setValidators(Validators.required);
+    } else {
+      this.searchForm.get('search')?.clearValidators();
+    }
+    this.searchForm.get('search')?.updateValueAndValidity();
+  }
+
   submitSearch() {
-    this.submitted1=true;
+    this.submitted1 = true;
     const selectedSearchType = this.searchForm.get('searchType')?.value;
     const searchValue = this.searchForm.get('search')?.value;
 
@@ -152,7 +179,7 @@ export class OwnerComponent implements OnInit {
         //this.searchForm.reset();
       }
     }
-    
+
     this.refreshData();
   }
   changePage() {
@@ -170,6 +197,7 @@ export class OwnerComponent implements OnInit {
           this.owners = res.data || [];
           this.metaData = res.metaData;
           this.allOwners = cloneDeep(res);
+          console.log(this.allOwners)
 
         } else {
           this.owners = [];
@@ -198,50 +226,75 @@ export class OwnerComponent implements OnInit {
     });
     this.addressService.getAllWoreda().subscribe({
       next: (res) => {
-        if (res) 
-          {
-            this.woredas = res
-            this.allWoredas = cloneDeep(res);
-            this.woredaNames = this.allWoredas.map((veh: any) => ({
-              id: veh.id,
-              name: veh.name,
-            }));
-          }
+        if (res) {
+          this.woredas = res
+          this.allWoredas = cloneDeep(res);
+          this.woredaNames = this.allWoredas.map((veh: any) => ({
+            id: veh.id,
+            name: veh.name,
+          }));
+        }
       },
       error: (err) => {
-        
+
       },
     });
 
   }
   onSubmit() {
+    if (this.ownerForm.valid) {
+      if (this.ownerForm.get("id")?.value) {
+        console.log(this.currentUser?.userId)
+        const newData: OwnerPostDto = this.ownerForm.value;
+        this.ownerService.updateOwner(newData).subscribe({
+          next: (res: ResponseMessage) => {
+            if (res.success) {
+              this.toastService.show(res.message, {
+                classname: "success text-white",
+                delay: 2000,
+              });
+              this.ownerForm.reset()
+            } else {
+              console.error(res.message);
+            }
+          },
+          error: (err) => {
+            console.error(err);
+          },
+        });
+
+      } else {
     // this.submitted = true;
     // console.log(this.submitted);
     // if (this.ownerForm.invalid) {
     //   return; 
     // }
-    
+
     //this.ownerForm.controls["createdById"].setValue(this.currentUser?.userId);
     //this.ownerForm.markAsTouched();
-    if (this.ownerForm.valid) {
-    const newData: OwnerPostDto = this.ownerForm.value;
-    this.ownerService.addOwner(newData).subscribe({
-      next: (res: ResponseMessage) => {
-        if (res.success) {
-          this.toastService.show(res.message, {
-            classname: "success text-white",
-            delay: 2000,
-          });
-          this.ownerForm.reset()
-        } else {
-          console.error(res.message);
-        }
 
-      },
-      error: (err) => {
-        console.error(err);
-      },
-    });}
+    if (this.ownerForm.valid) {
+      const newData: OwnerPostDto = this.ownerForm.value;
+      this.ownerService.addOwner(newData).subscribe({
+        next: (res: ResponseMessage) => {
+          if (res.success) {
+            this.toastService.show(res.message, {
+              classname: "success text-white",
+              delay: 2000,
+            });
+            this.ownerForm.reset()
+          } else {
+            console.error(res.message);
+          }
+
+        },
+        error: (err) => {
+          console.error(err);
+        },
+      });
+    }
+  }
+  }
     this.submitted = true;
   }
   get f() {
@@ -260,4 +313,43 @@ export class OwnerComponent implements OnInit {
     this.modalService.dismissAll();
   }
 
+  editDataGet(id: any, content: any) {
+    this.submitted = false;
+    this.modalService.open(content, { size: "lg", centered: true });
+    var modelTitle = document.querySelector(".modal-title") as HTMLAreaElement;
+    this.translate.get("Edit Owner").subscribe((res: string) => {
+      this.editOwnerText = res;
+    });
+    modelTitle.innerHTML = this.editOwnerText;
+    var updateBtn = document.getElementById("add-btn") as HTMLAreaElement;
+    this.translate.get("Update").subscribe((res: string) => {
+      this.editOwnerText = res;
+    });
+    updateBtn.innerHTML = this.updateText;
+    this.isEditing = true;
+    this.econtent = this.owners[id];
+    this.ownerForm.controls["ownerGroup"].setValue(this.econtent.ownerGroup);
+    this.ownerForm.controls["firstName"].setValue(this.econtent.firstName);
+    this.ownerForm.controls["middleName"].setValue(this.econtent.middleName);
+    this.ownerForm.controls["lastName"].setValue(this.econtent.lastName);
+    this.ownerForm.controls["amharicFirstName"].setValue(this.econtent.firstName);
+    this.ownerForm.controls["amharicMiddleName"].setValue(this.econtent.middleName);
+    this.ownerForm.controls["amharicLastName"].setValue(this.econtent.amharicLastName);
+    this.ownerForm.controls["lastName"].setValue(this.econtent.lastName);
+
+    this.ownerForm.controls["gender"].setValue(this.econtent.gender);
+    this.ownerForm.controls["zoneId"].setValue(this.econtent.zoneId);
+    this.ownerForm.controls["woredaId"].setValue(this.econtent.woredaId);
+
+    this.ownerForm.controls["town"].setValue(this.econtent.town);
+    this.ownerForm.controls["houseNo"].setValue(this.econtent.houseNo);
+    this.ownerForm.controls["phoneNumber"].setValue(this.econtent.phoneNumber);
+
+    this.ownerForm.controls["secondaryPhoneNumber"].setValue(this.econtent.town);
+    this.ownerForm.controls["idNumber"].setValue(this.econtent.houseNo);
+    this.ownerForm.controls["poBox"].setValue(this.econtent.phoneNumber);
+
+    this.ownerForm.controls["createdById"].setValue(this.currentUser?.userId);
+    this.ownerForm.controls["id"].setValue(this.econtent.id);
+  }
 }

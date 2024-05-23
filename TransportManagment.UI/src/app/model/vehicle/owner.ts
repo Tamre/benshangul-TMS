@@ -9,22 +9,23 @@ export interface OwnerGetDto {
     zoneId: number;
     woredaId?: string;
     town?: string;
-    houseNo?: string;
+    houseNo: string;
     phoneNumber: string;
     secondaryPhoneNumber?: string;
     idNumber: string;
     poBox?: string;
     createdById: string;
+    ownerGroup: string;
     id: string;
-    ownerId: string;
-    vechicleId: string;
-    vehicleRegistrationNo: string;
+    ownerNumber: string;
+    //vechicleId: string;
+    //vehicleRegistrationNo: string;
     fullName: string;
     amharicName: string;
     woreda: string;
     zone: string;
-    trainingCenter: string;
-    ownerState: string;
+    //trainingCenter: string;
+    //ownerState: string;
 }
 export interface PaginatedResponse<T> {
     data: T[];
@@ -50,11 +51,11 @@ export interface OwnerPostDto {
     zoneId: number;
     woredaId?: string;
     town?: string;
-    houseNo?: string;
+    houseNo: string;
     phoneNumber?: string;
     secondaryPhoneNumber?: string;
-    idNumber?: string;
+    idNumber: string;
     poBox?: string;
     createdById: string;
+    ownerGroup: string;
 }
- 

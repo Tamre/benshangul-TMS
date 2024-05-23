@@ -1,12 +1,12 @@
 <app-breadcrumbs title="VRMS" [breadcrumbItems]="breadCrumbItems"></app-breadcrumbs>
 
 <div class="row">
-    
+
 
 
     <div class="card">
-        <div class="col-lg-12">
-        
+        <!-- <div class="col-lg-12">
+
             <div class="card-header">
                 <div class="d-flex justify-content-end gap-2">
                     <button class="btn btn-info" data-bs-toggle="modal" data-bs-target="#showModal"
@@ -16,60 +16,73 @@
 
                 </div>
             </div>
-        
-    </div>
-        
+
+        </div> -->
+
         <div class="col-xxl-12">
             <div class="card" id="contactList">
                 <div class="card-header">
                     <div class="row g-4 mb-3">
-                        <!-- <div class="col-sm">
-                            <div class="d-flex justify-content-sm-start">
-                                <div class="search-box">
-                                    <input type="text" name="searchTerm" class="form-control"
-                                        placeholder="{{ 'Search for Name...' | translate }}" [(ngModel)]="searchTerm"
-                                        (ngModelChange)="searchTermSubject.next($event)">
-                                    <i class="ri-search-line search-icon"></i>
-                                </div>
-                            </div>
-                        </div> -->
-                        <div class="col-sm">
+                        <div class="col-lg-9">
                             <div class="card-header border-0 justify-content-sm-start">
-                            <form (ngSubmit)="submitSearch()" [formGroup]="searchForm" class="tablelist-form" autocomplete="off">
-                                <div class="row g-3 align-items-end">
-                                    <div class="text-end">
-                                    </div>
-                                    <div class="col-lg-2">
-                                        <label for="searchType-field" class="form-label">{{ 'Search By' | translate }}</label>
-                                        <!-- <ng-select [items]="searchDropDownItem" formControlName="searchType" bindLabel="name"
-                                            bindValue="code" id="searchType-field" name="searchType" [searchable]="false" placeholder="{{ 'Search By...' | translate }}">
-                                        </ng-select> -->
+                                <form (ngSubmit)="submitSearch()" [formGroup]="searchForm" class="tablelist-form"
+                                    autocomplete="off">
+                                    <div class="row g-3 align-items-end">
+                                        <div class="text-end">
+                                        </div>
+                                        <div class="col-lg-3">
+                                            <label for="searchType-field" class="form-label">{{ 'Search By' | translate
+                                                }}</label>
 
-
-                                        <ng-select [items]="searchDropDownItem" bindLabel="name" bindValue="code"
-                                                id="searchType-field" name="searchType" formControlName="searchType"
-                                                [ngClass]="{ 'is-invalid': submitted && searchForm.controls['searchType'].errors }"
-                                                [searchable]="false" placeholder="Select Gender" required>
-                                                <ng-option value="" disabled>{{ 'Select Gender' | translate
+                                            <ng-select [(ngModel)]="selectedSearchType" [items]="searchDropDownItem"
+                                                bindLabel="name" bindValue="code" id="searchType-field"
+                                                name="searchType" formControlName="searchType"
+                                                [ngClass]="{ 'is-invalid': submitted1 && searchForm.controls['searchType'].errors }"
+                                                [searchable]="false" placeholder="Select Search Type" required>
+                                                <ng-option value="" disabled>{{ 'Select Search Type' | translate
                                                     }}</ng-option>
                                             </ng-select>
-                
+
+                                        </div>
+                                        <div class="col-lg-3" *ngIf="selectedSearchType">
+                                            <label for="searchField-field" class="form-label">{{ 'Value' | translate
+                                                }}</label>
+                                            <input type="text" id="search-field" class="form-control"
+                                                placeholder="{{ 'value' | translate }}" required
+                                                formControlName="search"
+                                                [ngClass]="{ 'is-invalid': submitted1 && fo['search'].errors }" />
+                                        </div>
+                                        <div class="col-lg-2 d-flex align-items-end">
+                                            <button class="btn btn-success add-btn mt-auto" (click)="submitSearch()"
+                                                type="submit">
+                                                <i class="mdi mdi-magnify"></i> {{ 'Search' | translate }}
+                                            </button>
+                                        </div>
                                     </div>
-                                    <div class="col-lg-2">
-                                        <label for="searchField-field" class="form-label">{{ 'Value' | translate }}</label>
-                                        <input type="text" id="search-field" class="form-control"
-                                            placeholder="{{ 'value' | translate }}" required formControlName="search"
-                                            [ngClass]="{ 'is-invalid': submitted1 && fo['search'].errors }" />
-                                    </div>
-                                    <div class="col-lg-2 d-flex align-items-end">
-                                        <button class="btn btn-success add-btn mt-auto" (click)="submitSearch()" type="submit">
-                                            <i class="ri-filter-3-line"></i> {{ 'Search' | translate }}
-                                        </button>
-                                    </div>
-                                </div>
-                            </form></div>
+                                </form>
+                            </div>
                         </div>
-                        <div class="col-sm-auto d-flex align-items-center">
+                        <!-- <div class="col-sm-auto d-flex align-items-center">
+                            <span class="me-2">Show:</span>
+                            <ng-select [(ngModel)]="selectedPageSize" (ngModelChange)="refreshData()"
+                                [items]="pageSizeOptions" bindLabel="label" bindValue="value" class="custom-ng-select"
+                                [clearable]="false"></ng-select>
+                            <span class="ms-2">Entries</span>
+                        </div> -->
+                        <div class="col-lg-3 d-flex align-items-center justify-content-end">
+                            <!-- <div class="d-flex justify-content-end gap-2"> -->
+                                <button class="btn btn-info" data-bs-toggle="modal" data-bs-target="#showModal"
+                                    (click)="openModal(content)">
+                                    <i class="ri-add-fill me-1 align-bottom"></i> {{ 'Add Owner' | translate }}
+                                </button>
+
+                            <!-- </div> -->
+                        </div>
+
+                    </div>
+                    <div class="row g-4 mb-3">
+
+                        <div class="col-sm-auto ms-3 d-flex align-items-center">
                             <span class="me-2">Show:</span>
                             <ng-select [(ngModel)]="selectedPageSize" (ngModelChange)="refreshData()"
                                 [items]="pageSizeOptions" bindLabel="label" bindValue="value" class="custom-ng-select"
@@ -77,9 +90,12 @@
                             <span class="ms-2">Entries</span>
                         </div>
                         
+    
                     </div>
                 </div>
+                
                 <div class="card-body">
+                    
                     <div>
                         <div class="table-responsive table-card mb-2">
                             <table class="table">
@@ -91,7 +107,7 @@
                                         <th>{{ 'Owner Number' | translate }}</th>
                                         <th>{{ 'Full Name' | translate }}</th>
                                         <th>{{ 'Zone' | translate }}</th>
-                                        <th>{{ 'Owner State' | translate }}</th>
+                                        <th>{{ 'Owner Group' | translate }}</th>
                                         <th>{{ 'Action' | translate }}</th>
                                     </tr>
                                 </thead>
@@ -101,8 +117,7 @@
                                             <th scope="row">{{ i + 1 }}
                                             </th>
                                             <td class="name">
-                                                <ngb-highlight [result]="data.plateTypeName"
-                                                    [term]="''"></ngb-highlight>
+                                                <ngb-highlight [result]="data.ownerNumber" [term]="''"></ngb-highlight>
                                             </td>
                                             <td>
                                                 <ngb-highlight [result]="data.fullName" [term]="''"></ngb-highlight>
@@ -112,9 +127,14 @@
                                             </td>
 
                                             <td>
-                                                <ngb-highlight [result]="data.ownerState" [term]="''"></ngb-highlight>
+                                                <ngb-highlight [result]="data.ownerGroup" [term]="''"></ngb-highlight>
                                             </td>
                                             <td>
+                                                <button class="btn btn-soft-secondary btn-sm edit-item-btn"
+                                                    type="button" data-bs-toggle="modal"
+                                                    (click)="editDataGet(i,content)">
+                                                    <i class="ri-pencil-fill align-middle"></i>
+                                                </button>
                                             </td>
                                         </tr>
                                     </ng-container>
@@ -126,6 +146,7 @@
                                 </ng-template>
                             </table>
                         </div>
+                        
                         <div class="d-flex justify-content-end mt-3">
                             <ngb-pagination *ngIf="metaData" [collectionSize]="metaData.totalCount"
                                 [(page)]="metaData.currentPage" [pageSize]="metaData.pageSize"
@@ -145,11 +166,30 @@
                                 <div class="row g-3">
                                     <div class="col-lg-4">
                                         <div>
+                                            <label for="ownerGroup-field" class="form-label">{{ 'Owner Group' |
+                                                translate }}</label>
+                                            <ng-select [items]="ownerGroupEnum" bindLabel="name" bindValue="code"
+                                                id="ownerGroup-field" name="ownerGroup" formControlName="ownerGroup"
+                                                [ngClass]="{ 'is-invalid': submitted && ownerForm.controls['ownerGroup'].errors }"
+                                                [searchable]="false" placeholder="Select Owner Group" required>
+                                                <ng-option value="" disabled>{{ 'Select Owner Group' | translate
+                                                    }}</ng-option>
+                                            </ng-select>
+                                            <div *ngIf="submitted && ownerForm.controls['ownerGroup'].errors"
+                                                class="invalid-feedback" align="left">
+                                                <div *ngIf="ownerForm.controls['ownerGroup'].errors['required']">{{
+                                                    'Owner Group is required' | translate }}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <div>
                                             <label for="firstName-field" class="form-label">{{ 'First Name' | translate
                                                 }}</label>
                                             <input type="text" id="firstName-field" class="form-control"
                                                 placeholder="{{ 'Enter First Name' | translate }}" required
-                                                formControlName="firstName" [ngClass]="{ 'is-invalid': submitted && f['firstName'].errors }" />
+                                                formControlName="firstName"
+                                                [ngClass]="{ 'is-invalid': submitted && f['firstName'].errors }" />
                                             @if (submitted && f['firstName'].errors) {
                                             <div class="invalid-feedback" align="left">
                                                 @if (f['firstName'].errors['required']) {
@@ -166,7 +206,8 @@
                                                 translate }}</label>
                                             <input type="text" id="middleName-field" class="form-control"
                                                 placeholder="{{ 'Enter Middle Name' | translate }}" required
-                                                formControlName="middleName" [ngClass]="{ 'is-invalid': submitted && f['middleName'].errors }" />
+                                                formControlName="middleName"
+                                                [ngClass]="{ 'is-invalid': submitted && f['middleName'].errors }" />
                                             <!-- @if (submitted && f['middleName'].errors) {
                                             <div class="invalid-feedback" align="left">
                                                 @if (f['middleName'].errors['required']) {
@@ -174,8 +215,10 @@
                                                 }
                                             </div>
                                             } -->
-                                            <div *ngIf="submitted && ownerForm.get('middleName')?.errors" class="invalid-feedback" align="left">
-                                                <div *ngIf="ownerForm.get('middleName')?.errors!['required']">{{ 'Middle Name is required' | translate }}</div>
+                                            <div *ngIf="submitted && ownerForm.get('middleName')?.errors"
+                                                class="invalid-feedback" align="left">
+                                                <div *ngIf="ownerForm.get('middleName')?.errors!['required']">{{ 'Middle
+                                                    Name is required' | translate }}</div>
                                             </div>
 
                                         </div>
@@ -186,7 +229,8 @@
                                                 }}</label>
                                             <input type="text" id="lastName-field" class="form-control"
                                                 placeholder="{{ 'Enter Last Name' | translate }}" required
-                                                formControlName="lastName" [ngClass]="{ 'is-invalid': submitted && f['lastName'].errors }" />
+                                                formControlName="lastName"
+                                                [ngClass]="{ 'is-invalid': submitted && f['lastName'].errors }" />
                                             @if (submitted && f['lastName'].errors) {
                                             <div class="invalid-feedback" align="left">
                                                 @if (f['lastName'].errors['required']) {
@@ -202,7 +246,8 @@
                                                 Name' | translate }}</label>
                                             <input type="text" id="amharicFirstName-field" class="form-control"
                                                 placeholder="{{ 'Enter Amharic First Name' | translate }}" required
-                                                formControlName="amharicFirstName" [ngClass]="{ 'is-invalid': submitted && f['amharicFirstName'].errors }" />
+                                                formControlName="amharicFirstName"
+                                                [ngClass]="{ 'is-invalid': submitted && f['amharicFirstName'].errors }" />
                                             @if (submitted && f['amharicFirstName'].errors) {
                                             <div class="invalid-feedback" align="left">
                                                 @if (f['amharicFirstName'].errors['required']) {
@@ -218,7 +263,8 @@
                                                 Name' | translate }}</label>
                                             <input type="text" id="amharicMiddleName-field" class="form-control"
                                                 placeholder="{{ 'Enter Amharic Middle Name' | translate }}" required
-                                                formControlName="amharicMiddleName" [ngClass]="{ 'is-invalid': submitted && f['amharicMiddleName'].errors }" />
+                                                formControlName="amharicMiddleName"
+                                                [ngClass]="{ 'is-invalid': submitted && f['amharicMiddleName'].errors }" />
                                             @if (submitted && f['amharicMiddleName'].errors) {
                                             <div class="invalid-feedback" align="left">
                                                 @if (f['amharicMiddleName'].errors['required']) {
@@ -235,7 +281,8 @@
                                                 | translate }}</label>
                                             <input type="text" id="amharicLastName-field" class="form-control"
                                                 placeholder="{{ 'Enter Amharic Last Name' | translate }}" required
-                                                formControlName="amharicLastName" [ngClass]="{ 'is-invalid': submitted && f['amharicLastName'].errors }" />
+                                                formControlName="amharicLastName"
+                                                [ngClass]="{ 'is-invalid': submitted && f['amharicLastName'].errors }" />
                                             @if (submitted && f['amharicLastName'].errors) {
                                             <div class="invalid-feedback" align="left">
                                                 @if (f['amharicLastName'].errors['required']) {
@@ -271,7 +318,8 @@
                                         <ng-select [items]="zoneNames" bindLabel="name" bindValue="id"
                                             [(ngModel)]="selectedZone" id="zoneId-field" name="zoneId"
                                             formControlName="zoneId" [searchable]="true" required
-                                            placeholder="Select Zone" [ngClass]="{ 'is-invalid': submitted && ownerForm.controls['zoneId'].errors }">
+                                            placeholder="Select Zone"
+                                            [ngClass]="{ 'is-invalid': submitted && ownerForm.controls['zoneId'].errors }">
                                         </ng-select>
                                         <div *ngIf="submitted && ownerForm.get('zoneId')?.errors"
                                             class="invalid-feedback" align="left">
@@ -305,7 +353,8 @@
                                                 }}</label>
                                             <input type="text" id="town-field" class="form-control"
                                                 placeholder="{{ 'Enter House No' | translate }}"
-                                                formControlName="houseNo" required [ngClass]="{ 'is-invalid': submitted && f['houseNo'].errors }" />
+                                                formControlName="houseNo" required
+                                                [ngClass]="{ 'is-invalid': submitted && f['houseNo'].errors }" />
 
                                         </div>
                                     </div>
@@ -315,7 +364,8 @@
                                                 translate }}</label>
                                             <input type="text" id="town-field" class="form-control"
                                                 placeholder="{{ 'Enter Phone Number' | translate }}"
-                                                formControlName="phoneNumber" required [ngClass]="{ 'is-invalid': submitted && f['phoneNumber'].errors }" />
+                                                formControlName="phoneNumber" required
+                                                [ngClass]="{ 'is-invalid': submitted && f['phoneNumber'].errors }" />
 
                                         </div>
                                     </div>
@@ -335,7 +385,8 @@
                                                 }}</label>
                                             <input type="text" id="town-field" class="form-control"
                                                 placeholder="{{ 'Enter Id Number' | translate }}"
-                                                formControlName="idNumber" required [ngClass]="{ 'is-invalid': submitted && f['idNumber'].errors }" />
+                                                formControlName="idNumber" required
+                                                [ngClass]="{ 'is-invalid': submitted && f['idNumber'].errors }" />
 
                                         </div>
                                     </div>

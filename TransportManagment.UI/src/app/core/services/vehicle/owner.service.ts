@@ -1,10 +1,11 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { PaginatedResponse } from 'src/app/model/stock-management/plate-stock';
+//import { PaginatedResponse } from 'src/app/model/stock-management/plate-stock';
 import { OwnerGetDto, OwnerPostDto } from 'src/app/model/vehicle/owner';
 import { environment } from 'src/environments/environment';
 import { TokenStorageService } from '../token-storage.service';
 import { ResponseMessage } from 'src/app/model/ResponseMessage.Model';
+import { PaginatedResponse } from 'src/app/model/common';
 
 @Injectable({
   providedIn: 'root'
@@ -38,6 +39,13 @@ export class OwnerService {
     var headers = this.headers
     return this.http.post<ResponseMessage>(
       `${this.baseUrl}/OwnerList/AddOwner`,
+      formData,{headers:headers}
+    );
+  }
+  updateOwner(formData:OwnerPostDto){
+    var headers = this.headers
+    return this.http.post<ResponseMessage>(
+      `${this.baseUrl}/OwnerList/UpdateOwner`,
       formData,{headers:headers}
     );
   }
