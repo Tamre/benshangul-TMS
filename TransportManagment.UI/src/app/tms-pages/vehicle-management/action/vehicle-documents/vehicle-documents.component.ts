@@ -9,6 +9,7 @@ import { TokenStorageService } from "src/app/core/services/token-storage.service
 import { ToastService } from "src/app/account/login/toast-service";
 import { VehicleDropdownService } from "src/app/core/services/Vehicle-services/vehicle-drop-down.service";
 import { VehicleService } from "src/app/core/services/Vehicle-services/vehicle.service";
+import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 
 
 @Component({
@@ -20,10 +21,34 @@ import { VehicleService } from "src/app/core/services/Vehicle-services/vehicle.s
 export class VehicleDocumentsComponent implements OnInit {
   @Input() vehicleId: any;
   documentTypes: ISettingDropDownsDto[] = [];
-
+  searchTerm: any;
   vehicleDocumentForm!: FormGroup;
+  vehicleDocumentList!:any;
   currentUser!: UserView | null;
+  sortField: any;
+  sortBy: any;
+  submitted = false;
+  SortFilter() {
+    this.sortField = (
+      document.getElementById("choices-single-default") as HTMLInputElement
+    ).value;
+    if (this.sortField[0] == "A") {
+      this.sortBy = "desc";
+      this.sortField = this.sortField.replace(/A/g, "");
+    }
+    if (this.sortField[0] == "D") {
+      this.sortBy = "asc";
+      this.sortField = this.sortField.replace(/D/g, "");
+    }
+  }
+  onSort(column: any) {
+   
+  }
+  csvFileExport() {
+    
+  }
   constructor(
+    private modalService: NgbModal,
     private vehcDropDownService: VehicleDropdownService,
     private fb: FormBuilder,
     private vehicleService: VehicleService,
@@ -33,6 +58,13 @@ export class VehicleDocumentsComponent implements OnInit {
   forVehicleDocumentOption = [
     { name: "AnnualInspection", code: 0 },
   ];
+  
+  openModal(content: any) {
+    this.submitted = false;
+    this.vehicleDocumentForm.reset();
+    this.modalService.open(content, { size: "md", centered: true });
+  }
+
  
   ngOnInit(): void {
     this.currentUser = this.tokenStorageService.getCurrentUser();
@@ -58,6 +90,9 @@ export class VehicleDocumentsComponent implements OnInit {
     });
   }
 
+  closeModal() {
+    this.modalService.dismissAll();
+  }
   onSubmit() {
     if (this.vehicleDocumentForm.valid) {
       const formData = new FormData();
@@ -89,6 +124,7 @@ export class VehicleDocumentsComponent implements OnInit {
             classname: "success text-white",
             delay: 2000,
           });
+          this.submitted = true;
         },
         error: (err) => {
           this.toastService.show("unable to add document", {
