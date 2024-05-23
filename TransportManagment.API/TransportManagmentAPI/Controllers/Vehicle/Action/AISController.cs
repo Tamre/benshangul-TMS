@@ -11,12 +11,12 @@ namespace TransportManagmentAPI.Controllers.Vehicle.Action
     [Route("api/[controller]/[action]")]
     [ApiController]
     public class AISController : ControllerBase
-    {
+    { 
 
         private readonly AISService _aisService; 
 
 
-        public AISController (AISService aisService)
+        public AISController (AISService aisService) 
         {
             
            _aisService = aisService;

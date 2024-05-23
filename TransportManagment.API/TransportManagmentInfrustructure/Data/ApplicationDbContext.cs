@@ -76,6 +76,10 @@ namespace TransportManagmentInfrustructure.Data
         public DbSet<VehicleBan> VehicleBans { get; set; }
         public DbSet<VehicleReplacement> VehicleReplacements { get; set; }
         public DbSet<VehicleTransfer> VehicleTransfers { get; set; }
+        public DbSet<DataChange> DataChanges { get; set; }
+
+
+
         #endregion
 
 
@@ -234,7 +238,11 @@ namespace TransportManagmentInfrustructure.Data
             {
                 entity.HasIndex(t => new { t.DocumentTypeId, t.VehicleId }).IsUnique();
             });
-
+            modelBuilder.Entity<DataChange>(entity =>
+            {
+                entity.HasIndex(t => t.Id).IsUnique();
+                
+            });
 
             #region commonNames
             modelBuilder.Entity<RoleCategory>().ToTable("RoleCategories", schema: "UserMgt");

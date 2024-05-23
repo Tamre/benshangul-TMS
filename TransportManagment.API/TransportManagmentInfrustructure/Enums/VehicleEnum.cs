@@ -264,6 +264,21 @@ namespace TransportManagmentInfrustructure.Enums
         
         
         }
+        public enum DataChangeStatus
+        {
+            Submitted,
+            Pending,
+            Approved,
+            Rejected
+        }
+        public enum TableColumnName
+        {
+            ChassisNo,
+            EngineNumber,
+            ManufacturingYear
+          
+        }
+
 
     }
 }

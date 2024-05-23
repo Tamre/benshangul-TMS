@@ -39,6 +39,8 @@ namespace TransportManagmentImplementation.Datas
                 .ForMember(a => a.ApproverUser, e => e.MapFrom(mfg => mfg.Approver.FullName))
                 .ForMember(a => a.RequesterUser, e => e.MapFrom(mfg => mfg.CreatedBy.FullName));
         ;
+            CreateMap<DataChange, DataChange>()
+                 .ForMember(a => a.Status, e => e.MapFrom(mfg => mfg.Status.ToString()));
             #endregion
 
             #region vechile-config
