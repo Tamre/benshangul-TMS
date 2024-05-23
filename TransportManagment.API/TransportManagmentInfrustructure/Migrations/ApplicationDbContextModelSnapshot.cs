@@ -1199,6 +1199,9 @@ namespace TransportManagmentInfrustructure.Migrations
                         .HasMaxLength(10)
                         .HasColumnType("nvarchar(10)");
 
+                    b.Property<int>("OwnerGroup")
+                        .HasColumnType("int");
+
                     b.Property<string>("OwnerNumber")
                         .IsRequired()
                         .HasMaxLength(40)
@@ -1914,9 +1917,6 @@ namespace TransportManagmentInfrustructure.Migrations
 
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
-
-                    b.Property<int>("OwnerGroup")
-                        .HasColumnType("int");
 
                     b.Property<Guid?>("OwnerId")
                         .HasColumnType("uniqueidentifier");

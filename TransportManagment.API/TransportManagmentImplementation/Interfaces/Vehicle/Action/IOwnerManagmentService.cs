@@ -10,7 +10,7 @@ namespace TransportManagmentImplementation.Interfaces.Vehicle.Action
 {
     public interface IOwnerManagmentService
     {
-        public Task<List<OwnerListGetDto>> GetOwnerByVechicleId(Guid ownerId);
+        public Task<List<VehicleOwnerListGetDto>> GetOwnerByVechicleId(Guid ownerId);
         public Task<ResponseMessage> CreateOwner(OwnerListPostDto ownerListPostDto);
         public Task<ResponseMessage> AssignOwner(VehicleOwnerDto vehicleOwnerDto);
 

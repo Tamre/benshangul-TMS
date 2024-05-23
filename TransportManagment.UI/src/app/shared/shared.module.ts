@@ -40,6 +40,7 @@ import { CandidatesComponent } from './landing/job/candidates/candidates.compone
 import { BlogComponent } from './landing/job/blog/blog.component';
 import { JobcategoriesComponent } from './landing/job/jobcategories/jobcategories.component';
 import { JobFooterComponent } from './landing/job/job-footer/job-footer.component';
+import { SortByCrmPipe } from './sort-by.pipe';
 
 
 @NgModule({
@@ -71,7 +72,8 @@ import { JobFooterComponent } from './landing/job/job-footer/job-footer.componen
     JobcategoriesComponent,
     JobFooterComponent,
     ScrollspyDirective,
-    LandingScrollspyDirective
+    LandingScrollspyDirective,
+    SortByCrmPipe
   ],
   imports: [
     CommonModule,
@@ -83,7 +85,7 @@ import { JobFooterComponent } from './landing/job/job-footer/job-footer.componen
   ],
   schemas:[CUSTOM_ELEMENTS_SCHEMA],
   exports: [BreadcrumbsComponent, ClientLogoComponent, ServicesComponent, CollectionComponent, CtaComponent, DesignedComponent, PlanComponent, FaqsComponent, ReviewComponent, CounterComponent, WorkProcessComponent, TeamComponent, ContactComponent, FooterComponent, 
-    WalletComponent, MarketPlaceComponent, FeaturesComponent, CategoriesComponent, DiscoverComponent, TopCreatorComponent,   ScrollspyDirective,
+    WalletComponent, MarketPlaceComponent, FeaturesComponent, CategoriesComponent, DiscoverComponent, TopCreatorComponent,   ScrollspyDirective,SortByCrmPipe,
     LandingScrollspyDirective, ProcessComponent, FindjobsComponent, CandidatesComponent, BlogComponent, JobcategoriesComponent, JobFooterComponent]
 })
 export class SharedModule { }

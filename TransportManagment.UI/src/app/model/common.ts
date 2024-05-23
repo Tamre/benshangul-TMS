@@ -7,54 +7,6 @@ export interface reponseData {
 }
 
 
-export interface SelectList {
-
-    id: string;
-    name: string;
-    employeeId ?: string 
-    reason?:string
-    photo ?:string
-    commiteeStatus?:string
-}
-
-export interface BankSelectList{
-    id: string;
-    name: string;
-    bankDigit: number;
-}
-
-export interface ProgramBudgetYear {
-
-    Id: string;
-    Name: String;
-    FromYear: Number;
-    ToYear: Number;
-    Remark: String;
-
-}
-
-export interface BudgetYear {
-
-    Id: string;
-    ProgramBudgetYearId: string;
-    Year: Number;
-    FromDate: Date;
-    ToDate: Date;
-    Remark: String;
-
-}
-
-
-export interface BudgetYearwithoutId {
-
-    ProgramBudgetYearId: string;
-    Year: Number;
-    FromDate: Date;
-    ToDate: Date;
-    Remark: String;
-    CreatedBy: String
-
-}
 
 export interface GeneralCodeDto {
 
@@ -84,13 +36,6 @@ export interface IEvoCalanderDto {
     everyYear: boolean
 }
 
-export interface TerminatedEmployeeReplacmentDto
-{
-    activity:SelectList,
-    replaceEmployees:SelectList[],
-    terminatedEmployee?:SelectList
-
-}
 
 export interface MacAddressServiceDto {
     PCName: string
@@ -105,5 +50,20 @@ export interface ISettingDropDownsDto {
 export interface IActionDropDownDto {
     id : string 
     name: string
+}
+
+
+export interface PaginatedResponse<T> {
+    data: T[];
+    metaData: MetaData;
+}
+
+export interface MetaData {
+    currentPage: number;
+    totalPages: number;
+    pageSize: number;
+    totalCount: number;
+    hasPrevious: boolean;
+    hasNext: boolean;
 }
 

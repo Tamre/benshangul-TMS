@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { MetaData } from 'src/app/model/stock-management/plate-stock';
+import { MetaData } from 'src/app/model/common';
 
 @Injectable({
   providedIn: 'root'

@@ -1,25 +1,22 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { TmsDashboardsComponent } from './tms-dashboards/tms-dashboards.component';
 
-// Component pages
-import { DashboardComponent } from "./dashboards/dashboard/dashboard.component";
+
 
 
 const routes: Routes = [
     {
         path: "",
-        component: DashboardComponent
+        component: TmsDashboardsComponent
     },
-  
     {
       path: 'config', loadChildren: () => import('./configuration/configuration.module').then(m => m.configurationModule)
     },
     {
       path: 'v-management', loadChildren: () => import('./vehicle-management/vehicle-management.module').then(m => m.VehicleManagementModule)
-    },
-    {
-      path: 'vehicle', loadChildren: () => import('./vehicle/vehicle.module').then(m => m.vehicleModule)
-    },
+    }
+   
     
 ];
 
