@@ -5,7 +5,7 @@ import { ResponseMessage } from "src/app/model/ResponseMessage.Model";
 import { environment } from "src/environments/environment";
 
 import { TokenStorageService } from "../token-storage.service";
-import { GetVehicleDetailRequestDto, VehicleData } from "src/app/model/vehicle";
+import { GetVehicleDetailRequestDto, VehicleData, VehicleDetailDto } from "src/app/model/vehicle";
 import { IVehicleOwnerGetDto, VehicleOwnerPostDto } from "src/app/tms-pages/vehicle-management/action/vehicle-owners/IVehicleOwnersDto";
 import { PaginatedResponse } from "src/app/model/common";
 import { OwnerGetDto, OwnerPostDto } from "src/app/tms-pages/vehicle-management/action/owner/IownerDto";
@@ -31,9 +31,9 @@ export class VehicleService {
       formData,{headers:headers}
     );
   }
-  getVehicleList(formData: GetVehicleDetailRequestDto) {
+  getVehicleDetail(formData: GetVehicleDetailRequestDto) {
     var headers = this.headers
-    return this.http.post<VehicleData>(
+    return this.http.post<VehicleDetailDto>(
       `${this.baseUrl}/VehicleList/GetVehicleDetail`,
       formData,{headers:headers}
     ); 

@@ -61,7 +61,7 @@ namespace TransportManagmentImplementation.Services.Vehicle.Action
                 };
                 if (vechicleInspections.Any())
                 {
-                    annualInspection.PreviousReason = vechicleInspections.FirstOrDefault().IssueReason;
+                    annualInspection.PreviousReason = vechicleInspections.First().IssueReason;
                 }
 
 

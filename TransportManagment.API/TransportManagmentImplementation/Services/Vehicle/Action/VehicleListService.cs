@@ -268,6 +268,7 @@ namespace TransportManagmentImplementation.Services.Vehicle.Action
                                       {
                                           Id = x.VehicleId,
                                           RegistrationNumber = x.Vehicle.RegistrationNo,
+                                          RegistrationType = x.Vehicle.RegistrationType.ToString(),
                                           AssembledCountry = x.Vehicle.AssembledCountry.Name,
                                           BillOfLoading = x.Vehicle.BillOfLoading,
                                           ChassisMadeCountry = x.Vehicle.ChassisMade.Name,
@@ -289,7 +290,8 @@ namespace TransportManagmentImplementation.Services.Vehicle.Action
                                           TaxStatus = x.Vehicle.TaxStatus.ToString(),
                                           TransferStatus = x.Vehicle.TransferStatus.ToString(),
                                           TypeOfVehicle = x.Vehicle.TypeOfVehicle.ToString(),
-                                          VehicleCurrentStatus = x.Vehicle.VehicleCurrentStatus.ToString()
+                                          VehicleCurrentStatus = x.Vehicle.VehicleCurrentStatus.ToString(),
+                                          ServiceZone = x.Vehicle.ServiceZone.Name,
                                       })
                                   .FirstOrDefaultAsync();
 
@@ -308,6 +310,7 @@ namespace TransportManagmentImplementation.Services.Vehicle.Action
                                           Id = x.Id,
                                           RegistrationNumber = x.RegistrationNo,
                                           AssembledCountry = x.AssembledCountry.Name,
+                                          RegistrationType = x.RegistrationType.ToString(),
                                           BillOfLoading = x.BillOfLoading,
                                           ChassisMadeCountry = x.ChassisMade.Name,
                                           ChassisNo = x.ChassisNo,
@@ -328,7 +331,8 @@ namespace TransportManagmentImplementation.Services.Vehicle.Action
                                           TaxStatus = x.TaxStatus.ToString(),
                                           TransferStatus = x.TransferStatus.ToString(),
                                           TypeOfVehicle = x.TypeOfVehicle.ToString(),
-                                          VehicleCurrentStatus = x.VehicleCurrentStatus.ToString()
+                                          VehicleCurrentStatus = x.VehicleCurrentStatus.ToString(),
+                                          ServiceZone = x.ServiceZone.Name,
                                       })
                                   .FirstOrDefaultAsync();
 
@@ -347,6 +351,7 @@ namespace TransportManagmentImplementation.Services.Vehicle.Action
                                           Id = x.Id,
                                           RegistrationNumber = x.RegistrationNo,
                                           AssembledCountry = x.AssembledCountry.Name,
+                                          RegistrationType = x.RegistrationType.ToString(),
                                           BillOfLoading = x.BillOfLoading,
                                           ChassisMadeCountry = x.ChassisMade.Name,
                                           ChassisNo = x.ChassisNo,
@@ -367,7 +372,8 @@ namespace TransportManagmentImplementation.Services.Vehicle.Action
                                           TaxStatus = x.TaxStatus.ToString(),
                                           TransferStatus = x.TransferStatus.ToString(),
                                           TypeOfVehicle = x.TypeOfVehicle.ToString(),
-                                          VehicleCurrentStatus = x.VehicleCurrentStatus.ToString()
+                                          VehicleCurrentStatus = x.VehicleCurrentStatus.ToString(),
+                                          ServiceZone = x.ServiceZone.Name,
                                       })
                                   .FirstOrDefaultAsync();
 
@@ -385,6 +391,7 @@ namespace TransportManagmentImplementation.Services.Vehicle.Action
                                       {
                                           Id = x.Id,                                          
                                           RegistrationNumber = x.RegistrationNo,
+                                          RegistrationType = x.RegistrationType.ToString(),
                                           AssembledCountry = x.AssembledCountry.Name,
                                           BillOfLoading = x.BillOfLoading,
                                           ChassisMadeCountry = x.ChassisMade.Name,
@@ -406,7 +413,8 @@ namespace TransportManagmentImplementation.Services.Vehicle.Action
                                           TaxStatus = x.TaxStatus.ToString(),
                                           TransferStatus = x.TransferStatus.ToString(),
                                           TypeOfVehicle = x.TypeOfVehicle.ToString(),
-                                          VehicleCurrentStatus = x.VehicleCurrentStatus.ToString()
+                                          VehicleCurrentStatus = x.VehicleCurrentStatus.ToString(),
+                                          ServiceZone = x.ServiceZone.Name,
                                       })
                                   .FirstOrDefaultAsync();
 

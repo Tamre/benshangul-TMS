@@ -86,12 +86,27 @@ namespace TransportManagmentAPI.Controllers.Vehicle.Action
 
 
         [HttpGet]
-        [ProducesResponseType(typeof(VehicleDetailDto), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(InspectionDto), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> GetInspectionDetailByVehicleId(Guid vehicleId)
         {
             if (ModelState.IsValid)
             {
                 return Ok(await _inspectionService.GetInspectionByVehicleId(vehicleId));
+            }
+            else
+            {
+                return BadRequest();
+            }
+        }
+
+
+        [HttpGet]
+        [ProducesResponseType(typeof(InspectionDto), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> GetInspectionByModelId(int modelId)
+        {
+            if (ModelState.IsValid)
+            {
+                return Ok(await _inspectionService.GetInspectionByModelId(modelId));
             }
             else
             {

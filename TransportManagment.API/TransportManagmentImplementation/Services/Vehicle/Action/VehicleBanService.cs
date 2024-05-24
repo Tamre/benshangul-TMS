@@ -124,9 +124,6 @@ namespace TransportManagmentImplementation.Services.Vehicle.Action
                     };
                 }
 
-
-
-
                 vehicleban.LetterLiftDate = liftBanPost.LetterLiftDate;
                 vehicleban.LetterLiftNo = liftBanPost.LetterLiftNo;
                 vehicleban.LiftedById = liftBanPost.LiftedById;
