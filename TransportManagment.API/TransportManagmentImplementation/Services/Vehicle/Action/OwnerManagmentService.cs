@@ -92,7 +92,7 @@ namespace TransportManagmentImplementation.Services.Vehicle.Action
                     return new ResponseMessage { Success = false, Message = "Data not sent" };
 
                 var ownerExist = await _dbContext.OwnerLists
-                    .Where(x => (x.PhoneNumber == ownerListPostDto.PhoneNumber || x.SecondaryPhoneNumber == ownerListPostDto.PhoneNumber)||x.IdNumber == ownerListPostDto.IdNumber).Select(x=> new { 
+                    .Where(x => (x.PhoneNumber == ownerListPostDto.PhoneNumber)||x.IdNumber == ownerListPostDto.IdNumber).Select(x=> new { 
                     x.FirstName, x.LastName,x.MiddleName,x.PhoneNumber
                     }).FirstOrDefaultAsync();
 
@@ -122,45 +122,86 @@ namespace TransportManagmentImplementation.Services.Vehicle.Action
 
                 var ownerRegistrationNo = await _generalConfigService.GenerateVehicleNumber(VehicleSerialType.OWNER, ownerListPostDto.ZoneId, ownerListPostDto.CreatedById);
 
-
-
-                var owner = new OwnerList
+                if (ownerListPostDto.OwnerGroup == OwnerGroup.Private_Owner)
                 {
-                    OwnerNumber = ownerRegistrationNo,
-                    FirstName = ownerListPostDto.FirstName,
-                    MiddleName = ownerListPostDto.MiddleName,
-                    LastName = ownerListPostDto.LastName,
-                    AmharicFirstName = ownerListPostDto.AmharicFirstName,
-                    AmharicMiddleName = ownerListPostDto.AmharicMiddleName,
-                    AmharicLastName = ownerListPostDto.AmharicLastName,
-                    Gender = ownerListPostDto.Gender,
-                    ZoneId = ownerListPostDto.ZoneId,
-                    WoredaId = ownerListPostDto?.WoredaId,
-                    Town = ownerListPostDto.Town,
-                    HouseNo = ownerListPostDto?.HouseNo,
-                    PhoneNumber = ownerListPostDto.PhoneNumber,
-                    SecondaryPhoneNumber = ownerListPostDto?.SecondaryPhoneNumber,
-                    IdNumber = ownerListPostDto?.IdNumber,
-                    PoBox = ownerListPostDto?.PoBox,
-                    OwnerGroup = ownerListPostDto.OwnerGroup,
 
-                    Id = Guid.NewGuid(),
-                    CreatedById = ownerListPostDto.CreatedById,
-                    CreatedDate = DateTime.Now
-                };
+                    var owner = new OwnerList
+                    {
+                        OwnerNumber = ownerRegistrationNo,
+                        FirstName = ownerListPostDto.FirstName,
+                        MiddleName = ownerListPostDto.MiddleName,
+                        LastName = ownerListPostDto.LastName,
+                        AmharicFirstName = ownerListPostDto.AmharicFirstName,
+                        AmharicMiddleName = ownerListPostDto.AmharicMiddleName,
+                        AmharicLastName = ownerListPostDto.AmharicLastName,
+                        Gender = ownerListPostDto.Gender,
+                        ZoneId = ownerListPostDto.ZoneId,
+                        WoredaId = ownerListPostDto?.WoredaId,
+                        Town = ownerListPostDto.Town,
+                        HouseNo = ownerListPostDto?.HouseNo,
+                        PhoneNumber = ownerListPostDto.PhoneNumber,
+                        SecondaryPhoneNumber = ownerListPostDto?.SecondaryPhoneNumber,
+                        IdNumber = ownerListPostDto?.IdNumber,
+                        PoBox = ownerListPostDto?.PoBox,
+                        OwnerGroup = ownerListPostDto.OwnerGroup,
 
+                        Id = Guid.NewGuid(),
+                        CreatedById = ownerListPostDto.CreatedById,
+                        CreatedDate = DateTime.Now
+                    };
 
-                await _dbContext.OwnerLists.AddAsync(owner);
-                await _dbContext.SaveChangesAsync();
-
-
-
-                return new ResponseMessage
+                    await _dbContext.OwnerLists.AddAsync(owner);
+                    await _dbContext.SaveChangesAsync();
+                    return new ResponseMessage
+                    {
+                        Success = true,
+                        Message = $"Owner Added Successfully With Owner Numeber {owner.OwnerNumber}",
+                        Data = owner.OwnerNumber
+                    };
+                }
+                else
                 {
-                    Success = true,
-                    Message = $"Owner Added Successfully With Owner Numeber {owner.OwnerNumber}",
-                    Data = owner.OwnerNumber
-                };
+                    var owner = new OwnerList
+                    {
+                        OwnerNumber = ownerRegistrationNo,
+                        FirstName = ownerListPostDto.FirstName,
+                      
+                        AmharicFirstName = ownerListPostDto.AmharicFirstName,                       
+                        Gender = Gender.Male,
+
+                        ZoneId = ownerListPostDto.ZoneId,
+                        WoredaId = ownerListPostDto?.WoredaId,
+                        Town = ownerListPostDto?.Town,
+                        HouseNo = ownerListPostDto?.HouseNo,
+                        PhoneNumber = ownerListPostDto.PhoneNumber,
+                        SecondaryPhoneNumber = ownerListPostDto?.SecondaryPhoneNumber,
+                        IdNumber = ownerListPostDto?.IdNumber,
+                        PoBox = ownerListPostDto?.PoBox,
+                        OwnerGroup = ownerListPostDto.OwnerGroup,
+                        OrganizationType= ownerListPostDto.OrganizationType,
+                        Id = Guid.NewGuid(),
+                        CreatedById = ownerListPostDto.CreatedById,
+                        CreatedDate = DateTime.Now
+                    };
+
+                    await _dbContext.OwnerLists.AddAsync(owner);
+                    await _dbContext.SaveChangesAsync();
+
+                    return new ResponseMessage
+                    {
+                        Success = true,
+                        Message = $"Owner Added Successfully With Owner Numeber {owner.OwnerNumber}",
+                        Data = owner.OwnerNumber
+                    };
+                }
+
+
+                  
+                
+
+
+
+               
 
             }
             catch (Exception ex)

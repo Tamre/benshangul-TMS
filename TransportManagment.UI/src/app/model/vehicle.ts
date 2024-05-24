@@ -78,4 +78,6 @@ export interface VehicleDetailDto
     vehicleCurrentStatus: string;
     transferStatus: string;
     serviceZone: string;
+
+    plateNumber?:string
 }

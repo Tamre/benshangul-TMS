@@ -15,7 +15,7 @@
             <ul ngbNav #customNav="ngbNav" [activeId]="activeIdd" class="nav nav-pills custom-nav nav-justified"
                 role="tablist">
                 <li [ngbNavItem]="1" class="nav-item">
-                    <a ngbNavLink class="nav-link fs-15 p-3" [class.disabled]="registerdVehicle.vehicleId==''">
+                    <a ngbNavLink class="nav-link fs-15 p-3" [class.disabled]="registerdVehicle.vehicleId!=''||isRegisterdFinished">
                         <i
                             class=" ri-truck-line  fs-16 p-2 bg-primary-subtle text-primary rounded-circle align-middle mx-2"></i>
                         Vehicle Information
@@ -391,7 +391,7 @@
                     </ng-template>
                 </li>
                 <li [ngbNavItem]="2" class="nav-item">
-                    <a ngbNavLink  class="nav-link fs-15 p-3" [class.disabled]=" registerdVehicle.vehicleId==''||isRegisterdFinished" >
+                    <a ngbNavLink  class="nav-link fs-15 p-3" [class.disabled]="registerdVehicle.vehicleId==''||isRegisterdFinished" >
                         <i
                             class=" ri-bank-card-line fs-16 p-2 bg-primary-subtle text-primary rounded-circle align-middle mx-2"></i>
                         Vehicle Docuemnts
@@ -424,7 +424,7 @@
                     <ng-template ngbNavContent>
 
                         <div class="card border" *ngIf="registerdVehicle.vehicleId!=''">
-                            <app-vehicle-owners [vehicleId]="registerdVehicle.vehicleId"> </app-vehicle-owners>
+                            <app-vehicle-owners [vehicleId]="registerdVehicle.vehicleId" callFrom="register"> </app-vehicle-owners>
 
                         </div>
 
