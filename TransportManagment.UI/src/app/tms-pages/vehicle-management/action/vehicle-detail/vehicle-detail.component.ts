@@ -17,7 +17,7 @@ export class VehicleDetailComponent implements OnInit{
     }
     
     ngOnInit(): void {
-     
+     console.log('vehicle detail',this.vehicleDetail)
     }
 
 }

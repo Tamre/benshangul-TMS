@@ -1,6 +1,6 @@
 <!-- <app-breadcrumbs title="VRMS" [breadcrumbItems]="breadCrumbItems"></app-breadcrumbs> -->
 
-<div class="card">
+<div class="card" *ngIf="vehicleDetail">
 
     <div class="card-header align-items-center d-flex">
         <h4 class="card-title mb-0 flex-grow-1">Vehicle Detail of {{vehicleDetail.registrationNumber}}</h4>

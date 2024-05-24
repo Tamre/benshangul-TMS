@@ -242,6 +242,9 @@ export class VehicleListComponent implements OnInit {
         if (data.id) {
           this.isvehicleFound = true;
           this.vehicleDetail = data;
+
+          this.vehicleId = data.id;
+          this.vehicleRegistrationNo = data.registrationNumber;
           this.toastService.show("found a vehicle", {
             classname: "success text-white",
             delay: 2000,

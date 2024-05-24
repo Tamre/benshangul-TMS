@@ -7,7 +7,7 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal"
             (click)="closeModal()"></button>
     </div>
-    <form (ngSubmit)="onSubmit()" [formGroup]="vehicleOwnerForm" class="tablelist-form" autocomplete="off">
+    <form (ngSubmit)="onSubmit()" [formGroup]="vehicleOwnerForm" class="tablelist-form was-validated" autocomplete="off">
         <div class="modal-body">
             <input type="hidden" id="id-field" />
             <div class="row g-3">

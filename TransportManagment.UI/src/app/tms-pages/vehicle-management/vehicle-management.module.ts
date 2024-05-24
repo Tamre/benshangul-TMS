@@ -88,9 +88,7 @@ import { TechnicalInspectionComponent } from './action/inspection/technical-insp
     VehicleLookupsComponent,
     VehicleOwnersComponent,    
     VehicleDocumentsComponent,
-    AssignOwnersComponent,
-    
-  
+    AssignOwnersComponent, 
     VehicleDetailComponent,
     InspectionComponent,
     FieldInspectionComponent,
