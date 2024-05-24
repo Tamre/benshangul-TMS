@@ -383,8 +383,7 @@ namespace TransportManagmentImplementation.Services.Vehicle.Action
                                        .Where(x => x.RegistrationNo == vehicleGet.Value && x.RegistrationType == vehicleGet.RegistrationType)
                                       .Select(x => new VehicleDetailDto
                                       {
-                                          Id = x.Id,
-                                          
+                                          Id = x.Id,                                          
                                           RegistrationNumber = x.RegistrationNo,
                                           AssembledCountry = x.AssembledCountry.Name,
                                           BillOfLoading = x.BillOfLoading,

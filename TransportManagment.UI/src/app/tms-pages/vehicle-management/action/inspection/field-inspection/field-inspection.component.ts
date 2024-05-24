@@ -60,6 +60,8 @@ export class FieldInspectionComponent implements OnInit {
 
   ngOnInit(): void {
 
+    console.log('field',this.vehicleId)
+
     this.currentUser = this.tokenStorageService.getCurrentUser();
     this.fieldInspectionForm = this.formBuilder.group({
       vehicleId: [""],
@@ -117,6 +119,6 @@ export class FieldInspectionComponent implements OnInit {
     });
   }
   openModal(content: any) {
-    this.modalService.open(content, { size: "lg", centered: true });
+    this.modalService.open(content, { size: "xl", centered: true,backdrop: "static"});
   }
 }

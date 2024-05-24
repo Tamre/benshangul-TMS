@@ -217,35 +217,40 @@ namespace TransportManagmentImplementation.Services.Vehicle.Action
         public async Task<InspectionDto> GetInspectionByVehicleId(Guid vehicleId)
         {
 
-            var InspectionDetails = new InspectionDto();
-            var FieldInspections = await _dbContext.FieldInspections.Where(u => u.VehicleId == vehicleId ).ToListAsync();
+            var inspectionDetails = new InspectionDto();
 
+            // Fetch field inspections for the vehicle
+            var fieldInspections = await _dbContext.FieldInspections
+                                                   .Where(u => u.VehicleId == vehicleId)
+                                                   .ToListAsync();
 
-            var FieldInspectionDetailResponseDtos = _mapper.Map<List<FieldInspectionGetDto>>(FieldInspections);
+            // Map field inspections to DTOs
+            var fieldInspectionDetailResponseDtos = _mapper.Map<List<FieldInspectionGetDto>>(fieldInspections);
 
-            InspectionDetails.FieldInspection = new List<FieldInspectionGetDto>();
-            InspectionDetails.TechnicalInspection = new List<TechnicalInspectionGetDto>();
-
-            InspectionDetails.FieldInspection = FieldInspectionDetailResponseDtos;
-
-            foreach ( var fieldInspection in FieldInspections)
+            // Iterate over each field inspection DTO
+            foreach (var fieldInspectionDto in fieldInspectionDetailResponseDtos)
             {
-               
+                // Find the corresponding field inspection entity
+                var fieldInspectionEntity = fieldInspections.FirstOrDefault(fi => fi.Id == fieldInspectionDto.Id);
+                if (fieldInspectionEntity != null)
+                {
+                    // Fetch technical inspections for the current field inspection
+                    var technicalInspections = await _dbContext.TechnicalInspections
+                                                               .Where(u => u.FieldInspectionId == fieldInspectionEntity.Id)
+                                                               .FirstOrDefaultAsync();
 
-                    var tecnicalInspection = await _dbContext.TechnicalInspections.Where(u => u.FieldInspectionId == fieldInspection.Id).ToListAsync();
-                    
-                    var tecnicalInspectionDetailResponseDtos = _mapper.Map<List<TechnicalInspectionGetDto>>(tecnicalInspection);
+                    // Map technical inspections to DTOs
+                    var technicalInspectionDetailResponseDtos = _mapper.Map<TechnicalInspectionGetDto>(technicalInspections);
 
-
-                    InspectionDetails.TechnicalInspection.AddRange(tecnicalInspectionDetailResponseDtos);
-
-                                  
-
-
+                    // Assign technical inspections to the current field inspection DTO
+                    fieldInspectionDto.TechnicalInspection = technicalInspectionDetailResponseDtos;
+                }
             }
 
+            // Set the field inspections in the inspection details DTO
+            inspectionDetails.FieldInspection = fieldInspectionDetailResponseDtos;
 
-            return InspectionDetails;
+            return inspectionDetails;
         }
 
         public async Task<ResponseMessage> UpdateFieldInspection(FieldInspectionGetDto inspection)

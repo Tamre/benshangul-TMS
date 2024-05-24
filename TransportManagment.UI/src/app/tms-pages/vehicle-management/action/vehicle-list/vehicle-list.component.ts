@@ -250,7 +250,7 @@ export class VehicleListComponent implements OnInit {
     var value = this.searchValueForm.value;
 
     this.vehicleService.getVehicleList(value).subscribe({
-      next: (res) => {
+      next: (data) => {
         if (data.chassisNo) {
           this.isvehicleFound = true;
          
@@ -280,12 +280,13 @@ export class VehicleListComponent implements OnInit {
             transferStatus: data.transferStatus,
             serviceZoneId: "",
             createdById: this.currentUser?.userId,
-            lastActionTaken: data.lastActionTaken,
+            lastActionTaken: "",
           });
 
-          this.vehicleRegistrationNo = res.registrationNumber!;
-          this.vehicleId = res.id!;
+          this.vehicleRegistrationNo = data.registrationNumber!;
+          this.vehicleId = data.id!;
 
+          console.log("search", this.vehicleId);
           this.toastService.show("found a vehicle", {
             classname: "success text-white",
             delay: 2000,

@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -6,6 +6,10 @@ import { CommonModule } from '@angular/common';
   templateUrl: './inspection.component.html',
   styleUrl: './inspection.component.scss'
 })
-export class InspectionComponent {
+export class InspectionComponent implements OnInit {
+  ngOnInit(): void {
+    console.log('inspection',this.vehicleId)
+
+  }
   @Input() vehicleId!: string;
 }
