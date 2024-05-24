@@ -9,11 +9,12 @@ import {
   VehicleOwnerPostDto,
   IOwnerListDropdownDto,
 } from "../IVehicleOwnersDto";
-import { VehicleService } from "src/app/core/services/vehicle.service";
-import { VehicleDropdownService } from "src/app/core/services/vehicle-dropdown.service";
+
 import { IActionDropDownDto, ISettingDropDownsDto } from "src/app/model/common";
 import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
 import { ToastService } from "src/app/account/login/toast-service";
+import { VehicleDropdownService } from "src/app/core/services/Vehicle-services/vehicle-drop-down.service";
+import { VehicleService } from "src/app/core/services/Vehicle-services/vehicle.service";
 
 @Component({
   selector: "app-assign-owners",
@@ -106,7 +107,7 @@ export class AssignOwnersComponent implements OnInit {
   getOwnerLists(){
     var ownerGroup = this.vehicleOwnerForm.value.ownerGroup;
     this.vehicleDropdownService.getOwnerListDropdown(Number(ownerGroup)).subscribe({
-      next:(res)=>{
+      next:(res:any)=>{
         this.ownersLists = res;
 
         console.log(this.ownersLists)

@@ -1744,9 +1744,6 @@ namespace TransportManagmentInfrustructure.Migrations
                     b.Property<int>("DocumentTypeId")
                         .HasColumnType("int");
 
-                    b.Property<int>("ForVehicleDocument")
-                        .HasColumnType("int");
-
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
 
@@ -1898,7 +1895,7 @@ namespace TransportManagmentInfrustructure.Migrations
 
                     b.HasIndex("ServiceZoneId");
 
-                    b.ToTable("VehicleLists");
+                    b.ToTable("VehicleLists", "VRMS");
                 });
 
             modelBuilder.Entity("TransportManagmentInfrustructure.Model.Vehicle.Action.VehicleOwner", b =>
@@ -2650,7 +2647,7 @@ namespace TransportManagmentInfrustructure.Migrations
 
                     b.HasIndex("CreatedById");
 
-                    b.ToTable("ValuationReasons");
+                    b.ToTable("ValuationReasons", "VRMS");
                 });
 
             modelBuilder.Entity("TransportManagmentInfrustructure.Model.Vehicle.Configuration.VehicleBodyType", b =>

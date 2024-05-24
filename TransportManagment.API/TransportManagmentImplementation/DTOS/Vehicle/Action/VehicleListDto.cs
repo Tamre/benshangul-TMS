@@ -79,7 +79,8 @@ namespace TransportManagmentImplementation.DTOS.Vehicle.Action
     {
         public Guid Id { get; set; }
 
-        public string RegistrationNumber { get; set; }
+        public string RegistrationNumber { get; set; } = null!;
+        public string RegistrationType { get; set; } = null!;
         public string Model { get; set; } = null!;
         public int ModelId { get; set; }
         public string TaxStatus { get; set; } = null!;
@@ -105,6 +106,7 @@ namespace TransportManagmentImplementation.DTOS.Vehicle.Action
         public string TypeOfVehicle { get; set; } = null!;
         public string VehicleCurrentStatus { get; set; } = null!;
         public string TransferStatus { get; set; } = null!;
+        public string ServiceZone { get; set; } = null!;
 
     }
 
@@ -126,11 +128,17 @@ namespace TransportManagmentImplementation.DTOS.Vehicle.Action
         public IFormFile Document { get; set; } = null!;
         public int DocumentTypeId { get; set; }
 
-        public ForVehicleDocument ForVehicleDocument { get; set; }
+        //public ForVehicleDocument ForVehicleDocument { get; set; }
 
     }
 
+    public record VehicleDocumetGetDto
+    {
+        public Guid VehicleId { get; set; }
+        public string DocumentName { get; set; } = null!;
+        public string DocumentPath { get; set; } = null!;
 
+    }
     public record VehicleStatusActionDto
     {
         public Guid VechileId { get; set; }

@@ -1,10 +1,10 @@
 import { Injectable } from "@angular/core";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
-import { User } from "src/app/store/Authentication/auth.models";
+
 import { ResponseMessage } from "src/app/model/ResponseMessage.Model";
 import { environment } from "src/environments/environment";
 import { Observable } from "rxjs";
-import { DeviceGetDto, DeviceRequestDto } from "src/app/model/user";
+import { DeviceGetDto, DeviceRequestDto, User } from "src/app/model/user";
 
 @Injectable({ providedIn: "root" })
 export class UserProfileService {
@@ -14,9 +14,7 @@ export class UserProfileService {
   /***
    * Get All User
    */
-  getAll() {
-    return this.http.get<User[]>(`api/users`);
-  }
+  
 
   login(formData: User) {
     

@@ -107,5 +107,13 @@ namespace TransportManagmentAPI.Controllers.Vehicle.Action
                 return BadRequest();
             }
         }
+
+        [HttpGet]
+        [ProducesResponseType(typeof(List<VehicleDocumetGetDto>), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> GetVehicleDocuments(Guid vehicleId )
+        {
+            var docs = await _vehicleListService.GetVehicleDocuments(vehicleId);
+            return Ok(docs);
+        }
     }
 }

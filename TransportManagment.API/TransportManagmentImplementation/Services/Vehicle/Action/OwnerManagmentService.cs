@@ -88,20 +88,36 @@ namespace TransportManagmentImplementation.Services.Vehicle.Action
             try
             {
 
+                if (ownerListPostDto == null)
+                    return new ResponseMessage { Success = false, Message = "Data not sent" };
+
                 var ownerExist = await _dbContext.OwnerLists
-                    .Where(x => x.PhoneNumber == ownerListPostDto.PhoneNumber || x.SecondaryPhoneNumber == ownerListPostDto.PhoneNumber).Select(x=> new { 
-                    x.FirstName, x.LastName,x.MiddleName
+                    .Where(x => (x.PhoneNumber == ownerListPostDto.PhoneNumber || x.SecondaryPhoneNumber == ownerListPostDto.PhoneNumber)||x.IdNumber == ownerListPostDto.IdNumber).Select(x=> new { 
+                    x.FirstName, x.LastName,x.MiddleName,x.PhoneNumber
                     }).FirstOrDefaultAsync();
 
 
                 if (ownerExist != null)
                 {
-
-                    return new ResponseMessage
+                    if (ownerExist.PhoneNumber == ownerListPostDto.PhoneNumber)
                     {
-                        Success = false,
-                        Message = $"Owner Phonenumber is already assigned for the owner {ownerExist.FirstName} {ownerExist.MiddleName} {ownerExist.LastName}"
-                    };
+                        return new ResponseMessage
+                        {
+                            Success = false,
+                            Message = $"Owner Phonenumber is already assigned for the owner {ownerExist.FirstName} {ownerExist.MiddleName} {ownerExist.LastName}"
+                        };
+                    }
+                    else
+                    {
+                        return new ResponseMessage
+                        {
+                            Success = false,
+                            Message = $"Owner Id Number is already assigned for the owner {ownerExist.FirstName} {ownerExist.MiddleName} {ownerExist.LastName}"
+                        };
+
+                    }
+
+                  
                 }
 
                 var ownerRegistrationNo = await _generalConfigService.GenerateVehicleNumber(VehicleSerialType.OWNER, ownerListPostDto.ServiceZoneId, ownerListPostDto.CreatedById);
@@ -120,9 +136,9 @@ namespace TransportManagmentImplementation.Services.Vehicle.Action
                     Gender = ownerListPostDto.Gender,
                     ZoneId = ownerListPostDto.ZoneId,
                     WoredaId = ownerListPostDto?.WoredaId,
-                    Town = ownerListPostDto?.Town,
+                    Town = ownerListPostDto.Town,
                     HouseNo = ownerListPostDto?.HouseNo,
-                    PhoneNumber = ownerListPostDto?.PhoneNumber,
+                    PhoneNumber = ownerListPostDto.PhoneNumber,
                     SecondaryPhoneNumber = ownerListPostDto?.SecondaryPhoneNumber,
                     IdNumber = ownerListPostDto.IdNumber,
                     PoBox = ownerListPostDto?.PoBox,

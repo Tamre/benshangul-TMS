@@ -2,14 +2,13 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AbstractControl, UntypedFormBuilder, UntypedFormGroup, ValidationErrors, Validators } from '@angular/forms';
 import { UserView } from 'src/app/model/user';
-import { Store } from '@ngrx/store';
-import { RootReducerState } from 'src/app/store';
+
+
 import { TranslateService } from '@ngx-translate/core';
 import { PaginationService } from 'src/app/core/services/pagination.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { TokenStorageService } from 'src/app/core/services/token-storage.service';
-import { fetchCrmContactData } from 'src/app/store/CRM/crm_action';
-import { selectCRMLoading } from 'src/app/store/CRM/crm_selector';
+
 import { cloneDeep } from 'lodash';
 import { successToast } from 'src/app/core/services/toast.service';
 import { PlateTypePostDto } from 'src/app/model/vehicle-configuration/plate-type';
@@ -44,9 +43,11 @@ export class PlateTypeComponent {
     private modalService: NgbModal,
     public service: PaginationService,
     public translate: TranslateService,
-    private store: Store<{ data: RootReducerState }>,
-    public vehiclecongigService: VehicleConfigService
-  ) { }
+
+   
+    public vehiclecongigService:VehicleConfigService
+  ) {}
+
   ngOnInit(): void {
     this.currentUser = this.tokenStorageService.getCurrentUser();
     this.refreshData()
@@ -63,16 +64,9 @@ export class PlateTypeComponent {
       isActive: [true]
     });
 
-    /**
-     * fetches data
-     */
-    this.store.dispatch(fetchCrmContactData());
-    this.store.select(selectCRMLoading).subscribe((data) => {
-      if (data == false) {
-        document.getElementById("elmLoader")?.classList.add("d-none");
-      }
-    });
-  }
+    
+     }
+  
 
   openModal(content: any) {
     this.submitted = false;

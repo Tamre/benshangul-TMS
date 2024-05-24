@@ -45,7 +45,15 @@ import { VehicleConfigComponent } from './configuratuion/vehicle-config/vehicle-
 
 import { VehicleAdd } from './action/vehicle-add/vehicle-add.component';
 import { VehicleListComponent } from './action/vehicle-list/vehicle-list.component';
-import { OwnerComponent } from './action/owner/owner.component';
+
+import { VehicleOwnersComponent } from './action/vehicle-owners/vehicle-owners.component';
+import { VehicleDocumentsComponent } from './action/vehicle-documents/vehicle-documents.component';
+import { AssignOwnersComponent } from './action/vehicle-owners/assign-owners/assign-owners.component';
+import { VehicleDetailComponent } from './action/vehicle-detail/vehicle-detail.component';
+import { InspectionComponent } from './action/inspection/inspection.component';
+import { FieldInspectionComponent } from './action/inspection/field-inspection/field-inspection.component';
+import { TechnicalInspectionComponent } from './action/inspection/technical-inspection/technical-inspection.component';
+
 
 
 
@@ -79,8 +87,16 @@ import { OwnerComponent } from './action/owner/owner.component';
     AisStockComponent,
     VehicleAdd,
     VehicleListComponent,
-    OwnerComponent
-  
+
+    VehicleLookupsComponent,
+    VehicleOwnersComponent,    
+    VehicleDocumentsComponent,
+    AssignOwnersComponent, 
+    VehicleDetailComponent,
+    InspectionComponent,
+    FieldInspectionComponent,
+    TechnicalInspectionComponent
+
   ],
   imports: [
     CommonModule,

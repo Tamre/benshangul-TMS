@@ -1,15 +1,17 @@
 import { Injectable } from "@angular/core";
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import { User } from "src/app/store/Authentication/auth.models";
+
 import { ResponseMessage } from "src/app/model/ResponseMessage.Model";
 import { environment } from "src/environments/environment";
 
 import { TokenStorageService } from "../token-storage.service";
-import { GetVehicleDetailRequestDto, VehicleData } from "src/app/model/vehicle";
+import { GetVehicleDetailRequestDto, VehicleData, VehicleDetailDto } from "src/app/model/vehicle";
 import { IVehicleOwnerGetDto, VehicleOwnerPostDto } from "src/app/tms-pages/vehicle-management/action/vehicle-owners/IVehicleOwnersDto";
 import { PaginatedResponse } from "src/app/model/common";
-import { OwnerGetDto, OwnerPostDto } from "src/app/model/vehicle/owner";
-//import { OwnerGetDto, OwnerPostDto } from "src/app/tms-pages/vehicle-management/action/owner/IownerDto";
+
+import { OwnerGetDto, OwnerPostDto } from "src/app/tms-pages/vehicle-management/action/owner/IownerDto";
+import { IVehicleDocumentGetDto } from "src/app/tms-pages/vehicle-management/action/vehicle-documents/IVehicleDocuemntsDto";
+
 @Injectable({ providedIn: "root" })
 
 export class VehicleService {
@@ -31,9 +33,9 @@ export class VehicleService {
       formData,{headers:headers}
     );
   }
-  getVehicleList(formData: GetVehicleDetailRequestDto) {
+  getVehicleDetail(formData: GetVehicleDetailRequestDto) {
     var headers = this.headers
-    return this.http.post<VehicleData>(
+    return this.http.post<VehicleDetailDto>(
       `${this.baseUrl}/VehicleList/GetVehicleDetail`,
       formData,{headers:headers}
     ); 
@@ -48,6 +50,16 @@ export class VehicleService {
       formData,{headers:headers}
     );
   }
+
+  getVehicleDocuemnts(vehicleId : string) {
+    var headers = this.headers
+    return this.http.get<IVehicleDocumentGetDto[]>(
+      `${this.baseUrl}/VehicleList/GetVehicleDocuments?vehicleId=${vehicleId}`,
+      {headers:headers}
+    ); 
+  }
+
+  
 
 
   //vech owners 

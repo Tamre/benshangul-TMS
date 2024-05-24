@@ -6,7 +6,7 @@ import {
   Validators,
 } from "@angular/forms";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
-import { Store } from "@ngrx/store";
+
 import { TranslateService } from "@ngx-translate/core";
 import { cloneDeep } from "lodash";
 import { ngxCsv } from "ngx-csv";
@@ -17,9 +17,7 @@ import { TokenStorageService } from "src/app/core/services/token-storage.service
 import { GlobalComponent } from "src/app/global-component";
 import { Country } from "src/app/model/address/country";
 import { DeviceGetDto, UserView } from "src/app/model/user";
-import { RootReducerState } from "src/app/store";
-import { fetchCrmContactData } from "src/app/store/CRM/crm_action";
-import { selectCRMLoading } from "src/app/store/CRM/crm_selector";
+
 import { UserProfileService } from "src/app/core/services/user.service";
 import { ToastService } from "src/app/account/login/toast-service";
 
@@ -52,7 +50,6 @@ export class DeviceListComponent implements OnInit {
     private formBuilder: UntypedFormBuilder,
     private toastService: ToastService,
 
-    private store: Store<{ data: RootReducerState }>,
     private datePipe: DatePipe,
     private addressService: AddressService,
     private tokenStorageService: TokenStorageService,

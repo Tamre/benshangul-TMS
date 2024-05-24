@@ -2,14 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { UserView } from 'src/app/model/user';
-import { RootReducerState } from 'src/app/store';
-import { Store } from '@ngrx/store';
+
+
 import { TranslateService } from '@ngx-translate/core';
 import { PaginationService } from 'src/app/core/services/pagination.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { TokenStorageService } from 'src/app/core/services/token-storage.service';
-import { fetchCrmContactData } from 'src/app/store/CRM/crm_action';
-import { selectCRMLoading } from 'src/app/store/CRM/crm_selector';
+
 import { cloneDeep } from 'lodash';
 import { successToast } from 'src/app/core/services/toast.service';
 import { ResponseMessage } from 'src/app/model/ResponseMessage.Model';
@@ -60,7 +59,7 @@ export class VehicleModelComponent implements OnInit {
     private modalService: NgbModal,
     public service: PaginationService,
     public translate: TranslateService,
-    private store: Store<{ data: RootReducerState }>,
+
     public vehicleConfigService: VehicleConfigService
   ) { }
   ngOnInit(): void {
@@ -80,15 +79,7 @@ export class VehicleModelComponent implements OnInit {
       createdById: [this.currentUser?.userId, [Validators.required]],
       isActive: [true]
     });
-    /**
-     * fetches data
-     */
-    this.store.dispatch(fetchCrmContactData());
-    this.store.select(selectCRMLoading).subscribe((data) => {
-      if (data == false) {
-        document.getElementById("elmLoader")?.classList.add("d-none");
-      }
-    });
+
   }
   gethorsePowerMeasureName(code: string): string {
     const horsePowerMeasure = this.horsePowerMeasureDropDownItem.find(item => item.code === code);

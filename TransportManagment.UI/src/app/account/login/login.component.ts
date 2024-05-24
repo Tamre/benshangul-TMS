@@ -8,12 +8,12 @@ import { ActivatedRoute, Router } from "@angular/router";
 
 // Login Auth
 import { environment } from "../../../environments/environment";
-import { AuthenticationService } from "../../core/services/auth.service";
+
 
 import { first } from "rxjs/operators";
 import { ToastService } from "./toast-service";
-import { Store } from "@ngrx/store";
-import { login } from "src/app/store/Authentication/authentication.actions";
+
+
 import { UserProfileService } from "src/app/core/services/user.service";
 import { TokenStorageService } from "src/app/core/services/token-storage.service";
 import { caesarCipherEncrypt } from "src/app/core/helpers/cipher";
@@ -50,18 +50,16 @@ export class LoginComponent implements OnInit {
 
   constructor(
     private formBuilder: UntypedFormBuilder,
-    private authenticationService: AuthenticationService,
+   
     private router: Router,
     private userService: UserProfileService,
     private route: ActivatedRoute,
     public toastService: ToastService,
     private tokenStorageService: TokenStorageService,
-    private store: Store
+
   ) {
     // redirect to home if already logged in
-    if (this.authenticationService.currentUserValue) {
-      this.router.navigate(["/"]);
-    }
+
   }
 
   ngOnInit(): void {

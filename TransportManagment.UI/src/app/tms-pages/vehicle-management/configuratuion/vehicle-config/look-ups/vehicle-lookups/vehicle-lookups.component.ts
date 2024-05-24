@@ -6,10 +6,9 @@ import { TokenStorageService } from 'src/app/core/services/token-storage.service
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { PaginationService } from 'src/app/core/services/pagination.service';
 import { TranslateService } from '@ngx-translate/core';
-import { RootReducerState } from 'src/app/store';
-import { Store } from '@ngrx/store';
-import { fetchCrmContactData } from 'src/app/store/CRM/crm_action';
-import { selectCRMLoading } from 'src/app/store/CRM/crm_selector';
+
+
+
 import { cloneDeep } from 'lodash';
 import { VehicleLookupPostDto } from 'src/app/model/vehicle-configuration/vehicle-lookup';
 import { successToast } from 'src/app/core/services/toast.service';
@@ -60,7 +59,7 @@ export class VehicleLookupsComponent {
     private modalService: NgbModal,
     public service: PaginationService,
     public translate: TranslateService,
-    private store: Store<{ data: RootReducerState }>,
+
     public vehiclecongigService:VehicleConfigService
   ) {
 
@@ -80,15 +79,7 @@ export class VehicleLookupsComponent {
       createdById: [this.currentUser?.userId, [Validators.required]],
       isActive:[true]
     });
-    /**
-     * fetches data
-     */
-    this.store.dispatch(fetchCrmContactData());
-    this.store.select(selectCRMLoading).subscribe((data) => {
-      if (data == false) {
-        document.getElementById("elmLoader")?.classList.add("d-none");
-      }
-    });
+
   }
   changePage() {
     this.vehLookups = this.service.changePage(this.allVehLookups);

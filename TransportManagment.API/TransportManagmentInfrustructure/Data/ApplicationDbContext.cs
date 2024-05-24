@@ -289,6 +289,8 @@ namespace TransportManagmentInfrustructure.Data
             modelBuilder.Entity <VehicleReplacement>().ToTable("VehicleReplacements", schema: "VRMS");
             modelBuilder.Entity <VehicleTransfer>().ToTable("VehicleTransfers", schema: "VRMS");
             modelBuilder.Entity <VehicleDocument>().ToTable("VehicleDocuments", schema: "VRMS");
+            modelBuilder.Entity <ValuationReason>().ToTable("ValuationReasons", schema: "VRMS");
+            modelBuilder.Entity <VehicleList>().ToTable("VehicleLists", schema: "VRMS");
 
 
             #endregion

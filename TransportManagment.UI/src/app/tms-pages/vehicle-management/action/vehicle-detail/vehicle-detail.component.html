@@ -1,0 +1,50 @@
+<!-- <app-breadcrumbs title="VRMS" [breadcrumbItems]="breadCrumbItems"></app-breadcrumbs> -->
+
+<div class="card" *ngIf="vehicleDetail">
+
+    <div class="card-header align-items-center d-flex">
+        <h4 class="card-title mb-0 flex-grow-1">Vehicle Detail of {{vehicleDetail.registrationNumber}}</h4>
+        <span>Current Zone {{vehicleDetail.serviceZone}}</span>
+    </div>
+
+    <div class="card-body checkout-tab">
+        <div class="row">
+            <div class="col-md-4">
+                <h5>Registration Type <span class="badge text-bg-secondary"> {{vehicleDetail.registrationType}}</span>
+                </h5>
+                <h5>Model <span class="badge text-bg-secondary"> {{vehicleDetail.model}}</span></h5>
+                <h5>Power Out put <span class="badge text-bg-secondary"> {{vehicleDetail.horsePower}}</span></h5>
+                <h5>Power Unit <span class="badge text-bg-secondary"> {{vehicleDetail.horsePowerMeasure}}</span></h5>
+                <h5>Manufacturing year <span class="badge text-bg-secondary"> {{vehicleDetail.manufacturingYear}}</span>
+                </h5>
+                <h5>Engine Capacity <span class="badge text-bg-secondary"> {{vehicleDetail.engineCapacity}}</span></h5>
+                <h5>No of Cylinder <span class="badge text-bg-secondary"> {{vehicleDetail.noCylinder}}</span></h5>
+                <h5>No of Cylinder <span class="badge text-bg-secondary"> {{vehicleDetail.noCylinder}}</span></h5>
+
+            </div>
+            <div class="col-md-4">
+                <h5>Assembled Country <span class="badge text-bg-secondary"> {{vehicleDetail.assembledCountry}}</span>
+                </h5>
+                <h5>Chassis Made Country <span class="badge text-bg-secondary">
+                        {{vehicleDetail.chassisMadeCountry}}</span></h5>
+                <h5>Chassis No <span class="badge text-bg-secondary"> {{vehicleDetail.chassisNo}}</span></h5>
+                <h5>Engine No<span class="badge text-bg-secondary"> {{vehicleDetail.engineNumber}}</span></h5>
+                <h5>Vehicle Type <span class="badge text-bg-secondary"> {{vehicleDetail.typeOfVehicle}}</span></h5>
+                <h5>Vehicle Status <span class="badge text-bg-secondary"> {{vehicleDetail.vehicleCurrentStatus}}</span>
+                </h5>
+            </div>
+            <div class="col-md-4">
+                <h5>Tax Status <span class="badge text-bg-secondary"> {{vehicleDetail.taxStatus}}</span></h5>
+                <h5>Declaraci Date <span class="badge text-bg-secondary"> {{vehicleDetail.declarationDate | date : 'yyyy, MMM, dd'}}</span></h5>
+                <h5>Removal Number <span class="badge text-bg-secondary"> {{vehicleDetail.removalNumber}}</span></h5>
+                <h5>Office Code<span class="badge text-bg-secondary"> {{vehicleDetail.officeCode}}</span></h5>
+                <h5>Invoice Date<span class="badge text-bg-secondary"> {{vehicleDetail.invoiceDate | date: 'yyy, MMM,dd'}}</span></h5>
+                <h5>Invoice Price<span class="badge text-bg-secondary"> {{vehicleDetail.invoicePrice}}</span></h5>
+            </div>
+        </div>
+
+    </div>
+
+
+
+</div>
