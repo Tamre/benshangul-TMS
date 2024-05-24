@@ -133,6 +133,8 @@ namespace Implementation.Services.Authentication
                 new Claim(JwtRegisteredClaimNames.Sub, user.UserName),
                 new Claim(JwtRegisteredClaimNames.Email, user.Email),
                 new Claim("userId",user.Id),
+                new Claim("userTypeId",user.UserTypeId),
+                new Claim("userType",user.UserType.ToString()),
                 new Claim(JwtRegisteredClaimNames.Jti,
                 Guid.NewGuid().ToString())
              }),

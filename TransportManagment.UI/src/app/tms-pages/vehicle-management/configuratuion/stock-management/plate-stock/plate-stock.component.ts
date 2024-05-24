@@ -227,6 +227,7 @@ export class PlateStockComponent implements OnInit {
             id: veh.id,
             name: veh.code,
           }));
+          
 
         }
       },
@@ -312,7 +313,7 @@ export class PlateStockComponent implements OnInit {
   }
 
   saveCriteria() {
-    //this.criteriaSaved.emit(this.criteria);
+    
     this.criteria = Object.entries(this.plateStockCriteria)
     .filter(([key, value]) => value !== undefined && value !== null)
     .map(([columnName, filterValue]) => ({ columnName, filterValue: filterValue.toString() }));

@@ -51,6 +51,7 @@ namespace TransportManagmentImplementation.DTOS.Vehicle.Action
         public OwnerGroup OwnerGroup { get; set; }
 
         public string CreatedById { get; set; } = null!;
+        public int ServiceZoneId { get; set; }
 
     }
 
