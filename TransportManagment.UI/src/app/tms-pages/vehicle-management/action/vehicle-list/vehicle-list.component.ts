@@ -19,7 +19,7 @@ import { successToast, errorToast } from "src/app/core/services/toast.service";
 import { TokenStorageService } from "src/app/core/services/token-storage.service";
 import { ResponseMessage } from "src/app/model/ResponseMessage.Model";
 import { UserView } from "src/app/model/user";
-import { GetVehicleDetailRequestDto, VehicleData } from "src/app/model/vehicle";
+import { GetVehicleDetailRequestDto, VehicleData, VehicleDetailDto } from "src/app/model/vehicle";
 import { VehicleModelPostDto } from "src/app/model/vehicle-configuration/vehicle-model";
 import { RootReducerState } from "src/app/store";
 import { fetchCrmContactData } from "src/app/store/CRM/crm_action";
@@ -40,7 +40,8 @@ export class VehicleListComponent implements OnInit {
   searchTerm: any;
   searchResults: any;
   econtent?: any;
-  vehicleDetail!: VehicleData ;
+  vehicleDetail!: VehicleDetailDto ;
+
   allVehicleModels?: any;
   vehicleModels?: any;
   vehicle?: any;
@@ -114,6 +115,20 @@ export class VehicleListComponent implements OnInit {
   isRegistrationType: boolean = false;
  // groupData = groupData;
 
+ 
+ vehicleActionList: any[] = [
+  { code: 1, name: "Profile" },
+  { code: 2, name: "Dcouments" },
+  { code: 3, name: "Owners" },
+  { code: 4, name: "Plates" },
+  { code: 5, name: "ORC" },  
+  { code: 6, name: "Annual Inspection" },
+  { code: 7, name: "Change Cases" },
+  { code: 8, name: "Valuations" },
+  { code: 9, name: "Transfers" },
+  { code: 10, name: "Ban Cancel & Lost" },
+];
+
   constructor(
     private formBuilder: UntypedFormBuilder,
     private tokenStorageService: TokenStorageService,
@@ -129,7 +144,6 @@ export class VehicleListComponent implements OnInit {
   ngOnInit(): void {
     this.currentUser = this.tokenStorageService.getCurrentUser();
     this.refreshData();
-    this.getMark();
     /**
      * Form Validation
      */
@@ -198,20 +212,6 @@ export class VehicleListComponent implements OnInit {
   }
   activeTab: number = 1;
 
-  vehicleActionList: any[] = [
-    { code: 1, name: "Profile" },
-    { code: 2, name: "Dcouments" },
-    { code: 3, name: "Owners" },
-    { code: 4, name: "Plates" },
-    { code: 5, name: "ORC" },  
-    { code: 6, name: "Annual Inspection" },
-    { code: 7, name: "Change Cases" },
-    { code: 8, name: "Valuations" },
-    { code: 9, name: "Transfers" },
-    { code: 10, name: "Ban Cancel & Lost" },
-
-
-  ];
   setActiveTab(tab: number) {
     this.activeTab = tab;
   }
@@ -220,19 +220,7 @@ export class VehicleListComponent implements OnInit {
     return this.vehicleForm.controls;
   }
 
-  onSelectionChange(event: any) {
-    const selectedValue = event.name;
-    if (selectedValue === "FromZone") {
-      this.showZoneInput = true;
-      this.showRegionInput = false;
-    } else if (selectedValue === "FromOtherRegion") {
-      this.showZoneInput = false;
-      this.showRegionInput = true;
-    } else {
-      this.showZoneInput = false;
-      this.showRegionInput = false;
-    }
-  }
+
 
   changeType(type:any){
     this.isRegistrationType = false;
@@ -257,43 +245,12 @@ export class VehicleListComponent implements OnInit {
 
     var value = this.searchValueForm.value;
 
-    this.vehicleService.getVehicleList(value).subscribe({
-      next: (res) => {
-        if (data.chassisNo) {
+    this.vehicleService.getVehicleDetail(value).subscribe({
+      next: (data) => {
+        debugger;
+        if (data.id) {
           this.isvehicleFound = true;
-         
-          this.selectedModelId = data.modelId;
-
-          this.vehicleForm.setValue({
-            modelId: data.modelId,
-            officeCode: data.officeCode,
-            declarationNo: data.declarationNo,
-            declarationDate: data.declarationDate,
-            billOfLoading: data.billOfLoading,
-            removalNumber: data.removalNumber,
-            invoiceDate: data.invoiceDate,
-            invoicePrice: data.invoicePrice,
-            taxStatus: data.taxStatus,
-            chassisNo: data.chassisNo,
-            engineNumber: data.engineNumber,
-            assembledCountryId: data.assembledCountryId,
-            chassisMadeId: data.chassisMadeId,
-            manufacturingYear: data.manufacturingYear,
-            horsePower: data.horsePower,
-            horsePowerMeasure: data.horsePowerMeasure,
-            noCylinder: data.noCylinder,
-            engineCapacity: data.engineCapacity,
-            typeOfVehicle: data.typeOfVehicle,
-            vehicleCurrentStatus: data.vehicleCurrentStatus,
-            transferStatus: data.transferStatus,
-            serviceZoneId: "",
-            createdById: this.currentUser?.userId,
-            lastActionTaken: data.lastActionTaken,
-          });
-
-          this.vehicleRegistrationNo = res.registrationNumber!;
-          this.vehicleId = res.id!;
-
+          this.vehicleDetail = data;
           this.toastService.show("found a vehicle", {
             classname: "success text-white",
             delay: 2000,
@@ -339,40 +296,7 @@ export class VehicleListComponent implements OnInit {
     });
   }
 
-  selectedAccount = "This is a placeholder";
-  Default = [{ name: "Choice 1" }, { name: "Choice 2" }, { name: "Choice 3" }];
-
-  getMark() {
-    this.vehicleCongigService.getVehicleLookup(this.markId).subscribe({
-      next: (res) => {
-        if (res) {
-          this.vehLookups = res;
-          this.allVehLookups = cloneDeep(res);
-          this.vehLookups = this.service.changePage(this.allVehLookups);
-
-          // Populate the markNames array with names from vehLookups
-          this.markNames = this.vehLookups.map((veh: any) => veh.name);
-        }
-        // Populate the markNameIdMap with name-ID mapping
-        this.markNameIdMap = this.vehLookups.reduce((map: any, veh: any) => {
-          map[veh.name] = veh.id;
-          return map;
-        }, {});
-      },
-      error: (err) => {},
-    });
-  }
-  openModal(content: any) {
-    this.submitted = false;
-    this.isEditing = false;
-    this.dataForm.reset();
-    this.dataForm.controls["createdById"].setValue(this.currentUser?.userId);
-    this.modalService.open(content, { size: "lg", centered: true });
-  }
-  changePage() {
-    this.vehicleModels = this.service.changePage(this.allVehicleModels);
-  }
-
+  
   // Search Data
   performSearch(): void {
     this.searchResults = this.allVehicleModels.filter((item: any) => {
@@ -430,63 +354,8 @@ export class VehicleListComponent implements OnInit {
     });
   }
 
-  saveData() {
-    const updatedData = this.dataForm.value;
 
-    if (this.dataForm.valid) {
-      if (this.dataForm.get("id")?.value) {
-        const newData: VehicleModelPostDto = this.dataForm.value;
-        this.vehicleCongigService.updateVehicleModel(newData).subscribe({
-          next: (res: ResponseMessage) => {
-            if (res.success) {
-              this.successAddMessage = res.message;
-              this.closeModal();
 
-              this.toastService.show(this.successAddMessage, {
-                classname: "success text-white",
-                delay: 2000,
-              });
-              this.refreshData();
-            } else {
-              this.toastService.show("vehicle update not working !!", {
-                classname: "error text-white",
-                delay: 2000,
-              });
-            }
-          },
-          error: (err) => {
-            this.toastService.show(err.message, {
-              classname: "error text-white",
-              delay: 2000,
-            });
-          },
-        });
-      } else {
-        const newData: VehicleModelPostDto = this.dataForm.value;
-        newData.isActive = true;
-        this.vehicleCongigService.addVehicleModel(newData).subscribe({
-          next: (res: ResponseMessage) => {
-            if (res.success) {
-              this.successAddMessage = res.message;
-              this.closeModal();
-              successToast(this.successAddMessage);
-              this.refreshData();
-            } else {
-              console.error(res.message);
-            }
-          },
-          error: (err) => {
-            console.error(err);
-          },
-        });
-      }
-    }
-    this.submitted = true;
-  }
-
-  closeModal() {
-    this.modalService.dismissAll();
-  }
   /**
    * Form data get
    */

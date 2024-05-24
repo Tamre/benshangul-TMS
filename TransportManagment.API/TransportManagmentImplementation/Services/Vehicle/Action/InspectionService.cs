@@ -203,6 +203,30 @@ namespace TransportManagmentImplementation.Services.Vehicle.Action
 
         }
 
+        public async Task<InspectionDto> GetInspectionByModelId(int modelId)
+        {
+            var InspectionDetails = new InspectionDto();
+            var FieldInspection = await _dbContext.FieldInspections.Include(x => x.Vehicle.Model).Where(u => u.Vehicle.ModelId == modelId && u.IsActive).FirstOrDefaultAsync();
+
+            if (FieldInspection != null)
+            {
+
+                var tecnicalInspection = await _dbContext.TechnicalInspections.Where(u => u.FieldInspectionId == FieldInspection.Id && u.IsActive).FirstOrDefaultAsync();
+
+                var FieldInspectionDetailResponseDto = _mapper.Map<FieldInspectionGetDto>(FieldInspection);
+                var tecnicalInspectionDetailResponseDto = _mapper.Map<TechnicalInspectionGetDto>(tecnicalInspection);
+
+
+                InspectionDetails.FieldInspection = FieldInspectionDetailResponseDto;
+
+                InspectionDetails.TechnicalInspection = tecnicalInspectionDetailResponseDto;
+
+
+            }
+
+            return InspectionDetails;
+        }
+
         public async Task<InspectionDto> GetInspectionByVehicleId(Guid vehicleId)
         {
 

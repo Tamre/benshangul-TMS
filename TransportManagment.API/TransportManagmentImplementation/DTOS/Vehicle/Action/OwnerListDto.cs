@@ -39,6 +39,7 @@ namespace TransportManagmentImplementation.DTOS.Vehicle.Action
         public string? HouseNo { get; set; }
         [Required, StringLength(ValidationClasses.PhoneNumber)]
         public string PhoneNumber { get; set; } = null!;
+
         [StringLength(ValidationClasses.PhoneNumber)]
         public string? SecondaryPhoneNumber { get; set; }
         [StringLength(ValidationClasses.MaxNameLength)]

@@ -53,7 +53,8 @@ export class VehicleDocumentsComponent implements OnInit {
     private fb: FormBuilder,
     private vehicleService: VehicleService,
     private tokenStorageService: TokenStorageService,
-    private toastService: ToastService
+    private toastService: ToastService,
+  
   ) {}
   forVehicleDocumentOption = [
     { name: "AnnualInspection", code: 0 },
