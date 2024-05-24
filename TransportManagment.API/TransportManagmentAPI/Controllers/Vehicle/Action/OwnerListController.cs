@@ -81,7 +81,8 @@ namespace TransportManagmentAPI.Controllers.Vehicle.Action
         {
             if (ModelState.IsValid)
             {
-                return Ok(await _ownerService.GetAllOwners(filterDetail));
+                var pagedList= await _ownerService.GetAllOwners(filterDetail);
+                return Ok(new { data = pagedList, metaData = pagedList.MetaData });
             }
             else
             {

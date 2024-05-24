@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TransportManagmentInfrustructure.Data;
 
@@ -11,9 +12,11 @@ using TransportManagmentInfrustructure.Data;
 namespace TransportManagmentInfrustructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240523132706_VehclSerial")]
+    partial class VehclSerial
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1744,6 +1747,9 @@ namespace TransportManagmentInfrustructure.Migrations
                     b.Property<int>("DocumentTypeId")
                         .HasColumnType("int");
 
+                    b.Property<int>("ForVehicleDocument")
+                        .HasColumnType("int");
+
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
 
@@ -1895,7 +1901,7 @@ namespace TransportManagmentInfrustructure.Migrations
 
                     b.HasIndex("ServiceZoneId");
 
-                    b.ToTable("VehicleLists", "VRMS");
+                    b.ToTable("VehicleLists");
                 });
 
             modelBuilder.Entity("TransportManagmentInfrustructure.Model.Vehicle.Action.VehicleOwner", b =>
@@ -2647,7 +2653,7 @@ namespace TransportManagmentInfrustructure.Migrations
 
                     b.HasIndex("CreatedById");
 
-                    b.ToTable("ValuationReasons", "VRMS");
+                    b.ToTable("ValuationReasons");
                 });
 
             modelBuilder.Entity("TransportManagmentInfrustructure.Model.Vehicle.Configuration.VehicleBodyType", b =>

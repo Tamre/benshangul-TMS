@@ -120,7 +120,7 @@ namespace TransportManagmentImplementation.Services.Vehicle.Action
                   
                 }
 
-                var ownerRegistrationNo = await _generalConfigService.GenerateVehicleNumber(VehicleSerialType.OWNER, ownerListPostDto.ZoneId, ownerListPostDto.CreatedById);
+                var ownerRegistrationNo = await _generalConfigService.GenerateVehicleNumber(VehicleSerialType.OWNER, ownerListPostDto.ServiceZoneId, ownerListPostDto.CreatedById);
 
 
 
@@ -140,7 +140,7 @@ namespace TransportManagmentImplementation.Services.Vehicle.Action
                     HouseNo = ownerListPostDto?.HouseNo,
                     PhoneNumber = ownerListPostDto.PhoneNumber,
                     SecondaryPhoneNumber = ownerListPostDto?.SecondaryPhoneNumber,
-                    IdNumber = ownerListPostDto?.IdNumber,
+                    IdNumber = ownerListPostDto.IdNumber,
                     PoBox = ownerListPostDto?.PoBox,
                     OwnerGroup = ownerListPostDto.OwnerGroup,
 
@@ -316,11 +316,11 @@ namespace TransportManagmentImplementation.Services.Vehicle.Action
         {
             return criteria.ColumnName?.ToLower() switch
             {
-                "FirstName" => owner => owner.FirstName.Contains(criteria.FilterValue),
-                "LastName" => owner => owner.LastName.Contains(criteria.FilterValue),
-                "MiddleName" => owner => owner.MiddleName.Contains(criteria.FilterValue),
-                "OwnerNumber" => owner => owner.OwnerNumber.Contains(criteria.FilterValue),
-                "PhoneNumber" => owner => owner.PhoneNumber.Contains(criteria.FilterValue),
+                "firstname" => owner => owner.FirstName.Contains(criteria.FilterValue),
+                "lastname" => owner => owner.LastName.Contains(criteria.FilterValue),
+                "middlename" => owner => owner.MiddleName.Contains(criteria.FilterValue),
+                "ownernumber" => owner => owner.OwnerNumber.Contains(criteria.FilterValue),
+                "phonenumber" => owner => owner.PhoneNumber.Contains(criteria.FilterValue),
                
             };
         }

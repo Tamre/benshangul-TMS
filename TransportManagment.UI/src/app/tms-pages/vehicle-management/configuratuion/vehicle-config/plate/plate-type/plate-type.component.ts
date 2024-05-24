@@ -22,14 +22,15 @@ import { VehicleConfigService } from 'src/app/core/services/Vehicle-services/veh
 })
 export class PlateTypeComponent {
   submitted = false;
-  isEditing:Boolean = false;
+  isEditing: Boolean = false;
+  econtent?: any;
   dataForm!: UntypedFormGroup;
   currentUser!: UserView | null;
   searchTerm: any;
   searchResults: any;
-  econtent?: any;
 
-  allPlates?:any;
+
+  allPlates?: any;
   plates?: any;
 
   successAddMessage: string = "";
@@ -42,9 +43,11 @@ export class PlateTypeComponent {
     private modalService: NgbModal,
     public service: PaginationService,
     public translate: TranslateService,
+
    
     public vehiclecongigService:VehicleConfigService
   ) {}
+
   ngOnInit(): void {
     this.currentUser = this.tokenStorageService.getCurrentUser();
     this.refreshData()
@@ -56,13 +59,15 @@ export class PlateTypeComponent {
       name: ["", [Validators.required]],
       localName: ["", [Validators.required]],
       code: ["", [Validators.required, Validators.maxLength(3)]],
-      regionList:["",[Validators.required]],
+      regionList: ["", [Validators.required]],
       createdById: [this.currentUser?.userId, [Validators.required]],
-      isActive:[true]
+      isActive: [true]
     });
+
     
      }
   
+
   openModal(content: any) {
     this.submitted = false;
     this.isEditing = false;
@@ -103,26 +108,25 @@ export class PlateTypeComponent {
     this.plates = this.service.changePage(this.allPlates)
   }
 
-  refreshData(){
+  refreshData() {
     this.vehiclecongigService.getAllPlateType().subscribe({
       next: (res) => {
-        if (res) 
-          {
-            this.plates = res
-            this.allPlates = cloneDeep(res);
-            this.plates = this.service.changePage(this.allPlates)
-            console.log(this.allPlates)
-          }
+        if (res) {
+          this.plates = res
+          this.allPlates = cloneDeep(res);
+          this.plates = this.service.changePage(this.allPlates)
+          console.log(this.allPlates)
+        }
       },
       error: (err) => {
-        
+
       },
     });
   }
 
   saveData() {
     const updatedData = this.dataForm.value;
-   
+
     if (this.dataForm.valid) {
       if (this.dataForm.get("id")?.value) {
         console.log(this.currentUser?.userId)
@@ -135,7 +139,7 @@ export class PlateTypeComponent {
               successToast(this.successAddMessage);
               this.refreshData();
             } else {
-              console.error( res.message);
+              console.error(res.message);
             }
           },
           error: (err) => {
@@ -154,7 +158,7 @@ export class PlateTypeComponent {
               successToast(this.successAddMessage);
               this.refreshData();
             } else {
-              console.error( res.message);
+              console.error(res.message);
             }
           },
           error: (err) => {
@@ -183,10 +187,10 @@ export class PlateTypeComponent {
     this.translate.get("Edit Plate Type").subscribe((res: string) => {
       this.editPlateTypeText = res;
     });
-    modelTitle.innerHTML =this.editPlateTypeText ;
+    modelTitle.innerHTML = this.editPlateTypeText;
     var updateBtn = document.getElementById("add-btn") as HTMLAreaElement;
     this.translate.get("Update").subscribe((res: string) => {
-      this.updateText= res;
+      this.updateText = res;
     });
     updateBtn.innerHTML = this.updateText;
     this.isEditing = true;

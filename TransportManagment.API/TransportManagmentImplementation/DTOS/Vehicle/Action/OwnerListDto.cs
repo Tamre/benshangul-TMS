@@ -48,6 +48,7 @@ namespace TransportManagmentImplementation.DTOS.Vehicle.Action
         [StringLength(ValidationClasses.MaxNameLength)]
         public string? PoBox { get; set; }
         public string CreatedById { get; set; } = null!;
+        public int ServiceZoneId { get; set; }
 
         public OwnerGroup OwnerGroup { get; set; }
     }
