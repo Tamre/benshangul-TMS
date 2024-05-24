@@ -10,7 +10,7 @@ namespace TransportManagmentImplementation.Interfaces.Vehicle.Action
 {
     public interface IInpsectionService
     {
-        public Task<InspectionDto> GetInspectionByModelId(int modelId);
+        public Task<InspectionModelDto> GetInspectionByModelId(int modelId);
         public Task<InspectionDto> GetInspectionByVehicleId(Guid vehicleId);
         public Task<ResponseMessage> CreateFieldInspection(FieldInspectionPostDto inspection);
         public Task<ResponseMessage> CreateTechnicalInspection(TechnicalInspectionPostDto inspection);

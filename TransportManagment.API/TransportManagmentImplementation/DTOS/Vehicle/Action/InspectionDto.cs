@@ -115,4 +115,9 @@ namespace TransportManagmentImplementation.DTOS.Vehicle.Action
        
     }
 
+    public record InspectionModelDto
+    {
+        public FieldInspectionGetDto FieldInspection { get; set; } = null!;
+    }
+
 }
