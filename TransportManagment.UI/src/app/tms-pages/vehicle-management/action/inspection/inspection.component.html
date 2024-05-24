@@ -10,7 +10,7 @@
                         Field Inspection
                     </a>
                     <ng-template ngbNavContent>
-                        <app-field-inspection></app-field-inspection>
+                        <app-field-inspection  [vehicleId]="vehicleId"></app-field-inspection>
                     </ng-template>
                 </li>
                 <li [ngbNavItem]="2">
@@ -18,7 +18,7 @@
                         Techincal Inspection
                     </a>
                     <ng-template ngbNavContent>
-                        <app-technical-inspection></app-technical-inspection>
+                        <app-technical-inspection [vehicleId]="vehicleId"></app-technical-inspection>
                     </ng-template>
                 </li>
                

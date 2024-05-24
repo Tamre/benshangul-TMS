@@ -1,1 +1,204 @@
-<p>field-inspection works!</p>
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-header text-end">
+                <div class="d-flex align-items-center flex-wrap gap-2">
+                    <div class="flex-grow-1">
+                        <button class="btn btn-info add-btn" data-bs-toggle="modal" data-bs-target="#showModal"
+                            (click)="openModal(content)">
+                            <i class="ri-add-fill me-1 align-bottom"></i> {{ 'Add Field Inspection' | translate }}
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body">
+                <!-- Additional content can go here if needed -->
+            </div>
+        </div>
+    </div>
+</div>
+
+<ng-template #content role="document" let-modal>
+    <div class="modal-header bg-info-subtle p-3">
+        <h5 class="modal-title" id="exampleModalLabel">{{ 'Add Field Inspection' | translate }}</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal"
+            (click)="modal.dismiss('Cross click')"></button>
+    </div>
+
+    <form (ngSubmit)="submitCreateFieldInspection()" [formGroup]="fieldInspectionForm" class="tablelist-form" autocomplete="off">
+        <div class="modal-body">
+            <div class="row g-3">
+                <!-- Zone -->
+                <div class="col-lg-3">
+                    <div class="mb-3">
+                        <label for="givenZoneId" class="form-label">{{ 'Zone' | translate }}</label>
+                        <ng-select [items]="zoneList" bindLabel="name" bindValue="id" formControlName="givenZoneId" [searchable]="true" required>
+                        </ng-select>
+                        <div *ngIf="submitted && fieldInspectionForm.get('givenZoneId')?.invalid" class="text-danger">
+                            {{ 'Zone is required' | translate }}
+                        </div>
+                    </div>
+                </div>
+                <!-- Width -->
+                <div class="col-lg-3">
+                    <div class="mb-3">
+                        <label for="width-field" class="form-label">{{ 'Width' | translate }}</label>
+                        <input type="number" id="width-field" class="form-control" placeholder="{{ 'Width' | translate }}" formControlName="width" [ngClass]="{'is-invalid': submitted && fieldInspectionForm.get('width')?.invalid}" />
+                        <div *ngIf="submitted && fieldInspectionForm.get('width')?.invalid" class="invalid-feedback">
+                            {{ 'Width is required' | translate }}
+                        </div>
+                    </div>
+                </div>
+                <!-- Height -->
+                <div class="col-lg-3">
+                    <div class="mb-3">
+                        <label for="height-field" class="form-label">{{ 'Height' | translate }}</label>
+                        <input type="number" id="height-field" class="form-control" placeholder="{{ 'Height' | translate }}" formControlName="height" [ngClass]="{'is-invalid': submitted && fieldInspectionForm.get('height')?.invalid}" />
+                        <div *ngIf="submitted && fieldInspectionForm.get('height')?.invalid" class="invalid-feedback">
+                            {{ 'Height is required' | translate }}
+                        </div>
+                    </div>
+                </div>
+                <!-- Length -->
+                <div class="col-lg-3">
+                    <div class="mb-3">
+                        <label for="length-field" class="form-label">{{ 'Length' | translate }}</label>
+                        <input type="number" id="length-field" class="form-control" placeholder="{{ 'Length' | translate }}" formControlName="length" [ngClass]="{'is-invalid': submitted && fieldInspectionForm.get('length')?.invalid}" />
+                        <div *ngIf="submitted && fieldInspectionForm.get('length')?.invalid" class="invalid-feedback">
+                            {{ 'Length is required' | translate }}
+                        </div>
+                    </div>
+                </div>
+                <!-- Front Tyre Size -->
+                <div class="col-lg-3">
+                    <div class="mb-3">
+                        <label for="frontTyreSize-field" class="form-label">{{ 'Front Tyre Size' | translate }}</label>
+                        <input type="text" id="frontTyreSize-field" class="form-control" placeholder="{{ 'Front Tyre Size' | translate }}" formControlName="frontTyreSize" [ngClass]="{'is-invalid': submitted && fieldInspectionForm.get('frontTyreSize')?.invalid}" />
+                        <div *ngIf="submitted && fieldInspectionForm.get('frontTyreSize')?.invalid" class="invalid-feedback">
+                            {{ 'Front Tyre Size is required' | translate }}
+                        </div>
+                    </div>
+                </div>
+                <!-- Rear Tyre Size -->
+                <div class="col-lg-3">
+                    <div class="mb-3">
+                        <label for="rearTyreSize-field" class="form-label">{{ 'Rear Tyre Size' | translate }}</label>
+                        <input type="text" id="rearTyreSize-field" class="form-control" placeholder="{{ 'Rear Tyre Size' | translate }}" formControlName="rearTyreSize" [ngClass]="{'is-invalid': submitted && fieldInspectionForm.get('rearTyreSize')?.invalid}" />
+                        <div *ngIf="submitted && fieldInspectionForm.get('rearTyreSize')?.invalid" class="invalid-feedback">
+                            {{ 'Rear Tyre Size is required' | translate }}
+                        </div>
+                    </div>
+                </div>
+                <!-- No of Rear Axel -->
+                <div class="col-lg-3">
+                    <div class="mb-3">
+                        <label for="noOfRearAxel-field" class="form-label">{{ 'No of Rear Axel' | translate }}</label>
+                        <input type="number" id="noOfRearAxel-field" class="form-control" placeholder="{{ 'No of Rear Axel' | translate }}" formControlName="noOfRearAxel" [ngClass]="{'is-invalid': submitted && fieldInspectionForm.get('noOfRearAxel')?.invalid}" />
+                        <div *ngIf="submitted && fieldInspectionForm.get('noOfRearAxel')?.invalid" class="invalid-feedback">
+                            {{ 'No of Rear Axel is required' | translate }}
+                        </div>
+                    </div>
+                </div>
+                <!-- No of Front Axel -->
+                <div class="col-lg-3">
+                    <div class="mb-3">
+                        <label for="noOfFrontAxel-field" class="form-label">{{ 'No of Front Axel' | translate }}</label>
+                        <input type="number" id="noOfFrontAxel-field" class="form-control" placeholder="{{ 'No of Front Axel' | translate }}" formControlName="noOfFrontAxel" [ngClass]="{'is-invalid': submitted && fieldInspectionForm.get('noOfFrontAxel')?.invalid}" />
+                        <div *ngIf="submitted && fieldInspectionForm.get('noOfFrontAxel')?.invalid" class="invalid-feedback">
+                            {{ 'No of Front Axel is required' | translate }}
+                        </div>
+                    </div>
+                </div>
+                <!-- Axel Drive Type -->
+                <div class="col-lg-3">
+                    <div class="mb-3">
+                        <label for="axelDriveType-field" class="form-label">{{ 'Axel Drive Type' | translate }}</label>
+                        <input type="text" id="axelDriveType-field" class="form-control" placeholder="{{ 'Axel Drive Type' | translate }}" formControlName="axelDriveType" [ngClass]="{'is-invalid': submitted && fieldInspectionForm.get('axelDriveType')?.invalid}" />
+                        <div *ngIf="submitted && fieldInspectionForm.get('axelDriveType')?.invalid" class="invalid-feedback">
+                            {{ 'Axel Drive Type is required' | translate }}
+                        </div>
+                    </div>
+                </div>
+                <!-- Number of Tyre -->
+                <div class="col-lg-3">
+                    <div class="mb-3">
+                        <label for="numberOfTyre-field" class="form-label">{{ 'Number of Tyre' | translate }}</label>
+                        <input type="number" id="numberOfTyre-field" class="form-control" placeholder="{{ 'Number of Tyre' | translate }}" formControlName="numberOfTyre" [ngClass]="{'is-invalid': submitted && fieldInspectionForm.get('numberOfTyre')?.invalid}" />
+                        <div *ngIf="submitted && fieldInspectionForm.get('numberOfTyre')?.invalid" class="invalid-feedback">
+                            {{ 'Number of Tyre is required' | translate }}
+                        </div>
+                    </div>
+                </div>
+                <!-- Front Axel Max Load -->
+                <div class="col-lg-3">
+                    <div class="mb-3">
+                        <label for="frontAxelMaxLoad-field" class="form-label">{{ 'Front Axel Max Load' | translate }}</label>
+                        <input type="number" id="frontAxelMaxLoad-field" class="form-control" placeholder="{{ 'Front Axel Max Load' | translate }}" formControlName="frontAxelMaxLoad" [ngClass]="{'is-invalid': submitted && fieldInspectionForm.get('frontAxelMaxLoad')?.invalid}" />
+                        <div *ngIf="submitted && fieldInspectionForm.get('frontAxelMaxLoad')?.invalid" class="invalid-feedback">
+                            {{ 'Front Axel Max Load is required' | translate }}
+                        </div>
+                    </div>
+                </div>
+                <!-- Rear Axel Max Load -->
+                <div class="col-lg-3">
+                    <div class="mb-3">
+                        <label for="rearAxelMaxLoad-field" class="form-label">{{ 'Rear Axel Max Load' | translate }}</label>
+                        <input type="number" id="rearAxelMaxLoad-field" class="form-control" placeholder="{{ 'Rear Axel Max Load' | translate }}" formControlName="rearAxelMaxLoad" [ngClass]="{'is-invalid': submitted && fieldInspectionForm.get('rearAxelMaxLoad')?.invalid}" />
+                        <div *ngIf="submitted && fieldInspectionForm.get('rearAxelMaxLoad')?.invalid" class="invalid-feedback">
+                            {{ 'Rear Axel Max Load is required' | translate }}
+                        </div>
+                    </div>
+                </div>
+                <!-- Gross Weight -->
+                <div class="col-lg-3">
+                    <div class="mb-3">
+                        <label for="grossWeight-field" class="form-label">{{ 'Gross Weight' | translate }}</label>
+                        <input type="number" id="grossWeight-field" class="form-control" placeholder="{{ 'Gross Weight' | translate }}" formControlName="grossWeight" [ngClass]="{'is-invalid': submitted && fieldInspectionForm.get('grossWeight')?.invalid}" />
+                        <div *ngIf="submitted && fieldInspectionForm.get('grossWeight')?.invalid" class="invalid-feedback">
+                            {{ 'Gross Weight is required' | translate }}
+                        </div>
+                    </div>
+                </div>
+                <!-- Tare Weight -->
+                <div class="col-lg-3">
+                    <div class="mb-3">
+                        <label for="tareWeight-field" class="form-label">{{ 'Tare Weight' | translate }}</label>
+                        <input type="number" id="tareWeight-field" class="form-control" placeholder="{{ 'Tare Weight' | translate }}" formControlName="tareWeight" [ngClass]="{'is-invalid': submitted && fieldInspectionForm.get('tareWeight')?.invalid}" />
+                        <div *ngIf="submitted && fieldInspectionForm.get('tareWeight')?.invalid" class="invalid-feedback">
+                            {{ 'Tare Weight is required' | translate }}
+                        </div>
+                    </div>
+                </div>
+                <!-- Front Plate Size -->
+                <div class="col-lg-3">
+                    <div class="mb-3">
+                        <label for="frontPlateSizeId" class="form-label">{{ 'Front Plate Size' | translate }}</label>
+                        <ng-select [items]="plateSizeList" bindLabel="name" bindValue="id" formControlName="frontPlateSizeId" [searchable]="true" required>
+                        </ng-select>
+                        <div *ngIf="submitted && fieldInspectionForm.get('frontPlateSizeId')?.invalid" class="text-danger">
+                            {{ 'Front Plate Size is required' | translate }}
+                        </div>
+                    </div>
+                </div>
+                <!-- Back Plate Size -->
+                <div class="col-lg-3">
+                    <div class="mb-3">
+                        <label for="backPlateSizeId" class="form-label">{{ 'Back Plate Size' | translate }}</label>
+                        <ng-select [items]="plateSizeList" bindLabel="name" bindValue="id" formControlName="backPlateSizeId" [searchable]="true" required>
+                        </ng-select>
+                        <div *ngIf="submitted && fieldInspectionForm.get('backPlateSizeId')?.invalid" class="text-danger">
+                            {{ 'Back Plate Size is required' | translate }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <div class="hstack gap-2 justify-content-end">
+                <button type="submit" [disabled]="fieldInspectionForm.invalid" class="btn btn-success" id="add-btn">
+                    {{ 'Add' | translate }}
+                </button>
+            </div>
+        </div>
+    </form>
+</ng-template>
