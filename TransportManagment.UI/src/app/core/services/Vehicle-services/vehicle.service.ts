@@ -9,8 +9,9 @@ import { GetVehicleDetailRequestDto, VehicleData, VehicleDetailDto } from "src/a
 import { IVehicleOwnerGetDto, VehicleOwnerPostDto } from "src/app/tms-pages/vehicle-management/action/vehicle-owners/IVehicleOwnersDto";
 import { PaginatedResponse } from "src/app/model/common";
 
-import { OwnerGetDto, OwnerPostDto } from "src/app/tms-pages/vehicle-management/action/owner/IownerDto";
+
 import { IVehicleDocumentGetDto } from "src/app/tms-pages/vehicle-management/action/vehicle-documents/IVehicleDocuemntsDto";
+import { OwnerGetDto, OwnerPostDto } from "src/app/model/vehicle/owner";
 
 @Injectable({ providedIn: "root" })
 

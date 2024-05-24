@@ -14,6 +14,8 @@ import { Subject, debounceTime, distinctUntilChanged } from 'rxjs';
 import { cloneDeep } from 'lodash';
 import { Pagination1Service } from 'src/app/core/services/pagination1.service';
 import { AddressService } from 'src/app/core/services/address.service';
+import { PaginatedResponse, MetaData } from 'src/app/model/common';
+import { OwnerGetDto, OwnerPostDto } from 'src/app/model/vehicle/owner';
 
 
 

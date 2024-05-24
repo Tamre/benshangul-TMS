@@ -53,6 +53,7 @@ import { VehicleDetailComponent } from './action/vehicle-detail/vehicle-detail.c
 import { InspectionComponent } from './action/inspection/inspection.component';
 import { FieldInspectionComponent } from './action/inspection/field-inspection/field-inspection.component';
 import { TechnicalInspectionComponent } from './action/inspection/technical-inspection/technical-inspection.component';
+import { OwnerComponent } from './action/owner/owner.component';
 
 
 
@@ -95,7 +96,8 @@ import { TechnicalInspectionComponent } from './action/inspection/technical-insp
     VehicleDetailComponent,
     InspectionComponent,
     FieldInspectionComponent,
-    TechnicalInspectionComponent
+    TechnicalInspectionComponent,
+    OwnerComponent
 
   ],
   imports: [
