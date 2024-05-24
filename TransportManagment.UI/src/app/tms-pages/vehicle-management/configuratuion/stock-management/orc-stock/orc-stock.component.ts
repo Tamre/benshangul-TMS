@@ -2,16 +2,15 @@ import { Component, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AbstractControl, UntypedFormBuilder, UntypedFormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { UserView } from 'src/app/model/user';
-import { fetchCrmContactData } from 'src/app/store/CRM/crm_action';
-import { selectCRMLoading } from 'src/app/store/CRM/crm_selector';
+
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { Store } from '@ngrx/store';
+
 import { TranslateService } from '@ngx-translate/core';
 import { Observable, Subject, debounceTime, distinctUntilChanged, map, of } from 'rxjs';
 import { AddressService } from 'src/app/core/services/address.service';
 import { Pagination1Service } from 'src/app/core/services/pagination1.service';
 import { TokenStorageService } from 'src/app/core/services/token-storage.service';
-import { RootReducerState } from 'src/app/store';
+
 import { cloneDeep } from 'lodash';
 import { OrcStockPostDto } from 'src/app/model/stock-management/orc-stock';
 import { successToast } from 'src/app/core/services/toast.service';
@@ -89,7 +88,7 @@ export class OrcStockComponent {
     private modalService: NgbModal,
     public service: Pagination1Service,
     public translate: TranslateService,
-    private store: Store<{ data: RootReducerState }>,
+
     public stockManagementService: StockManagementService,
     public vehicleConfig: VehicleConfigService,
     private addressService: AddressService
@@ -123,15 +122,7 @@ export class OrcStockComponent {
     this.dataForm1 = this.formBuilder.group({
       zoneId: ['', Validators.required],
     });
-    /**
-     * fetches data
-     */
-    this.store.dispatch(fetchCrmContactData());
-    this.store.select(selectCRMLoading).subscribe((data) => {
-      if (data == false) {
-        document.getElementById("elmLoader")?.classList.add("d-none");
-      }
-    });
+
   }
   
   refreshData() {

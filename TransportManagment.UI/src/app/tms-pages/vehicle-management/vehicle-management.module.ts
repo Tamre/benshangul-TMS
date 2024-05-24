@@ -45,7 +45,9 @@ import { VehicleConfigComponent } from './configuratuion/vehicle-config/vehicle-
 
 import { VehicleAdd } from './action/vehicle-add/vehicle-add.component';
 import { VehicleListComponent } from './action/vehicle-list/vehicle-list.component';
-
+import { VehicleOwnersComponent } from './action/vehicle-owners/vehicle-owners.component';
+import { VehicleDocumentsComponent } from './action/vehicle-documents/vehicle-documents.component';
+import { AssignOwnersComponent } from './action/vehicle-owners/assign-owners/assign-owners.component';
 
 
 
@@ -78,6 +80,10 @@ import { VehicleListComponent } from './action/vehicle-list/vehicle-list.compone
     AisStockComponent,
     VehicleAdd,
     VehicleListComponent,
+    VehicleLookupsComponent,
+    VehicleOwnersComponent,    
+    VehicleDocumentsComponent,
+    AssignOwnersComponent
     
   
   ],

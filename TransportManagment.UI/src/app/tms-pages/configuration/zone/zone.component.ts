@@ -13,25 +13,14 @@ import { DatePipe } from "@angular/common";
 // Csv File Export
 import { ngxCsv } from "ngx-csv/ngx-csv";
 
-// Rest Api Service
-import { restApiService } from "../../../core/services/rest-api.service";
-import { GlobalComponent } from "../../../global-component";
+
 
 // Sweet Alert
 import Swal from "sweetalert2";
 
-import { Store } from "@ngrx/store";
-import { RootReducerState } from "src/app/store";
-import {
-  addContact,
-  deleteContact,
-  fetchCrmContactData,
-  updateContact,
-} from "src/app/store/CRM/crm_action";
-import {
-  selectCRMLoading,
-  selectContactData,
-} from "src/app/store/CRM/crm_selector";
+
+
+
 import { cloneDeep } from "lodash";
 import { PaginationService } from "src/app/core/services/pagination.service";
 import { AddressService } from "src/app/core/services/address.service";
@@ -65,7 +54,7 @@ export class ZoneComponent implements OnInit {
   content?: any;
   contacts?: any;
   econtent?: any;
-  url = GlobalComponent.API_URL;
+ 
   allcontacts: any;
   searchTerm: any;
   searchResults: any;
@@ -84,8 +73,8 @@ export class ZoneComponent implements OnInit {
     private modalService: NgbModal,
     public service: PaginationService,
     private formBuilder: UntypedFormBuilder,
-    private restApiService: restApiService,
-    private store: Store<{ data: RootReducerState }>,
+   
+   
     private datePipe: DatePipe,
     private addressService: AddressService,
     private tokenStorageService: TokenStorageService,
@@ -128,15 +117,7 @@ export class ZoneComponent implements OnInit {
     });
 
 
-    /**
-     * fetches data
-     */
-    this.store.dispatch(fetchCrmContactData());
-    this.store.select(selectCRMLoading).subscribe((data) => {
-      if (data == false) {
-        document.getElementById("elmLoader")?.classList.add("d-none");
-      }
-    });
+   
    
   }
 

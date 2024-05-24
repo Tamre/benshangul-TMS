@@ -2,7 +2,7 @@
 
 <div class="card">
     <div class="card-header border-0">
-        <form (ngSubmit)="submitSearch()" [formGroup]="searchForm" class="tablelist-form" autocomplete="off">
+        <form (ngSubmit)="submitSearch()" [formGroup]="searchForm" class="tablelist-form was-validated" autocomplete="off">
             <div class="row g-3 align-items-end">
                 <div class="text-end">
 
@@ -68,7 +68,7 @@
 
                             <div class="chat-message-list">
                                 <ul class="list-unstyled chat-list chat-user-list mb-0" id="channelList">
-                                    <li *ngFor="let item of vehicleActionList " [class.active]="activeTab ==item.code"
+                                    <li *ngFor="let item of vehicleActionList" [class.active]="activeTab ==item.code"
                                         (click)="setActiveTab(item.code)" style="cursor: pointer;">
                                         <a class="unread-msg-user">
                                             <div class="d-flex align-items-center">
@@ -81,7 +81,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="flex-grow-1 overflow-hidden">
-                                                    <p class="text-truncate mb-0">Vehicle {{item.name}}</p>
+                                                    <p class="text-truncate mb-0"> {{item.name}}</p>
                                                 </div>
                                                 <div class="flex-shrink-0">
 
@@ -431,6 +431,7 @@
                 </div>
 
                 <div class="row align-items-center " *ngIf="activeTab === 2">
+            
                     <app-vehicle-documents [vehicleId]="vehicleId"></app-vehicle-documents>
                 </div>
 

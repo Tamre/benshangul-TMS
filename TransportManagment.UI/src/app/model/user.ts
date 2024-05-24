@@ -1,6 +1,7 @@
 export interface User {
-    userName: string ;
+    username: string ;
     password: string ;
+    macAddress:String
 }
 export interface UserView {
     email : string ; 

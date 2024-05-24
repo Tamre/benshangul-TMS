@@ -1171,8 +1171,8 @@ namespace TransportManagmentInfrustructure.Migrations
 
                     b.Property<string>("FirstName")
                         .IsRequired()
-                        .HasMaxLength(10)
-                        .HasColumnType("nvarchar(10)");
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
 
                     b.Property<int>("Gender")
                         .HasColumnType("int");
@@ -1742,9 +1742,6 @@ namespace TransportManagmentInfrustructure.Migrations
                         .HasColumnType("nvarchar(3000)");
 
                     b.Property<int>("DocumentTypeId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ForVehicleDocument")
                         .HasColumnType("int");
 
                     b.Property<bool>("IsActive")

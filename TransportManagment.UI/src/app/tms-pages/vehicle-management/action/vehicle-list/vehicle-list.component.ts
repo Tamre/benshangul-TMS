@@ -5,7 +5,7 @@ import {
   Validators,
 } from "@angular/forms";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
-import { Store } from "@ngrx/store";
+
 import { TranslateService } from "@ngx-translate/core";
 import { number } from "echarts";
 import { cloneDeep } from "lodash";
@@ -21,9 +21,8 @@ import { ResponseMessage } from "src/app/model/ResponseMessage.Model";
 import { UserView } from "src/app/model/user";
 import { GetVehicleDetailRequestDto } from "src/app/model/vehicle";
 import { VehicleModelPostDto } from "src/app/model/vehicle-configuration/vehicle-model";
-import { RootReducerState } from "src/app/store";
-import { fetchCrmContactData } from "src/app/store/CRM/crm_action";
-import { selectCRMLoading } from "src/app/store/CRM/crm_selector";
+
+
 @Component({
   selector: "app-vehicle-list",
   templateUrl: "./vehicle-list.component.html",
@@ -119,7 +118,7 @@ export class VehicleListComponent implements OnInit {
     private modalService: NgbModal,
     public service: PaginationService,
     public translate: TranslateService,
-    private store: Store<{ data: RootReducerState }>,
+   
     public vehicleCongigService: VehicleConfigService,
     private addressService: AddressService,
     public vehicleService: VehicleService,
@@ -185,15 +184,7 @@ export class VehicleListComponent implements OnInit {
       createdById: [""],
       lastActionTaken: ["Endoding"],
     });
-    /**
-     * fetches data
-     */
-    this.store.dispatch(fetchCrmContactData());
-    this.store.select(selectCRMLoading).subscribe((data) => {
-      if (data == false) {
-        document.getElementById("elmLoader")?.classList.add("d-none");
-      }
-    });
+
   }
   activeTab: number = 1;
 

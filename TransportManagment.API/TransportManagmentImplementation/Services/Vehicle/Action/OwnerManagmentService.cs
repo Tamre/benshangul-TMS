@@ -89,19 +89,32 @@ namespace TransportManagmentImplementation.Services.Vehicle.Action
             {
 
                 var ownerExist = await _dbContext.OwnerLists
-                    .Where(x => x.PhoneNumber == ownerListPostDto.PhoneNumber || x.SecondaryPhoneNumber == ownerListPostDto.PhoneNumber).Select(x=> new { 
-                    x.FirstName, x.LastName,x.MiddleName
+                    .Where(x => (x.PhoneNumber == ownerListPostDto.PhoneNumber || x.SecondaryPhoneNumber == ownerListPostDto.PhoneNumber)||x.IdNumber == ownerListPostDto.IdNumber).Select(x=> new { 
+                    x.FirstName, x.LastName,x.MiddleName,x.PhoneNumber
                     }).FirstOrDefaultAsync();
 
 
                 if (ownerExist != null)
                 {
-
-                    return new ResponseMessage
+                    if (ownerExist.PhoneNumber == ownerListPostDto.PhoneNumber)
                     {
-                        Success = false,
-                        Message = $"Owner Phonenumber is already assigned for the owner {ownerExist.FirstName} {ownerExist.MiddleName} {ownerExist.LastName}"
-                    };
+                        return new ResponseMessage
+                        {
+                            Success = false,
+                            Message = $"Owner Phonenumber is already assigned for the owner {ownerExist.FirstName} {ownerExist.MiddleName} {ownerExist.LastName}"
+                        };
+                    }
+                    else
+                    {
+                        return new ResponseMessage
+                        {
+                            Success = false,
+                            Message = $"Owner Id Number is already assigned for the owner {ownerExist.FirstName} {ownerExist.MiddleName} {ownerExist.LastName}"
+                        };
+
+                    }
+
+                  
                 }
 
                 var ownerRegistrationNo = await _generalConfigService.GenerateVehicleNumber(VehicleSerialType.OWNER, ownerListPostDto.ZoneId, ownerListPostDto.CreatedById);

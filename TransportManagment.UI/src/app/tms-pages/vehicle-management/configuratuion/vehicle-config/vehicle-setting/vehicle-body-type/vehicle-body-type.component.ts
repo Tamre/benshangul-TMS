@@ -6,10 +6,9 @@ import { TokenStorageService } from 'src/app/core/services/token-storage.service
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { PaginationService } from 'src/app/core/services/pagination.service';
 import { TranslateService } from '@ngx-translate/core';
-import { RootReducerState } from 'src/app/store';
-import { Store } from '@ngrx/store';
-import { fetchCrmContactData } from 'src/app/store/CRM/crm_action';
-import { selectCRMLoading } from 'src/app/store/CRM/crm_selector';
+
+
+
 import { cloneDeep } from 'lodash';
 import { ResponseMessage } from 'src/app/model/ResponseMessage.Model';
 import { successToast } from 'src/app/core/services/toast.service';
@@ -53,7 +52,7 @@ export class VehicleBodyTypeComponent implements OnInit {
     private modalService: NgbModal,
     public service: PaginationService,
     public translate: TranslateService,
-    private store: Store<{ data: RootReducerState }>,
+
     public vehiclecongigService:VehicleConfigService,
   ) {}
   ngOnInit(): void {
@@ -76,12 +75,7 @@ export class VehicleBodyTypeComponent implements OnInit {
     /**
      * fetches data
      */
-    this.store.dispatch(fetchCrmContactData());
-    this.store.select(selectCRMLoading).subscribe((data) => {
-      if (data == false) {
-        document.getElementById("elmLoader")?.classList.add("d-none");
-      }
-    });
+   
   }
   floatValidator(control: AbstractControl): Promise<ValidationErrors | null> {
     return Promise.resolve().then(() => {

@@ -139,7 +139,13 @@ namespace TransportManagmentImplementation.Services.Vehicle.Action
                 return new ResponseMessage
                 {
                     Success = true,
-                    Message = "Vehicle Encoded Successfully !!!"
+                    Message = "Vehicle Encoded Successfully !!!",
+                    Data = new
+                    {
+                        vehicleId= vechicle.Id,
+                        vehicleRegNo= vechicle.RegistrationNo,
+                        vehicleChasis = vechicle.ChassisNo}
+
                 };
 
             }
@@ -182,9 +188,9 @@ namespace TransportManagmentImplementation.Services.Vehicle.Action
                 return new ResponseMessage { Success = false, Message = "Document Already exists" };
             }
 
-            string nameOfFile = $"{currentDocument.FileName}/{currentVehicle.Id}";
+            string nameOfFolder = $"Vehicle\\{currentDocument.FileName}";
 
-            string path = await _generalConfigService.UploadFiles(addVehicleDocument.Document, nameOfFile, "Vehicle");
+            string path = await _generalConfigService.UploadFiles(addVehicleDocument.Document, currentVehicle.Id.ToString(), nameOfFolder);
 
             if (string.IsNullOrEmpty(path))
             {
@@ -198,7 +204,7 @@ namespace TransportManagmentImplementation.Services.Vehicle.Action
                 CreatedDate = DateTime.Now,
                 DocumentPath = path,
                 DocumentTypeId = addVehicleDocument.DocumentTypeId,
-                ForVehicleDocument = addVehicleDocument.ForVehicleDocument,
+              
                 IsActive = true,
                 VehicleId = addVehicleDocument.VehicleId
             };
@@ -526,6 +532,18 @@ namespace TransportManagmentImplementation.Services.Vehicle.Action
             }
         }
 
+        public async Task<List<VehicleDocumetGetDto>> GetVehicleDocuments(Guid vehicleId)
+        {
 
+            var docs = await _dbContext.VehicleDocuments.Include(x => x.DocumentType).
+                
+                Where(x => x.VehicleId== vehicleId).ToListAsync();
+
+            var docDtos = _mapper.Map<List<VehicleDocumetGetDto>>(docs);
+
+            return docDtos; 
+
+
+        }
     }
 }

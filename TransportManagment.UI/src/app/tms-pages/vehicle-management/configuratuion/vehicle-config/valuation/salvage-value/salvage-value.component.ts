@@ -2,15 +2,14 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { UntypedFormGroup, UntypedFormBuilder, AbstractControl, ValidationErrors, Validators } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { Store } from '@ngrx/store';
+
 import { TranslateService } from '@ngx-translate/core';
 import { PaginationService } from 'src/app/core/services/pagination.service';
 import { TokenStorageService } from 'src/app/core/services/token-storage.service';
 import { UserView } from 'src/app/model/user';
-import { RootReducerState } from 'src/app/store';
+
 import { cloneDeep } from 'lodash';
-import { fetchCrmContactData } from 'src/app/store/CRM/crm_action';
-import { selectCRMLoading } from 'src/app/store/CRM/crm_selector';
+
 import { successToast } from 'src/app/core/services/toast.service';
 import { SalvageValuePostDto } from 'src/app/model/vehicle-configuration/salvage-value';
 import { VehicleConfigService } from 'src/app/core/services/Vehicle-services/vehicle-config.service';
@@ -42,7 +41,7 @@ export class SalvageValueComponent {
     private modalService: NgbModal,
     public service: PaginationService,
     public translate: TranslateService,
-    private store: Store<{ data: RootReducerState }>,
+   
     public vehicleConfigService:VehicleConfigService
   ) {}
   ngOnInit(): void {
@@ -61,15 +60,7 @@ export class SalvageValueComponent {
       isActive:[true]
     });
     
-    /**
-     * fetches data
-     */
-    this.store.dispatch(fetchCrmContactData());
-    this.store.select(selectCRMLoading).subscribe((data) => {
-      if (data == false) {
-        document.getElementById("elmLoader")?.classList.add("d-none");
-      }
-    });
+  
   }
   floatValidator(control: AbstractControl): ValidationErrors | null {
     if (control.value && !/^-?\d+(\.\d+)?$/.test(control.value)) {

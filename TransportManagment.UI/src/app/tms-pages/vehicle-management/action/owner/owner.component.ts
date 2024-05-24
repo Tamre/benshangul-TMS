@@ -5,10 +5,8 @@ import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { TokenStorageService } from 'src/app/core/services/token-storage.service';
 import { UserView } from 'src/app/model/user';
-import { fetchCrmContactData } from 'src/app/store/CRM/crm_action';
-import { selectCRMLoading } from 'src/app/store/CRM/crm_selector';
-import { RootReducerState } from 'src/app/store';
-import { Store } from '@ngrx/store';
+
+
 import { ResponseMessage } from 'src/app/model/ResponseMessage.Model';
 import { successToast } from 'src/app/core/services/toast.service';
 import { ToastService } from 'src/app/account/login/toast-service';
@@ -89,7 +87,7 @@ export class OwnerComponent implements OnInit {
     private formBuilder: UntypedFormBuilder,
     private tokenStorageService: TokenStorageService,
     private modalService: NgbModal,
-    private store: Store<{ data: RootReducerState }>,
+
     public toastService: ToastService,
     public service: Pagination1Service,
     private addressService: AddressService,
@@ -130,12 +128,7 @@ export class OwnerComponent implements OnInit {
       searchType: ["", Validators.required],
       search: ["", Validators.required],
     });
-    this.store.dispatch(fetchCrmContactData());
-    this.store.select(selectCRMLoading).subscribe((data) => {
-      if (data == false) {
-        document.getElementById("elmLoader")?.classList.add("d-none");
-      }
-    });
+
   }
   submitSearch() {
     this.submitted1=true;

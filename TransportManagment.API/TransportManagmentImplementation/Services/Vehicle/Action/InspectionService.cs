@@ -37,13 +37,23 @@ namespace TransportManagmentImplementation.Services.Vehicle.Action
 
             try
             {
+
+
                 var FieldInspection = new FieldInspection();
+                               
+
+                var fieldInspections = await _dbContext.FieldInspections.Where(x=>x.VehicleId== inspection.VehicleId).ToListAsync();
 
 
+                fieldInspections.ForEach(fi =>
+                {
+                    fi.IsActive = false;
+                });
+                await _dbContext.SaveChangesAsync();
 
 
                 FieldInspection.Id = Guid.NewGuid();
-                FieldInspection.CreatedById = FieldInspection.CreatedById;
+                FieldInspection.CreatedById = inspection.CreatedById;
                 FieldInspection.CreatedDate = DateTime.Now;
                 FieldInspection.VehicleId = inspection.VehicleId;
                 FieldInspection.GivenZoneId = inspection.GivenZoneId;
@@ -63,6 +73,7 @@ namespace TransportManagmentImplementation.Services.Vehicle.Action
                 FieldInspection.TareWeight = inspection.TareWeight;
                 FieldInspection.FrontPlateSizeId = inspection.FrontPlateSizeId;
                 FieldInspection.BackPlateSizeId = inspection.BackPlateSizeId;
+                FieldInspection.IsActive = true; 
 
 
                 await _dbContext.FieldInspections.AddAsync(FieldInspection);
@@ -207,23 +218,32 @@ namespace TransportManagmentImplementation.Services.Vehicle.Action
         {
 
             var InspectionDetails = new InspectionDto();
-            var FieldInspection = await _dbContext.FieldInspections.Where(u => u.VehicleId == vehicleId && u.IsActive).FirstOrDefaultAsync();
+            var FieldInspections = await _dbContext.FieldInspections.Where(u => u.VehicleId == vehicleId ).ToListAsync();
 
-            if (FieldInspection != null)
+
+            var FieldInspectionDetailResponseDtos = _mapper.Map<List<FieldInspectionGetDto>>(FieldInspections);
+
+            InspectionDetails.FieldInspection = new List<FieldInspectionGetDto>();
+            InspectionDetails.TechnicalInspection = new List<TechnicalInspectionGetDto>();
+
+            InspectionDetails.FieldInspection = FieldInspectionDetailResponseDtos;
+
+            foreach ( var fieldInspection in FieldInspections)
             {
+               
 
-                var tecnicalInspection = await _dbContext.TechnicalInspections.Where(u => u.FieldInspectionId == FieldInspection.Id && u.IsActive).FirstOrDefaultAsync();
+                    var tecnicalInspection = await _dbContext.TechnicalInspections.Where(u => u.FieldInspectionId == fieldInspection.Id).ToListAsync();
+                    
+                    var tecnicalInspectionDetailResponseDtos = _mapper.Map<List<TechnicalInspectionGetDto>>(tecnicalInspection);
 
-                var FieldInspectionDetailResponseDto = _mapper.Map<FieldInspectionGetDto>(FieldInspection);
-                var tecnicalInspectionDetailResponseDto = _mapper.Map<TechnicalInspectionGetDto>(tecnicalInspection);
 
+                    InspectionDetails.TechnicalInspection.AddRange(tecnicalInspectionDetailResponseDtos);
 
-                InspectionDetails.FieldInspection = FieldInspectionDetailResponseDto;
-
-                InspectionDetails.TechnicalInspection = tecnicalInspectionDetailResponseDto;
+                                  
 
 
             }
+
 
             return InspectionDetails;
         }

@@ -1,57 +1,131 @@
-
-<form (ngSubmit)="onSubmit()" [formGroup]="vehicleDocumentForm" class="tablelist-form" autocomplete="off">
-  <div class="modal-body">                           
-      <div class="row g-3">
-
-
-        <div class="col-lg-6">
-          <div class="mb-3">
-              <label for="documentTypeId-field" class="form-label">{{ 'Document Type' | translate
-                  }}</label>
-              <ng-select [items]="documentTypes" bindLabel="name" bindValue="id"
-                  id="documentTypeId-field" name="documentTypeId"
-                  formControlName="documentTypeId" [searchable]="true" required>
-              </ng-select>
-              <div *ngIf="vehicleDocumentForm.get('document')?.invalid && (vehicleDocumentForm.get('document')?.dirty || vehicleDocumentForm.get('document')?.touched)">
-                Document is required.
-              </div>
-          </div>
-          </div>
-          
-
-          
-        <div class="col-lg-6">
-          <div class="mb-3">
-              <label for="forVehicleDocument-field" class="form-label">{{ 'For Vehicle Document' | translate
-                  }}</label>
-              <ng-select [items]="forVehicleDocumentOption" bindLabel="name" bindValue="code"
-                  id="forVehicleDocument-field" name="forVehicleDocument"
-                  formControlName="forVehicleDocument" [searchable]="true" required>
-              </ng-select>
-              <div *ngIf="vehicleDocumentForm.get('forVehicleDocument')?.invalid && (vehicleDocumentForm.get('forVehicleDocument')?.dirty || vehicleDocumentForm.get('forVehicleDocument')?.touched)">
-                For Vehicle Document is required.
-              </div>
-          </div>
-      </div>
-      <div class="col-lg-6">
-        <div class="mb-3">
-            <label for="formFile" class="form-label">Document</label>
-            <input class="form-control" type="file" id="formFile" (change)="onFileChange($event)">
-            <div *ngIf="vehicleDocumentForm.get('document')?.invalid && (vehicleDocumentForm.get('document')?.dirty || vehicleDocumentForm.get('document')?.touched)">
-              Document is required.
+<div class="card-header text-end">
+    <div class="row g-3 p-2">
+        <div class="d-flex align-items-center flex-wrap gap-2">
+            <div class="flex-grow-1">
+                <button class="btn btn-info add-btn" data-bs-toggle="modal" data-bs-target="#showModal"
+                    (click)="openModal(content)">
+                    <i class="ri-add-fill me-1 align-bottom"></i> {{ 'Add Document' | translate }}
+                </button>
             </div>
         </div>
+
     </div>
+</div>
+<div class="card-body mt-4">
+    <div>
+        <div class="table-responsive table-card mb-2">
+            <table class="table table-gridjs">
+                <thead>
+                    <tr class="bg-light">
+                        <th scope="col" style="width: 50px;"></th>
+                        <th>{{ 'For Vehicle Document' | translate }}</th>
+                        <th>{{ 'Document' | translate }}</th>
+                        <th>{{ 'Action' | translate }}</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (data of vehicleDocumentList ; track $index) {
+                    <tr id="c_{{data.documentName}}">
+                        <th scope="row">{{ $index + 1 }}</th>
+                        <td class="name">
+
+                            <span>{{data.documentName}}</span>
+                        </td>
+                        <td>
+
+                            <button class="btn btn-outline-info add-btn" data-bs-toggle="modal2"
+                                data-bs-target="#showModal2" (click)="viewFile(content2,data)">
+                                <i class="ri-eye me-1 align-bottom"></i> {{ 'View Document' | translate }}
+                            </button>
+
+                        </td>
+
+                        <td>
+
+
+
+                        </td>
+                    </tr>
+                    }
+                </tbody>
+            </table>
         </div>
+
+    </div>
+
+
+</div>
+
+
+<ng-template #content role="document" let-modal>
+    <div class="modal-header bg-info-subtle p-3">
+        <h5 class="modal-title" id="exampleModalLabel">{{ 'Add Document' | translate }}</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal"
+            (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <form (ngSubmit)="onSubmit()" [formGroup]="vehicleDocumentForm" class="tablelist-form" autocomplete="off">
+        <div class="modal-body">
+            <div class="row g-3">
+
+
+                <div class="col-lg-6">
+                    <div class="mb-3">
+                        <label for="documentTypeId-field" class="form-label">{{ 'Document Type' | translate
+                            }}</label>
+                        <ng-select [items]="documentTypes" bindLabel="name" bindValue="id" id="documentTypeId-field"
+                            name="documentTypeId" formControlName="documentTypeId" [searchable]="true" required>
+                        </ng-select>
+                        <div
+                            *ngIf="vehicleDocumentForm.get('document')?.invalid && (vehicleDocumentForm.get('document')?.dirty || vehicleDocumentForm.get('document')?.touched)">
+                            Document is required.
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <div class="col-lg-6">
+                    <div class="mb-3">
+                        <label for="formFile" class="form-label">Document</label>
+                        <input class="form-control" type="file" id="formFile" (change)="onFileChange($event)">
+                        <div
+                            *ngIf="vehicleDocumentForm.get('document')?.invalid && (vehicleDocumentForm.get('document')?.dirty || vehicleDocumentForm.get('document')?.touched)">
+                            Document is required.
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
         <div class="modal-footer">
-          <div class="hstack gap-2 justify-content-end">
-              <!-- <button type="button" class="btn btn-light" data-bs-dismiss="modal" (click)="closeModal()">{{
-                      'Close' |
-                      translate }}</button> -->
-              <button type="submit" [disabled]="vehicleDocumentForm.invalid" class="btn btn-success"
-                  id="add-btn">{{
-                  'Add document' | translate }}</button>
-          </div>
-      </div>
-</form>
+            <div class="hstack gap-2 justify-content-end">
+                <!-- <button type="button" class="btn btn-light" data-bs-dismiss="modal" (click)="closeModal()">{{
+                          'Close' |
+                          translate }}</button> -->
+                <button type="submit" [disabled]="vehicleDocumentForm.invalid" class="btn btn-success" id="add-btn">{{
+                    'Add document' | translate }}</button>
+            </div>
+        </div>
+    </form>
+
+</ng-template>
+
+<ng-template #content2 role="docu-viewr" let-modal>
+
+    <div class="modal-header bg-info-subtle p-3">
+        <h5 class="modal-title" id="exampleModalLabel">{{ selectedVehcDoc.documentName | translate }}</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal"
+            (click)="closeModal()"></button>
+    </div>
+
+    <div class="modal-body">
+
+        <div class="" style="height: 100vh;overflow-y: scroll;">
+            <img [src]="getImageUrl(selectedVehcDoc.documentPath)" style="width: 100%;">
+        </div>
+
+
+    </div>
+
+
+</ng-template>

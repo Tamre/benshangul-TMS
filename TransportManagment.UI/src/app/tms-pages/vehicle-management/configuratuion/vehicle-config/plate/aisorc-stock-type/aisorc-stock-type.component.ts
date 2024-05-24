@@ -9,10 +9,8 @@ import { StockTypePostDto } from 'src/app/model/vehicle-configuration/stock-type
 import { TranslateService } from '@ngx-translate/core';
 import { successToast } from "src/app/core/services/toast.service";
 import { cloneDeep } from 'lodash';
-import { Store } from '@ngrx/store';
-import { RootReducerState } from 'src/app/store';
-import { fetchCrmContactData } from 'src/app/store/CRM/crm_action';
-import { selectCRMLoading } from 'src/app/store/CRM/crm_selector';
+
+
 import { ResponseMessage } from 'src/app/model/ResponseMessage.Model';
 import { VehicleConfigService } from 'src/app/core/services/Vehicle-services/vehicle-config.service';
 
@@ -48,7 +46,7 @@ export class AisorcStockTypeComponent {
     public service: PaginationService,
     public vehiclecongigService: VehicleConfigService,
     public translate: TranslateService,
-    private store: Store<{ data: RootReducerState }>,
+  
   ) {}
 
   ngOnInit(): void {
@@ -67,15 +65,8 @@ export class AisorcStockTypeComponent {
       isActive:[true]
       //,Validators.pattern(/^-?\d+$/)
     });
-    /**
-     * fetches data
-     */
-    this.store.dispatch(fetchCrmContactData());
-    this.store.select(selectCRMLoading).subscribe((data) => {
-      if (data == false) {
-        document.getElementById("elmLoader")?.classList.add("d-none");
-      }
-    });
+   
+
   }
   getCategoryName(code: string): string {
     const category = this.CategoryDropDownItem.find(item => item.code === code);
