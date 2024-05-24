@@ -1,0 +1,159 @@
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-header text-end">
+                <div class="d-flex align-items-center flex-wrap gap-2">
+                    <div class="flex-grow-1">
+                        <button class="btn btn-info add-btn" data-bs-toggle="modal" data-bs-target="#showModal"
+                            (click)="openModal(content)">
+                            <i class="ri-add-fill me-1 align-bottom"></i> {{ 'Add Technical Inspection' | translate }}
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body">
+                <!-- Additional content can go here if needed -->
+            </div>
+        </div>
+    </div>
+</div>
+
+<ng-template #content role="document" let-modal>
+    <div class="modal-header bg-info-subtle p-3">
+        <h5 class="modal-title" id="exampleModalLabel">{{ 'Add Technical Inspection' | translate }}</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal"
+            (click)="modal.dismiss('Cross click')"></button>
+    </div>
+
+    <form (ngSubmit)="submitCreateTechnicalInspection()" [formGroup]="technicalInspectionForm" class="tablelist-form" autocomplete="off">
+        <div class="modal-body">
+            <div class="row g-3">
+              
+                
+                <!-- Vehicle Body Type Id -->
+                <div class="col-lg-3">
+                    <div class="mb-3">
+                        <label for="vehicleBodyTypeId" class="form-label">{{ 'Vehicle Body Type Id' | translate }}</label>
+                        <ng-select [items]="vehicleBodyTypeList" bindLabel="name" bindValue="id" formControlName="vehicleBodyTypeId" [searchable]="true" required>
+                        </ng-select>
+                        <div *ngIf="submitted && technicalInspectionForm.get('vehicleBodyTypeId')?.invalid" class="invalid-feedback">
+                            {{ 'Vehicle Body Type Id is required' | translate }}
+                        </div>
+                    </div>
+                </div>
+              
+                <!-- Load Measurement Id -->
+                <div class="col-lg-3">
+                    <div class="mb-3">
+                        <label for="loadMesurementId" class="form-label">{{ 'Load Measurement Id' | translate }}</label>
+                        <input type="number" id="loadMesurementId" class="form-control" placeholder="{{ 'Load Measurement Id' | translate }}" formControlName="loadMesurementId" [ngClass]="{'is-invalid': submitted && technicalInspectionForm.get('loadMesurementId')?.invalid}" />
+                        <div *ngIf="submitted && technicalInspectionForm.get('loadMesurementId')?.invalid" class="invalid-feedback">
+                            {{ 'Load Measurement Id is required' | translate }}
+                        </div>
+                    </div>
+                </div>
+                <!-- Number of People -->
+                <div class="col-lg-3">
+                    <div class="mb-3">
+                        <label for="noOfPeople" class="form-label">{{ 'Number of People' | translate }}</label>
+                        <input type="number" id="noOfPeople" class="form-control" placeholder="{{ 'Number of People' | translate }}" formControlName="noOfPeople" [ngClass]="{'is-invalid': submitted && technicalInspectionForm.get('noOfPeople')?.invalid}" />
+                        <div *ngIf="submitted && technicalInspectionForm.get('noOfPeople')?.invalid" class="invalid-feedback">
+                            {{ 'Number of People is required' | translate }}
+                        </div>
+                    </div>
+                </div>
+                <!-- Load Value -->
+                <div class="col-lg-3">
+                    <div class="mb-3">
+                        <label for="loadValue" class="form-label">{{ 'Load Value' | translate }}</label>
+                        <input type="number" id="loadValue" class="form-control" placeholder="{{ 'Load Value' | translate }}" formControlName="loadValue" [ngClass]="{'is-invalid': submitted && technicalInspectionForm.get('loadValue')?.invalid}" />
+                        <div *ngIf="submitted && technicalInspectionForm.get('loadValue')?.invalid" class="invalid-feedback">
+                            {{ 'Load Value is required' | translate }}
+                        </div>
+                    </div>
+                </div>
+                <!-- Color Id -->
+                <div class="col-lg-3">
+                    <div class="mb-3">
+                        <label for="colorId" class="form-label">{{ 'Color' | translate }}</label>
+                        <ng-select [items]="colorList" bindLabel="name" bindValue="id" formControlName="colorId" [searchable]="true" required>
+                        </ng-select>
+                        <div *ngIf="submitted && technicalInspectionForm.get('colorId')?.invalid" class="invalid-feedback">
+                            {{ 'Color Id is required' | translate }}
+                        </div>
+                    </div>
+                </div>
+                <!-- Hydro Carbon -->
+                <div class="col-lg-3">
+                    <div class="mb-3">
+                        <label for="hydroCarbon" class="form-label">{{ 'Hydro Carbon' | translate }}</label>
+                        <input type="text" id="hydroCarbon" class="form-control" placeholder="{{ 'Hydro Carbon' | translate }}" formControlName="hydroCarbon" [ngClass]="{'is-invalid': submitted && technicalInspectionForm.get('hydroCarbon')?.invalid}" />
+                        <div *ngIf="submitted && technicalInspectionForm.get('hydroCarbon')?.invalid" class="invalid-feedback">
+                            {{ 'Hydro Carbon is required' | translate }}
+                        </div>
+                    </div>
+                </div>
+                <!-- Carbon Mono Oxide -->
+                <div class="col-lg-3">
+                    <div class="mb-3">
+                        <label for="carbonMonoOxide" class="form-label">{{ 'Carbon Mono Oxide' | translate }}</label>
+                        <input type="text" id="carbonMonoOxide" class="form-control" placeholder="{{ 'Carbon Mono Oxide' | translate }}" formControlName="carbonMonoOxide" [ngClass]="{'is-invalid': submitted && technicalInspectionForm.get('carbonMonoOxide')?.invalid}" />
+                        <div *ngIf="submitted && technicalInspectionForm.get('carbonMonoOxide')?.invalid" class="invalid-feedback">
+                            {{ 'Carbon Mono Oxide is required' | translate }}
+                        </div>
+                    </div>
+                </div>
+                <!-- Is Engine Readable -->
+                <div class="col-lg-3">
+                    <div class="mb-3">
+                        <label for="isEngineReadable" class="form-label">{{ 'Is Engine Readable' | translate }}</label>
+                        <input type="checkbox" id="isEngineReadable" class="form-check-input" formControlName="isEngineReadable" />
+                        <div *ngIf="submitted && technicalInspectionForm.get('isEngineReadable')?.invalid" class="text-danger">
+                            {{ 'Engine readability status is required' | translate }}
+                        </div>
+                    </div>
+                </div>
+                <!-- Permission Letter No -->
+                <div class="col-lg-3">
+                    <div class="mb-3">
+                        <label for="permissionLetterNo" class="form-label">{{ 'Permission Letter No' | translate }}</label>
+                        <input type="text" id="permissionLetterNo" class="form-control" placeholder="{{ 'Permission Letter No' | translate }}" formControlName="permissionLetterNo" [ngClass]="{'is-invalid': submitted && technicalInspectionForm.get('permissionLetterNo')?.invalid}" />
+                        <div *ngIf="submitted && technicalInspectionForm.get('permissionLetterNo')?.invalid" class="invalid-feedback">
+                            {{ 'Permission Letter No is required' | translate }}
+                        </div>
+                    </div>
+                </div>
+                <!-- Permission Date -->
+                <div class="col-lg-3">
+                    <div class="mb-3">
+                        <label for="permissionDate" class="form-label">{{ 'Permission Date' | translate }}</label>
+                        <input type="date" id="permissionDate" class="form-control" placeholder="{{ 'Permission Date' | translate }}" formControlName="permissionDate" [ngClass]="{'is-invalid': submitted && technicalInspectionForm.get('permissionDate')?.invalid}" />
+                        <div *ngIf="submitted && technicalInspectionForm.get('permissionDate')?.invalid" class="invalid-feedback">
+                            {{ 'Permission Date is required' | translate }}
+                        </div>
+                    </div>
+                </div>
+                <!-- Remark -->
+                <div class="col-lg-3">
+                    <div class="mb-3">
+                        <label for="remark" class="form-label">{{ 'Remark' | translate }}</label>
+                        <textarea id="remark" class="form-control" placeholder="{{ 'Remark' | translate }}" formControlName="remark" [ngClass]="{'is-invalid': submitted && technicalInspectionForm.get('remark')?.invalid}"></textarea>
+                        <div *ngIf="submitted && technicalInspectionForm.get('remark')?.invalid" class="invalid-feedback">
+                            {{ 'Remark is required' | translate }}
+                        </div>
+                    </div>
+                </div>
+                <!-- Created By Id -->
+                
+            </div>
+        </div>
+        <div class="modal-footer">
+            <div class="hstack gap-2 justify-content-end">
+                <button type="submit" [disabled]="technicalInspectionForm.invalid" class="btn btn-success" id="add-btn">
+                    {{ 'Add' | translate }}
+                </button>
+            </div>
+        </div>
+       
+    </form>
+</ng-template>
