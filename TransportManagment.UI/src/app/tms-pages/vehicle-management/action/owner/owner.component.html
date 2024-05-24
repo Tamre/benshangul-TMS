@@ -5,24 +5,66 @@
 
 
     <div class="card">
-        <!-- <div class="col-lg-12">
-
-            <div class="card-header">
-                <div class="d-flex justify-content-end gap-2">
-                    <button class="btn btn-info" data-bs-toggle="modal" data-bs-target="#showModal"
-                        (click)="openModal(content)">
-                        <i class="ri-add-fill me-1 align-bottom"></i> {{ 'Add Owner' | translate }}
-                    </button>
-
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-header text-end">
+                    <div class="d-flex align-items-center flex-wrap gap-2">
+                        <div class="flex-grow-1">
+                            <button class="btn btn-info" data-bs-toggle="modal" data-bs-target="#showModal"
+                                    (click)="openModal(content)">
+                                    <i class="ri-add-fill me-1 align-bottom"></i> {{ 'Add Owner' | translate }}
+                                </button>
+                        </div>
+                    </div>
                 </div>
             </div>
+        </div>
+        <div class="row g-3 align-items-end">
+            <div class="col-lg-9">
+                <div class="card-header border-0 justify-content-sm-start">
+                    <form (ngSubmit)="submitSearch()" [formGroup]="searchForm" class="tablelist-form"
+                        autocomplete="off">
+                        <div class="row g-3 align-items-end">
+                            <div class="text-end">
+                            </div>
+                            <div class="col-lg-3">
+                                <label for="searchType-field" class="form-label">{{ 'Search By' | translate
+                                    }}</label>
 
-        </div> -->
+                                <ng-select [(ngModel)]="selectedSearchType" [items]="searchDropDownItem"
+                                    bindLabel="name" bindValue="code" id="searchType-field"
+                                    name="searchType" formControlName="searchType"
+                                    [ngClass]="{ 'is-invalid': submitted1 && searchForm.controls['searchType'].errors }"
+                                    [searchable]="false" placeholder="Select Search Type" required>
+                                    <ng-option value="" disabled>{{ 'Select Search Type' | translate
+                                        }}</ng-option>
+                                </ng-select>
+
+                            </div>
+                            <div class="col-lg-3" *ngIf="selectedSearchType">
+                                <label for="searchField-field" class="form-label">{{ 'Value' | translate
+                                    }}</label>
+                                <input type="text" id="search-field" class="form-control"
+                                    placeholder="{{ 'value' | translate }}" required
+                                    formControlName="search"
+                                    [ngClass]="{ 'is-invalid': submitted1 && fo['search'].errors }" />
+                            </div>
+                            <div class="col-lg-2 d-flex align-items-end">
+                                <button class="btn btn-success add-btn mt-auto" (click)="submitSearch()"
+                                    type="submit">
+                                    <i class="mdi mdi-magnify"></i> {{ 'Search' | translate }}
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
 
         <div class="col-xxl-12">
             <div class="card" id="contactList">
                 <div class="card-header">
-                    <div class="row g-4 mb-3">
+                    <!-- <div class="row g-4 mb-3">
                         <div class="col-lg-9">
                             <div class="card-header border-0 justify-content-sm-start">
                                 <form (ngSubmit)="submitSearch()" [formGroup]="searchForm" class="tablelist-form"
@@ -62,27 +104,27 @@
                                 </form>
                             </div>
                         </div>
-                        <!-- <div class="col-sm-auto d-flex align-items-center">
+                        <div class="col-sm-auto d-flex align-items-center">
                             <span class="me-2">Show:</span>
                             <ng-select [(ngModel)]="selectedPageSize" (ngModelChange)="refreshData()"
                                 [items]="pageSizeOptions" bindLabel="label" bindValue="value" class="custom-ng-select"
                                 [clearable]="false"></ng-select>
                             <span class="ms-2">Entries</span>
-                        </div> -->
+                        </div>
                         <div class="col-lg-3 d-flex align-items-center justify-content-end">
-                            <!-- <div class="d-flex justify-content-end gap-2"> -->
+                            <div class="d-flex justify-content-end gap-2">
                                 <button class="btn btn-info" data-bs-toggle="modal" data-bs-target="#showModal"
                                     (click)="openModal(content)">
                                     <i class="ri-add-fill me-1 align-bottom"></i> {{ 'Add Owner' | translate }}
                                 </button>
 
-                            <!-- </div> -->
+                            </div>
                         </div>
 
-                    </div>
+                    </div> -->
                     <div class="row g-4 mb-3">
 
-                        <div class="col-sm-auto ms-3 d-flex align-items-center">
+                        <div class="col-sm-auto d-flex align-items-center">
                             <span class="me-2">Show:</span>
                             <ng-select [(ngModel)]="selectedPageSize" (ngModelChange)="refreshData()"
                                 [items]="pageSizeOptions" bindLabel="label" bindValue="value" class="custom-ng-select"
@@ -111,7 +153,7 @@
                                         <th>{{ 'Action' | translate }}</th>
                                     </tr>
                                 </thead>
-                                <tbody *ngIf="owners?.length > 0; else noData">
+                                <tbody *ngIf="owners.length > 0; else noData">
                                     <ng-container *ngFor="let data of owners; let i=index">
                                         <tr id="c_{{data.id}}">
                                             <th scope="row">{{ i + 1 }}
@@ -317,7 +359,7 @@
                                             }}</label>
                                         <ng-select [items]="zoneNames" bindLabel="name" bindValue="id"
                                             [(ngModel)]="selectedZone" id="zoneId-field" name="zoneId"
-                                            formControlName="zoneId" [searchable]="true" required
+                                            formControlName="zoneId" [searchable]="false" required
                                             placeholder="Select Zone"
                                             [ngClass]="{ 'is-invalid': submitted && ownerForm.controls['zoneId'].errors }">
                                         </ng-select>
@@ -334,7 +376,7 @@
                                             }}</label>
                                         <ng-select [items]="woredaNames" bindLabel="name" bindValue="id"
                                             [(ngModel)]="selectedWoreda" id="woredaId-field" name="woredaId"
-                                            formControlName="woredaId" [searchable]="true" placeholder="Select Woreda">
+                                            formControlName="woredaId" [searchable]="false" placeholder="Select Woreda">
                                         </ng-select>
                                     </div>
                                     <div class="col-lg-4">

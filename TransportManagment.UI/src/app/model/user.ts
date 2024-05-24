@@ -7,6 +7,8 @@ export interface UserView {
     userId : string ;
     id:string;
     userName:string ;
+    userTypeId: number;
+    userType: string;
 }
 
 export interface Token {

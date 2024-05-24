@@ -59,50 +59,53 @@ namespace TransportManagmentImplementation.Services.Configuration
             }
             else
             {
-                var currentZone = await _dbContext.Zones.FindAsync(zoneId);
-                if (currentZone == null)
-                {
-                    return "";
-                }
+                
+                    var currentZone = await _dbContext.Zones.FindAsync(zoneId);
+                    if (currentZone == null)
+                    {
+                        return "";
+                    }
 
 
-                string vehicleSerialTypeShortCode = "";
+                    string vehicleSerialTypeShortCode = "";
 
-                switch (vehicleSerialType)
-                {
-                    case VehicleSerialType.TRANSFERNO:
-                        vehicleSerialTypeShortCode = "TN";
-                        break;
-                    case VehicleSerialType.OWNER:
+                    switch (vehicleSerialType)
+                    {
+                        case VehicleSerialType.TRANSFERNO:
+                            vehicleSerialTypeShortCode = "TN";
+                            break;
+                        case VehicleSerialType.OWNER:
 
-                        vehicleSerialTypeShortCode = "ON";
-                        break;
+                            vehicleSerialTypeShortCode = "ON";
+                            break;
 
-                    default:
-                        vehicleSerialTypeShortCode = "RN";
-                        break;
+                        default:
+                            vehicleSerialTypeShortCode = "RN";
+                            break;
 
 
-                };
+                    };
 
-                VehicleSerialSetting vehicleSerial = new VehicleSerialSetting()
-                {
-                    CreatedById = userId,
-                    CreatedDate = DateTime.Now,
-                    IsActive = true,
-                    Name = vehicleSerialTypeShortCode,
-                    VehicleSerialType = vehicleSerialType,
-                    Pad = 5,
-                    Value = 1,
-                    ZoneId = zoneId,
-                };
-                await _dbContext.VehicleSerialSettings.AddAsync(vehicleSerial);
-                await _dbContext.SaveChangesAsync();
+                    VehicleSerialSetting vehicleSerial = new VehicleSerialSetting()
+                    {
+                        CreatedById = userId,
+                        CreatedDate = DateTime.Now,
+                        IsActive = true,
+                        Name = vehicleSerialTypeShortCode,
+                        VehicleSerialType = vehicleSerialType,
+                        Pad = 5,
+                        Value = 1,
+                        ZoneId = zoneId,
+                    };
+                    await _dbContext.VehicleSerialSettings.AddAsync(vehicleSerial);
+                    await _dbContext.SaveChangesAsync();
 
-                var generatedCode = $"{currentZone.Code}-{vehicleSerial.Name}{vehicleSerial.Value.ToString().PadLeft(vehicleSerial.Pad, '0')}";
+                    var generatedCode = $"{currentZone.Code}-{vehicleSerial.Name}{vehicleSerial.Value.ToString().PadLeft(vehicleSerial.Pad, '0')}";
 
-                return generatedCode;
+                    return generatedCode;
 
+                
+               
             }
 
             return "";

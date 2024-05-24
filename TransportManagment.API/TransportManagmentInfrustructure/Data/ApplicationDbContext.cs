@@ -169,7 +169,7 @@ namespace TransportManagmentInfrustructure.Data
             });
             modelBuilder.Entity<VehicleSerialSetting>(entity =>
             {
-                entity.HasIndex(t => t.VehicleSerialType).IsUnique();
+                entity.HasIndex(t =>  new { t.VehicleSerialType, t.ZoneId }).IsUnique();
             });
             modelBuilder.Entity<VehicleSettings>(entity =>
             {

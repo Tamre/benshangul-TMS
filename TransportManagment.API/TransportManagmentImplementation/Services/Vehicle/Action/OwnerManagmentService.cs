@@ -104,7 +104,7 @@ namespace TransportManagmentImplementation.Services.Vehicle.Action
                     };
                 }
 
-                var ownerRegistrationNo = await _generalConfigService.GenerateVehicleNumber(VehicleSerialType.OWNER, ownerListPostDto.ZoneId, ownerListPostDto.CreatedById);
+                var ownerRegistrationNo = await _generalConfigService.GenerateVehicleNumber(VehicleSerialType.OWNER, ownerListPostDto.ServiceZoneId, ownerListPostDto.CreatedById);
 
 
 

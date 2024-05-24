@@ -24,6 +24,7 @@ export interface OwnerGetDto {
     amharicName: string;
     woreda: string;
     zone: string;
+    serviceZoneId: string;
     //trainingCenter: string;
     //ownerState: string;
 }
@@ -47,7 +48,7 @@ export interface OwnerPostDto {
     amharicFirstName: string;
     amharicMiddleName: string;
     amharicLastName: string;
-    gender: string;
+    gender: number;
     zoneId: number;
     woredaId?: string;
     town?: string;
@@ -57,5 +58,6 @@ export interface OwnerPostDto {
     idNumber: string;
     poBox?: string;
     createdById: string;
-    ownerGroup: string;
+    ownerGroup: number;
+    serviceZoneId: number;
 }

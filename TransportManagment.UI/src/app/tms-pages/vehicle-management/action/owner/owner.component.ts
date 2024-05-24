@@ -10,7 +10,7 @@ import { fetchCrmContactData } from 'src/app/store/CRM/crm_action';
 import { selectCRMLoading } from 'src/app/store/CRM/crm_selector';
 import { RootReducerState } from 'src/app/store';
 import { Store } from '@ngrx/store';
-import { MetaData, OwnerPostDto } from 'src/app/model/vehicle/owner';
+import { MetaData, OwnerGetDto, OwnerPostDto, PaginatedResponse } from 'src/app/model/vehicle/owner';
 import { ResponseMessage } from 'src/app/model/ResponseMessage.Model';
 import { successToast } from 'src/app/core/services/toast.service';
 import { ToastService } from 'src/app/account/login/toast-service';
@@ -33,8 +33,8 @@ export class OwnerComponent implements OnInit {
   ownerForm!: UntypedFormGroup;
   searchForm!: UntypedFormGroup;
 
-  allOwners?: any;
-  owners?: any;
+  allOwners!: PaginatedResponse<OwnerGetDto>;
+  owners!: OwnerGetDto[];
   //owner?: OwnerPostDto;
   metaData!: MetaData;
   pageSizeOptions = [
@@ -56,13 +56,13 @@ export class OwnerComponent implements OnInit {
   search: string = "";
 
   genderEnum = [
-    { name: 'Male', code: 'Male' },
-    { name: 'Female', code: 'Female' }
+    { name: 'Male', code: 0 },
+    { name: 'Female', code: 1 }
   ]
   ownerGroupEnum = [
-    { name: 'Private_Owner', code: 'Private_Owner' },
-    { name: 'Organization', code: 'Organization' },
-    { name: 'Government', code: 'Government' }
+    { name: 'Private Owner', code: 0 },
+    { name: 'Organization', code: 1 },
+    { name: 'Government', code: 2 }
   ]
 
 
@@ -138,6 +138,7 @@ export class OwnerComponent implements OnInit {
       idNumber: ["", Validators.required],
       poBox: [""],
       createdById: [this.currentUser?.userId, [Validators.required]],
+      serviceZoneId: [this.currentUser?.userTypeId, [Validators.required]],
     });
     this.searchForm = this.formBuilder.group({
       searchType: ["", Validators.required],
@@ -197,12 +198,13 @@ export class OwnerComponent implements OnInit {
           this.owners = res.data || [];
           this.metaData = res.metaData;
           this.allOwners = cloneDeep(res);
+          console.log(this.owners)
           console.log(this.allOwners)
 
         } else {
           this.owners = [];
           //this.metaData = null;
-          this.allOwners = null;
+          //this.allOwners = null;
         }
       },
       error: (err) => {
@@ -282,7 +284,7 @@ export class OwnerComponent implements OnInit {
               classname: "success text-white",
               delay: 2000,
             });
-            this.ownerForm.reset()
+            //this.ownerForm.reset()
           } else {
             console.error(res.message);
           }

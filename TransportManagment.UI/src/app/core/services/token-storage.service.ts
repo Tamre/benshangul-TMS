@@ -34,7 +34,9 @@ export class TokenStorageService {
       userId: payLoad.userId,
       email: payLoad.email,
       id:payLoad.Id,
-      userName: payLoad.sub
+      userName: payLoad.sub,
+      userTypeId: payLoad.userTypeId,
+      userType: payLoad.userType
     }
 
     return user;
