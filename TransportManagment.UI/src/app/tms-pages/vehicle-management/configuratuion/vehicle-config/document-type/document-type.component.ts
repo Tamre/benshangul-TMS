@@ -127,11 +127,8 @@ export class DocumentTypeComponent {
     });
   }
   saveData() {
-    const updatedData = this.dataForm.value;
-   
     if (this.dataForm.valid) {
       if (this.dataForm.get("id")?.value) {
-        console.log(this.currentUser?.userId)
         const newData: DocTypePostDto = this.dataForm.value;
         this.vehiclecongigService.updateDocType(newData).subscribe({
           next: (res) => {

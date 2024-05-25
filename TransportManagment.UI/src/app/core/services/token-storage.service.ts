@@ -26,10 +26,10 @@ export class TokenStorageService {
     return sessionStorage.getItem(TOKEN_KEY);
   }
 
-  getCurrentUser(): UserView | null {
+  getCurrentUser(): UserView {
     const token = this.getToken();
     var payLoad = JSON.parse(window.atob(token!.split('.')[1]));
-
+    //console.log("payload" ,payLoad);
     let user: UserView = {
       userId: payLoad.userId,
       email: payLoad.email,

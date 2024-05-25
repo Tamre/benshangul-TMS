@@ -42,6 +42,7 @@ export interface MetaData {
     hasNext: boolean;
 }
 export interface OwnerPostDto {
+    ownerGroup: number;
     firstName: string;
     middleName: string;
     lastName: string;
@@ -53,11 +54,10 @@ export interface OwnerPostDto {
     woredaId?: string;
     town?: string;
     houseNo: string;
-    phoneNumber?: string;
+    phoneNumber: string;
     secondaryPhoneNumber?: string;
     idNumber: string;
     poBox?: string;
     createdById: string;
-    ownerGroup: number;
     serviceZoneId: number;
 }
