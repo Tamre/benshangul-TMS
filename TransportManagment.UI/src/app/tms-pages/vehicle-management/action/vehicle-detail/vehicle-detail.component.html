@@ -1,50 +1,140 @@
 <!-- <app-breadcrumbs title="VRMS" [breadcrumbItems]="breadCrumbItems"></app-breadcrumbs> -->
-
 <div class="card" *ngIf="vehicleDetail">
-
-    <div class="card-header align-items-center d-flex">
-        <h4 class="card-title mb-0 flex-grow-1">Vehicle Detail of {{vehicleDetail.registrationNumber}}</h4>
-        <span>Current Zone {{vehicleDetail.serviceZone}}</span>
+    <div class="card-header  text-white d-flex justify-content-between align-items-center">
+        <h5 class="mb-0"> Current Zone: {{vehicleDetail.serviceZone}}</h5>
+        <span class="badge bg-light text-dark"></span>
     </div>
-
     <div class="card-body checkout-tab">
-        <div class="row">
-            <div class="col-md-4">
-                <h5>Registration Type <span class="badge text-bg-secondary"> {{vehicleDetail.registrationType}}</span>
-                </h5>
-                <h5>Model <span class="badge text-bg-secondary"> {{vehicleDetail.model}}</span></h5>
-                <h5>Power Out put <span class="badge text-bg-secondary"> {{vehicleDetail.horsePower}}</span></h5>
-                <h5>Power Unit <span class="badge text-bg-secondary"> {{vehicleDetail.horsePowerMeasure}}</span></h5>
-                <h5>Manufacturing year <span class="badge text-bg-secondary"> {{vehicleDetail.manufacturingYear}}</span>
-                </h5>
-                <h5>Engine Capacity <span class="badge text-bg-secondary"> {{vehicleDetail.engineCapacity}}</span></h5>
-                <h5>No of Cylinder <span class="badge text-bg-secondary"> {{vehicleDetail.noCylinder}}</span></h5>
-                <h5>No of Cylinder <span class="badge text-bg-secondary"> {{vehicleDetail.noCylinder}}</span></h5>
 
+
+        <div class="row well well-sm">
+            <div class="col-lg-4">
+                <div class="col-lg-12">
+                    <table class="table table-bordered table-striped table-hover ">
+                        <tbody
+                            style="border: 3px solid #f0f3f4;padding: 8px;margin-bottom: 10px;border-radius: 6px; text-align:center">
+
+
+                            <tr>
+                                <th style="font-weight:600 !important">Registration No</th>
+                                <td>{{vehicleDetail.registrationNumber}}</td>
+                            </tr>
+                            <tr>
+                                <th style="font-weight:600 !important">Model Name</th>
+                                <td>{{vehicleDetail.model}}</td>
+                            </tr>
+                            <tr>
+                                <th style="font-weight:600 !important">Power output</th>
+                                <td>{{vehicleDetail.horsePower}}</td>
+                            </tr>
+                            <tr>
+                                <th style="font-weight:600 !important">Power Unit</th>
+                                <td>
+                                    <!----><span>{{vehicleDetail.horsePowerMeasure}}</span>
+                                    <!---->
+                                </td>
+                            </tr>
+                            <tr>
+                                <th style="font-weight:600 !important">Manufacturing Year</th>
+                                <td>{{vehicleDetail.manufacturingYear}}</td>
+                            </tr>
+                            <tr>
+                                <th style="font-weight:600 !important">Engine Capacity</th>
+                                <td>{{vehicleDetail.engineCapacity}}</td>
+                            </tr>
+                            <tr>
+                                <th style="font-weight:600 !important">No Of Cylinder</th>
+                                <td>{{vehicleDetail.noCylinder}}</td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div>
             </div>
-            <div class="col-md-4">
-                <h5>Assembled Country <span class="badge text-bg-secondary"> {{vehicleDetail.assembledCountry}}</span>
-                </h5>
-                <h5>Chassis Made Country <span class="badge text-bg-secondary">
-                        {{vehicleDetail.chassisMadeCountry}}</span></h5>
-                <h5>Chassis No <span class="badge text-bg-secondary"> {{vehicleDetail.chassisNo}}</span></h5>
-                <h5>Engine No<span class="badge text-bg-secondary"> {{vehicleDetail.engineNumber}}</span></h5>
-                <h5>Vehicle Type <span class="badge text-bg-secondary"> {{vehicleDetail.typeOfVehicle}}</span></h5>
-                <h5>Vehicle Status <span class="badge text-bg-secondary"> {{vehicleDetail.vehicleCurrentStatus}}</span>
-                </h5>
-            </div>
-            <div class="col-md-4">
-                <h5>Tax Status <span class="badge text-bg-secondary"> {{vehicleDetail.taxStatus}}</span></h5>
-                <h5>Declaraci Date <span class="badge text-bg-secondary"> {{vehicleDetail.declarationDate | date : 'yyyy, MMM, dd'}}</span></h5>
-                <h5>Removal Number <span class="badge text-bg-secondary"> {{vehicleDetail.removalNumber}}</span></h5>
-                <h5>Office Code<span class="badge text-bg-secondary"> {{vehicleDetail.officeCode}}</span></h5>
-                <h5>Invoice Date<span class="badge text-bg-secondary"> {{vehicleDetail.invoiceDate | date: 'yyy, MMM,dd'}}</span></h5>
-                <h5>Invoice Price<span class="badge text-bg-secondary"> {{vehicleDetail.invoicePrice}}</span></h5>
+
+            <div class="col-lg-4">
+                <div class="col-lg-12">
+                    <table class="table table-bordered table-striped table-hover ">
+                        <tbody
+                            style="border: 3px solid #f0f3f4;padding: 8px;margin-bottom: 10px;border-radius: 6px; text-align:center">
+                            <!---->
+                            <tr>
+                                <th style="font-weight:600 !important">Assembled Country </th>
+                                <td>{{vehicleDetail.assembledCountry}} </td>
+                            </tr>
+                            <!---->
+                            <tr>
+                                <th style="font-weight:600 !important">Chassis Made Country </th>
+                                <td>{{vehicleDetail.chassisMadeCountry}} </td>
+                            </tr>
+                            <tr>
+                                <th style="font-weight:600 !important">Chassis No </th>
+                                <td>{{vehicleDetail.chassisNo}}</td>
+                            </tr>
+                            <tr>
+                                <th style="font-weight:600 !important">Engine No </th>
+                                <td> {{vehicleDetail.engineNumber}}</td>
+
+                            </tr>
+                            <tr>
+                                <th style="font-weight:600 !important">Previous Engine No </th>
+                                <td> </td>
+
+                            </tr>
+                            <tr>
+                                <th style="font-weight:600 !important">Vehicle Type </th>
+                                <td>
+                                    <!---->
+                                    <!---->
+                                </td>
+
+                            </tr>
+
+                            <tr>
+                                <th style="font-weight:600 !important">Tax Status</th>
+                                <td>{{vehicleDetail.taxStatus}}</td>
+                            </tr>
+                            <tr>
+                                <th style="font-weight:600 !important">Registration Type</th>
+                                <td>{{vehicleDetail.registrationType}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>         
+
+            <div class="col-lg-4">
+                <div class="col-lg-12">
+                    <table class="table table-bordered table-striped table-hover ">
+                        <tbody
+                            style="border: 3px solid #f0f3f4;padding: 8px;margin-bottom: 10px;border-radius: 6px; text-align:center">
+                            <!---->
+                            <tr>
+                                <th style="font-weight:600 !important">Declarci Date </th>
+                                <td>12/10/1999</td>
+                            </tr>
+                            <!---->
+                            <tr>
+                                <th style="font-weight:600 !important">Removal No </th>
+                                <td>-</td>
+                            </tr>
+                            <tr>
+                                <th style="font-weight:600 !important">Office Code</th>
+                                <td> -</td>
+                            </tr>
+                            <tr>
+                                <th style="font-weight:600 !important">Plate Number </th>
+                                <td> {{vehicleDetail.plateNumber}}</td>
+                            </tr>
+                            <tr>
+                                <th style="font-weight:600 !important">Previous Plate :</th>
+                                <td> </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
-
+     
     </div>
-
-
-
 </div>

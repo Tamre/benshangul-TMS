@@ -65,11 +65,7 @@ export class TopbarComponent implements OnInit {
     }
 
  
-    this.cart_length = this.cartData.length;
-    this.cartData.forEach((item) => {
-      var item_price = item.quantity * item.price
-      this.total += item_price
-    });
+   
   }
 
   /**
