@@ -552,5 +552,52 @@ namespace TransportManagmentImplementation.Services.Vehicle.Action
 
 
         }
+
+        public async Task<ResponseMessage> ReplaceVehicleDocuemtns(VehicleDocumetGetDto vehicleDocuemtGet)
+        {
+            try
+            {
+                var vehicleDoucment = await _dbContext.VehicleDocuments.Include(x=>x.DocumentType).Where(x=>x.Id== vehicleDocuemtGet.DocumentId).FirstOrDefaultAsync();
+                if (vehicleDoucment == null)
+                {
+                    return new ResponseMessage
+                    {
+                        Success = false,
+                        Message = "Docuement Not Found"
+                    };
+                }
+
+               
+
+                string nameOfFolder = $"Vehicle\\{vehicleDoucment.DocumentType.FileName}";
+
+                string path = await _generalConfigService.UploadFiles(vehicleDocuemtGet.Docuemnt, vehicleDoucment.Id.ToString(), nameOfFolder);
+
+                if (string.IsNullOrEmpty(path))
+                {
+                    return new ResponseMessage { Success = false, Message = "Please Upload The file again" };
+                }
+
+
+                return new ResponseMessage
+                {
+                    Success = true,
+                    Message = "Document Replaced Successfulyy!!!"
+                };
+
+
+
+            }
+            catch(Exception ex)
+            {
+
+                return new ResponseMessage
+                {
+                    Success = false,
+                    Message = ex.Message
+                };
+
+            }
+        }
     }
 }

@@ -134,9 +134,11 @@ namespace TransportManagmentImplementation.DTOS.Vehicle.Action
 
     public record VehicleDocumetGetDto
     {
+        public Guid DocumentId { get; set; }
         public Guid VehicleId { get; set; }
         public string DocumentName { get; set; } = null!;
         public string DocumentPath { get; set; } = null!;
+        public IFormFile ? Docuemnt { get; set; }
 
     }
     public record VehicleStatusActionDto

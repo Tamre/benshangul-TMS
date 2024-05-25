@@ -161,7 +161,8 @@ namespace TransportManagmentImplementation.Datas
 
 
             CreateMap<VehicleDocument, VehicleDocumetGetDto>()
-                .ForMember(a => a.DocumentName, e => e.MapFrom(mfg => mfg.DocumentType.FileName));
+                .ForMember(a => a.DocumentName, e => e.MapFrom(mfg => mfg.DocumentType.FileName))
+                .ForMember(a => a.DocumentId, e => e.MapFrom(mfg => mfg.Id.ToString()));
 
             #endregion
         }

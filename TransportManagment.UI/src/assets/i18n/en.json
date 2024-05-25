@@ -32,7 +32,7 @@
       "LIST": {
         "REGISTER": "Register Vehicle",
         "FIND":"Find Vehicle",
-        "OWNER":"Owner"
+        "OWNER":"Owner Management"
       }
     },
 
