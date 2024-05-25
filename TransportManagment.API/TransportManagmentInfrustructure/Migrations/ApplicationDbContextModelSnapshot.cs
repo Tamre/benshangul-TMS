@@ -953,22 +953,16 @@ namespace TransportManagmentInfrustructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("AdditionalChanges")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<int>("ApprovalStatus")
                         .HasColumnType("int");
 
                     b.Property<string>("ApprovedById")
+                        .IsRequired()
                         .HasMaxLength(450)
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime?>("ApprovedDate")
                         .HasColumnType("datetime2");
-
-                    b.Property<int>("ColumnName")
-                        .HasColumnType("int");
 
                     b.Property<string>("Comments")
                         .HasColumnType("nvarchar(max)");
@@ -987,18 +981,8 @@ namespace TransportManagmentInfrustructure.Migrations
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
 
-                    b.Property<bool?>("IsSensitive")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("NewValue")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("OldValue")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Reason")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("RegistrationType")
@@ -1024,7 +1008,51 @@ namespace TransportManagmentInfrustructure.Migrations
                     b.HasIndex("Id")
                         .IsUnique();
 
-                    b.ToTable("DataChanges");
+                    b.ToTable("DataChanges", "VRMS");
+                });
+
+            modelBuilder.Entity("TransportManagmentInfrustructure.Model.Vehicle.Action.DataChangeDetail", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("ColumnName")
+                        .HasColumnType("int");
+
+                    b.Property<string>("CreatedById")
+                        .IsRequired()
+                        .HasMaxLength(450)
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("DataChangeId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("NewValue")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("OldValue")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CreatedById");
+
+                    b.HasIndex("Id")
+                        .IsUnique();
+
+                    b.HasIndex("DataChangeId", "ColumnName")
+                        .IsUnique();
+
+                    b.ToTable("DataChangeDetails", "VRMS");
                 });
 
             modelBuilder.Entity("TransportManagmentInfrustructure.Model.Vehicle.Action.FieldInspection", b =>
@@ -1251,8 +1279,8 @@ namespace TransportManagmentInfrustructure.Migrations
 
                     b.Property<string>("FirstName")
                         .IsRequired()
-                        .HasMaxLength(10)
-                        .HasColumnType("nvarchar(10)");
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
 
                     b.Property<int>("Gender")
                         .HasColumnType("int");
@@ -3271,16 +3299,35 @@ namespace TransportManagmentInfrustructure.Migrations
                     b.Navigation("ToZone");
                 });
 
-            modelBuilder.Entity("TransportManagmentInfrustructure.Model.Vehicle.Action.DataChange", b =>
-                {
-                    b.HasOne("TransportManagmentInfrustructure.Model.Authentication.ApplicationUser", "CreatedBy")
-                        .WithMany()
-                        .HasForeignKey("CreatedById")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
+            //modelBuilder.Entity("TransportManagmentInfrustructure.Model.Vehicle.Action.DataChange", b =>
+            //    {
+            //        b.HasOne("TransportManagmentInfrustructure.Model.Authentication.ApplicationUser", "CreatedBy")
+            //            .WithMany()
+            //            .HasForeignKey("CreatedById")
+            //            .OnDelete(DeleteBehavior.NoAction)
+            //            .IsRequired();
 
-                    b.Navigation("CreatedBy");
-                });
+            //        b.Navigation("CreatedBy");
+            //    });
+
+            //modelBuilder.Entity("TransportManagmentInfrustructure.Model.Vehicle.Action.DataChangeDetail", b =>
+            //    {
+            //        b.HasOne("TransportManagmentInfrustructure.Model.Authentication.ApplicationUser", "CreatedBy")
+            //            .WithMany()
+            //            .HasForeignKey("CreatedById")
+            //            .OnDelete(DeleteBehavior.NoAction)
+            //            .IsRequired();
+
+            //        b.HasOne("TransportManagmentInfrustructure.Model.Vehicle.Action.DataChange", "DataChange")
+            //            .WithMany("DataChangeDetails")
+            //            .HasForeignKey("DataChangeId")
+            //            .OnDelete(DeleteBehavior.Cascade)
+            //            .IsRequired();
+
+            //        b.Navigation("CreatedBy");
+
+            //        b.Navigation("DataChange");
+            //    });
 
             modelBuilder.Entity("TransportManagmentInfrustructure.Model.Vehicle.Action.FieldInspection", b =>
                 {
@@ -4175,6 +4222,11 @@ namespace TransportManagmentInfrustructure.Migrations
                 {
                     b.Navigation("AIS")
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("TransportManagmentInfrustructure.Model.Vehicle.Action.DataChange", b =>
+                {
+                    b.Navigation("DataChangeDetails");
                 });
 
             modelBuilder.Entity("TransportManagmentInfrustructure.Model.Vehicle.Action.ORCStock", b =>

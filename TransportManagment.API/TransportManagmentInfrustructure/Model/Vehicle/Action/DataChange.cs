@@ -8,36 +8,43 @@ using static TransportManagmentInfrustructure.Enums.VehicleEnum;
 using TransportManagmentInfrustructure.Model.Common;
 using System.ComponentModel.DataAnnotations;
 using TransportManagmentInfrustructure.Data;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace TransportManagmentInfrustructure.Model.Vehicle.Action
 {
       public class DataChange : ActionIdModel
-    {
-        
-        public Guid VehicleId { get; set; }  
-        public bool? IsSensitive { get; set; } // Flag to indicate update includes sensitive data
-        public string TableName { get; set; }
+      {
+
+        public DataChange()
+        {
+            DataChangeDetails = new HashSet<DataChangeDetail>();
+        }
+
+        //  public bool? IsSensitive { get; set; } // Flag to indicate update includes sensitive data
         [Required]
-        public TableColumnName ColumnName { get; set; }
+        public string TableName { get; set; } = null!;
         [Required]
-        public string OldValue { get; set; }
-        [Required]
-        public string NewValue { get; set; }
+        public Guid VehicleId { get; set; }
+        [Required]      
         public string? Reason { get; set; }
-        public RegistrationType RegistrationType { get; set; }
-        public bool ISApproved { get; set; }
-        public VehicleApprovalStatus ApprovalStatus { get; set; }
-        [Required]       
-        public DateTime RequestedDate { get; set; } = DateTime.UtcNow;
+        [Required]
         public DataChangeStatus Status { get; set; }
-        [StringLength(ValidationClasses.UserId)]
-        public string? ApprovedById { get; set; }  
+        [Required]
+        public DateTime CreatedDate { get; set; } = DateTime.UtcNow;
+        [Required]
+        [StringLength(ValidationClasses.UserId)]      
+        public string? ApprovedById { get; set; }
+        [Required]
         public DateTime? ApprovedDate { get; set; }
         public string? Comments { get; set; }
-        public string AdditionalChanges { get; set; } // Optional JSON string for additional sensetive column changes
-      
-        
+
+        [Required]
+        [InverseProperty(nameof(DataChangeDetail.DataChange))]
+        public ICollection<DataChangeDetail> DataChangeDetails { get; set; } = null!;
+     
+     
     }
+
 }
 
 
