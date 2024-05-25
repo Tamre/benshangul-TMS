@@ -8,7 +8,7 @@ import { TokenStorageService } from "../token-storage.service";
 import { GetVehicleDetailRequestDto, VehicleData } from "src/app/model/vehicle";
 import { IVehicleOwnerGetDto, VehicleOwnerPostDto } from "src/app/tms-pages/vehicle-management/action/vehicle-owners/IVehicleOwnersDto";
 import { PaginatedResponse } from "src/app/model/common";
-//import { OwnerGetDto, OwnerPostDto } from "src/app/tms-pages/vehicle-management/action/owner/IownerDto";
+
 import { CreateFieldInspectionDto } from "src/app/model/inspection/CreateFieldInspection";
 import { CreateTechnicalInspectionDto } from "src/app/model/inspection/CreateTechnicalInspection";
 @Injectable({ providedIn: "root" })

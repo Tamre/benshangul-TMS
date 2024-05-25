@@ -20,6 +20,7 @@ import { VehicleService } from "src/app/core/services/Vehicle-services/vehicle.s
 })
 export class VehicleOwnersComponent implements OnInit {
   @Input() vehicleId!: string;
+  @Input() callFrom: string='';
   vehicleOwners: IVehicleOwnerGetDto[] = [];
  
 

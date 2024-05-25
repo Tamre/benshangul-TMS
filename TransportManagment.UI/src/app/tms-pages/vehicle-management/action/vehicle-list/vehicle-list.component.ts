@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, EventEmitter, OnInit, Output } from "@angular/core";
 import {
   UntypedFormGroup,
   UntypedFormBuilder,
@@ -40,7 +40,7 @@ export class VehicleListComponent implements OnInit {
   searchResults: any;
   econtent?: any;
   vehicleDetail!: VehicleDetailDto ;
-
+  @Output() mobileMenuButtonClicked = new EventEmitter();
   allVehicleModels?: any;
   vehicleModels?: any;
   vehicle?: any;
@@ -113,19 +113,22 @@ export class VehicleListComponent implements OnInit {
   vehicleRegistrationNo: string = "";
   isRegistrationType: boolean = false;
  // groupData = groupData;
-
+ showCardHeader = true;
  
  vehicleActionList: any[] = [
   { code: 1, name: "Profile" },
-  { code: 2, name: "Dcouments" },
-  { code: 3, name: "Owners" },
+  { code: 2, name: "Owners" },  
+  { code: 3, name: "Inspection" },
   { code: 4, name: "Plates" },
   { code: 5, name: "ORC" },  
   { code: 6, name: "Annual Inspection" },
   { code: 7, name: "Change Cases" },
   { code: 8, name: "Valuations" },
   { code: 9, name: "Transfers" },
-  { code: 10, name: "Ban Cancel & Lost" },
+  { code: 10, name: "Ban" },
+  { code: 11, name: "Replacement" },
+  { code: 12, name: "Cancel" },
+  { code: 13, name: "Dcouments" },
 ];
 
   constructor(
@@ -348,7 +351,11 @@ export class VehicleListComponent implements OnInit {
     });
   }
 
-
+  toggleCardHeader() {
+    this.showCardHeader = !this.showCardHeader;
+   
+    this.mobileMenuButtonClicked.emit();
+  }
 
   /**
    * Form data get
