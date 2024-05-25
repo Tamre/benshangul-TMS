@@ -7,8 +7,9 @@ import { MetaData } from 'src/app/model/common';
 export class Pagination1Service {
   metaData: MetaData | null = null;
 
-  changePage(allData: any[], metaData: MetaData) {
+  changePage<T>(paginatedResponse: { data: T[], metaData: MetaData }, metaData: MetaData) {
     this.metaData = metaData;
+    const allData = paginatedResponse.data;
   
     if (Array.isArray(allData)) {
       const { currentPage, pageSize, totalCount } = metaData;

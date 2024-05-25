@@ -29,7 +29,7 @@ namespace TransportManagmentImplementation.Services.Vehicle.Action
         {
             _dbContext = dbContext;
             _logger = logger;
-            _mapper = mapper;   
+            _mapper = mapper;
         }
 
         public async Task<ResponseMessage> CreateFieldInspection(FieldInspectionPostDto inspection)
@@ -37,13 +37,23 @@ namespace TransportManagmentImplementation.Services.Vehicle.Action
 
             try
             {
+
+
                 var FieldInspection = new FieldInspection();
 
 
+                var fieldInspections = await _dbContext.FieldInspections.Where(x => x.VehicleId == inspection.VehicleId).ToListAsync();
+
+
+                fieldInspections.ForEach(fi =>
+                {
+                    fi.IsActive = false;
+                });
+                await _dbContext.SaveChangesAsync();
 
 
                 FieldInspection.Id = Guid.NewGuid();
-                FieldInspection.CreatedById = FieldInspection.CreatedById;
+                FieldInspection.CreatedById = inspection.CreatedById;
                 FieldInspection.CreatedDate = DateTime.Now;
                 FieldInspection.VehicleId = inspection.VehicleId;
                 FieldInspection.GivenZoneId = inspection.GivenZoneId;
@@ -63,6 +73,7 @@ namespace TransportManagmentImplementation.Services.Vehicle.Action
                 FieldInspection.TareWeight = inspection.TareWeight;
                 FieldInspection.FrontPlateSizeId = inspection.FrontPlateSizeId;
                 FieldInspection.BackPlateSizeId = inspection.BackPlateSizeId;
+                FieldInspection.IsActive = true;
 
 
                 await _dbContext.FieldInspections.AddAsync(FieldInspection);
@@ -203,29 +214,73 @@ namespace TransportManagmentImplementation.Services.Vehicle.Action
 
         }
 
+        public async Task<InspectionModelDto> GetInspectionByModelId(int modelId)
+        {
+            var InspectionDetails = new InspectionModelDto();
+            var FieldInspection = await _dbContext.FieldInspections.Include(x => x.Vehicle.Model).Where(u => u.Vehicle.ModelId == modelId && u.IsActive).FirstOrDefaultAsync();
+
+            var fieldInspectionDetailResponseDtos = _mapper.Map<FieldInspectionGetDto>(FieldInspection);
+
+
+
+            var fieldInspectionEntity = FieldInspection;
+            if (fieldInspectionEntity != null)
+            {
+                // Fetch technical inspections for the current field inspection
+                var technicalInspections = await _dbContext.TechnicalInspections
+                                                           .Where(u => u.FieldInspectionId == fieldInspectionEntity.Id)
+                                                           .FirstOrDefaultAsync();
+
+                // Map technical inspections to DTOs
+                var technicalInspectionDetailResponseDtos = _mapper.Map<TechnicalInspectionGetDto>(technicalInspections);
+
+                fieldInspectionDetailResponseDtos.TechnicalInspection = technicalInspectionDetailResponseDtos;
+                // Assign technical inspections to the current field inspection DTO
+            }
+
+            InspectionDetails.FieldInspection = fieldInspectionDetailResponseDtos;
+
+
+            return InspectionDetails;
+        }
+
         public async Task<InspectionDto> GetInspectionByVehicleId(Guid vehicleId)
         {
 
-            var InspectionDetails = new InspectionDto();
-            var FieldInspection = await _dbContext.FieldInspections.Where(u => u.VehicleId == vehicleId && u.IsActive).FirstOrDefaultAsync();
+            var inspectionDetails = new InspectionDto();
 
-            if (FieldInspection != null)
+            // Fetch field inspections for the vehicle
+            var fieldInspections = await _dbContext.FieldInspections
+                                                   .Where(u => u.VehicleId == vehicleId)
+                                                   .ToListAsync();
+
+            // Map field inspections to DTOs
+            var fieldInspectionDetailResponseDtos = _mapper.Map<List<FieldInspectionGetDto>>(fieldInspections);
+
+            // Iterate over each field inspection DTO
+            foreach (var fieldInspectionDto in fieldInspectionDetailResponseDtos)
             {
+                // Find the corresponding field inspection entity
+                var fieldInspectionEntity = fieldInspections.FirstOrDefault(fi => fi.Id == fieldInspectionDto.Id);
+                if (fieldInspectionEntity != null)
+                {
+                    // Fetch technical inspections for the current field inspection
+                    var technicalInspections = await _dbContext.TechnicalInspections
+                                                               .Where(u => u.FieldInspectionId == fieldInspectionEntity.Id)
+                                                               .FirstOrDefaultAsync();
 
-                var tecnicalInspection = await _dbContext.TechnicalInspections.Where(u => u.FieldInspectionId == FieldInspection.Id && u.IsActive).FirstOrDefaultAsync();
+                    // Map technical inspections to DTOs
+                    var technicalInspectionDetailResponseDtos = _mapper.Map<TechnicalInspectionGetDto>(technicalInspections);
 
-                var FieldInspectionDetailResponseDto = _mapper.Map<FieldInspectionGetDto>(FieldInspection);
-                var tecnicalInspectionDetailResponseDto = _mapper.Map<TechnicalInspectionGetDto>(tecnicalInspection);
-
-
-                InspectionDetails.FieldInspection = FieldInspectionDetailResponseDto;
-
-                InspectionDetails.TechnicalInspection = tecnicalInspectionDetailResponseDto;
-
-
+                    // Assign technical inspections to the current field inspection DTO
+                    fieldInspectionDto.TechnicalInspection = technicalInspectionDetailResponseDtos;
+                }
             }
 
-            return InspectionDetails;
+            // Set the field inspections in the inspection details DTO
+            inspectionDetails.FieldInspection = fieldInspectionDetailResponseDtos;
+
+            return inspectionDetails;
         }
 
         public async Task<ResponseMessage> UpdateFieldInspection(FieldInspectionGetDto inspection)
@@ -236,62 +291,63 @@ namespace TransportManagmentImplementation.Services.Vehicle.Action
                 var FieldInspection = await _dbContext.FieldInspections.FindAsync(inspection.Id);
 
 
-                if (FieldInspection != null) { 
-
-                
-                FieldInspection.VehicleId = inspection.VehicleId;
-                FieldInspection.GivenZoneId = inspection.GivenZoneId;
-                FieldInspection.ServiceChangeId = inspection.ServiceChangeId;
-                FieldInspection.Width = inspection.Width;
-                FieldInspection.Height = inspection.Height;
-                FieldInspection.Length = inspection.Length;
-                FieldInspection.FrontTyreSize = inspection.FrontTyreSize;
-                FieldInspection.RearTyreSize = inspection.RearTyreSize;
-                FieldInspection.NoOfRearAxel = inspection.NoOfRearAxel;
-                FieldInspection.NoOfFrontAxel = inspection.NoOfFrontAxel;
-                FieldInspection.AxelDriveType = inspection.AxelDriveType;
-                FieldInspection.NumberOfTyre = inspection.NumberOfTyre;
-                FieldInspection.FrontAxelMAxLoad = inspection.FrontAxelMAxLoad;
-                FieldInspection.RearAxelMaxLoad = inspection.RearAxelMaxLoad;
-                FieldInspection.GrossWeight = inspection.GrossWeight;
-                FieldInspection.TareWeight = inspection.TareWeight;
-                FieldInspection.FrontPlateSizeId = inspection.FrontPlateSizeId;
-                FieldInspection.BackPlateSizeId = inspection.BackPlateSizeId;
-
-
-                await _dbContext.SaveChangesAsync();
-
-                string loggerMessage = $"Field Inspection with Id {FieldInspection.Id} for Vechicle {inspection.VehicleId} updated By {inspection.CreatedById} on {DateTime.Now}";
-
-                _logger.LogCreate("VRMS", inspection.CreatedById, loggerMessage);
-
-
-                var vehicle = await _dbContext.VehicleLists.FindAsync(FieldInspection.VehicleId);
-                if (vehicle != null)
+                if (FieldInspection != null)
                 {
-                    vehicle.LastActionTaken = TransportManagmentInfrustructure.Enums.VehicleEnum.LastActionTaken.FieldInspection;
 
+
+                    FieldInspection.VehicleId = inspection.VehicleId;
+                    FieldInspection.GivenZoneId = inspection.GivenZoneId;
+                    FieldInspection.ServiceChangeId = inspection.ServiceChangeId;
+                    FieldInspection.Width = inspection.Width;
+                    FieldInspection.Height = inspection.Height;
+                    FieldInspection.Length = inspection.Length;
+                    FieldInspection.FrontTyreSize = inspection.FrontTyreSize;
+                    FieldInspection.RearTyreSize = inspection.RearTyreSize;
+                    FieldInspection.NoOfRearAxel = inspection.NoOfRearAxel;
+                    FieldInspection.NoOfFrontAxel = inspection.NoOfFrontAxel;
+                    FieldInspection.AxelDriveType = inspection.AxelDriveType;
+                    FieldInspection.NumberOfTyre = inspection.NumberOfTyre;
+                    FieldInspection.FrontAxelMAxLoad = inspection.FrontAxelMAxLoad;
+                    FieldInspection.RearAxelMaxLoad = inspection.RearAxelMaxLoad;
+                    FieldInspection.GrossWeight = inspection.GrossWeight;
+                    FieldInspection.TareWeight = inspection.TareWeight;
+                    FieldInspection.FrontPlateSizeId = inspection.FrontPlateSizeId;
+                    FieldInspection.BackPlateSizeId = inspection.BackPlateSizeId;
+
+
+                    await _dbContext.SaveChangesAsync();
+
+                    string loggerMessage = $"Field Inspection with Id {FieldInspection.Id} for Vechicle {inspection.VehicleId} updated By {inspection.CreatedById} on {DateTime.Now}";
+
+                    _logger.LogCreate("VRMS", inspection.CreatedById, loggerMessage);
+
+
+                    var vehicle = await _dbContext.VehicleLists.FindAsync(FieldInspection.VehicleId);
+                    if (vehicle != null)
+                    {
+                        vehicle.LastActionTaken = TransportManagmentInfrustructure.Enums.VehicleEnum.LastActionTaken.FieldInspection;
+
+                    }
+                    await _dbContext.SaveChangesAsync();
+
+
+                    return new ResponseMessage
+                    {
+
+                        Success = true,
+                        Message = loggerMessage,
+                        Data = FieldInspection.Id
+
+                    };
                 }
-                await _dbContext.SaveChangesAsync();
-
-
-                return new ResponseMessage
+                else
                 {
-
-                    Success = true,
-                    Message = loggerMessage,
-                    Data = FieldInspection.Id
-
-                };
-            }
-            else
-            {
                     return new ResponseMessage
                     {
 
                         Success = false,
                         Message = "Field Inspection Not Found !!! ",
-                        
+
 
                     };
 
@@ -326,7 +382,7 @@ namespace TransportManagmentImplementation.Services.Vehicle.Action
                 if (TechnicalInspection != null)
                 {
 
-                   
+
                     TechnicalInspection.FieldInspectionId = inspection.FieldInspectionId;
                     TechnicalInspection.VehicleBodyTypeId = inspection.VehicleBodyTypeId;
                     TechnicalInspection.ServiceTypeId = inspection.ServiceTypeId;
@@ -394,7 +450,7 @@ namespace TransportManagmentImplementation.Services.Vehicle.Action
 
                     Success = false,
                     Message = "Technical Inspection Not Found!!!",
-                    Data = TechnicalInspection.Id
+                    Data = ""
 
                 };
 

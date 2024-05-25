@@ -88,63 +88,120 @@ namespace TransportManagmentImplementation.Services.Vehicle.Action
             try
             {
 
+                if (ownerListPostDto == null)
+                    return new ResponseMessage { Success = false, Message = "Data not sent" };
+
                 var ownerExist = await _dbContext.OwnerLists
-                    .Where(x => x.PhoneNumber == ownerListPostDto.PhoneNumber || x.SecondaryPhoneNumber == ownerListPostDto.PhoneNumber).Select(x=> new { 
-                    x.FirstName, x.LastName,x.MiddleName
+                    .Where(x => (x.PhoneNumber == ownerListPostDto.PhoneNumber)||x.IdNumber == ownerListPostDto.IdNumber).Select(x=> new { 
+                    x.FirstName, x.LastName,x.MiddleName,x.PhoneNumber
                     }).FirstOrDefaultAsync();
 
 
                 if (ownerExist != null)
                 {
+                    if (ownerExist.PhoneNumber == ownerListPostDto.PhoneNumber)
+                    {
+                        return new ResponseMessage
+                        {
+                            Success = false,
+                            Message = $"Owner Phonenumber is already assigned for the owner {ownerExist.FirstName} {ownerExist.MiddleName} {ownerExist.LastName}"
+                        };
+                    }
+                    else
+                    {
+                        return new ResponseMessage
+                        {
+                            Success = false,
+                            Message = $"Owner Id Number is already assigned for the owner {ownerExist.FirstName} {ownerExist.MiddleName} {ownerExist.LastName}"
+                        };
+
+                    }
+
+                  
+                }
+
+                var ownerRegistrationNo = await _generalConfigService.GenerateVehicleNumber(VehicleSerialType.OWNER, ownerListPostDto.ServiceZoneId, ownerListPostDto.CreatedById);
+
+                if (ownerListPostDto.OwnerGroup == OwnerGroup.Private_Owner)
+                {
+
+                    var owner = new OwnerList
+                    {
+                        OwnerNumber = ownerRegistrationNo,
+                        FirstName = ownerListPostDto.FirstName,
+                        MiddleName = ownerListPostDto.MiddleName,
+                        LastName = ownerListPostDto.LastName,
+                        AmharicFirstName = ownerListPostDto.AmharicFirstName,
+                        AmharicMiddleName = ownerListPostDto.AmharicMiddleName,
+                        AmharicLastName = ownerListPostDto.AmharicLastName,
+                        Gender = ownerListPostDto.Gender,
+                        ZoneId = ownerListPostDto.ZoneId,
+                        WoredaId = ownerListPostDto?.WoredaId,
+                        Town = ownerListPostDto.Town,
+                        HouseNo = ownerListPostDto?.HouseNo,
+                        PhoneNumber = ownerListPostDto.PhoneNumber,
+                        SecondaryPhoneNumber = ownerListPostDto?.SecondaryPhoneNumber,
+                        IdNumber = ownerListPostDto?.IdNumber,
+                        PoBox = ownerListPostDto?.PoBox,
+                        OwnerGroup = ownerListPostDto.OwnerGroup,
+
+                        Id = Guid.NewGuid(),
+                        CreatedById = ownerListPostDto.CreatedById,
+                        CreatedDate = DateTime.Now
+                    };
+
+                    await _dbContext.OwnerLists.AddAsync(owner);
+                    await _dbContext.SaveChangesAsync();
+                    return new ResponseMessage
+                    {
+                        Success = true,
+                        Message = $"Owner Added Successfully With Owner Numeber {owner.OwnerNumber}",
+                        Data = owner.OwnerNumber
+                    };
+                }
+                else
+                {
+                    var owner = new OwnerList
+                    {
+                        OwnerNumber = ownerRegistrationNo,
+                        FirstName = ownerListPostDto.FirstName,
+                      
+                        AmharicFirstName = ownerListPostDto.AmharicFirstName,                       
+                        Gender = Gender.Male,
+
+                        ZoneId = ownerListPostDto.ZoneId,
+                        WoredaId = ownerListPostDto?.WoredaId,
+                        Town = ownerListPostDto?.Town,
+                        HouseNo = ownerListPostDto?.HouseNo,
+                        PhoneNumber = ownerListPostDto.PhoneNumber,
+                        SecondaryPhoneNumber = ownerListPostDto?.SecondaryPhoneNumber,
+                        IdNumber = ownerListPostDto?.IdNumber,
+                        PoBox = ownerListPostDto?.PoBox,
+                        OwnerGroup = ownerListPostDto.OwnerGroup,
+                        OrganizationType= ownerListPostDto.OrganizationType,
+                        Id = Guid.NewGuid(),
+                        CreatedById = ownerListPostDto.CreatedById,
+                        CreatedDate = DateTime.Now
+                    };
+
+                    await _dbContext.OwnerLists.AddAsync(owner);
+                    await _dbContext.SaveChangesAsync();
 
                     return new ResponseMessage
                     {
-                        Success = false,
-                        Message = $"Owner Phonenumber is already assigned for the owner {ownerExist.FirstName} {ownerExist.MiddleName} {ownerExist.LastName}"
+                        Success = true,
+                        Message = $"Owner Added Successfully With Owner Numeber {owner.OwnerNumber}",
+                        Data = owner.OwnerNumber
                     };
                 }
 
-                var ownerRegistrationNo = await _generalConfigService.GenerateVehicleNumber(VehicleSerialType.OWNER, ownerListPostDto.ZoneId, ownerListPostDto.CreatedById);
+
+                  
+                
 
 
 
-                var owner = new OwnerList
-                {
-                    OwnerNumber = ownerRegistrationNo,
-                    FirstName = ownerListPostDto.FirstName,
-                    MiddleName = ownerListPostDto.MiddleName,
-                    LastName = ownerListPostDto.LastName,
-                    AmharicFirstName = ownerListPostDto.AmharicFirstName,
-                    AmharicMiddleName = ownerListPostDto.AmharicMiddleName,
-                    AmharicLastName = ownerListPostDto.AmharicLastName,
-                    Gender = ownerListPostDto.Gender,
-                    ZoneId = ownerListPostDto.ZoneId,
-                    WoredaId = ownerListPostDto?.WoredaId,
-                    Town = ownerListPostDto?.Town,
-                    HouseNo = ownerListPostDto?.HouseNo,
-                    PhoneNumber = ownerListPostDto?.PhoneNumber,
-                    SecondaryPhoneNumber = ownerListPostDto?.SecondaryPhoneNumber,
-                    IdNumber = ownerListPostDto?.IdNumber,
-                    PoBox = ownerListPostDto?.PoBox,
-                    OwnerGroup = ownerListPostDto.OwnerGroup,
-
-                    Id = Guid.NewGuid(),
-                    CreatedById = ownerListPostDto.CreatedById,
-                    CreatedDate = DateTime.Now
-                };
-
-
-                await _dbContext.OwnerLists.AddAsync(owner);
-                await _dbContext.SaveChangesAsync();
-
-
-
-                return new ResponseMessage
-                {
-                    Success = true,
-                    Message = $"Owner Added Successfully With Owner Numeber {owner.OwnerNumber}",
-                    Data = owner.OwnerNumber
-                };
+               
 
             }
             catch (Exception ex)
@@ -196,8 +253,9 @@ namespace TransportManagmentImplementation.Services.Vehicle.Action
                 ownerExist.SecondaryPhoneNumber = ownerListGetDto?.SecondaryPhoneNumber;
                 ownerExist.IdNumber = ownerListGetDto?.IdNumber;
                 ownerExist.PoBox = ownerListGetDto?.PoBox;
+                ownerExist.OwnerGroup = ownerListGetDto.OwnerGroup;
 
-            
+
 
 
 
@@ -300,11 +358,11 @@ namespace TransportManagmentImplementation.Services.Vehicle.Action
         {
             return criteria.ColumnName?.ToLower() switch
             {
-                "FirstName" => owner => owner.FirstName.Contains(criteria.FilterValue),
-                "LastName" => owner => owner.LastName.Contains(criteria.FilterValue),
-                "MiddleName" => owner => owner.MiddleName.Contains(criteria.FilterValue),
-                "OwnerNumber" => owner => owner.OwnerNumber.Contains(criteria.FilterValue),
-                "PhoneNumber" => owner => owner.PhoneNumber.Contains(criteria.FilterValue),
+                "firstname" => owner => owner.FirstName.Contains(criteria.FilterValue),
+                "lastname" => owner => owner.LastName.Contains(criteria.FilterValue),
+                "middlename" => owner => owner.MiddleName.Contains(criteria.FilterValue),
+                "ownernumber" => owner => owner.OwnerNumber.Contains(criteria.FilterValue),
+                "phonenumber" => owner => owner.PhoneNumber.Contains(criteria.FilterValue),
                
             };
         }

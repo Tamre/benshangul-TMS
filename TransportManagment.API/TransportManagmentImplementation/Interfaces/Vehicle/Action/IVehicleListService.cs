@@ -13,6 +13,9 @@ namespace TransportManagmentImplementation.Interfaces.Vehicle.Action
 
         public Task<ResponseMessage> Add(VehicleListPostDto vehicleListPostDto);
         public Task<ResponseMessage> AddVehicleDocument(AddVehicleDocumetDto addVehicleDocument);
+        public Task<List<VehicleDocumetGetDto>> GetVehicleDocuments(Guid vehicleId);
+
+        public Task<ResponseMessage> ReplaceVehicleDocuemtns(VehicleDocumetGetDto vehicleDOcuemtGet);
         public Task<VehicleDetailDto> GetVehicleDetail(VehicleGetParameterDto vehicleGet);
         Task<PagedList<VehicleDetailDto>> GetAll(FilterDetail filterData);
         public Task<ResponseMessage> Update(UpdateVehicleDto updteVehicle);

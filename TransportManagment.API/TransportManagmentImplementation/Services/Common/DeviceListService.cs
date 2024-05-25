@@ -46,9 +46,7 @@ namespace TransportManagmentImplementation.Services.Common
 
                     PCNAme = DeviceListPost.PCNAme,
                     IpAddress = DeviceListPost.IpAddress,
-                    MACAddress = DeviceListPost.MACAddress,
-                    //ApprovedFor = Enum.Parse<ApprovedFor>(DeviceListPost.ApprovedFor),
-                    // ApproverId = DeviceListPost.ApproverId,
+                    MACAddress = DeviceListPost.MACAddress,                  
                     CreatedById = DeviceListPost.CreatedById,
                     CreatedDate = DateTime.Now,
                     IsActive = false

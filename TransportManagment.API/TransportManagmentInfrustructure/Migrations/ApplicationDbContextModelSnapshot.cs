@@ -1256,16 +1256,14 @@ namespace TransportManagmentInfrustructure.Migrations
 
                     b.Property<string>("AmharicFirstName")
                         .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
 
                     b.Property<string>("AmharicLastName")
-                        .IsRequired()
                         .HasMaxLength(20)
                         .HasColumnType("nvarchar(20)");
 
                     b.Property<string>("AmharicMiddleName")
-                        .IsRequired()
                         .HasMaxLength(20)
                         .HasColumnType("nvarchar(20)");
 
@@ -1290,7 +1288,6 @@ namespace TransportManagmentInfrustructure.Migrations
                         .HasColumnType("nvarchar(10)");
 
                     b.Property<string>("IdNumber")
-                        .IsRequired()
                         .HasMaxLength(10)
                         .HasColumnType("nvarchar(10)");
 
@@ -1298,14 +1295,15 @@ namespace TransportManagmentInfrustructure.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("LastName")
-                        .IsRequired()
                         .HasMaxLength(10)
                         .HasColumnType("nvarchar(10)");
 
                     b.Property<string>("MiddleName")
-                        .IsRequired()
                         .HasMaxLength(10)
                         .HasColumnType("nvarchar(10)");
+
+                    b.Property<int>("OrganizationType")
+                        .HasColumnType("int");
 
                     b.Property<int>("OwnerGroup")
                         .HasColumnType("int");
@@ -1343,7 +1341,8 @@ namespace TransportManagmentInfrustructure.Migrations
                     b.HasIndex("CreatedById");
 
                     b.HasIndex("IdNumber")
-                        .IsUnique();
+                        .IsUnique()
+                        .HasFilter("[IdNumber] IS NOT NULL");
 
                     b.HasIndex("PhoneNumber")
                         .IsUnique();
@@ -1852,9 +1851,6 @@ namespace TransportManagmentInfrustructure.Migrations
                     b.Property<int>("DocumentTypeId")
                         .HasColumnType("int");
 
-                    b.Property<int>("ForVehicleDocument")
-                        .HasColumnType("int");
-
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
 
@@ -2006,7 +2002,7 @@ namespace TransportManagmentInfrustructure.Migrations
 
                     b.HasIndex("ServiceZoneId");
 
-                    b.ToTable("VehicleLists");
+                    b.ToTable("VehicleLists", "VRMS");
                 });
 
             modelBuilder.Entity("TransportManagmentInfrustructure.Model.Vehicle.Action.VehicleOwner", b =>
@@ -2758,7 +2754,7 @@ namespace TransportManagmentInfrustructure.Migrations
 
                     b.HasIndex("CreatedById");
 
-                    b.ToTable("ValuationReasons");
+                    b.ToTable("ValuationReasons", "VRMS");
                 });
 
             modelBuilder.Entity("TransportManagmentInfrustructure.Model.Vehicle.Configuration.VehicleBodyType", b =>
@@ -2936,10 +2932,10 @@ namespace TransportManagmentInfrustructure.Migrations
 
                     b.HasIndex("CreatedById");
 
-                    b.HasIndex("VehicleSerialType")
-                        .IsUnique();
-
                     b.HasIndex("ZoneId");
+
+                    b.HasIndex("VehicleSerialType", "ZoneId")
+                        .IsUnique();
 
                     b.ToTable("VehicleSerialSettings", "VRMS");
                 });

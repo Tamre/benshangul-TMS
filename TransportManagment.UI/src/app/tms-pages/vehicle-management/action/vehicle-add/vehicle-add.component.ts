@@ -6,7 +6,7 @@ import {
   FormGroup,
 } from "@angular/forms";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
-import { Store } from "@ngrx/store";
+
 import { TranslateService } from "@ngx-translate/core";
 import { cloneDeep } from "lodash";
 import { VehicleConfigService } from "src/app/core/services/Vehicle-services/vehicle-config.service";
@@ -18,9 +18,9 @@ import { TokenStorageService } from "src/app/core/services/token-storage.service
 import { ResponseMessage } from "src/app/model/ResponseMessage.Model";
 import { UserView } from "src/app/model/user";
 import { VehicleModelPostDto } from "src/app/model/vehicle-configuration/vehicle-model";
-import { RootReducerState } from "src/app/store";
-import { fetchCrmContactData } from "src/app/store/CRM/crm_action";
-import { selectCRMLoading } from "src/app/store/CRM/crm_selector";
+import { IVehicleRegisterTabDto } from "./IVehicleRegisterDto";
+import { ToastService } from "src/app/account/login/toast-service";
+
 
 @Component({
   selector: "app-vehicle-add",
@@ -49,6 +49,23 @@ export class VehicleAdd implements OnInit {
   markId: number = 0;
   markNames: string[] = [];
   markNameIdMap: { [name: string]: number } = {};
+  activeIdd:number=1
+
+ registerdVehicle:IVehicleRegisterTabDto={
+  vehicleId: '',
+
+ }
+// registerdVehicle:IVehicleRegisterTabDto = {
+//   vehicleId:'F2C9050E-38A9-4C67-A14A-054F134E2A2C',
+//   vehicleRegNo:'strin-RN00002',
+//   vehicleChasis:'17',
+//   owner:"kirubel",
+//   vehicleDocuments:['File 1 ', 'Annual Inspection', 'File 3']
+// }
+
+isRegisterdFinished:boolean = false;
+
+
 
 
   breadCrumbItems = [
@@ -101,7 +118,7 @@ export class VehicleAdd implements OnInit {
     private modalService: NgbModal,
     public service: PaginationService,
     public translate: TranslateService,
-    private store: Store<{ data: RootReducerState }>,
+    private toastService : ToastService,
     public vehicleConfigService: VehicleConfigService,
     private addressService: AddressService,
     public vehicleService:VehicleService
@@ -155,15 +172,11 @@ export class VehicleAdd implements OnInit {
       createdById:[""],
       lastActionTaken:["Endoding"]
     });
-    /**
-     * fetches data
-     */
-    this.store.dispatch(fetchCrmContactData());
-    this.store.select(selectCRMLoading).subscribe((data) => {
-      if (data == false) {
-        document.getElementById("elmLoader")?.classList.add("d-none");
-      }
-    });
+
+    if(this.registerdVehicle.vehicleId!=''){
+      this.activeIdd=2
+    }
+  
   }
   // Convenience getter for easy access to form fields
   get f() {
@@ -201,14 +214,34 @@ export class VehicleAdd implements OnInit {
     // // Call the service to add the vehicle
     this.vehicleService.addVehicleList(this.vehicle).subscribe({
       next: (res) => {
-        if (res.success) {
-          console.log(res)
-          successToast(res.message);
-          this.refreshData()
+        if (res.success) {       
+
+                  
+
+          this.toastService.show(res.message, {
+            classname: "success text-white",
+            delay: 2000,
+          });
+
+        
+
+          this.registerdVehicle.vehicleId = res.data.vehicleId;
+          this.registerdVehicle.vehicleChasis= res.data.vehicleChasis;
+          this.registerdVehicle.vehicleRegNo = res.data.vehicleRegNo
+
+          this.setActiveTab(2);
+        }else {
+          this.toastService.show(res.message, {
+            classname: "error text-white",
+            delay: 2000,
+          });
         }
       },
       error: (err) => {
-        errorToast(err);
+        this.toastService.show(err.message, {
+          classname: "error text-white",
+          delay: 2000,
+        });
       },
       
     });
@@ -317,10 +350,25 @@ export class VehicleAdd implements OnInit {
         this.vehicleConfigService.updateVehicleModel(newData).subscribe({
           next: (res: ResponseMessage) => {
             if (res.success) {
-              this.successAddMessage = res.message;           
-              successToast(this.successAddMessage);
+             
+
+              this.toastService.show(res.message, {
+                classname: "success text-white",
+                delay: 2000,
+              });
+
+
+              this.registerdVehicle.vehicleId = res.data.vehicleId;
+              this.registerdVehicle.vehicleChasis= res.data.vehicleChasis;
+              this.registerdVehicle.vehicleRegNo = res.data.vehicleRegNo
+
+
               this.dataForm.reset();
               this.refreshData();
+
+              this.setActiveTab(2);
+
+
             } else {
               console.error(res.message);
             }
@@ -335,10 +383,22 @@ export class VehicleAdd implements OnInit {
         this.vehicleConfigService.addVehicleModel(newData).subscribe({
           next: (res: ResponseMessage) => {
             if (res.success) {
-              this.successAddMessage = res.message;
-              this.closeModal();
-              successToast(this.successAddMessage);
+              
+                      
+
+              this.toastService.show(res.message, {
+                classname: "success text-white",
+                delay: 2000,
+              });
+
+
+              this.registerdVehicle.vehicleId = res.data.vehicleId;
+              this.registerdVehicle.vehicleChasis= res.data.vehicleChasis;
+              this.registerdVehicle.vehicleRegNo = res.data.vehicleRegNo
+
               this.refreshData();
+
+              this.setActiveTab(2);
             } else {
               console.error(res.message);
             }
@@ -360,5 +420,19 @@ export class VehicleAdd implements OnInit {
    */
   get form() {
     return this.dataForm.controls;
+  }
+
+  setActiveTab(value: number) {
+
+    console.log(value);
+    this.activeIdd= value
+
+    if (this.activeIdd==4) {
+      this.isRegisterdFinished = true;
+    }
+  }
+  onNavLinkClick(event: Event): void {
+    event.preventDefault();  // This will prevent the default action of the link
+    // Add any additional logic if needed
   }
 }

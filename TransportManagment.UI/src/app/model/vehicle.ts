@@ -25,6 +25,7 @@ export interface VehicleData {
     transferStatus: string;
     serviceZoneId: number;
     createdById: string;
+
   }
   
 
@@ -44,3 +45,39 @@ export interface VehicleData {
   //     ChessisNo, 3
   //     EngineNo 2
   // }
+
+
+export interface VehicleDetailDto
+{
+    id: string;
+    registrationNumber: string;
+    registrationType: string;
+    model:string;
+    mdelId: string;
+    taxStatus: string;
+    officeCode: string;
+    declarationNo: string;
+    declarationDate: Date;
+    billOfLoading: string;
+    removalNumber: string;
+    invoiceDate: Date;
+    invoicePrice: number;
+    chassisNo: string;
+    engineNumber: string;
+    assembledCountryId: number;
+    assembledCountry: string;
+    chassisMadeId: number;
+    chassisMadeCountry: string;
+    manufacturingYear: number;
+    horsePower: number;
+    approvalStatus: string;
+    horsePowerMeasure: string;
+    noCylinder: number;
+    engineCapacity: number;
+    typeOfVehicle: string;
+    vehicleCurrentStatus: string;
+    transferStatus: string;
+    serviceZone: string;
+
+    plateNumber?:string
+}

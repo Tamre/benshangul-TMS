@@ -175,7 +175,7 @@ namespace TransportManagmentInfrustructure.Data
             });
             modelBuilder.Entity<VehicleSerialSetting>(entity =>
             {
-                entity.HasIndex(t => t.VehicleSerialType).IsUnique();
+                entity.HasIndex(t =>  new { t.VehicleSerialType, t.ZoneId }).IsUnique();
             });
             modelBuilder.Entity<VehicleSettings>(entity =>
             {
@@ -311,8 +311,12 @@ namespace TransportManagmentInfrustructure.Data
             modelBuilder.Entity <VehicleReplacement>().ToTable("VehicleReplacements", schema: "VRMS");
             modelBuilder.Entity <VehicleTransfer>().ToTable("VehicleTransfers", schema: "VRMS");
             modelBuilder.Entity <VehicleDocument>().ToTable("VehicleDocuments", schema: "VRMS");
-            modelBuilder.Entity<DataChange>().ToTable("DataChanges", schema: "VRMS");
-            modelBuilder.Entity<DataChangeDetail>().ToTable("DataChangeDetails", schema: "VRMS");
+
+           
+            modelBuilder.Entity <ValuationReason>().ToTable("ValuationReasons", schema: "VRMS");
+            modelBuilder.Entity <VehicleList>().ToTable("VehicleLists", schema: "VRMS");
+
+
 
             #endregion
         }
