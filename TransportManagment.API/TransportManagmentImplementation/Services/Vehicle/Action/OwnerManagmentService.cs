@@ -253,8 +253,9 @@ namespace TransportManagmentImplementation.Services.Vehicle.Action
                 ownerExist.SecondaryPhoneNumber = ownerListGetDto?.SecondaryPhoneNumber;
                 ownerExist.IdNumber = ownerListGetDto?.IdNumber;
                 ownerExist.PoBox = ownerListGetDto?.PoBox;
+                ownerExist.OwnerGroup = ownerListGetDto.OwnerGroup;
 
-            
+
 
 
 

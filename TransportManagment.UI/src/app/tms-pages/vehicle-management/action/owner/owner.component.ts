@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { OwnerService } from 'src/app/core/services/vehicle/owner.service';
 import { TranslateService } from '@ngx-translate/core';
-import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormGroup, UntypedFormBuilder, UntypedFormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { TokenStorageService } from 'src/app/core/services/token-storage.service';
 import { UserView } from 'src/app/model/user';
@@ -19,16 +19,26 @@ import { OwnerGetDto, OwnerPostDto } from 'src/app/model/vehicle/owner';
 
 
 
+export function phoneValidator(): ValidatorFn {
+  return (control: AbstractControl): ValidationErrors | null => {
+    const phonePattern = /^\+251\d{9}$|^0\d{9}$/;
+    if (control.value && !phonePattern.test(control.value)) {
+      return { phoneInvalid: true };
+    }
+    return null;
+  };
+}
 @Component({
   selector: 'app-owner',
   templateUrl: './owner.component.html',
   styleUrl: './owner.component.scss'
 })
 export class OwnerComponent implements OnInit {
+
   submitted = false;
   submitted1 = false;
-  currentUser!: UserView | null;
-  ownerForm!: UntypedFormGroup;
+  currentUser!: UserView;
+  ownerForm!: FormGroup;
   searchForm!: UntypedFormGroup;
 
   allOwners!: PaginatedResponse<OwnerGetDto>;
@@ -118,7 +128,9 @@ export class OwnerComponent implements OnInit {
   ngOnInit(): void {
     this.refreshData();
     this.currentUser = this.tokenStorageService.getCurrentUser();
+    //console.log("currentUser",this.currentUser);
     this.ownerForm = this.formBuilder.group({
+      id: [""],
       ownerGroup: ["", Validators.required],
       firstName: ["", Validators.required],
       middleName: ["", Validators.required],
@@ -131,19 +143,20 @@ export class OwnerComponent implements OnInit {
       woredaId: [""],
       town: [""],
       houseNo: ["", Validators.required],
-      phoneNumber: ["", Validators.required],
+      phoneNumber: ["", [Validators.required]],
       secondaryPhoneNumber: [""],
       idNumber: ["", Validators.required],
-      poBox: [""],
-      createdById: [this.currentUser?.userId, [Validators.required]],
-      serviceZoneId: [this.currentUser?.userTypeId, [Validators.required]],
+      poBox: [""]
+    
     });
     this.searchForm = this.formBuilder.group({
       searchType: ["", Validators.required],
       search: ["", Validators.required],
     });
 
+
   }
+
 
   submitSearch() {
     this.submitted1 = true;
@@ -179,13 +192,9 @@ export class OwnerComponent implements OnInit {
           this.owners = res.data || [];
           this.metaData = res.metaData;
           this.allOwners = cloneDeep(res);
-          console.log(this.owners)
-          console.log(this.allOwners)
 
         } else {
           this.owners = [];
-          //this.metaData = null;
-          //this.allOwners = null;
         }
       },
       error: (err) => {
@@ -225,10 +234,12 @@ export class OwnerComponent implements OnInit {
 
   }
   onSubmit() {
+    var newData: OwnerPostDto = this.ownerForm.value;
+    newData.createdById = this.currentUser.userId;
+    newData.serviceZoneId = this.currentUser.userTypeId;
     if (this.ownerForm.valid) {
       if (this.ownerForm.get("id")?.value) {
-        console.log(this.currentUser?.userId)
-        const newData: OwnerPostDto = this.ownerForm.value;
+        var newData: OwnerPostDto = this.ownerForm.value;
         this.ownerService.updateOwner(newData).subscribe({
           next: (res: ResponseMessage) => {
             if (res.success) {
@@ -236,6 +247,7 @@ export class OwnerComponent implements OnInit {
                 classname: "success text-white",
                 delay: 2000,
               });
+              this.closeModal();
               this.ownerForm.reset()
             } else {
               console.error(res.message);
@@ -247,37 +259,38 @@ export class OwnerComponent implements OnInit {
         });
 
       } else {
-    // this.submitted = true;
-    // console.log(this.submitted);
-    // if (this.ownerForm.invalid) {
-    //   return; 
-    // }
+        // this.submitted = true;
+        // console.log(this.submitted);
+        // if (this.ownerForm.invalid) {
+        //   return; 
+        // }
 
-    //this.ownerForm.controls["createdById"].setValue(this.currentUser?.userId);
-    //this.ownerForm.markAsTouched();
+        //this.ownerForm.controls["createdById"].setValue(this.currentUser?.userId);
+        //this.ownerForm.markAsTouched();
 
-    if (this.ownerForm.valid) {
-      const newData: OwnerPostDto = this.ownerForm.value;
-      this.ownerService.addOwner(newData).subscribe({
-        next: (res: ResponseMessage) => {
-          if (res.success) {
-            this.toastService.show(res.message, {
-              classname: "success text-white",
-              delay: 2000,
-            });
-            //this.ownerForm.reset()
-          } else {
-            console.error(res.message);
-          }
+        if (this.ownerForm.valid) {
+          const newData: OwnerPostDto = this.ownerForm.value;
+          this.ownerService.addOwner(newData).subscribe({
+            next: (res: ResponseMessage) => {
+              if (res.success) {
+                this.toastService.show(res.message, {
+                  classname: "success text-white",
+                  delay: 2000,
+                });
+                this.closeModal();
+                //this.ownerForm.reset()
+              } else {
+                console.error(res.message);
+              }
 
-        },
-        error: (err) => {
-          console.error(err);
-        },
-      });
+            },
+            error: (err) => {
+              console.error(err);
+            },
+          });
+        }
+      }
     }
-  }
-  }
     this.submitted = true;
   }
   get f() {
@@ -289,7 +302,6 @@ export class OwnerComponent implements OnInit {
   openModal(content: any) {
     this.submitted = false;
     this.ownerForm.reset();
-    this.ownerForm.controls["createdById"].setValue(this.currentUser?.userId);
     this.modalService.open(content, { size: "lg", centered: true });
   }
   closeModal() {
@@ -311,6 +323,7 @@ export class OwnerComponent implements OnInit {
     updateBtn.innerHTML = this.updateText;
     this.isEditing = true;
     this.econtent = this.owners[id];
+    console.log(this.econtent)
     this.ownerForm.controls["ownerGroup"].setValue(this.econtent.ownerGroup);
     this.ownerForm.controls["firstName"].setValue(this.econtent.firstName);
     this.ownerForm.controls["middleName"].setValue(this.econtent.middleName);
@@ -332,7 +345,6 @@ export class OwnerComponent implements OnInit {
     this.ownerForm.controls["idNumber"].setValue(this.econtent.houseNo);
     this.ownerForm.controls["poBox"].setValue(this.econtent.phoneNumber);
 
-    this.ownerForm.controls["createdById"].setValue(this.currentUser?.userId);
     this.ownerForm.controls["id"].setValue(this.econtent.id);
   }
 }

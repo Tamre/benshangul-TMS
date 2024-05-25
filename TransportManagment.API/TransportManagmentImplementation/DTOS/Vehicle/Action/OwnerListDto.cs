@@ -63,7 +63,7 @@ namespace TransportManagmentImplementation.DTOS.Vehicle.Action
         public string? AmharicName { get; set; }
         public string? Woreda { get; set; }
         public string? Zone { get; set; }
-        public string OwnerGroup { get; set; }= null!;
+        public string? OwnerGroupName { get; set; }= null!;
     }
     public record VehicleOwnerListGetDto 
     {

@@ -15,6 +15,9 @@ import { allIcons } from 'angular-feather/icons';
 import { DropzoneModule } from 'ngx-dropzone-wrapper';
 import { SimplebarAngularModule } from 'simplebar-angular';
 
+
+import { NgxMaskDirective, NgxMaskPipe, provideNgxMask } from 'ngx-mask';
+
 import { AisorcStockTypeComponent } from './configuratuion/vehicle-config/plate/aisorc-stock-type/aisorc-stock-type.component';
 import { BanBodyComponent } from './configuratuion/vehicle-config/look-ups/ban-body/ban-body.component';
 import { DepreciatioCostComponent } from './configuratuion/vehicle-config/valuation/depreciatio-cost/depreciatio-cost.component';
@@ -54,6 +57,7 @@ import { InspectionComponent } from './action/inspection/inspection.component';
 import { FieldInspectionComponent } from './action/inspection/field-inspection/field-inspection.component';
 import { TechnicalInspectionComponent } from './action/inspection/technical-inspection/technical-inspection.component';
 import { OwnerComponent } from './action/owner/owner.component';
+
 
 
 
@@ -122,12 +126,15 @@ import { OwnerComponent } from './action/owner/owner.component';
     NgbProgressbarModule,
     NgPipesModule,
     NgbModule,
-    
-    
+    //NgxMaskPipe
+    NgxMaskDirective,
+    NgxMaskPipe,
+
   ],
   providers: [
     DatePipe,
-    LanguageService
+    LanguageService,
+    provideNgxMask()
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
