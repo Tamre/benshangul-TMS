@@ -44,7 +44,7 @@ export class OwnerService {
   }
   updateOwner(formData:OwnerPostDto){
     var headers = this.headers
-    return this.http.post<ResponseMessage>(
+    return this.http.put<ResponseMessage>(
       `${this.baseUrl}/OwnerList/UpdateOwner`,
       formData,{headers:headers}
     );

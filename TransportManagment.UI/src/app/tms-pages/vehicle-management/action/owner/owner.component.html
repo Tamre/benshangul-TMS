@@ -64,64 +64,7 @@
         <div class="col-xxl-12">
             <div class="card" id="contactList">
                 <div class="card-header">
-                    <!-- <div class="row g-4 mb-3">
-                        <div class="col-lg-9">
-                            <div class="card-header border-0 justify-content-sm-start">
-                                <form (ngSubmit)="submitSearch()" [formGroup]="searchForm" class="tablelist-form"
-                                    autocomplete="off">
-                                    <div class="row g-3 align-items-end">
-                                        <div class="text-end">
-                                        </div>
-                                        <div class="col-lg-3">
-                                            <label for="searchType-field" class="form-label">{{ 'Search By' | translate
-                                                }}</label>
-
-                                            <ng-select [(ngModel)]="selectedSearchType" [items]="searchDropDownItem"
-                                                bindLabel="name" bindValue="code" id="searchType-field"
-                                                name="searchType" formControlName="searchType"
-                                                [ngClass]="{ 'is-invalid': submitted1 && searchForm.controls['searchType'].errors }"
-                                                [searchable]="false" placeholder="Select Search Type" required>
-                                                <ng-option value="" disabled>{{ 'Select Search Type' | translate
-                                                    }}</ng-option>
-                                            </ng-select>
-
-                                        </div>
-                                        <div class="col-lg-3" *ngIf="selectedSearchType">
-                                            <label for="searchField-field" class="form-label">{{ 'Value' | translate
-                                                }}</label>
-                                            <input type="text" id="search-field" class="form-control"
-                                                placeholder="{{ 'value' | translate }}" required
-                                                formControlName="search"
-                                                [ngClass]="{ 'is-invalid': submitted1 && fo['search'].errors }" />
-                                        </div>
-                                        <div class="col-lg-2 d-flex align-items-end">
-                                            <button class="btn btn-success add-btn mt-auto" (click)="submitSearch()"
-                                                type="submit">
-                                                <i class="mdi mdi-magnify"></i> {{ 'Search' | translate }}
-                                            </button>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                        <div class="col-sm-auto d-flex align-items-center">
-                            <span class="me-2">Show:</span>
-                            <ng-select [(ngModel)]="selectedPageSize" (ngModelChange)="refreshData()"
-                                [items]="pageSizeOptions" bindLabel="label" bindValue="value" class="custom-ng-select"
-                                [clearable]="false"></ng-select>
-                            <span class="ms-2">Entries</span>
-                        </div>
-                        <div class="col-lg-3 d-flex align-items-center justify-content-end">
-                            <div class="d-flex justify-content-end gap-2">
-                                <button class="btn btn-info" data-bs-toggle="modal" data-bs-target="#showModal"
-                                    (click)="openModal(content)">
-                                    <i class="ri-add-fill me-1 align-bottom"></i> {{ 'Add Owner' | translate }}
-                                </button>
-
-                            </div>
-                        </div>
-
-                    </div> -->
+                    
                     <div class="row g-4 mb-3">
 
                         <div class="col-sm-auto d-flex align-items-center">
@@ -202,7 +145,7 @@
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
                                 id="close-modal" (click)="modal.dismiss('Cross click')"></button>
                         </div>
-                        <form (ngSubmit)="onSubmit()" [formGroup]="ownerForm" class="tablelist-form" autocomplete="off">
+                        <form (ngSubmit)="onSubmit()" [formGroup]="ownerForm" class="tablelist-form was-validated" autocomplete="off">
                             <div class="modal-body">
                                 <input type="hidden" id="id-field" />
                                 <div class="row g-3">
@@ -365,9 +308,8 @@
                                         </ng-select>
                                         <div *ngIf="submitted && ownerForm.get('zoneId')?.errors"
                                             class="invalid-feedback" align="left">
-                                            <div *ngIf="ownerForm.get('zoneId')?.errors?.['required']">{{ 'Zone is
-                                                required'
-                                                | translate }}</div>
+                                            <div *ngIf="ownerForm.get('zoneId')?.errors?.['required']">{{ 'Zone is required'| translate }}
+                                            </div>
                                         </div>
 
                                     </div>
@@ -393,7 +335,7 @@
                                         <div>
                                             <label for="houseNo-field" class="form-label">{{ 'House No' | translate
                                                 }}</label>
-                                            <input type="text" id="town-field" class="form-control"
+                                            <input type="text" id="houseNo-field" class="form-control"
                                                 placeholder="{{ 'Enter House No' | translate }}"
                                                 formControlName="houseNo" required
                                                 [ngClass]="{ 'is-invalid': submitted && f['houseNo'].errors }" />
@@ -404,8 +346,8 @@
                                         <div>
                                             <label for="phoneNumber-field" class="form-label">{{ 'Phone Number' |
                                                 translate }}</label>
-                                            <input type="text" id="town-field" class="form-control"
-                                                placeholder="{{ 'Enter Phone Number' | translate }}"
+                                            <input type="text" mask="`(251)000-0000`"  id="phoneNumber-phone" class="form-control"
+                                                placeholder="{{'(251)xxx-xxxx' | translate }}"
                                                 formControlName="phoneNumber" required
                                                 [ngClass]="{ 'is-invalid': submitted && f['phoneNumber'].errors }" />
 
@@ -415,7 +357,7 @@
                                         <div>
                                             <label for="secondaryPhoneNumber-field" class="form-label">{{ 'Secondary
                                                 Phone Number' | translate }}</label>
-                                            <input type="text" id="town-field" class="form-control"
+                                            <input type="text" id="secondaryPhoneNumber-field" class="form-control"
                                                 placeholder="{{ 'Enter Phone Number' | translate }}"
                                                 formControlName="secondaryPhoneNumber" />
 
@@ -425,7 +367,7 @@
                                         <div>
                                             <label for="idNumber-field" class="form-label">{{ 'Id Number' | translate
                                                 }}</label>
-                                            <input type="text" id="town-field" class="form-control"
+                                            <input type="text" id="idNumber-field" class="form-control"
                                                 placeholder="{{ 'Enter Id Number' | translate }}"
                                                 formControlName="idNumber" required
                                                 [ngClass]="{ 'is-invalid': submitted && f['idNumber'].errors }" />
@@ -437,7 +379,7 @@
                                         <div>
                                             <label for="poBox-field" class="form-label">{{ 'PO Box' | translate
                                                 }}</label>
-                                            <input type="text" id="town-field" class="form-control"
+                                            <input type="text" id="poBox-field" class="form-control"
                                                 placeholder="{{ 'Enter PO Box' | translate }}"
                                                 formControlName="poBox" />
 
@@ -450,7 +392,7 @@
                                     <button type="button" class="btn btn-light" data-bs-dismiss="modal"
                                         (click)="closeModal()">{{
                                         'Close' | translate }}</button>
-                                    <button type="submit" class="btn btn-success" id="add-btn">{{ 'Add' | translate
+                                    <button type="submit" class="btn btn-success " [disabled]="!ownerForm.valid" id="add-btn">{{ 'Add' | translate
                                         }}</button>
                                 </div>
                             </div>
