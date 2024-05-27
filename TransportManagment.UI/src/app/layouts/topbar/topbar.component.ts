@@ -13,9 +13,9 @@ import { TokenStorageService } from '../../core/services/token-storage.service';
 import { CookieService } from 'ngx-cookie-service';
 import { LanguageService } from '../../core/services/language.service';
 import { TranslateService } from '@ngx-translate/core';
-import { allNotification, messages } from './data'
+
 import { CartModel } from './topbar.model';
-import { cartData } from './data';
+
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
@@ -64,16 +64,8 @@ export class TopbarComponent implements OnInit {
       this.flagvalue = val.map(element => element.flag);
     }
 
-    // Fetch Data
-    this.allnotifications = allNotification;
-
-    this.messages = messages;
-    this.cartData = cartData;
-    this.cart_length = this.cartData.length;
-    this.cartData.forEach((item) => {
-      var item_price = item.quantity * item.price
-      this.total += item_price
-    });
+ 
+   
   }
 
   /**

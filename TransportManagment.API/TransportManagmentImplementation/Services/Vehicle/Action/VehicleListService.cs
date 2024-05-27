@@ -139,7 +139,13 @@ namespace TransportManagmentImplementation.Services.Vehicle.Action
                 return new ResponseMessage
                 {
                     Success = true,
-                    Message = "Vehicle Encoded Successfully !!!"
+                    Message = "Vehicle Encoded Successfully !!!",
+                    Data = new
+                    {
+                        vehicleId= vechicle.Id,
+                        vehicleRegNo= vechicle.RegistrationNo,
+                        vehicleChasis = vechicle.ChassisNo}
+
                 };
 
             }
@@ -182,9 +188,9 @@ namespace TransportManagmentImplementation.Services.Vehicle.Action
                 return new ResponseMessage { Success = false, Message = "Document Already exists" };
             }
 
-            string nameOfFile = $"{currentDocument.FileName}/{currentVehicle.Id}";
+            string nameOfFolder = $"Vehicle\\{currentDocument.FileName}";
 
-            string path = await _generalConfigService.UploadFiles(addVehicleDocument.Document, nameOfFile, "Vehicle");
+            string path = await _generalConfigService.UploadFiles(addVehicleDocument.Document, currentVehicle.Id.ToString(), nameOfFolder);
 
             if (string.IsNullOrEmpty(path))
             {
@@ -198,7 +204,7 @@ namespace TransportManagmentImplementation.Services.Vehicle.Action
                 CreatedDate = DateTime.Now,
                 DocumentPath = path,
                 DocumentTypeId = addVehicleDocument.DocumentTypeId,
-                ForVehicleDocument = addVehicleDocument.ForVehicleDocument,
+              
                 IsActive = true,
                 VehicleId = addVehicleDocument.VehicleId
             };
@@ -262,6 +268,7 @@ namespace TransportManagmentImplementation.Services.Vehicle.Action
                                       {
                                           Id = x.VehicleId,
                                           RegistrationNumber = x.Vehicle.RegistrationNo,
+                                          RegistrationType = x.Vehicle.RegistrationType.ToString(),
                                           AssembledCountry = x.Vehicle.AssembledCountry.Name,
                                           BillOfLoading = x.Vehicle.BillOfLoading,
                                           ChassisMadeCountry = x.Vehicle.ChassisMade.Name,
@@ -283,7 +290,8 @@ namespace TransportManagmentImplementation.Services.Vehicle.Action
                                           TaxStatus = x.Vehicle.TaxStatus.ToString(),
                                           TransferStatus = x.Vehicle.TransferStatus.ToString(),
                                           TypeOfVehicle = x.Vehicle.TypeOfVehicle.ToString(),
-                                          VehicleCurrentStatus = x.Vehicle.VehicleCurrentStatus.ToString()
+                                          VehicleCurrentStatus = x.Vehicle.VehicleCurrentStatus.ToString(),
+                                          ServiceZone = x.Vehicle.ServiceZone.Name,
                                       })
                                   .FirstOrDefaultAsync();
 
@@ -302,6 +310,7 @@ namespace TransportManagmentImplementation.Services.Vehicle.Action
                                           Id = x.Id,
                                           RegistrationNumber = x.RegistrationNo,
                                           AssembledCountry = x.AssembledCountry.Name,
+                                          RegistrationType = x.RegistrationType.ToString(),
                                           BillOfLoading = x.BillOfLoading,
                                           ChassisMadeCountry = x.ChassisMade.Name,
                                           ChassisNo = x.ChassisNo,
@@ -322,7 +331,8 @@ namespace TransportManagmentImplementation.Services.Vehicle.Action
                                           TaxStatus = x.TaxStatus.ToString(),
                                           TransferStatus = x.TransferStatus.ToString(),
                                           TypeOfVehicle = x.TypeOfVehicle.ToString(),
-                                          VehicleCurrentStatus = x.VehicleCurrentStatus.ToString()
+                                          VehicleCurrentStatus = x.VehicleCurrentStatus.ToString(),
+                                          ServiceZone = x.ServiceZone.Name,
                                       })
                                   .FirstOrDefaultAsync();
 
@@ -341,6 +351,7 @@ namespace TransportManagmentImplementation.Services.Vehicle.Action
                                           Id = x.Id,
                                           RegistrationNumber = x.RegistrationNo,
                                           AssembledCountry = x.AssembledCountry.Name,
+                                          RegistrationType = x.RegistrationType.ToString(),
                                           BillOfLoading = x.BillOfLoading,
                                           ChassisMadeCountry = x.ChassisMade.Name,
                                           ChassisNo = x.ChassisNo,
@@ -361,7 +372,8 @@ namespace TransportManagmentImplementation.Services.Vehicle.Action
                                           TaxStatus = x.TaxStatus.ToString(),
                                           TransferStatus = x.TransferStatus.ToString(),
                                           TypeOfVehicle = x.TypeOfVehicle.ToString(),
-                                          VehicleCurrentStatus = x.VehicleCurrentStatus.ToString()
+                                          VehicleCurrentStatus = x.VehicleCurrentStatus.ToString(),
+                                          ServiceZone = x.ServiceZone.Name,
                                       })
                                   .FirstOrDefaultAsync();
 
@@ -377,9 +389,9 @@ namespace TransportManagmentImplementation.Services.Vehicle.Action
                                        .Where(x => x.RegistrationNo == vehicleGet.Value && x.RegistrationType == vehicleGet.RegistrationType)
                                       .Select(x => new VehicleDetailDto
                                       {
-                                          Id = x.Id,
-                                          
+                                          Id = x.Id,                                          
                                           RegistrationNumber = x.RegistrationNo,
+                                          RegistrationType = x.RegistrationType.ToString(),
                                           AssembledCountry = x.AssembledCountry.Name,
                                           BillOfLoading = x.BillOfLoading,
                                           ChassisMadeCountry = x.ChassisMade.Name,
@@ -401,7 +413,8 @@ namespace TransportManagmentImplementation.Services.Vehicle.Action
                                           TaxStatus = x.TaxStatus.ToString(),
                                           TransferStatus = x.TransferStatus.ToString(),
                                           TypeOfVehicle = x.TypeOfVehicle.ToString(),
-                                          VehicleCurrentStatus = x.VehicleCurrentStatus.ToString()
+                                          VehicleCurrentStatus = x.VehicleCurrentStatus.ToString(),
+                                          ServiceZone = x.ServiceZone.Name,
                                       })
                                   .FirstOrDefaultAsync();
 
@@ -526,8 +539,65 @@ namespace TransportManagmentImplementation.Services.Vehicle.Action
             }
         }
 
+        public async Task<List<VehicleDocumetGetDto>> GetVehicleDocuments(Guid vehicleId)
+        {
+
+            var docs = await _dbContext.VehicleDocuments.Include(x => x.DocumentType).
+                
+                Where(x => x.VehicleId== vehicleId).ToListAsync();
+
+            var docDtos = _mapper.Map<List<VehicleDocumetGetDto>>(docs);
+
+            return docDtos; 
+
+
+        }
+
+        public async Task<ResponseMessage> ReplaceVehicleDocuemtns(VehicleDocumetGetDto vehicleDocuemtGet)
+        {
+            try
+            {
+                var vehicleDoucment = await _dbContext.VehicleDocuments.Include(x=>x.DocumentType).Where(x=>x.Id== vehicleDocuemtGet.DocumentId).FirstOrDefaultAsync();
+                if (vehicleDoucment == null)
+                {
+                    return new ResponseMessage
+                    {
+                        Success = false,
+                        Message = "Docuement Not Found"
+                    };
+                }
+
+               
+
+                string nameOfFolder = $"Vehicle\\{vehicleDoucment.DocumentType.FileName}";
+
+                string path = await _generalConfigService.UploadFiles(vehicleDocuemtGet.Docuemnt, vehicleDoucment.Id.ToString(), nameOfFolder);
+
+                if (string.IsNullOrEmpty(path))
+                {
+                    return new ResponseMessage { Success = false, Message = "Please Upload The file again" };
+                }
+
+
+                return new ResponseMessage
+                {
+                    Success = true,
+                    Message = "Document Replaced Successfulyy!!!"
+                };
 
 
 
+            }
+            catch(Exception ex)
+            {
+
+                return new ResponseMessage
+                {
+                    Success = false,
+                    Message = ex.Message
+                };
+
+            }
+        }
     }
 }

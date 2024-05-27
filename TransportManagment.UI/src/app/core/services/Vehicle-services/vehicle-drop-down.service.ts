@@ -1,13 +1,12 @@
 import { Injectable } from "@angular/core";
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import { User } from "src/app/store/Authentication/auth.models";
-import { ResponseMessage } from "src/app/model/ResponseMessage.Model";
-import { environment } from "src/environments/environment";
 
-import { IActionDropDownDto, ISettingDropDownsDto } from "src/app/model/common";
+import { environment } from "./../../../../environments/environment";
+
 import { TokenStorageService } from "../token-storage.service";
-import { IOwnerListDropdownDto, OwnerGroup } from "src/app/tms-pages/vehicle-management/action/vehicle-owners/IVehicleOwnersDto";
-import { DepCostGetDto, DepCostPostDto } from "src/app/model/vehicle-configuration/dep-cost";
+import { OwnerGroup, IOwnerListDropdownDto } from "../../../tms-pages/vehicle-management/action/vehicle-owners/IVehicleOwnersDto";
+import { ISettingDropDownsDto } from "src/app/model/common";
+
 
 @Injectable({ providedIn: "root" })
 
@@ -38,23 +37,23 @@ export class VehicleDropdownService {
     ); 
   }
 
-  getAllDepCost() {
-    var headers = this.headers
-    return this.http.get<DepCostGetDto[]>(`${this.baseUrl}/vech-config/DepreciationCost/GetAll`,{headers});
-  }
-  updateDepCost(formData:DepCostPostDto){
-    var headers = this.headers
-    return this.http.put<ResponseMessage>(
-      `${this.baseUrl}/vech-config/DepreciationCost/Update`,
-      formData,{headers:headers}
-    );
-  }
-  addDepCost(formData:DepCostPostDto){
-    var headers = this.headers
-    return this.http.post<ResponseMessage>(
-      `${this.baseUrl}/vech-config/DepreciationCost/Add`,
-      formData,{headers:headers}
-    );
-  }
+  // getAllDepCost() {
+  //   var headers = this.headers
+  //   return this.http.get<DepCostGetDto[]>(`${this.baseUrl}/vech-config/DepreciationCost/GetAll`,{headers});
+  // }
+  // updateDepCost(formData:DepCostPostDto){
+  //   var headers = this.headers
+  //   return this.http.put<ResponseMessage>(
+  //     `${this.baseUrl}/vech-config/DepreciationCost/Update`,
+  //     formData,{headers:headers}
+  //   );
+  // }
+  // addDepCost(formData:DepCostPostDto){
+  //   var headers = this.headers
+  //   return this.http.post<ResponseMessage>(
+  //     `${this.baseUrl}/vech-config/DepreciationCost/Add`,
+  //     formData,{headers:headers}
+  //   );
+  // }
 
 }

@@ -20,8 +20,6 @@ namespace TransportManagmentInfrustructure.Model.Vehicle.Action
         [StringLength(ValidationClasses.MaxSettingRemarkLength)]
         public string DocumentPath { get; set; } = null!;
 
-        public ForVehicleDocument ForVehicleDocument { get; set; }
-
-
+     
     }
 }

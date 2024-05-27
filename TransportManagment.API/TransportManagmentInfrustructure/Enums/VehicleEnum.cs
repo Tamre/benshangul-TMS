@@ -180,6 +180,11 @@ namespace TransportManagmentInfrustructure.Enums
            
         }
 
+        public enum OrganizationType
+        {
+            Type1
+        }
+
 
         public enum OwnerState
         {

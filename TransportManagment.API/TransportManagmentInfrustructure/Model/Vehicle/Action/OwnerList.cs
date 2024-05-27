@@ -19,16 +19,16 @@ namespace TransportManagmentInfrustructure.Model.Vehicle.Action
 
         [Required, StringLength(30)]
         public string FirstName { get; set; } = null!;
-        [Required, StringLength(ValidationClasses.MaxNameLength)]
-        public string MiddleName { get; set; } = null!;
-        [Required, StringLength(ValidationClasses.MaxNameLength)]
-        public string LastName { get; set; } = null!;
-        [Required, StringLength(ValidationClasses.MaxLocalNameLength)]
+        [ StringLength(ValidationClasses.MaxNameLength)]
+        public string? MiddleName { get; set; } = null!;
+        [ StringLength(ValidationClasses.MaxNameLength)]
+        public string? LastName { get; set; } = null!;
+        [Required, StringLength(30)]
         public string AmharicFirstName { get; set; } = null!;
-        [Required, StringLength(ValidationClasses.MaxLocalNameLength)]
-        public string AmharicMiddleName { get; set; } = null!;
-        [Required, StringLength(ValidationClasses.MaxLocalNameLength)]
-        public string AmharicLastName { get; set; } = null!;
+        [ StringLength(ValidationClasses.MaxLocalNameLength)]
+        public string? AmharicMiddleName { get; set; } = null!;
+        [ StringLength(ValidationClasses.MaxLocalNameLength)]
+        public string? AmharicLastName { get; set; } = null!;
         [Required]
         public Gender Gender { get; set; }
         [Required]
@@ -40,15 +40,15 @@ namespace TransportManagmentInfrustructure.Model.Vehicle.Action
         public string? Town { get; set; }
         [StringLength(ValidationClasses.MaxNameLength)]
         public string? HouseNo { get; set; }
-        [Required,StringLength(ValidationClasses.PhoneNumber)]
+        [Required, StringLength(ValidationClasses.PhoneNumber)]
         public string PhoneNumber { get; set; } = null!;
         [StringLength(ValidationClasses.PhoneNumber)]
         public string? SecondaryPhoneNumber { get; set; }
         [StringLength(ValidationClasses.MaxNameLength)]
-        public string IdNumber { get; set; } = null!;
+        public string? IdNumber { get; set; } = null!;
         [StringLength(ValidationClasses.MaxNameLength)]
         public string? PoBox { get; set; }
-
+        public OrganizationType OrganizationType {get;set;}
         public OwnerGroup OwnerGroup { get; set; }
     }
 }

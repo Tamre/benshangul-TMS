@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { User } from "src/app/store/Authentication/auth.models";
+
 import { ResponseMessage } from "src/app/model/ResponseMessage.Model";
 import { environment } from "src/environments/environment";
 
@@ -9,6 +9,7 @@ import { Country } from "src/app/model/address/country";
 import { Region } from "src/app/model/address/region";
 import { Zone } from "src/app/model/address/zone";
 import { Woreda } from "src/app/model/address/woreda";
+import { User } from "src/app/model/user";
 @Injectable({ providedIn: "root" })
 
 export class AddressService {

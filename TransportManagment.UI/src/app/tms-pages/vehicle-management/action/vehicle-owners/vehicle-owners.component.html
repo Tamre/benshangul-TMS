@@ -1,7 +1,7 @@
 <div class="card-header text-end">
     <div class="row g-3 p-2">
         <div class="d-flex align-items-center flex-wrap gap-2">
-            <div class="flex-grow-1">
+            <div class="flex-grow-1" *ngIf="callFrom=='register'">
                 <button class="btn btn-info add-btn" data-bs-toggle="modal" data-bs-target="#showModal"
                     (click)="assignOwners()">
                     <i class="ri-add-fill me-1 align-bottom"></i> {{ 'Assign Owners' | translate }}
@@ -20,7 +20,7 @@
                         <th class="sort">{{'Owner Number'|translate}}</th>
                         <th class="sort">{{ 'Full Name' | translate }}</th>
                         <th class="sort">{{ 'Amharic Name' | translate }}</th>
-                        <th class="sort">{{ 'phoneNumber' | translate }}</th>
+                        <th class="sort">{{ 'Phone Number' | translate }}</th>
                         <th class="sort">{{ 'Gender' | translate }}</th>
                         <th class="sort">{{ 'Status' | translate }}</th>
                         <th>{{ 'Action' | translate }}</th>

@@ -3,13 +3,11 @@ import { CommonModule } from '@angular/common';
 import { AbstractControl, UntypedFormBuilder, UntypedFormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { UserView } from 'src/app/model/user';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { Store } from '@ngrx/store';
+
 import { TranslateService } from '@ngx-translate/core';
 import { PaginationService } from 'src/app/core/services/pagination.service';
 import { TokenStorageService } from 'src/app/core/services/token-storage.service';
-import { RootReducerState } from 'src/app/store';
-import { fetchCrmContactData } from 'src/app/store/CRM/crm_action';
-import { selectCRMLoading } from 'src/app/store/CRM/crm_selector';
+
 import { cloneDeep } from 'lodash';
 import { Pagination1Service } from 'src/app/core/services/pagination1.service';
 import { Observable, Subject, debounceTime, distinctUntilChanged, map, of } from 'rxjs';
@@ -117,7 +115,7 @@ export class PlateStockComponent implements OnInit {
     private modalService: NgbModal,
     public service: Pagination1Service,
     public translate: TranslateService,
-    private store: Store<{ data: RootReducerState }>,
+ 
     public vehicleConfigService: VehicleConfigService,
     public stockmanagementService: StockManagementService,
     private addressService: AddressService
@@ -154,15 +152,7 @@ export class PlateStockComponent implements OnInit {
     this.dataForm1 = this.formBuilder.group({
       zoneId: ['', Validators.required]
     });
-    /**
-     * fetches data
-     */
-    this.store.dispatch(fetchCrmContactData());
-    this.store.select(selectCRMLoading).subscribe((data) => {
-      if (data == false) {
-        document.getElementById("elmLoader")?.classList.add("d-none");
-      }
-    });
+ 
   }
   checkUncheckAll(ev: any, id: string | null) {
     var isChecked = ev.target.checked;
@@ -237,6 +227,7 @@ export class PlateStockComponent implements OnInit {
             id: veh.id,
             name: veh.code,
           }));
+          
 
         }
       },
@@ -322,7 +313,7 @@ export class PlateStockComponent implements OnInit {
   }
 
   saveCriteria() {
-    //this.criteriaSaved.emit(this.criteria);
+    
     this.criteria = Object.entries(this.plateStockCriteria)
     .filter(([key, value]) => value !== undefined && value !== null)
     .map(([columnName, filterValue]) => ({ columnName, filterValue: filterValue.toString() }));

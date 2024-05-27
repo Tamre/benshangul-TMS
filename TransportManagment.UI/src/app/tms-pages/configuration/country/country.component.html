@@ -97,7 +97,7 @@
                                     <h5 class="modal-title" id="exampleModalLabel">{{ 'Add Country' | translate }}</h5>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal" (click)="modal.dismiss('Cross click')"></button>
                                 </div>
-                                <form (ngSubmit)="saveData()" [formGroup]="dataForm" class="tablelist-form" autocomplete="off">
+                                <form (ngSubmit)="saveData()" [formGroup]="dataForm" class="tablelist-form was-validated" autocomplete="off">
                                     <div class="modal-body">
                                         <input type="hidden" id="id-field" />
                                         <div class="row g-3">

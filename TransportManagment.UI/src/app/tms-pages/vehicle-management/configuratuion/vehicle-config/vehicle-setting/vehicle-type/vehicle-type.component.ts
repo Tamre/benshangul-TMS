@@ -2,14 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { UserView } from 'src/app/model/user';
-import { RootReducerState } from 'src/app/store';
-import { Store } from '@ngrx/store';
+
+
 import { TranslateService } from '@ngx-translate/core';
 import { PaginationService } from 'src/app/core/services/pagination.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { TokenStorageService } from 'src/app/core/services/token-storage.service';
-import { fetchCrmContactData } from 'src/app/store/CRM/crm_action';
-import { selectCRMLoading } from 'src/app/store/CRM/crm_selector';
+
 import { VehicleTypePostDto } from 'src/app/model/vehicle-configuration/vehicle-type';
 import { ResponseMessage } from 'src/app/model/ResponseMessage.Model';
 import { successToast } from 'src/app/core/services/toast.service';
@@ -53,7 +52,7 @@ export class VehicleTypeComponent implements OnInit {
     private modalService: NgbModal,
     public service: PaginationService,
     public translate: TranslateService,
-    private store: Store<{ data: RootReducerState }>,
+  
     public vehicleConfigService: VehicleConfigService
   ) { }
   ngOnInit(): void {
@@ -74,12 +73,7 @@ export class VehicleTypeComponent implements OnInit {
     /**
      * fetches data
      */
-    this.store.dispatch(fetchCrmContactData());
-    this.store.select(selectCRMLoading).subscribe((data) => {
-      if (data == false) {
-        document.getElementById("elmLoader")?.classList.add("d-none");
-      }
-    });
+ 
   }
 
   getVehicleCategory() {

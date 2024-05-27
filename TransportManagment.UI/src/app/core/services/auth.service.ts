@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
 
-import { User } from 'src/app/store/Authentication/auth.models';
+import { User } from 'src/app/model/user';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
 import { BehaviorSubject, Observable, of, throwError } from 'rxjs';
 import { GlobalComponent } from "../../global-component";
-import { Store } from '@ngrx/store';
-import { RegisterSuccess, loginFailure, loginSuccess, logout, logoutSuccess } from 'src/app/store/Authentication/authentication.actions';
+
+
 
 const AUTH_API = GlobalComponent.AUTH_API;
 
@@ -29,7 +29,7 @@ export class AuthenticationService {
     private currentUserSubject!: BehaviorSubject<User>;
     // public currentUser: Observable<User>;
 
-    constructor(private http: HttpClient, private store: Store) {
+    constructor(private http: HttpClient) {
 
         console.log(sessionStorage.getItem('currentUser'))
 
@@ -66,7 +66,7 @@ export class AuthenticationService {
             }),
             catchError((error: any) => {
                 const errorMessage = 'Login failed'; // Customize the error message as needed
-                this.store.dispatch(loginFailure({ error: errorMessage }));
+             
                 return throwError(errorMessage);
             })
         );
@@ -109,7 +109,7 @@ export class AuthenticationService {
      * Logout the user
      */
     logout() {
-        this.store.dispatch(logout());
+      
         // logout the user
         // return getFirebaseBackend()!.logout();
         sessionStorage.removeItem('currentUser');

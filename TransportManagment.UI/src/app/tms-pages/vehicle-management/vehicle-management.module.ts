@@ -15,6 +15,9 @@ import { allIcons } from 'angular-feather/icons';
 import { DropzoneModule } from 'ngx-dropzone-wrapper';
 import { SimplebarAngularModule } from 'simplebar-angular';
 
+
+import { NgxMaskDirective, NgxMaskPipe, provideNgxMask } from 'ngx-mask';
+
 import { AisorcStockTypeComponent } from './configuratuion/vehicle-config/plate/aisorc-stock-type/aisorc-stock-type.component';
 import { BanBodyComponent } from './configuratuion/vehicle-config/look-ups/ban-body/ban-body.component';
 import { DepreciatioCostComponent } from './configuratuion/vehicle-config/valuation/depreciatio-cost/depreciatio-cost.component';
@@ -45,6 +48,17 @@ import { VehicleConfigComponent } from './configuratuion/vehicle-config/vehicle-
 
 import { VehicleAdd } from './action/vehicle-add/vehicle-add.component';
 import { VehicleListComponent } from './action/vehicle-list/vehicle-list.component';
+
+import { VehicleOwnersComponent } from './action/vehicle-owners/vehicle-owners.component';
+import { VehicleDocumentsComponent } from './action/vehicle-documents/vehicle-documents.component';
+import { AssignOwnersComponent } from './action/vehicle-owners/assign-owners/assign-owners.component';
+import { VehicleDetailComponent } from './action/vehicle-detail/vehicle-detail.component';
+import { InspectionComponent } from './action/inspection/inspection.component';
+import { FieldInspectionComponent } from './action/inspection/field-inspection/field-inspection.component';
+import { TechnicalInspectionComponent } from './action/inspection/technical-inspection/technical-inspection.component';
+import { OwnerComponent } from './action/owner/owner.component';
+
+
 
 
 
@@ -78,8 +92,17 @@ import { VehicleListComponent } from './action/vehicle-list/vehicle-list.compone
     AisStockComponent,
     VehicleAdd,
     VehicleListComponent,
-    
-  
+
+    VehicleLookupsComponent,
+    VehicleOwnersComponent,    
+    VehicleDocumentsComponent,
+    AssignOwnersComponent, 
+    VehicleDetailComponent,
+    InspectionComponent,
+    FieldInspectionComponent,
+    TechnicalInspectionComponent,
+    OwnerComponent
+
   ],
   imports: [
     CommonModule,
@@ -103,12 +126,15 @@ import { VehicleListComponent } from './action/vehicle-list/vehicle-list.compone
     NgbProgressbarModule,
     NgPipesModule,
     NgbModule,
-    
-    
+    //NgxMaskPipe
+    NgxMaskDirective,
+    NgxMaskPipe,
+
   ],
   providers: [
     DatePipe,
-    LanguageService
+    LanguageService,
+    provideNgxMask()
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })

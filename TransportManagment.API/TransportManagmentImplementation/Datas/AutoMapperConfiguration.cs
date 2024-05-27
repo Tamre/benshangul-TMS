@@ -122,7 +122,7 @@ namespace TransportManagmentImplementation.Datas
               .ForMember(a => a.FullName, e => e.MapFrom(mfg => $"{mfg.FirstName} {mfg.MiddleName} {mfg.LastName}"))
               .ForMember(a => a.AmharicName, e => e.MapFrom(mfg => $"{mfg.AmharicFirstName} {mfg.AmharicMiddleName} {mfg.AmharicLastName}"))
               .ForMember(a => a.Zone, e => e.MapFrom(mfg => $"{mfg.Zone.Name} {mfg.Zone.LocalName}"))
-              .ForMember(a => a.OwnerGroup, e => e.MapFrom(mfg => mfg.OwnerGroup.ToString()))
+              .ForMember(a => a.OwnerGroupName, e => e.MapFrom(mfg => mfg.OwnerGroup.ToString()))
               ;
 
 
@@ -171,6 +171,10 @@ namespace TransportManagmentImplementation.Datas
 
 
 
+
+            CreateMap<VehicleDocument, VehicleDocumetGetDto>()
+                .ForMember(a => a.DocumentName, e => e.MapFrom(mfg => mfg.DocumentType.FileName))
+                .ForMember(a => a.DocumentId, e => e.MapFrom(mfg => mfg.Id.ToString()));
 
             #endregion
         }

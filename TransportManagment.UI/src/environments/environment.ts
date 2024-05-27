@@ -5,6 +5,7 @@
 export const environment = {
   baseUrl:'http://localhost:5179/api',
   macUrl:'http://localhost:5000',
+  assetUrl : 'http://localhost:5179',
   production: false,
   defaultauth: 'fakebackend',
   firebaseConfig: {
