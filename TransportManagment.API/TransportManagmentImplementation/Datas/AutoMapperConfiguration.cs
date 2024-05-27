@@ -47,6 +47,9 @@ namespace TransportManagmentImplementation.Datas
             #endregion
 
 
+            CreateMap<ServiceChange, ServiceChangeDTO>()
+
+                    .ForMember(a => a.Status, e => e.MapFrom(mfg => mfg.Status.ToString()));
             #region vechile-config
 
             CreateMap<AISORCStockType, AISORCStockTypeGetDto>()
@@ -162,6 +165,9 @@ namespace TransportManagmentImplementation.Datas
                     .ForMember(a => a.LoadMeasurment, e => e.MapFrom(mfg => mfg.LoadMesurement.Name))
                     .ForMember(a => a.Color, e => e.MapFrom(mfg => mfg.Color.Name))
                     ;
+
+
+           
 
 
 

@@ -21,8 +21,9 @@ namespace TransportManagmentInfrustructure.Model.Vehicle.Action
         public string OldValue { get; set; }
         [Required]
         public string NewValue { get; set; }
-
-       
+       public DateTime? CreatedDate { get; set; } = DateTime.UtcNow;
+        public string? CreatedById { get; set; } = null!;
+        //public bool IsActive { get; set; }
 
     }
 }

@@ -7,47 +7,34 @@ using TransportManagmentImplementation.Services.Vehicle.Action;
 
 namespace TransportManagmentAPI.Controllers.Vehicle.Action
 {
+
     [Route("api/[controller]/[action]")]
     [ApiController]
-    public class DataChangeController : ControllerBase
+    public class ServiceChangeController: ControllerBase
     {
 
-        
-        private readonly IDataChange _dataChangeService;
+        private readonly IServiceChange _serviceChangeService;
 
-
-        public DataChangeController(IDataChange dataChangeService)
+        public ServiceChangeController(IServiceChange serviceChangeService)
         {
 
-            _dataChangeService = dataChangeService;
+            _serviceChangeService = serviceChangeService;
         }
+
+
         [HttpGet]
         public async Task<IActionResult> GetAllDataChangeRequests()
         {
-            var pagedList = await _dataChangeService.GetAllDataChangeRequests();
+            var pagedList = await _serviceChangeService.GetAllServiceChanges();
             return Ok(new { data = pagedList });
         }
         [HttpPost]
         [ProducesResponseType(typeof(ResponseMessage), (int)HttpStatusCode.OK)]
-        public async Task<IActionResult> CreateDataChangeRequest(DataChangeDto dataChangePost)
+        public async Task<IActionResult> CreateDataChangeRequest(ServiceChangeDTO serviceChangePost)
         {
             if (ModelState.IsValid)
             {
-                return Ok(await _dataChangeService .CreateDataChangeRequest(dataChangePost));
-            }
-            else
-            {
-                return BadRequest();
-            }
-        }
-        
-        [HttpPut]
-        [ProducesResponseType(typeof(ResponseMessage), (int)HttpStatusCode.OK)]
-        public async Task<IActionResult> ApproveRequestAsync(DataChangeDto dataChangePostDto)
-        {
-            if (ModelState.IsValid)
-            {
-                return Ok(await _dataChangeService.ApproveRequestAsync(dataChangePostDto));
+                return Ok(await _serviceChangeService.CreateServiceChangeRequest(serviceChangePost));
             }
             else
             {
@@ -55,6 +42,19 @@ namespace TransportManagmentAPI.Controllers.Vehicle.Action
             }
         }
 
+        [HttpPut]
+        [ProducesResponseType(typeof(ResponseMessage), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> ApproveRequestAsync(ServiceChangeDTO serviceChangePost)
+        {
+            if (ModelState.IsValid)
+            {
+                return Ok(await _serviceChangeService.ApproveRequestAsync(serviceChangePost));
+            }
+            else
+            {
+                return BadRequest();
+            }
+        }
 
 
     }

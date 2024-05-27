@@ -93,6 +93,9 @@ namespace TransportManagmentImplementation.Datas
             services.AddScoped<IORCService, ORCService>();
             services.AddScoped<IOwnerManagmentService, OwnerManagmentService>();
             services.AddScoped<IVehicleBanService, VehicleBanService>();
+            services.AddScoped<IDataChange, DataChangeService>();
+            services.AddScoped<IServiceChange, ServiceChangeService>();
+
 
 
             #endregion

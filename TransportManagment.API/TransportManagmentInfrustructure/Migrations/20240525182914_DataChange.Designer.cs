@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TransportManagmentInfrustructure.Data;
 
@@ -11,9 +12,11 @@ using TransportManagmentInfrustructure.Data;
 namespace TransportManagmentInfrustructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240525182914_DataChange")]
+    partial class DataChange
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -958,7 +961,7 @@ namespace TransportManagmentInfrustructure.Migrations
                         .HasMaxLength(450)
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<DateTime?>("ApprovedDate")
+                    b.Property<DateTime>("ApprovedDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Comments")
@@ -1008,9 +1011,11 @@ namespace TransportManagmentInfrustructure.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("CreatedById")
+                        .IsRequired()
+                        .HasMaxLength(450)
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<DateTime?>("CreatedDate")
+                    b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
                     b.Property<Guid>("DataChangeId")
@@ -1411,14 +1416,6 @@ namespace TransportManagmentInfrustructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("ApprovedById")
-                        .IsRequired()
-                        .HasMaxLength(450)
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<DateTime?>("ApprovedDate")
-                        .HasColumnType("datetime2");
-
                     b.Property<string>("CreatedById")
                         .IsRequired()
                         .HasMaxLength(450)
@@ -1470,9 +1467,6 @@ namespace TransportManagmentInfrustructure.Migrations
                     b.Property<int>("ServiceChangeType")
                         .HasColumnType("int");
 
-                    b.Property<int>("Status")
-                        .HasColumnType("int");
-
                     b.Property<Guid>("VehicleId")
                         .HasColumnType("uniqueidentifier");
 
@@ -1480,8 +1474,6 @@ namespace TransportManagmentInfrustructure.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("ApprovedById");
 
                     b.HasIndex("CreatedById");
 
@@ -3316,7 +3308,9 @@ namespace TransportManagmentInfrustructure.Migrations
                 {
                     b.HasOne("TransportManagmentInfrustructure.Model.Authentication.ApplicationUser", "CreatedBy")
                         .WithMany()
-                        .HasForeignKey("CreatedById");
+                        .HasForeignKey("CreatedById")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
 
                     b.HasOne("TransportManagmentInfrustructure.Model.Vehicle.Action.DataChange", "DataChange")
                         .WithMany("DataChangeDetails")
@@ -3518,12 +3512,6 @@ namespace TransportManagmentInfrustructure.Migrations
 
             modelBuilder.Entity("TransportManagmentInfrustructure.Model.Vehicle.Action.ServiceChange", b =>
                 {
-                    b.HasOne("TransportManagmentInfrustructure.Model.Authentication.ApplicationUser", "ApprovedBy")
-                        .WithMany()
-                        .HasForeignKey("ApprovedById")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
                     b.HasOne("TransportManagmentInfrustructure.Model.Authentication.ApplicationUser", "CreatedBy")
                         .WithMany()
                         .HasForeignKey("CreatedById")
@@ -3547,8 +3535,6 @@ namespace TransportManagmentInfrustructure.Migrations
                         .HasForeignKey("VehicleId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
-
-                    b.Navigation("ApprovedBy");
 
                     b.Navigation("CreatedBy");
 

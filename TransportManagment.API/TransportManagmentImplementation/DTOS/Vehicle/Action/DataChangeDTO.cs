@@ -20,17 +20,14 @@ namespace TransportManagmentImplementation.DTOS.Vehicle.Action
         [Required]
         public Guid VehicleId { get; set; }     
         public string? Reason { get; set; }
-        public string CreatedById { get; set; } = null!;
+        public string? CreatedById { get; set; } = null!;
         [Required]       
         public DateTime CreatedDate { get; set; } = DateTime.UtcNow;
-        public DataChangeStatus Status { get; set; }
-        [StringLength(ValidationClasses.UserId)]
-        public string? ApprovedById { get; set; }     
-        public DateTime? ApprovedDate { get; set; }
+        public DataChangeStatus Status { get; set; }    
         public string? Comments { get; set; }
         public IEnumerable<DataChangeDetailDto> DataChangeDetails { get; set; } = null!;
-
-
+      
+       
 
     }
     public record DataChangeDetailDto 
@@ -43,28 +40,12 @@ namespace TransportManagmentImplementation.DTOS.Vehicle.Action
         [Required]
         public string OldValue { get; set; }
         [Required]
-        public string NewValue { get; set; }       
-
+        public string NewValue { get; set; }
+        public DateTime? CreatedDate { get; set; } = DateTime.UtcNow;   
+        public string? CreatedById { get; set; } = null!;
+       
     }
-    //public record DataChangeGetDto : DataChangePostDto
-    //{
-
-    //    public string AISNo { get; set; } = null!;
-    //    public string VehicleRegistrationNo { get; set; } = null!;
-    //    public string GivenZone { get; set; } = null!;
-    //    public IEnumerable<DataChangeDetailGetDto> dataChangePostDetailDtos { get; set; }
-
-
-
-    //}
-    //public record DataChangeDetailGetDto: DataChangePostDetailDto
-    //{
-
-    //    public string AISNo { get; set; } = null!;
-    //    public string VehicleRegistrationNo { get; set; } = null!;
-    //    public string GivenZone { get; set; } = null!;
-
-    //}
+   
 
 
 }

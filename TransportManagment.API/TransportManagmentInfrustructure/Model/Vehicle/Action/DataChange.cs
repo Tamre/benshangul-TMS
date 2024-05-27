@@ -29,20 +29,16 @@ namespace TransportManagmentInfrustructure.Model.Vehicle.Action
         public string? Reason { get; set; }
         [Required]
         public DataChangeStatus Status { get; set; }
-        [Required]
-        public DateTime CreatedDate { get; set; } = DateTime.UtcNow;
-        [Required]
-        [StringLength(ValidationClasses.UserId)]      
-        public string? ApprovedById { get; set; }
-        [Required]
-        public DateTime? ApprovedDate { get; set; }
+        [Required]   
+        [StringLength(ValidationClasses.UserId)]
+        public string? ApprovedById { get; set; } = null!;
+        public virtual ApplicationUser ApprovedBy { get; set; } = null!;
+        public DateTime? ApprovedDate { get; set; }= DateTime.UtcNow;
         public string? Comments { get; set; }
-
         [Required]
         [InverseProperty(nameof(DataChangeDetail.DataChange))]
-        public ICollection<DataChangeDetail> DataChangeDetails { get; set; } = null!;
-     
-     
+        public  ICollection<DataChangeDetail> DataChangeDetails { get; set; } = null!;
+
     }
 
 }

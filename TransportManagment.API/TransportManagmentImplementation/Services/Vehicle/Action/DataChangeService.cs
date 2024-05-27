@@ -20,6 +20,7 @@ using TransportManagmentInfrustructure.Migrations;
 using TransportManagmentInfrustructure.Model.Vehicle.Action;
 using static TransportManagmentInfrustructure.Enums.VehicleEnum;
 using Superpower;
+using TransportManagmentInfrustructure.Model.Authentication;
 
 
 namespace TransportManagmentImplementation.Services.Vehicle.Action
@@ -28,51 +29,67 @@ namespace TransportManagmentImplementation.Services.Vehicle.Action
     public class DataChangeService : IDataChange
     {
         private readonly ApplicationDbContext _dbContext;
+       
+        private readonly ILoggerManagerService _logger;
+        private readonly IGeneralConfigService _generalConfigService;
+
         private readonly IMapper _mapper;
-        public DataChangeService(ApplicationDbContext dbContext, IMapper mapper)
+      
+        public DataChangeService(ApplicationDbContext dbContext, ILoggerManagerService logger, IGeneralConfigService generalConfigService, IMapper mapper)
         {
-
             _dbContext = dbContext;
+            _logger = logger;
+            _generalConfigService = generalConfigService;
             _mapper = mapper;
-
-        }     
+        }
         public async Task<ResponseMessage> CreateDataChangeRequest(DataChangeDto _datachangePostDto)
         {
+
+
 
             try
             {
                 // Create a new DataChange entity
-                var dataChange = new DataChange
-            {
-                Id = Guid.NewGuid(),
-                TableName = _datachangePostDto.TableName,
-                VehicleId = _datachangePostDto.VehicleId,
-                Reason = _datachangePostDto.Reason,
-                CreatedById = _datachangePostDto.CreatedById,
-                CreatedDate = _datachangePostDto.CreatedDate,
-                Status = DataChangeStatus.Submitted
-            };
+                var dataChange = new TransportManagmentInfrustructure.Model.Vehicle.Action.DataChange
+                {
+                    Id = Guid.NewGuid(),
+                    TableName = _datachangePostDto.TableName,
+                    VehicleId = _datachangePostDto.VehicleId,
+                    Reason = _datachangePostDto.Reason,
+                    CreatedById = _datachangePostDto.CreatedById,
+                    CreatedDate = DateTime.Now,
+                    Status = DataChangeStatus.Submitted,
+                    Comments = _datachangePostDto.Comments,
+                    ApprovedById = _datachangePostDto.CreatedById,
+                    ApprovedDate=DateTime.Now,
+                    //IsActive= _datachangePostDto.IsActive
 
-            // Add the DataChange entity to the database
-            _dbContext.DataChanges.Add(dataChange);
+                };
+
+                // Add the DataChange entity to the database
+                await _dbContext.DataChanges.AddAsync(dataChange);
 
                 // Create DataChangeDetail entities for each change detail
                 foreach (var detail in _datachangePostDto.DataChangeDetails)
                 {
-                    var dataChangeDetail = new DataChangeDetail
+                    var dataChangeDetail = new TransportManagmentInfrustructure.Model.Vehicle.Action.DataChangeDetail
                     {
                         Id = Guid.NewGuid(),
                         DataChangeId = dataChange.Id,
                         ColumnName = detail.ColumnName,
                         OldValue = detail.OldValue,
                         NewValue = detail.NewValue,
+                        CreatedById = detail.CreatedById,
+                        CreatedDate = DateTime.Now,
+
+
                     };
 
                     // Add the DataChangeDetail entity to the database
-                    _dbContext.DataChangeDetails.Add(dataChangeDetail);
+                   await _dbContext.DataChangeDetails.AddAsync(dataChangeDetail);
                 }
 
-                _dbContext.SaveChanges();
+                await _dbContext.SaveChangesAsync();
 
                 return new ResponseMessage
                 {
@@ -110,7 +127,7 @@ namespace TransportManagmentImplementation.Services.Vehicle.Action
                     TableName = x.TableName,
                     VehicleId = x.VehicleId,
                     Reason = x.Reason,
-                    CreatedById = x.CreatedBy.FullName,
+                    CreatedById = x.CreatedById,
                     CreatedDate = x.CreatedDate,
                     DataChangeDetails = x.DataChangeDetails.Select(dcd => new DataChangeDetailDto
                     {
@@ -152,8 +169,8 @@ namespace TransportManagmentImplementation.Services.Vehicle.Action
             if (dataChange != null)
             {
                 dataChange.Status = DataChangeStatus.Approved;
-                dataChange.ApprovedById = dataChangePostDto.ApprovedById;
-                dataChange.ApprovedDate = DateTime.UtcNow;
+                dataChange.ApprovedById = dataChangePostDto.CreatedById;
+                dataChange.ApprovedDate = DateTime.Now;
                 dataChange.Comments = dataChangePostDto.Comments;
                 await _dbContext.SaveChangesAsync();
                 await Update(dataChangePostDto);
@@ -164,7 +181,7 @@ namespace TransportManagmentImplementation.Services.Vehicle.Action
                 return new ResponseMessage
                 {
                     Success = true,
-                    Message = "Vehicle Encoded Successfully !!!"
+                    Message = "Request aproved Successfully !!!"
                 };
 
             }
@@ -247,8 +264,7 @@ namespace TransportManagmentImplementation.Services.Vehicle.Action
             if (request != null)
             {
                 request.Status = DataChangeStatus.Rejected;
-                request.ApprovedById = dataChangePostDto.ApprovedById;
-                request.ApprovedDate = DateTime.UtcNow;
+                request.ApprovedById = dataChangePostDto.CreatedById;             
                 request.Comments = dataChangePostDto.Comments;
                 await _dbContext.SaveChangesAsync();
             }

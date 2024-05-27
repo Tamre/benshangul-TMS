@@ -240,23 +240,7 @@ namespace TransportManagmentInfrustructure.Data
             {
                 entity.HasIndex(t => new { t.DocumentTypeId, t.VehicleId }).IsUnique();
             });
-            modelBuilder.Entity<DataChange>(entity =>
-            {
-                entity.HasIndex(t => t.Id).IsUnique();
-
-            });
-            modelBuilder.Entity<DataChange>()
-           .HasMany(dc => dc.DataChangeDetails)
-           .WithOne(dcd => dcd.DataChange)
-           .HasForeignKey(dcd => dcd.DataChangeId);
-            modelBuilder.Entity<DataChangeDetail>(entity =>
-            {
-                entity.HasIndex(d => d.Id).IsUnique();
-                //entity.HasIndex(d => new { d.DataChangeId, d.ColumnName }).IsUnique();
-
-                
-            });
-
+           
        
             #region commonNames
             modelBuilder.Entity<RoleCategory>().ToTable("RoleCategories", schema: "UserMgt");
@@ -311,8 +295,7 @@ namespace TransportManagmentInfrustructure.Data
             modelBuilder.Entity <VehicleReplacement>().ToTable("VehicleReplacements", schema: "VRMS");
             modelBuilder.Entity <VehicleTransfer>().ToTable("VehicleTransfers", schema: "VRMS");
             modelBuilder.Entity <VehicleDocument>().ToTable("VehicleDocuments", schema: "VRMS");
-            modelBuilder.Entity<DataChange>().ToTable("DataChanges", schema: "VRMS");
-            modelBuilder.Entity<DataChangeDetail>().ToTable("DataChangeDetails", schema: "VRMS");
+          
 
             #endregion
         }

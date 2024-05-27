@@ -16,12 +16,12 @@ namespace TransportManagmentImplementation.Interfaces.Vehicle.Action
     {
        
         //public Task<List<DataChangeDto>> GetDatachangeDetailById(Guid vehicleId);
-        Task<IEnumerable<DataChangeDto>> GetAllDataChangeRequests();           
-        Task<ResponseMessage> CreateDataChangeRequest(DataChangeDto request);
+      public  Task<IEnumerable<DataChangeDto>> GetAllDataChangeRequests();
+        public Task<ResponseMessage> CreateDataChangeRequest(DataChangeDto request);
         //Task<ResponseMessage> CreateDataChangeDetailAsync(DataChangeDto dataChangeDetail);
         //public Task<VehicleDetailDto> GetVehicleDetail(VehicleGetParameterDto vehicleGet);
-        Task<ResponseMessage> ApproveRequestAsync(DataChangeDto ApprovedData);
-        Task<ResponseMessage> RejectRequestAsync(DataChangeDto rejected);
+        public Task<ResponseMessage> ApproveRequestAsync(DataChangeDto ApprovedData);
+        public Task<ResponseMessage> RejectRequestAsync(DataChangeDto rejected);
        
 
     }
