@@ -4,37 +4,38 @@ using TransportManagmentImplementation.DTOS.Vehicle.Action;
 using TransportManagmentImplementation.Helper;
 using TransportManagmentImplementation.Interfaces.Vehicle.Action;
 using TransportManagmentImplementation.Services.Vehicle.Action;
+using TransportManagmentInfrustructure.Model.Vehicle.Action;
 
 namespace TransportManagmentAPI.Controllers.Vehicle.Action
 {
-
     [Route("api/[controller]/[action]")]
     [ApiController]
-    public class ServiceChangeController: ControllerBase
+    public class VehicleReplacementController : ControllerBase
     {
 
-        private readonly IServiceChange _serviceChangeService;
+        private readonly IVehicleReplacement _vehicleReplacement;
 
-        public ServiceChangeController(IServiceChange serviceChangeService)
+        public VehicleReplacementController(IVehicleReplacement vehicleReplacement)
         {
 
-            _serviceChangeService = serviceChangeService;
+            _vehicleReplacement = vehicleReplacement;
         }
+
 
 
         [HttpGet]
         public async Task<IActionResult> GetByVehicleId(Guid vehicleId)
         {
-            var pagedList = await _serviceChangeService.GetByVehicleId(vehicleId);
+            var pagedList = await _vehicleReplacement.GetByVehicleId(vehicleId);
             return Ok(new { data = pagedList });
         }
         [HttpPost]
         [ProducesResponseType(typeof(ResponseMessage), (int)HttpStatusCode.OK)]
-        public async Task<IActionResult> CreateDataChangeRequest(ServiceChangeDTO serviceChangePost)
+        public async Task<IActionResult> CreateReplecementRequest(VehicleReplacementDTO VehicleReplacement)
         {
             if (ModelState.IsValid)
             {
-                return Ok(await _serviceChangeService.CreateServiceChangeRequest(serviceChangePost));
+                return Ok(await _vehicleReplacement.CreateReplecementRequest(VehicleReplacement));
             }
             else
             {
@@ -44,17 +45,18 @@ namespace TransportManagmentAPI.Controllers.Vehicle.Action
 
         [HttpPut]
         [ProducesResponseType(typeof(ResponseMessage), (int)HttpStatusCode.OK)]
-        public async Task<IActionResult> ApproveRequestAsync(ServiceChangeDTO serviceChangePost)
+        public async Task<IActionResult> ApproveRequestAsync(VehicleReplacementDTO VehicleReplacement)
         {
             if (ModelState.IsValid)
             {
-                return Ok(await _serviceChangeService.ApproveRequestAsync(serviceChangePost));
+                return Ok(await _vehicleReplacement.ApproveRequestAsync(VehicleReplacement));
             }
             else
             {
                 return BadRequest();
             }
         }
+
 
 
     }

@@ -6,14 +6,17 @@ using System.Text;
 using System.Threading.Tasks;
 using TransportManagmentInfrustructure.Data;
 using TransportManagmentInfrustructure.Model.Authentication;
+using TransportManagmentInfrustructure.Model.Vehicle.Action;
 
-namespace TransportManagmentInfrustructure.Model.Vehicle.Action
+namespace TransportManagmentImplementation.DTOS.Vehicle.Action
 {
-    public class VehicleCancelation: ActionIdModel
+    public class VehicleCancellationDTO
     {
+
+        public Guid Id { get; set; }
         [Required]
         public Guid VehicleId { get; set; }
-        public virtual VehicleList Vehicle { get; set; } = null!;
+       
         [StringLength(ValidationClasses.MaxSettingRemarkLength)]
         public string? Reason { get; set; } = null!;
         [Required, StringLength(ValidationClasses.SerialNumberLength)]
@@ -23,7 +26,8 @@ namespace TransportManagmentInfrustructure.Model.Vehicle.Action
 
         [StringLength(ValidationClasses.UserId)]
         public string? RevertedById { get; set; }
-        public virtual ApplicationUser RevertedBy { get; set; } = null!;
+       // public virtual ApplicationUser RevertedBy { get; set; } = null!;
+        public string CreatedById { get; set; } = null!;
 
 
     }

@@ -79,6 +79,10 @@ namespace TransportManagmentInfrustructure.Data
         public DbSet<DataChange> DataChanges { get; set; }
 
         public DbSet<DataChangeDetail> DataChangeDetails { get; set; }
+        public DbSet<VehicleCancelation> VehicleCancelations { get; set; }
+
+
+
 
 
 
