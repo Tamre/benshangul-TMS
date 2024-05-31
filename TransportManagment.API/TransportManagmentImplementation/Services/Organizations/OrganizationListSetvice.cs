@@ -5,7 +5,6 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
-using TransportManagmentImplementation.DTOS;
 using TransportManagmentImplementation.Helper;
 using TransportManagmentImplementation.Interfaces.Common;
 using TransportManagmentImplementation.Interfaces.Organaizations;
@@ -16,10 +15,11 @@ using TransportManagmentInfrustructure.Model.Organizations;
 using Microsoft.EntityFrameworkCore;
 using TransportManagmentInfrustructure.Model.Common;
 using System.Xml;
+using TransportManagmentImplementation.DTOS.Organaizations;
 
 namespace TransportManagmentImplementation.Services.Organizations
 {
-   
+
     public class OrganizationListSetvice : IOrganaizationList
     {
         private readonly ApplicationDbContext _dbContext;

@@ -84,6 +84,9 @@ namespace TransportManagmentInfrustructure.Data
 
         public DbSet<OrganizationList> GetOrganizationLists { get; set; }
 
+        public DbSet<OrganizationCompound> organizationCompounds { get; set; }
+
+
 
 
 

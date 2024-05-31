@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using TransportManagmentImplementation.DTOS.Vehicle;
+using TransportManagmentImplementation.DTOS.Vehicle.Action;
 using TransportManagmentImplementation.Helper;
 using TransportManagmentImplementation.Interfaces.Common;
 using TransportManagmentImplementation.Interfaces.Vehicle.Action;

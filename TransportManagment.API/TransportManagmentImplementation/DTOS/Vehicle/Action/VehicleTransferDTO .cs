@@ -5,9 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using static TransportManagmentInfrustructure.Enums.VehicleEnum;
 
-namespace TransportManagmentImplementation.DTOS.Vehicle
+namespace TransportManagmentImplementation.DTOS.Vehicle.Action
 {
-    public class VehicleTransferDTO 
+    public class VehicleTransferDTO
     {
         public Guid VehicleId { get; set; }
         public int FromZoneId { get; set; }

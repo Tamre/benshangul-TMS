@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Net;
-using TransportManagmentImplementation.DTOS.Vehicle;
+using TransportManagmentImplementation.DTOS;
 using TransportManagmentImplementation.DTOS.Vehicle.Action;
 using TransportManagmentImplementation.Helper;
 using TransportManagmentImplementation.Interfaces.Vehicle.Action;
