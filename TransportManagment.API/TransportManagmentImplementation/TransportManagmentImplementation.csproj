@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <Compile Remove="DTOS\Vehicle\Action\VehicleUpdateRequestDto.cs" />
+    <Compile Remove="Services\Vehicle\Action\VehicleInspectionService.cs" />
   </ItemGroup>
 
   <ItemGroup>

@@ -283,6 +283,37 @@ namespace TransportManagmentInfrustructure.Enums
             ManufacturingYear
           
         }
+        public enum MachineModel
+        {
+
+            JEBOL,
+            vTECH,
+            OTHER,
+
+
+
+
+        }
+        public enum OrganizationLicenseType
+        {
+            NEW,
+            Organization_LICENSE_LOSE,
+            RENEW,
+            BACK_LOG,
+            Suspended,
+            CANCELLED,
+
+        }
+
+        public enum OrganizationLicenseReason
+        {
+            NEW,
+            Renew,
+            Lost,
+            Activated,
+            Suspended
+        }
+
 
 
     }

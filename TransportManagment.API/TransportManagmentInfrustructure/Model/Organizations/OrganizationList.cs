@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TransportManagmentInfrustructure.Data;
 using TransportManagmentInfrustructure.Model.Authentication;
 using TransportManagmentInfrustructure.Model.Common;
 using static TransportManagmentInfrustructure.Enums.VehicleEnum;
@@ -12,6 +14,7 @@ namespace TransportManagmentInfrustructure.Model.Organizations
     public class OrganizationList: ActionIdModel
     {
         public string Name { get; set; } = null!;
+        public string Tin { get; set; } = null!;
         public string LocalName { get; set; } = null!;
         public int ZoneId { get; set; }
         public virtual ZoneList Zone { get; set; } = null!;
@@ -24,5 +27,8 @@ namespace TransportManagmentInfrustructure.Model.Organizations
         public string PhoneNumber { get; set; } = null!;
         public string? SecondaryPhoneNumber { get; set; }
         public TypeOfOrganization TypeOfOrganization { get; set; }
+        public DateTime? ModifiedDate { get; set; } = null!;
+        [StringLength(ValidationClasses.UserId)]
+        public string? ModifiedById { get; set; } = null!;
     }
 }

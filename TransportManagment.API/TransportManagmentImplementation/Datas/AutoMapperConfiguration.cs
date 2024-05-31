@@ -2,6 +2,7 @@
 
 using AutoMapper;
 using TransportManagmentAPI.Controllers.Vehicle.Configuration;
+using TransportManagmentImplementation.DTOS;
 using TransportManagmentImplementation.DTOS.Common;
 using TransportManagmentImplementation.DTOS.Configuration;
 using TransportManagmentImplementation.DTOS.Vehicle.Action;
@@ -9,6 +10,7 @@ using TransportManagmentImplementation.DTOS.Vehicle.Configuration;
 using TransportManagmentImplementation.Interfaces.Common;
 using TransportManagmentImplementation.Services.Common;
 using TransportManagmentInfrustructure.Model.Common;
+using TransportManagmentInfrustructure.Model.Organizations;
 using TransportManagmentInfrustructure.Model.Vehicle.Action;
 using TransportManagmentInfrustructure.Model.Vehicle.Configuration;
 
@@ -138,6 +140,7 @@ namespace TransportManagmentImplementation.Datas
 
             CreateMap<ORCStock, ORCStockGetDto>();
 
+            CreateMap<OrganizationList, OrganizationDTO>();
 
             CreateMap<PlateStock, PlateStockGetDto>()
                 .ForMember(a => a.PlateDigit, e => e.MapFrom(mfg => mfg.PlateDigit.ToString()))

@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using TransportManagmentInfrustructure.Model.Authentication;
 using TransportManagmentInfrustructure.Model.Common;
+using TransportManagmentInfrustructure.Model.Organizations;
 using TransportManagmentInfrustructure.Model.Vehicle.Action;
 using TransportManagmentInfrustructure.Model.Vehicle.Configuration;
 using static System.Runtime.InteropServices.JavaScript.JSType;
@@ -80,6 +81,8 @@ namespace TransportManagmentInfrustructure.Data
 
         public DbSet<DataChangeDetail> DataChangeDetails { get; set; }
         public DbSet<VehicleCancelation> VehicleCancelations { get; set; }
+
+        public DbSet<OrganizationList> GetOrganizationLists { get; set; }
 
 
 
