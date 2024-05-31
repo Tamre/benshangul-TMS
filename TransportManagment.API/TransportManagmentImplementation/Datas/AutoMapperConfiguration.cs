@@ -22,6 +22,7 @@ namespace TransportManagmentImplementation.Datas
 
         public AutoMapperConfigurations()
         {
+
             #region Configuration
 
             #endregion
@@ -49,7 +50,8 @@ namespace TransportManagmentImplementation.Datas
             .ForMember(a => a.ColumnName, e => e.MapFrom(mfg => mfg.ColumnName.ToString()));
             #endregion
 
-
+            CreateMap<OrganizationList, OrganizationDTO>();
+            CreateMap<OrganizationCompound, OrganizationCompoundDto>();
             CreateMap<ServiceChange, ServiceChangeDTO>()
 
                     .ForMember(a => a.Status, e => e.MapFrom(mfg => mfg.Status.ToString()));
@@ -141,8 +143,7 @@ namespace TransportManagmentImplementation.Datas
 
             CreateMap<ORCStock, ORCStockGetDto>();
 
-            CreateMap<OrganizationList, OrganizationDTO>();
-            CreateMap<OrganizationCompound, OrganizationDTO>();
+          
             CreateMap<PlateStock, PlateStockGetDto>()
                 .ForMember(a => a.PlateDigit, e => e.MapFrom(mfg => mfg.PlateDigit.ToString()))
                 .ForMember(a => a.PlateTypeName, e => e.MapFrom(mfg => mfg.PlateType.Name))
