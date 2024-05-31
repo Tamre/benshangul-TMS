@@ -7,6 +7,7 @@ using TransportManagmentImplementation.DTOS.Configuration;
 using TransportManagmentImplementation.DTOS.Vehicle.Action;
 using TransportManagmentImplementation.DTOS.Vehicle.Configuration;
 using TransportManagmentImplementation.Interfaces.Common;
+using TransportManagmentImplementation.Interfaces.Vehicle.Action;
 using TransportManagmentImplementation.Services.Common;
 using TransportManagmentInfrustructure.Model.Common;
 using TransportManagmentInfrustructure.Model.Vehicle.Action;
@@ -160,6 +161,17 @@ namespace TransportManagmentImplementation.Datas
                     ;
 
 
+
+
+
+
+            CreateMap<VehicleDocument, VehicleDocumetGetDto>()
+                .ForMember(a => a.DocumentName, e => e.MapFrom(mfg => mfg.DocumentType.FileName))
+                .ForMember(a => a.DocumentId, e => e.MapFrom(mfg => mfg.Id.ToString()));
+
+
+            CreateMap<OrganizationCompound, OrganizationCompoundDto>();
+               
 
 
             #endregion
