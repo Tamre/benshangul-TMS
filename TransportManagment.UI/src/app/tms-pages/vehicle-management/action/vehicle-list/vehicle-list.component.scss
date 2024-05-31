@@ -1,0 +1,25 @@
+.search_header {
+  
+    transition: max-height 0.5s ease, padding 0.5s ease;
+}
+
+.slide-up {
+    max-height: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+.slide-down {
+    max-height: 1000px; /* or a large enough value to fit the content */
+    padding: 1rem; /* adjust as necessary */
+}
+
+
+.up-arrow::after {
+    content: '\25B2'; /* Upward arrow */
+  }
+  
+  .down-arrow::after {
+    content: '\25BC'; /* Downward arrow */
+  }
+  

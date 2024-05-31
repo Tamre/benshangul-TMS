@@ -1,14 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { OwnerService } from 'src/app/core/services/vehicle/owner.service';
 import { TranslateService } from '@ngx-translate/core';
-import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormGroup, UntypedFormBuilder, UntypedFormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { TokenStorageService } from 'src/app/core/services/token-storage.service';
 import { UserView } from 'src/app/model/user';
-import { fetchCrmContactData } from 'src/app/store/CRM/crm_action';
-import { selectCRMLoading } from 'src/app/store/CRM/crm_selector';
-import { RootReducerState } from 'src/app/store';
-import { Store } from '@ngrx/store';
+
 import { ResponseMessage } from 'src/app/model/ResponseMessage.Model';
 import { successToast } from 'src/app/core/services/toast.service';
 import { ToastService } from 'src/app/account/login/toast-service';
@@ -16,25 +14,35 @@ import { Subject, debounceTime, distinctUntilChanged } from 'rxjs';
 import { cloneDeep } from 'lodash';
 import { Pagination1Service } from 'src/app/core/services/pagination1.service';
 import { AddressService } from 'src/app/core/services/address.service';
-import { VehicleService } from 'src/app/core/services/Vehicle-services/vehicle.service';
-import {  OwnerPostDto } from './IownerDto';
-import { MetaData } from 'src/app/model/common';
+import { PaginatedResponse, MetaData } from 'src/app/model/common';
+import { OwnerGetDto, OwnerPostDto } from 'src/app/model/vehicle/owner';
 
 
+
+export function phoneValidator(): ValidatorFn {
+  return (control: AbstractControl): ValidationErrors | null => {
+    const phonePattern = /^\+251\d{9}$|^0\d{9}$/;
+    if (control.value && !phonePattern.test(control.value)) {
+      return { phoneInvalid: true };
+    }
+    return null;
+  };
+}
 @Component({
   selector: 'app-owner',
   templateUrl: './owner.component.html',
   styleUrl: './owner.component.scss'
 })
 export class OwnerComponent implements OnInit {
+
   submitted = false;
   submitted1 = false;
-  currentUser!: UserView | null;
-  ownerForm!: UntypedFormGroup;
+  currentUser!: UserView;
+  ownerForm!: FormGroup;
   searchForm!: UntypedFormGroup;
 
-  allOwners?: any;
-  owners?: any;
+  allOwners!: PaginatedResponse<OwnerGetDto>;
+  owners!: OwnerGetDto[];
   //owner?: OwnerPostDto;
   metaData!: MetaData;
   pageSizeOptions = [
@@ -55,12 +63,17 @@ export class OwnerComponent implements OnInit {
   ];
   search: string = "";
 
-  genderEnum= [
-    { name: 'Male', code: 'Male' },
-    { name: 'Female', code: 'Female' }
+  genderEnum = [
+    { name: 'Male', code: 0 },
+    { name: 'Female', code: 1 }
+  ]
+  ownerGroupEnum = [
+    { name: 'Private Owner', code: 0 },
+    { name: 'Organization', code: 1 },
+    { name: 'Government', code: 2 }
   ]
 
-  
+
 
   searchTermSubject = new Subject<string>();
   searchTerm = '';
@@ -84,12 +97,19 @@ export class OwnerComponent implements OnInit {
   woredaNames: string[] = [];
   selectedWoreda: { id: number; name: string } | null = null;
 
-  constructor(private vehicleService: VehicleService,
+  editOwnerText = "Edit Owner";
+  updateText = "Update";
+  isEditing: Boolean = false;
+  econtent?: any;
+
+  selectedSearchType!: string;
+
+  constructor(private ownerService: OwnerService,
     public translate: TranslateService,
     private formBuilder: UntypedFormBuilder,
     private tokenStorageService: TokenStorageService,
     private modalService: NgbModal,
-    private store: Store<{ data: RootReducerState }>,
+
     public toastService: ToastService,
     public service: Pagination1Service,
     private addressService: AddressService,
@@ -108,7 +128,10 @@ export class OwnerComponent implements OnInit {
   ngOnInit(): void {
     this.refreshData();
     this.currentUser = this.tokenStorageService.getCurrentUser();
+    //console.log("currentUser",this.currentUser);
     this.ownerForm = this.formBuilder.group({
+      id: [""],
+      ownerGroup: ["", Validators.required],
       firstName: ["", Validators.required],
       middleName: ["", Validators.required],
       lastName: ["", Validators.required],
@@ -119,26 +142,24 @@ export class OwnerComponent implements OnInit {
       zoneId: ["", Validators.required],
       woredaId: [""],
       town: [""],
-      houseNo: ["",Validators.required],
-      phoneNumber: ["",Validators.required],
+      houseNo: ["", Validators.required],
+      phoneNumber: ["", [Validators.required]],
       secondaryPhoneNumber: [""],
-      idNumber: [""],
-      poBox: [""],
-      createdById: [this.currentUser?.userId, [Validators.required]],
+      idNumber: ["", Validators.required],
+      poBox: [""]
+    
     });
     this.searchForm = this.formBuilder.group({
       searchType: ["", Validators.required],
       search: ["", Validators.required],
     });
-    this.store.dispatch(fetchCrmContactData());
-    this.store.select(selectCRMLoading).subscribe((data) => {
-      if (data == false) {
-        document.getElementById("elmLoader")?.classList.add("d-none");
-      }
-    });
+
+
   }
+
+
   submitSearch() {
-    this.submitted1=true;
+    this.submitted1 = true;
     const selectedSearchType = this.searchForm.get('searchType')?.value;
     const searchValue = this.searchForm.get('search')?.value;
 
@@ -153,7 +174,7 @@ export class OwnerComponent implements OnInit {
         //this.searchForm.reset();
       }
     }
-    
+
     this.refreshData();
   }
   changePage() {
@@ -164,7 +185,7 @@ export class OwnerComponent implements OnInit {
     const pageNumber = this.metaData ? this.metaData.currentPage : 1;
     const pageSize = this.selectedPageSize;
 
-    this.vehicleService.getAllOwner(pageNumber, pageSize, this.criteria).subscribe({
+    this.ownerService.getAllOwner(pageNumber, pageSize, this.criteria).subscribe({
 
       next: (res) => {
         if (res) {
@@ -174,11 +195,9 @@ export class OwnerComponent implements OnInit {
 
         } else {
           this.owners = [];
-          //this.metaData = null;
-          this.allOwners = null;
         }
       },
-      error: (err: any) => {
+      error: (err) => {
 
       },
     });
@@ -199,50 +218,79 @@ export class OwnerComponent implements OnInit {
     });
     this.addressService.getAllWoreda().subscribe({
       next: (res) => {
-        if (res) 
-          {
-            this.woredas = res
-            this.allWoredas = cloneDeep(res);
-            this.woredaNames = this.allWoredas.map((veh: any) => ({
-              id: veh.id,
-              name: veh.name,
-            }));
-          }
+        if (res) {
+          this.woredas = res
+          this.allWoredas = cloneDeep(res);
+          this.woredaNames = this.allWoredas.map((veh: any) => ({
+            id: veh.id,
+            name: veh.name,
+          }));
+        }
       },
       error: (err) => {
-        
+
       },
     });
 
   }
   onSubmit() {
-    // this.submitted = true;
-    // console.log(this.submitted);
-    // if (this.ownerForm.invalid) {
-    //   return; 
-    // }
-    
-    //this.ownerForm.controls["createdById"].setValue(this.currentUser?.userId);
-    //this.ownerForm.markAsTouched();
+    var newData: OwnerPostDto = this.ownerForm.value;
+    newData.createdById = this.currentUser.userId;
+    newData.serviceZoneId = this.currentUser.userTypeId;
     if (this.ownerForm.valid) {
-    const newData: OwnerPostDto = this.ownerForm.value;
-    this.vehicleService.addOwner(newData).subscribe({
-      next: (res: ResponseMessage) => {
-        if (res.success) {
-          this.toastService.show(res.message, {
-            classname: "success text-white",
-            delay: 2000,
-          });
-          this.ownerForm.reset()
-        } else {
-          console.error(res.message);
-        }
+      if (this.ownerForm.get("id")?.value) {
+        var newData: OwnerPostDto = this.ownerForm.value;
+        this.ownerService.updateOwner(newData).subscribe({
+          next: (res: ResponseMessage) => {
+            if (res.success) {
+              this.toastService.show(res.message, {
+                classname: "success text-white",
+                delay: 2000,
+              });
+              this.closeModal();
+              this.ownerForm.reset()
+            } else {
+              console.error(res.message);
+            }
+          },
+          error: (err) => {
+            console.error(err);
+          },
+        });
 
-      },
-      error: (err: any) => {
-        console.error(err);
-      },
-    });}
+      } else {
+        // this.submitted = true;
+        // console.log(this.submitted);
+        // if (this.ownerForm.invalid) {
+        //   return; 
+        // }
+
+        //this.ownerForm.controls["createdById"].setValue(this.currentUser?.userId);
+        //this.ownerForm.markAsTouched();
+
+        if (this.ownerForm.valid) {
+          const newData: OwnerPostDto = this.ownerForm.value;
+          this.ownerService.addOwner(newData).subscribe({
+            next: (res: ResponseMessage) => {
+              if (res.success) {
+                this.toastService.show(res.message, {
+                  classname: "success text-white",
+                  delay: 2000,
+                });
+                this.closeModal();
+                //this.ownerForm.reset()
+              } else {
+                console.error(res.message);
+              }
+
+            },
+            error: (err) => {
+              console.error(err);
+            },
+          });
+        }
+      }
+    }
     this.submitted = true;
   }
   get f() {
@@ -254,11 +302,49 @@ export class OwnerComponent implements OnInit {
   openModal(content: any) {
     this.submitted = false;
     this.ownerForm.reset();
-    this.ownerForm.controls["createdById"].setValue(this.currentUser?.userId);
     this.modalService.open(content, { size: "lg", centered: true });
   }
   closeModal() {
     this.modalService.dismissAll();
   }
 
+  editDataGet(id: any, content: any) {
+    this.submitted = false;
+    this.modalService.open(content, { size: "lg", centered: true });
+    var modelTitle = document.querySelector(".modal-title") as HTMLAreaElement;
+    this.translate.get("Edit Owner").subscribe((res: string) => {
+      this.editOwnerText = res;
+    });
+    modelTitle.innerHTML = this.editOwnerText;
+    var updateBtn = document.getElementById("add-btn") as HTMLAreaElement;
+    this.translate.get("Update").subscribe((res: string) => {
+      this.editOwnerText = res;
+    });
+    updateBtn.innerHTML = this.updateText;
+    this.isEditing = true;
+    this.econtent = this.owners[id];
+    console.log(this.econtent)
+    this.ownerForm.controls["ownerGroup"].setValue(this.econtent.ownerGroup);
+    this.ownerForm.controls["firstName"].setValue(this.econtent.firstName);
+    this.ownerForm.controls["middleName"].setValue(this.econtent.middleName);
+    this.ownerForm.controls["lastName"].setValue(this.econtent.lastName);
+    this.ownerForm.controls["amharicFirstName"].setValue(this.econtent.firstName);
+    this.ownerForm.controls["amharicMiddleName"].setValue(this.econtent.middleName);
+    this.ownerForm.controls["amharicLastName"].setValue(this.econtent.amharicLastName);
+    this.ownerForm.controls["lastName"].setValue(this.econtent.lastName);
+
+    this.ownerForm.controls["gender"].setValue(this.econtent.gender);
+    this.ownerForm.controls["zoneId"].setValue(this.econtent.zoneId);
+    this.ownerForm.controls["woredaId"].setValue(this.econtent.woredaId);
+
+    this.ownerForm.controls["town"].setValue(this.econtent.town);
+    this.ownerForm.controls["houseNo"].setValue(this.econtent.houseNo);
+    this.ownerForm.controls["phoneNumber"].setValue(this.econtent.phoneNumber);
+
+    this.ownerForm.controls["secondaryPhoneNumber"].setValue(this.econtent.town);
+    this.ownerForm.controls["idNumber"].setValue(this.econtent.houseNo);
+    this.ownerForm.controls["poBox"].setValue(this.econtent.phoneNumber);
+
+    this.ownerForm.controls["id"].setValue(this.econtent.id);
+  }
 }

@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from "@angular/core";
 import { CommonModule } from "@angular/common";
-import { VehicleService } from "src/app/core/services/vehicle.service";
+
 import {
   IVehicleOwnerGetDto,
   OwnerGroup,
@@ -8,11 +8,10 @@ import {
   VehicleOwnerPostDto,
 } from "./IVehicleOwnersDto";
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
-import { TokenStorageService } from "src/app/core/services/token-storage.service";
-import { User } from "src/app/store/Authentication/auth.models";
-import { UserView } from "src/app/model/user";
+
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { AssignOwnersComponent } from "./assign-owners/assign-owners.component";
+import { VehicleService } from "src/app/core/services/Vehicle-services/vehicle.service";
 
 @Component({
   selector: "app-vehicle-owners",
@@ -21,6 +20,7 @@ import { AssignOwnersComponent } from "./assign-owners/assign-owners.component";
 })
 export class VehicleOwnersComponent implements OnInit {
   @Input() vehicleId!: string;
+  @Input() callFrom: string='';
   vehicleOwners: IVehicleOwnerGetDto[] = [];
  
 

@@ -53,6 +53,10 @@ namespace TransportManagmentImplementation.DTOS.Vehicle.Action
         public string? FrontPlateSize { get; set; }
 
         public string? BackPlateSize { get; set; }
+
+        public bool IsActive { get; set; }
+
+        public TechnicalInspectionGetDto? TechnicalInspection { get; set; }
     }
 
 
@@ -98,17 +102,22 @@ namespace TransportManagmentImplementation.DTOS.Vehicle.Action
         public string ? ServiceType { get; set; }
         public string ? LoadMeasurment { get; set; }
         public string ? Color { get; set; }
+        public bool IsActive { get; set; }
     }
 
 
     public record InspectionDto
     {
 
-        public TechnicalInspectionGetDto TechnicalInspection { get; set; } = null!;
-
-        public FieldInspectionGetDto FieldInspection { get; set; } = null!;
+        
+        public List<FieldInspectionGetDto> FieldInspection { get; set; } = null!;
 
        
+    }
+
+    public record InspectionModelDto
+    {
+        public FieldInspectionGetDto FieldInspection { get; set; } = null!;
     }
 
 }

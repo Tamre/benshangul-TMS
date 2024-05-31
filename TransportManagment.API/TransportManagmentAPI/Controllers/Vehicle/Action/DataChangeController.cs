@@ -12,39 +12,24 @@ namespace TransportManagmentAPI.Controllers.Vehicle.Action
     public class DataChangeController : ControllerBase
     {
 
-        private readonly DataChangeService _dataChangeService;
+        
+        private readonly IDataChange _dataChangeService;
 
 
-        public DataChangeController(DataChangeService dataChangeService)
+        public DataChangeController(IDataChange dataChangeService)
         {
 
             _dataChangeService = dataChangeService;
         }
         [HttpGet]
-        public async Task<IActionResult> GetAll([FromQuery] FilterDetail filterData)
+        public async Task<IActionResult> GetAllDataChangeRequests()
         {
-            var pagedList = await _dataChangeService.GetAll(filterData);
-            return Ok(new { data = pagedList, metaData = pagedList.MetaData });
+            var pagedList = await _dataChangeService.GetAllDataChangeRequests();
+            return Ok(new { data = pagedList });
         }
-
-        [HttpGet]
-        [ProducesResponseType(typeof(VehicleDetailDto), (int)HttpStatusCode.OK)]
-        public async Task<IActionResult> GetVehicleDetail(VehicleGetParameterDto vehicleGet)
-        {
-            if (ModelState.IsValid)
-            {
-                return Ok(await _dataChangeService.GetVehicleDetail(vehicleGet));
-            }
-            else
-            {
-                return BadRequest();
-            }
-        }
-
-
         [HttpPost]
         [ProducesResponseType(typeof(ResponseMessage), (int)HttpStatusCode.OK)]
-        public async Task<IActionResult> CreateDataChangeRequest(DataChangePostDto dataChangePost)
+        public async Task<IActionResult> CreateDataChangeRequest(DataChangeDto dataChangePost)
         {
             if (ModelState.IsValid)
             {
@@ -55,10 +40,10 @@ namespace TransportManagmentAPI.Controllers.Vehicle.Action
                 return BadRequest();
             }
         }
-
+        
         [HttpPut]
         [ProducesResponseType(typeof(ResponseMessage), (int)HttpStatusCode.OK)]
-        public async Task<IActionResult> ApproveRequestAsync(DataChangePostDto dataChangePostDto)
+        public async Task<IActionResult> ApproveRequestAsync(DataChangeDto dataChangePostDto)
         {
             if (ModelState.IsValid)
             {

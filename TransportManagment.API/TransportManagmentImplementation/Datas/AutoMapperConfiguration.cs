@@ -4,12 +4,14 @@ using AutoMapper;
 using TransportManagmentAPI.Controllers.Vehicle.Configuration;
 using TransportManagmentImplementation.DTOS.Common;
 using TransportManagmentImplementation.DTOS.Configuration;
+using TransportManagmentImplementation.DTOS.Organaizations;
 using TransportManagmentImplementation.DTOS.Vehicle.Action;
 using TransportManagmentImplementation.DTOS.Vehicle.Configuration;
 using TransportManagmentImplementation.Interfaces.Common;
 using TransportManagmentImplementation.Interfaces.Vehicle.Action;
 using TransportManagmentImplementation.Services.Common;
 using TransportManagmentInfrustructure.Model.Common;
+using TransportManagmentInfrustructure.Model.Organizations;
 using TransportManagmentInfrustructure.Model.Vehicle.Action;
 using TransportManagmentInfrustructure.Model.Vehicle.Configuration;
 
@@ -40,10 +42,17 @@ namespace TransportManagmentImplementation.Datas
                 .ForMember(a => a.ApproverUser, e => e.MapFrom(mfg => mfg.Approver.FullName))
                 .ForMember(a => a.RequesterUser, e => e.MapFrom(mfg => mfg.CreatedBy.FullName));
         ;
-            CreateMap<DataChange, DataChange>()
+            CreateMap<DataChange, DataChangeDto>()
+                 //.ForMember(dto => dto.DataChangeDetails, opt => opt.MapFrom(entity => entity.DataChangeDetails))
                  .ForMember(a => a.Status, e => e.MapFrom(mfg => mfg.Status.ToString()));
+            CreateMap<DataChangeDetail, DataChangeDetailDto>()
+            .ForMember(a => a.ColumnName, e => e.MapFrom(mfg => mfg.ColumnName.ToString()));
             #endregion
 
+
+            CreateMap<ServiceChange, ServiceChangeDTO>()
+
+                    .ForMember(a => a.Status, e => e.MapFrom(mfg => mfg.Status.ToString()));
             #region vechile-config
 
             CreateMap<AISORCStockType, AISORCStockTypeGetDto>()
@@ -116,7 +125,7 @@ namespace TransportManagmentImplementation.Datas
               .ForMember(a => a.FullName, e => e.MapFrom(mfg => $"{mfg.FirstName} {mfg.MiddleName} {mfg.LastName}"))
               .ForMember(a => a.AmharicName, e => e.MapFrom(mfg => $"{mfg.AmharicFirstName} {mfg.AmharicMiddleName} {mfg.AmharicLastName}"))
               .ForMember(a => a.Zone, e => e.MapFrom(mfg => $"{mfg.Zone.Name} {mfg.Zone.LocalName}"))
-              .ForMember(a => a.OwnerGroup, e => e.MapFrom(mfg => mfg.OwnerGroup.ToString()))
+              .ForMember(a => a.OwnerGroupName, e => e.MapFrom(mfg => mfg.OwnerGroup.ToString()))
               ;
 
 
@@ -132,7 +141,8 @@ namespace TransportManagmentImplementation.Datas
 
             CreateMap<ORCStock, ORCStockGetDto>();
 
-
+            CreateMap<OrganizationList, OrganizationDTO>();
+            CreateMap<OrganizationCompound, OrganizationDTO>();
             CreateMap<PlateStock, PlateStockGetDto>()
                 .ForMember(a => a.PlateDigit, e => e.MapFrom(mfg => mfg.PlateDigit.ToString()))
                 .ForMember(a => a.PlateTypeName, e => e.MapFrom(mfg => mfg.PlateType.Name))
@@ -161,6 +171,7 @@ namespace TransportManagmentImplementation.Datas
                     ;
 
 
+           
 
 
 

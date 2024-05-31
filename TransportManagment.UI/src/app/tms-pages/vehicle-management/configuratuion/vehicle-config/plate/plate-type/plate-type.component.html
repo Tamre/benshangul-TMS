@@ -13,7 +13,7 @@
         </div>
     </div>
     <!--end col-->
-    <div class="col-xxl-12">
+    <div class="col-xxl-12"> 
         <div class="card" id="contactList">
             <div class="card-header">
                 <div class="row g-3">
@@ -93,7 +93,7 @@
                         <h5 class="modal-title" id="exampleModalLabel">{{ 'Add Plate Type' | translate }}</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal" (click)="modal.dismiss('Cross click')"></button>
                     </div>
-                    <form (ngSubmit)="saveData()" [formGroup]="dataForm" class="tablelist-form" autocomplete="off">
+                    <form (ngSubmit)="saveData()" [formGroup]="dataForm" class="tablelist-form was-validated" autocomplete="off">
                         <div class="modal-body">
                             <input type="hidden" id="id-field" />
                             <div class="row g-3">

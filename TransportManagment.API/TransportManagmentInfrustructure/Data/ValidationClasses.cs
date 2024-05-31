@@ -19,5 +19,6 @@ namespace TransportManagmentInfrustructure.Data
         public const int LetterLength = 20;
         public const int UserId = 450;
         public const int ChassisNo = 17;
+        public const int TaxIdentificationNumberLength = 10;
     }
 }

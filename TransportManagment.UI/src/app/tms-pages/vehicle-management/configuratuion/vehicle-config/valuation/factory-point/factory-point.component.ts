@@ -2,14 +2,13 @@ import { Component } from '@angular/core';
 import { AbstractControl, UntypedFormBuilder, UntypedFormGroup, ValidationErrors, Validators } from '@angular/forms';
 import { UserView } from 'src/app/model/user';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { Store } from '@ngrx/store';
+
 import { TranslateService } from '@ngx-translate/core';
 import { PaginationService } from 'src/app/core/services/pagination.service';
 import { TokenStorageService } from 'src/app/core/services/token-storage.service';
-import { RootReducerState } from 'src/app/store';
+
 import { cloneDeep } from 'lodash';
-import { selectCRMLoading } from 'src/app/store/CRM/crm_selector';
-import { fetchCrmContactData } from 'src/app/store/CRM/crm_action';
+
 import { ResponseMessage } from 'src/app/model/ResponseMessage.Model';
 import { successToast } from 'src/app/core/services/toast.service';
 import { FactoryPointPostDto, FactoryPointUpdateDto } from 'src/app/model/vehicle-configuration/factory-point';
@@ -52,7 +51,7 @@ export class FactoryPointComponent {
     private modalService: NgbModal,
     public service: PaginationService,
     public translate: TranslateService,
-    private store: Store<{ data: RootReducerState }>,
+ 
     public vehicleConfigService: VehicleConfigService
   ) { }
 
@@ -71,15 +70,7 @@ export class FactoryPointComponent {
       createdById: [this.currentUser?.userId, [Validators.required]],
       isActive:[true]
     });
-    /**
-     * fetches data
-     */
-    this.store.dispatch(fetchCrmContactData());
-    this.store.select(selectCRMLoading).subscribe((data) => {
-      if (data == false) {
-        document.getElementById("elmLoader")?.classList.add("d-none");
-      }
-    });
+  
   }
   floatValidator(control: AbstractControl): Promise<ValidationErrors | null> {
     return Promise.resolve().then(() => {

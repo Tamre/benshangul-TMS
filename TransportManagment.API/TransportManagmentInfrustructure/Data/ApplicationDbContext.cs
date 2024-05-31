@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using TransportManagmentInfrustructure.Model.Authentication;
 using TransportManagmentInfrustructure.Model.Common;
+using TransportManagmentInfrustructure.Model.Organizations;
 using TransportManagmentInfrustructure.Model.Vehicle.Action;
 using TransportManagmentInfrustructure.Model.Vehicle.Configuration;
 using static System.Runtime.InteropServices.JavaScript.JSType;
@@ -77,6 +78,17 @@ namespace TransportManagmentInfrustructure.Data
         public DbSet<VehicleReplacement> VehicleReplacements { get; set; }
         public DbSet<VehicleTransfer> VehicleTransfers { get; set; }
         public DbSet<DataChange> DataChanges { get; set; }
+
+        public DbSet<DataChangeDetail> DataChangeDetails { get; set; }
+        public DbSet<VehicleCancelation> VehicleCancelations { get; set; }
+
+        public DbSet<OrganizationList> GetOrganizationLists { get; set; }
+
+        public DbSet<OrganizationCompound> organizationCompounds { get; set; }
+
+
+
+
 
 
 
@@ -173,7 +185,7 @@ namespace TransportManagmentInfrustructure.Data
             });
             modelBuilder.Entity<VehicleSerialSetting>(entity =>
             {
-                entity.HasIndex(t => t.VehicleSerialType).IsUnique();
+                entity.HasIndex(t =>  new { t.VehicleSerialType, t.ZoneId }).IsUnique();
             });
             modelBuilder.Entity<VehicleSettings>(entity =>
             {
@@ -238,12 +250,8 @@ namespace TransportManagmentInfrustructure.Data
             {
                 entity.HasIndex(t => new { t.DocumentTypeId, t.VehicleId }).IsUnique();
             });
-            modelBuilder.Entity<DataChange>(entity =>
-            {
-                entity.HasIndex(t => t.Id).IsUnique();
-                
-            });
-
+           
+       
             #region commonNames
             modelBuilder.Entity<RoleCategory>().ToTable("RoleCategories", schema: "UserMgt");
             modelBuilder.Entity<ApplicationUser>().ToTable("Users", schema: "UserMgt");
@@ -297,6 +305,11 @@ namespace TransportManagmentInfrustructure.Data
             modelBuilder.Entity <VehicleReplacement>().ToTable("VehicleReplacements", schema: "VRMS");
             modelBuilder.Entity <VehicleTransfer>().ToTable("VehicleTransfers", schema: "VRMS");
             modelBuilder.Entity <VehicleDocument>().ToTable("VehicleDocuments", schema: "VRMS");
+
+           
+            modelBuilder.Entity <ValuationReason>().ToTable("ValuationReasons", schema: "VRMS");
+            modelBuilder.Entity <VehicleList>().ToTable("VehicleLists", schema: "VRMS");
+
 
 
             #endregion

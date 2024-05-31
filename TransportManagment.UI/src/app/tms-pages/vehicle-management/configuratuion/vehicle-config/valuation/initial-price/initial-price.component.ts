@@ -2,14 +2,12 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { UntypedFormGroup, UntypedFormBuilder, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { Store } from '@ngrx/store';
+
 import { TranslateService } from '@ngx-translate/core';
 import { PaginationService } from 'src/app/core/services/pagination.service';
 import { TokenStorageService } from 'src/app/core/services/token-storage.service';
 import { UserView } from 'src/app/model/user';
-import { RootReducerState } from 'src/app/store';
-import { fetchCrmContactData } from 'src/app/store/CRM/crm_action';
-import { selectCRMLoading } from 'src/app/store/CRM/crm_selector';
+
 import { cloneDeep } from 'lodash';
 import { successToast } from 'src/app/core/services/toast.service';
 import { InitialPricePostDto } from 'src/app/model/vehicle-configuration/initial-price';
@@ -44,7 +42,7 @@ export class InitialPriceComponent {
     private modalService: NgbModal,
     public service: PaginationService,
     public translate: TranslateService,
-    private store: Store<{ data: RootReducerState }>,
+   
     public vehicleConfigService:VehicleConfigService
   ) {}
   ngOnInit(): void {
@@ -62,15 +60,7 @@ export class InitialPriceComponent {
       isActive:[true]
     });
     
-    /**
-     * fetches data
-     */
-    this.store.dispatch(fetchCrmContactData());
-    this.store.select(selectCRMLoading).subscribe((data) => {
-      if (data == false) {
-        document.getElementById("elmLoader")?.classList.add("d-none");
-      }
-    });
+
   }
   floatValidator(control: AbstractControl): Promise<ValidationErrors | null> {
     return Promise.resolve().then(() => {

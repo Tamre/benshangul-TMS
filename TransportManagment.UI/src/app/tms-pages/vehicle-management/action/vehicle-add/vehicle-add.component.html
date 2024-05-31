@@ -1,300 +1,479 @@
 <app-breadcrumbs title="VRMS" [breadcrumbItems]="breadCrumbItems"></app-breadcrumbs>
 
 
+
 <div class="card">
 
     <div class="card-header align-items-center d-flex">
-        <h4 class="card-title mb-0 flex-grow-1">Vehicle Registration</h4>
+        <h4 class="card-title mb-0 flex-grow-1">Vehicle Registration </h4>
+        <h4 class="card-title text-end" *ngIf="registerdVehicle.vehicleId!=''"><b>VEHICLE Reg. No. :
+                <u>{{registerdVehicle.vehicleId!=''&&registerdVehicle.vehicleRegNo}}</u></b></h4>
     </div>
 
     <div class="card-body checkout-tab">
-        <form (ngSubmit)="submitForm()" [formGroup]="vehicleForm" class="tablelist-form" autocomplete="off">
-            <div class="modal-body">
-                <input type="hidden" id="id-field" formControlName="id" />
-                <div class="row g-3">
-                    <div class="col-lg-3">
-                        <div class="mb-3">
-                            <label for="modelId-field" class="form-label">{{ 'Model ID' | translate }}</label>
-                            <ng-select [items]="allVehicleModels" bindLabel="name" bindValue="id"
-                                [(ngModel)]="selectedModelId" id="modelId-field" name="modelId"
-                                formControlName="modelId" [searchable]="true" required>
-                            </ng-select>
-                            <div *ngIf="submitted && f['modelId'].errors" class="invalid-feedback" align="left">
-                                <div>{{ 'Model ID is required' | translate }}</div>
+        <div class="step-arrow-nav mt-n3 mx-n3 mb-3">
+            <ul ngbNav #customNav="ngbNav" [activeId]="activeIdd" class="nav nav-pills custom-nav nav-justified"
+                role="tablist">
+                <li [ngbNavItem]="1" class="nav-item">
+                    <a ngbNavLink class="nav-link fs-15 p-3" [class.disabled]="registerdVehicle.vehicleId!=''||isRegisterdFinished">
+                        <i
+                            class=" ri-truck-line  fs-16 p-2 bg-primary-subtle text-primary rounded-circle align-middle mx-2"></i>
+                        Vehicle Information
+                    </a>
+                    <ng-template ngbNavContent>
+                        <form (ngSubmit)="submitForm()" [formGroup]="vehicleForm" class="tablelist-form was-validated"
+                            autocomplete="off">
+                            <div class="modal-body">
+
+                                <div class="row g-3">
+
+                                    <div class="card p-4 border">
+                                        <div class="row g-3">
+                                            <div class="col-lg-3">
+                                                <div class="mb-3">
+                                                    <label for="modelId-field" class="form-label">{{ 'Model ID' |
+                                                        translate
+                                                        }}</label>
+                                                    <ng-select [items]="allVehicleModels" bindLabel="name"
+                                                        bindValue="id" [(ngModel)]="selectedModelId" id="modelId-field"
+                                                        name="modelId" formControlName="modelId" [searchable]="true"
+                                                        required>
+                                                    </ng-select>
+
+                                                    <div *ngIf="submitted && f['modelId'].errors"
+                                                        class="invalid-feedback" align="left">
+                                                        <div>{{ 'Model ID is required' | translate }}</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-3">
+                                                <div>
+                                                    <label for="manufacturingYear-field" class="form-label">{{
+                                                        'Manufacturing
+                                                        Year' | translate
+                                                        }}</label>
+                                                    <input type="number" id="manufacturingYear-field"
+                                                        class="form-control"
+                                                        placeholder="{{ 'Enter manufacturing year' | translate }}"
+                                                        required formControlName="manufacturingYear"
+                                                        [ngClass]="{ 'is-invalid': submitted && f['manufacturingYear'].errors }" />
+                                                    <div *ngIf="submitted && f['manufacturingYear'].errors"
+                                                        class="invalid-feedback" align="left">
+                                                        <div>{{ 'Manufacturing Year is required' | translate }}</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-3">
+                                                <div>
+                                                    <label for="horsePower-field" class="form-label">{{ 'Horse Power' |
+                                                        translate }}</label>
+                                                    <input type="number" id="horsePower-field" class="form-control"
+                                                        placeholder="{{ 'Enter horse power' | translate }}" required
+                                                        formControlName="horsePower"
+                                                        [ngClass]="{ 'is-invalid': submitted && f['horsePower'].errors }" />
+                                                    <div *ngIf="submitted && f['horsePower'].errors"
+                                                        class="invalid-feedback" align="left">
+                                                        <div>{{ 'Horse Power is required' | translate }}</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-lg-3">
+                                                <div class="mb-3">
+                                                    <label for="horsePowerMeasure-field" class="form-label">{{ 'Horse
+                                                        Power
+                                                        Measure' | translate
+                                                        }}</label>
+                                                    <ng-select [items]="horsePowerMeasureOption" bindLabel="name"
+                                                        bindValue="name" id="horsePowerMeasure-field"
+                                                        name="horsePowerMeasure" formControlName="horsePowerMeasure"
+                                                        [searchable]="true" required>
+                                                    </ng-select>
+                                                    <div *ngIf="submitted && f['horsePowerMeasure'].errors"
+                                                        class="invalid-feedback" align="left">
+                                                        <div>{{ 'Horse Power Measure is required' | translate }}</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-3">
+                                                <div>
+                                                    <label for="noCylinder-field" class="form-label">{{ 'No Cylinder' |
+                                                        translate }}</label>
+                                                    <input type="number" id="noCylinder-field" class="form-control"
+                                                        placeholder="{{ 'Enter no cylinder' | translate }}" required
+                                                        formControlName="noCylinder"
+                                                        [ngClass]="{ 'is-invalid': submitted && f['noCylinder'].errors }" />
+                                                    <div *ngIf="submitted && f['noCylinder'].errors"
+                                                        class="invalid-feedback" align="left">
+                                                        <div>{{ 'No Cylinder is required' | translate }}</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-3">
+                                                <div class="mb-3">
+                                                    <label for="typeOfVehicle-field" class="form-label">{{ 'Type Of
+                                                        Vehicle' |
+                                                        translate
+                                                        }}</label>
+                                                    <ng-select [items]="typeOfVehicleOption" bindLabel="name"
+                                                        bindValue="name" id="typeOfVehicle-field" name="typeOfVehicle"
+                                                        formControlName="typeOfVehicle" [searchable]="true" required>
+                                                    </ng-select>
+                                                    <div *ngIf="submitted && f['typeOfVehicle'].errors"
+                                                        class="invalid-feedback" align="left">
+                                                        <div>{{ 'Type Of Vehicle is required' | translate }}</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-lg-3">
+                                                <div>
+                                                    <label for="engineCapacity-field" class="form-label">{{ 'Engine
+                                                        Capacity' |
+                                                        translate
+                                                        }}</label>
+                                                    <input type="number" id="engineCapacity-field" class="form-control"
+                                                        placeholder="{{ 'Engine capacity' | translate }}" required
+                                                        formControlName="engineCapacity"
+                                                        [ngClass]="{ 'is-invalid': submitted && f['engineCapacity'].errors }" />
+                                                    <div *ngIf="submitted && f['engineCapacity'].errors"
+                                                        class="invalid-feedback" align="left">
+                                                        <div>{{ 'Engine Capacity is required' | translate }}</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-lg-3">
+                                                <div class="mb-3">
+                                                    <label class="form-label">{{ 'Vehicle Current Status' | translate
+                                                        }}</label>
+                                                    <ng-select [items]="vehicleCurrentStatusOption" bindLabel="name"
+                                                        bindValue="name" formControlName="vehicleCurrentStatus"
+                                                        [searchable]="true" required>
+                                                    </ng-select>
+                                                    <div *ngIf="submitted && f['vehicleCurrentStatus'].errors"
+                                                        class="invalid-feedback" align="left">
+                                                        <div>{{ 'Vehicle Current Status is required' | translate }}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-lg-3">
+                                                <div>
+                                                    <label for="transferStatus-field" class="form-label">{{ 'Transfer
+                                                        Status' |
+                                                        translate
+                                                        }}</label>
+                                                    <ng-select [items]="transferStatusOption" bindLabel="name"
+                                                        bindValue="name" formControlName="transferStatus"
+                                                        [searchable]="true" required
+                                                        (change)="onSelectionChange($event)">
+                                                    </ng-select>
+
+                                                </div>
+                                            </div>
+
+
+                                            <div class="col-lg-3" *ngIf="showZoneInput">
+                                                <div>
+                                                    <label for="zone-field" class="form-label">{{ 'Zone' | translate
+                                                        }}</label>
+                                                    <input type="text" class="form-control" id="zone-field" name="zone"
+                                                        formControlName="zone">
+                                                </div>
+                                            </div>
+
+                                            <div class="col-lg-3" *ngIf="showRegionInput">
+                                                <div>
+                                                    <label for="region-field" class="form-label">{{ 'Region' | translate
+                                                        }}</label>
+                                                    <input type="text" class="form-control" id="region-field"
+                                                        name="region" formControlName="region">
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-3">
+                                                <div>
+                                                    <label for="taxStatus-field" class="form-label">{{ 'Tax Status' |
+                                                        translate
+                                                        }}</label>
+                                                    <ng-select [items]="taxStatusOption" bindLabel="name"
+                                                        bindValue="name" formControlName="taxStatus" [searchable]="true"
+                                                        required>
+                                                    </ng-select>
+
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+
+                                    <div class="card p-4 border">
+
+                                        <div class="row g-3">
+                                            <!-- Add more fields as necessary -->
+
+
+                                            <div class="col-lg-3">
+                                                <div>
+                                                    <label for="officeCode-field" class="form-label">{{ 'Office Code' |
+                                                        translate }}</label>
+                                                    <input type="text" id="officeCode-field" class="form-control"
+                                                        placeholder="{{ 'Enter office code' | translate }}"
+                                                        formControlName="officeCode" />
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-3">
+                                                <div>
+                                                    <label for="declarationNo-field" class="form-label">{{ 'Declaration
+                                                        No' |
+                                                        translate
+                                                        }}</label>
+                                                    <input type="text" id="declarationNo-field" class="form-control"
+                                                        placeholder="{{ 'Enter declaration no' | translate }}" required
+                                                        formControlName="declarationNo"
+                                                        [ngClass]="{ 'is-invalid': submitted && f['declarationNo'].errors }" />
+                                                    <div *ngIf="submitted && f['declarationNo'].errors"
+                                                        class="invalid-feedback" align="left">
+                                                        <div>{{ 'Declaration No is required' | translate }}</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-3">
+                                                <div>
+                                                    <label for="declarationDate-field" class="form-label">{{
+                                                        'Declaration Date'
+                                                        | translate
+                                                        }}</label>
+                                                    <input type="date" id="declarationDate-field" class="form-control"
+                                                        formControlName="declarationDate" />
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-3">
+                                                <div>
+                                                    <label for="billOfLoading-field" class="form-label">{{ 'Bill of
+                                                        Loading' |
+                                                        translate
+                                                        }}</label>
+                                                    <input type="text" id="billOfLoading-field" class="form-control"
+                                                        placeholder="{{ 'Enter bill of loading' | translate }}"
+                                                        formControlName="billOfLoading" />
+                                                </div>
+                                            </div>
+
+                                            <div class="col-lg-3">
+                                                <div>
+                                                    <label for="removalNumber-field" class="form-label">{{ 'Removal
+                                                        Number' |
+                                                        translate
+                                                        }}</label>
+                                                    <input type="text" id="removalNumber-field" class="form-control"
+                                                        placeholder="{{ 'Enter removal number' | translate }}"
+                                                        formControlName="removalNumber" />
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-3">
+                                                <div>
+                                                    <label for="invoiceDate-field" class="form-label">{{ 'Invoice Date'
+                                                        |
+                                                        translate }}</label>
+                                                    <input type="date" id="invoiceDate-field" class="form-control"
+                                                        formControlName="invoiceDate" />
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-3">
+                                                <div>
+                                                    <label for="invoicePrice-field" class="form-label">{{ 'Invoice
+                                                        Price' |
+                                                        translate }}</label>
+                                                    <input type="number" id="invoicePrice-field" class="form-control"
+                                                        placeholder="{{ 'Enter invoice price' | translate }}"
+                                                        formControlName="invoicePrice" />
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-3">
+                                                <div>
+                                                    <label for="chassisNo-field" class="form-label">{{ 'Chassis No' |
+                                                        translate
+                                                        }}</label>
+                                                    <input type="text" id="chassisNo-field" class="form-control"
+                                                        placeholder="{{ 'Enter chassis no' | translate }}" required
+                                                        formControlName="chassisNo"
+                                                        [ngClass]="{ 'is-invalid': submitted && f['chassisNo'].errors }" />
+                                                    <div *ngIf="submitted && f['chassisNo'].errors"
+                                                        class="invalid-feedback" align="left">
+                                                        <div>{{ 'Chassis No is required' | translate }}</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-3">
+                                                <div>
+                                                    <label for="engineNumber-field" class="form-label">{{ 'Engine
+                                                        Number' |
+                                                        translate }}</label>
+                                                    <input type="text" id="engineNumber-field" class="form-control"
+                                                        placeholder="{{ 'Enter engine number' | translate }}"
+                                                        formControlName="engineNumber" />
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-3">
+                                                <div class="mb-3">
+                                                    <label for="assembledCountryId-field" class="form-label">{{
+                                                        'Assembled
+                                                        Country ID' |
+                                                        translate
+                                                        }}</label>
+                                                    <ng-select [items]="countries" bindLabel="name" bindValue="id"
+                                                        formControlName="assembledCountryId" [searchable]="true"
+                                                        required>
+                                                    </ng-select>
+
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-3">
+                                                <div class="mb-3">
+                                                    <label for="chassisMadeId-field" class="form-label">{{ 'Chassis Made
+                                                        ID' |
+                                                        translate
+                                                        }}</label>
+                                                    <ng-select [items]="countries" bindLabel="name" bindValue="id"
+                                                        formControlName="chassisMadeId" [searchable]="true" required>
+                                                    </ng-select>
+
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-3">
+                                                <div class="mb-3">
+                                                    <label for="serviceZoneId-field" class="form-label">{{ 'Service
+                                                        Zone' |
+                                                        translate }}</label>
+                                                    <ng-select [items]="zones" bindLabel="name" bindValue="id"
+                                                        formControlName="serviceZoneId" [searchable]="true" required>
+                                                    </ng-select>
+
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+
+
+
+
+
+
+
+
+                                </div>
                             </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-3">
-                        <div>
-                            <label for="manufacturingYear-field" class="form-label">{{ 'Manufacturing Year' | translate
-                                }}</label>
-                            <input type="number" id="manufacturingYear-field" class="form-control"
-                                placeholder="{{ 'Enter manufacturing year' | translate }}" required
-                                formControlName="manufacturingYear"
-                                [ngClass]="{ 'is-invalid': submitted && f['manufacturingYear'].errors }" />
-                            <div *ngIf="submitted && f['manufacturingYear'].errors" class="invalid-feedback"
-                                align="left">
-                                <div>{{ 'Manufacturing Year is required' | translate }}</div>
+                            <div class="modal-footer">
+                                <div class="hstack gap-2 justify-content-end">
+
+                                    <!-- <button class="btn btn-success" id="add-btn">{{
+                                    'Register' | translate }}</button> -->
+
+                                    <div class="d-flex align-items-start gap-3 mt-3">
+
+                                        <button type="submit" [disabled]="!vehicleForm.valid"
+                                            class="btn btn-primary btn-label right ms-auto nexttab"><i
+                                                class="ri-truck-line label-icon align-middle fs-16 ms-2"></i>Register &
+                                            Proceed </button>
+                                    </div>
+                                </div>
                             </div>
+                        </form>
+
+
+
+
+                    </ng-template>
+                </li>
+                <li [ngbNavItem]="2" class="nav-item">
+                    <a ngbNavLink  class="nav-link fs-15 p-3" [class.disabled]="registerdVehicle.vehicleId==''||isRegisterdFinished" >
+                        <i
+                            class=" ri-bank-card-line fs-16 p-2 bg-primary-subtle text-primary rounded-circle align-middle mx-2"></i>
+                        Vehicle Docuemnts
+                    </a>
+                    <ng-template ngbNavContent>
+
+
+
+                        <div class="card border " *ngIf="registerdVehicle.vehicleId!=''">
+
+                            <app-vehicle-documents [vehicleId]="registerdVehicle.vehicleId"></app-vehicle-documents>
                         </div>
-                    </div>
-                    <div class="col-lg-3">
-                        <div>
-                            <label for="horsePower-field" class="form-label">{{ 'Horse Power' | translate }}</label>
-                            <input type="number" id="horsePower-field" class="form-control"
-                                placeholder="{{ 'Enter horse power' | translate }}" required
-                                formControlName="horsePower"
-                                [ngClass]="{ 'is-invalid': submitted && f['horsePower'].errors }" />
-                            <div *ngIf="submitted && f['horsePower'].errors" class="invalid-feedback" align="left">
-                                <div>{{ 'Horse Power is required' | translate }}</div>
+
+                        <div class="d-flex align-items-start gap-3 mt-4">
+
+                            <button type="button" class="btn btn-primary btn-label right ms-auto nexttab"
+                                (click)="setActiveTab(3)" data-nexttab="pills-payment-tab"><i
+                                    class="ri-bank-card-line label-icon align-middle fs-16 ms-2"></i>Continue to
+                                Owner Info.</button>
+                        </div>
+
+                    </ng-template>
+                </li>
+                <li [ngbNavItem]="3" class="nav-item">
+                    <a ngbNavLink [class.disabled]=" registerdVehicle.vehicleId==''||  isRegisterdFinished" class="nav-link fs-15 p-3" >
+                        <i
+                            class=" ri-user-2-line  fs-16 p-2 bg-primary-subtle text-primary rounded-circle align-middle mx-2"></i>
+                        Vechile Owner Info
+                    </a>
+                    <ng-template ngbNavContent>
+
+                        <div class="card border" *ngIf="registerdVehicle.vehicleId!=''">
+                            <app-vehicle-owners [vehicleId]="registerdVehicle.vehicleId" callFrom="register"> </app-vehicle-owners>
+
+                        </div>
+
+                        <div class="d-flex align-items-start gap-3 mt-4">
+                            <button type="button" class="btn btn-light btn-label previestab" (click)="setActiveTab(2)"
+                                data-previous="pills-bill-address-tab"><i
+                                    class="ri-arrow-left-line label-icon align-middle fs-16 me-2"></i>Back to
+                                Documents</button>
+                            <button type="button" class="btn btn-primary btn-label right ms-auto nexttab"
+                                (click)="setActiveTab(4)" data-nexttab="pills-finish-tab"><i
+                                    class="ri-shopping-basket-line label-icon align-middle fs-16 ms-2"></i>Complete
+                                Registration</button>
+                        </div>
+
+                    </ng-template>
+                </li>
+                <li [ngbNavItem]="4" class="nav-item">
+                    <a ngbNavLink [class.disabled]="!isRegisterdFinished" class="nav-link fs-15 p-3">
+                        <i
+                            class="ri-checkbox-circle-line fs-16 p-2 bg-primary-subtle text-primary rounded-circle align-middle mx-2"></i>Finish
+                    </a>
+                    <ng-template ngbNavContent>
+                        <div class="text-center py-5" *ngIf="registerdVehicle.vehicleId!=''">
+
+                            <div class="mb-4">
+
+                                <img src="../../../../../assets/images/TMS/car.gif" style="width:150px;height:150px" />
                             </div>
+                            <h5>Registration is Completed !</h5>
+                            <p class="text-muted"><b>Chasis No. : </b> {{registerdVehicle.vehicleChasis}} </p>
+                            <p class="text-muted"><b>Current Owner. : </b> {{registerdVehicle.owner}} </p>
+                            <p class="text-muted"><b>Documents . : </b><span
+                                    *ngFor="let item of registerdVehicle.vehicleDocuments">{{item}},</span> </p>
+                            <h3 class="fw-semibold">Vehicle Registration No.: <a routerLink="#"
+                                    class="text-decoration-underline">{{registerdVehicle.vehicleRegNo}}</a>
+                            </h3>
                         </div>
-                    </div>
-
-                    <div class="col-lg-3">
-                        <div class="mb-3">
-                            <label for="horsePowerMeasure-field" class="form-label">{{ 'Horse Power Measure' | translate
-                                }}</label>
-                            <ng-select [items]="horsePowerMeasureOption" bindLabel="name" bindValue="name"
-                                id="horsePowerMeasure-field" name="horsePowerMeasure"
-                                formControlName="horsePowerMeasure" [searchable]="true" required>
-                            </ng-select>
-                            <div *ngIf="submitted && f['horsePowerMeasure'].errors" class="invalid-feedback"
-                                align="left">
-                                <div>{{ 'Horse Power Measure is required' | translate }}</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-3">
-                        <div>
-                            <label for="noCylinder-field" class="form-label">{{ 'No Cylinder' | translate }}</label>
-                            <input type="number" id="noCylinder-field" class="form-control"
-                                placeholder="{{ 'Enter no cylinder' | translate }}" required
-                                formControlName="noCylinder"
-                                [ngClass]="{ 'is-invalid': submitted && f['noCylinder'].errors }" />
-                            <div *ngIf="submitted && f['noCylinder'].errors" class="invalid-feedback" align="left">
-                                <div>{{ 'No Cylinder is required' | translate }}</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-3">
-                        <div class="mb-3">
-                            <label for="typeOfVehicle-field" class="form-label">{{ 'Type Of Vehicle' | translate
-                                }}</label>
-                            <ng-select [items]="typeOfVehicleOption" bindLabel="name" bindValue="name"
-                                id="typeOfVehicle-field" name="typeOfVehicle" formControlName="typeOfVehicle"
-                                [searchable]="true" required>
-                            </ng-select>
-                            <div *ngIf="submitted && f['typeOfVehicle'].errors" class="invalid-feedback" align="left">
-                                <div>{{ 'Type Of Vehicle is required' | translate }}</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-3">
-                        <div>
-                            <label for="engineCapacity-field" class="form-label">{{ 'Engine Capacity' | translate
-                                }}</label>
-                            <input type="number" id="engineCapacity-field" class="form-control"
-                                placeholder="{{ 'Engine capacity' | translate }}" required
-                                formControlName="engineCapacity"
-                                [ngClass]="{ 'is-invalid': submitted && f['engineCapacity'].errors }" />
-                            <div *ngIf="submitted && f['engineCapacity'].errors" class="invalid-feedback" align="left">
-                                <div>{{ 'Engine Capacity is required' | translate }}</div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-3">
-                        <div class="mb-3">
-                            <label class="form-label">{{ 'Vehicle Current Status' | translate }}</label>
-                            <ng-select [items]="vehicleCurrentStatusOption" bindLabel="name" bindValue="name"
-                                formControlName="vehicleCurrentStatus" [searchable]="true" required>
-                            </ng-select>
-                            <div *ngIf="submitted && f['vehicleCurrentStatus'].errors" class="invalid-feedback"
-                                align="left">
-                                <div>{{ 'Vehicle Current Status is required' | translate }}</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-3">
-                        <div>
-                            <label for="transferStatus-field" class="form-label">{{ 'Transfer Status' | translate
-                                }}</label>
-                            <ng-select [items]="transferStatusOption" bindLabel="name" bindValue="name"
-                                formControlName="transferStatus" [searchable]="true" required
-                                (change)="onSelectionChange($event)">
-                            </ng-select>
-
-                        </div>
-                    </div>
-
-
-                    <div class="col-lg-3" *ngIf="showZoneInput">
-                        <div>
-                            <label for="zone-field" class="form-label">{{ 'Zone' | translate }}</label>
-                            <input type="text" class="form-control" id="zone-field" name="zone" formControlName="zone">
-                        </div>
-                    </div>
-
-                    <div class="col-lg-3" *ngIf="showRegionInput">
-                        <div>
-                            <label for="region-field" class="form-label">{{ 'Region' | translate }}</label>
-                            <input type="text" class="form-control" id="region-field" name="region"
-                                formControlName="region">
-                        </div>
-                    </div>
-                    <div class="col-lg-3">
-                        <div>
-                            <label for="taxStatus-field" class="form-label">{{ 'Tax Status' | translate }}</label>
-                            <ng-select [items]="taxStatusOption" bindLabel="name" bindValue="name"
-                                formControlName="taxStatus" [searchable]="true" required>
-                            </ng-select>
-
-                        </div>
-                    </div>
-
-
-
-
-
-
-
-                    <!-- Add more fields as necessary -->
-
-
-                    <div class="col-lg-3">
-                        <div>
-                            <label for="officeCode-field" class="form-label">{{ 'Office Code' | translate }}</label>
-                            <input type="text" id="officeCode-field" class="form-control"
-                                placeholder="{{ 'Enter office code' | translate }}" formControlName="officeCode" />
-                        </div>
-                    </div>
-                    <div class="col-lg-3">
-                        <div>
-                            <label for="declarationNo-field" class="form-label">{{ 'Declaration No' | translate
-                                }}</label>
-                            <input type="text" id="declarationNo-field" class="form-control"
-                                placeholder="{{ 'Enter declaration no' | translate }}" required
-                                formControlName="declarationNo"
-                                [ngClass]="{ 'is-invalid': submitted && f['declarationNo'].errors }" />
-                            <div *ngIf="submitted && f['declarationNo'].errors" class="invalid-feedback" align="left">
-                                <div>{{ 'Declaration No is required' | translate }}</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-3">
-                        <div>
-                            <label for="declarationDate-field" class="form-label">{{ 'Declaration Date' | translate
-                                }}</label>
-                            <input type="date" id="declarationDate-field" class="form-control"
-                                formControlName="declarationDate" />
-                        </div>
-                    </div>
-                    <div class="col-lg-3">
-                        <div>
-                            <label for="billOfLoading-field" class="form-label">{{ 'Bill of Loading' | translate
-                                }}</label>
-                            <input type="text" id="billOfLoading-field" class="form-control"
-                                placeholder="{{ 'Enter bill of loading' | translate }}"
-                                formControlName="billOfLoading" />
-                        </div>
-                    </div>
-                    <div class="col-lg-3">
-                        <div>
-                            <label for="removalNumber-field" class="form-label">{{ 'Removal Number' | translate
-                                }}</label>
-                            <input type="text" id="removalNumber-field" class="form-control"
-                                placeholder="{{ 'Enter removal number' | translate }}"
-                                formControlName="removalNumber" />
-                        </div>
-                    </div>
-                    <div class="col-lg-3">
-                        <div>
-                            <label for="invoiceDate-field" class="form-label">{{ 'Invoice Date' | translate }}</label>
-                            <input type="date" id="invoiceDate-field" class="form-control"
-                                formControlName="invoiceDate" />
-                        </div>
-                    </div>
-                    <div class="col-lg-3">
-                        <div>
-                            <label for="invoicePrice-field" class="form-label">{{ 'Invoice Price' | translate }}</label>
-                            <input type="number" id="invoicePrice-field" class="form-control"
-                                placeholder="{{ 'Enter invoice price' | translate }}" formControlName="invoicePrice" />
-                        </div>
-                    </div>
-                    <div class="col-lg-3">
-                        <div>
-                            <label for="chassisNo-field" class="form-label">{{ 'Chassis No' | translate }}</label>
-                            <input type="text" id="chassisNo-field" class="form-control"
-                                placeholder="{{ 'Enter chassis no' | translate }}" required formControlName="chassisNo"
-                                [ngClass]="{ 'is-invalid': submitted && f['chassisNo'].errors }" />
-                            <div *ngIf="submitted && f['chassisNo'].errors" class="invalid-feedback" align="left">
-                                <div>{{ 'Chassis No is required' | translate }}</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-3">
-                        <div>
-                            <label for="engineNumber-field" class="form-label">{{ 'Engine Number' | translate }}</label>
-                            <input type="text" id="engineNumber-field" class="form-control"
-                                placeholder="{{ 'Enter engine number' | translate }}" formControlName="engineNumber" />
-                        </div>
-                    </div>
-                    <div class="col-lg-3">
-                        <div class="mb-3">
-                            <label for="assembledCountryId-field" class="form-label">{{ 'Assembled Country ID' |
-                                translate
-                                }}</label>
-                            <ng-select [items]="countries" bindLabel="name" bindValue="id"
-                                formControlName="assembledCountryId" [searchable]="true" required>
-                            </ng-select>
-
-                        </div>
-                    </div>
-                    <div class="col-lg-3">
-                        <div class="mb-3">
-                            <label for="chassisMadeId-field" class="form-label">{{ 'Chassis Made ID' | translate
-                                }}</label>
-                            <ng-select [items]="countries" bindLabel="name" bindValue="id"
-                                formControlName="chassisMadeId" [searchable]="true" required>
-                            </ng-select>
-
-                        </div>
-                    </div>
-                    <div class="col-lg-3">
-                        <div class="mb-3">
-                            <label for="serviceZoneId-field" class="form-label">{{ 'Service Zone' | translate }}</label>
-                            <ng-select [items]="zones" bindLabel="name" bindValue="id" formControlName="serviceZoneId"
-                                [searchable]="true" required>
-                            </ng-select>
-
-                        </div>
-                    </div>
-
-
-
-
-
-
-
-
-
-
-
-                </div>
-            </div>
-            <div class="modal-footer">
-                <div class="hstack gap-2 justify-content-end">
-                    <!-- <button type="button" class="btn btn-light" data-bs-dismiss="modal" (click)="closeModal()">{{
-                        'Close' |
-                        translate }}</button> -->
-                    <button type="submit" [disabled]="!vehicleForm.valid" class="btn btn-success" id="add-btn">{{
-                        'Register' | translate }}</button>
-                </div>
-            </div>
-        </form>
+                    </ng-template>
+                </li>
+            </ul>
+        </div>
+        <!-- Tab panes -->
+        <div class="tab-content">
+            <div [ngbNavOutlet]="customNav"></div>
+        </div>
 
     </div>
+
+
 
 
 

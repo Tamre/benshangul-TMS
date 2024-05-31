@@ -55,6 +55,21 @@ namespace TransportManagmentAPI.Controllers.Vehicle.Action
         }
 
 
+        [HttpPut]
+        [ProducesResponseType(typeof(ResponseMessage), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> ReplaceVehicleDocuemtns([FromForm] VehicleDocumetGetDto vehicleDocumetGet)
+        {
+            if (ModelState.IsValid)
+            {
+                return Ok(await _vehicleListService.ReplaceVehicleDocuemtns(vehicleDocumetGet));
+            }
+            else
+            {
+                return BadRequest();
+            }
+        }
+
+
         [HttpPost]
         [ProducesResponseType(typeof(VehicleDetailDto), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> GetVehicleDetail(VehicleGetParameterDto vehicleGet)
@@ -107,5 +122,15 @@ namespace TransportManagmentAPI.Controllers.Vehicle.Action
                 return BadRequest();
             }
         }
+
+        [HttpGet]
+        [ProducesResponseType(typeof(List<VehicleDocumetGetDto>), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> GetVehicleDocuments(Guid vehicleId )
+        {
+            var docs = await _vehicleListService.GetVehicleDocuments(vehicleId);
+            return Ok(docs);
+        }
+
+
     }
 }

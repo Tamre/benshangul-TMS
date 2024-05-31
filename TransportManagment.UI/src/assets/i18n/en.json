@@ -31,7 +31,8 @@
       "TEXT": "Vehicle",
       "LIST": {
         "REGISTER": "Register Vehicle",
-        "FIND":"Find Vehicle"
+        "FIND":"Find Vehicle",
+        "OWNER":"Owner Management"
       }
     },
 

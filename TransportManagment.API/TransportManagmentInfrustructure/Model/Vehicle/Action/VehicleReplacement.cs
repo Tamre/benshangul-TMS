@@ -26,5 +26,13 @@ namespace TransportManagmentInfrustructure.Model.Vehicle.Action
         public DateTime LetterDate { get; set;}
         [StringLength(ValidationClasses.MaxSettingRemarkLength)]
         public string?  Remark { get; set; }
+        [Required]
+        public DataChangeStatus Status { get; set; }
+        public string? CretedById { get; set; } = null!;
+        [Required]
+        [StringLength(ValidationClasses.UserId)]
+        public string? ApprovedById { get; set; } = null!;
+        public virtual ApplicationUser ApprovedBy { get; set; } = null!;
+        public DateTime? ApprovedDate { get; set; } = DateTime.UtcNow;
     }
 }

@@ -13,6 +13,7 @@ namespace TransportManagmentImplementation.DTOS.Vehicle.Action
 {
     public record AISPostDto
     {
+       // public required string Title { get; init; }
         [Required]
         public Guid VehicleId { get; set; } 
         

@@ -16,6 +16,7 @@ using TransportManagmentImplementation.Interfaces.Vehicle.Action;
 using TransportManagmentImplementation.Interfaces.Vehicle.Configuration;
 using TransportManagmentImplementation.Services.Common;
 using TransportManagmentImplementation.Services.Configuration;
+using TransportManagmentImplementation.Services.Vehicle;
 using TransportManagmentImplementation.Services.Vehicle.Action;
 using TransportManagmentImplementation.Services.Vehicle.Configuration;
 
@@ -93,6 +94,13 @@ namespace TransportManagmentImplementation.Datas
             services.AddScoped<IORCService, ORCService>();
             services.AddScoped<IOwnerManagmentService, OwnerManagmentService>();
             services.AddScoped<IVehicleBanService, VehicleBanService>();
+            services.AddScoped<IDataChange, DataChangeService>();
+            services.AddScoped<IServiceChange, ServiceChangeService>();
+            services.AddScoped<IVehicleReplacement, VehicleReplacementService>();
+
+            services.AddScoped<IVehicleTransfer, VehicleTransferService>();
+
+
 
 
             #endregion

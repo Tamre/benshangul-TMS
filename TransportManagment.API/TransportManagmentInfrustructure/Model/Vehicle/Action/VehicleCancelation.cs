@@ -19,11 +19,12 @@ namespace TransportManagmentInfrustructure.Model.Vehicle.Action
         [Required, StringLength(ValidationClasses.SerialNumberLength)]
         public string ClearanceLetterNo { get; set; } = null!;
         public DateTime CleranceDate { get; set; }
-        public bool IsReverted { get; set; }
+        public bool IsReverted { get; set; } = false!;
 
         [StringLength(ValidationClasses.UserId)]
         public string? RevertedById { get; set; }
         public virtual ApplicationUser RevertedBy { get; set; } = null!;
+
 
     }
 }
