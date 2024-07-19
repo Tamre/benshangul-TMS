@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using static TransportManagmentInfrustructure.Enums.VehicleEnum;
 using TransportManagmentInfrustructure.Model.Authentication;
 
-namespace TransportManagmentInfrustructure.Model.Vehicle.Action
+namespace TransportManagmentInfrustructure.Model.Organizations
 {
     public class OrganizationLicense : ActionIdModel
     {
@@ -40,9 +40,9 @@ namespace TransportManagmentInfrustructure.Model.Vehicle.Action
         public bool IsPrinted { get; set; }
 
         public OrganizationType Organization { get; set; }
-      
+
         public int NoOfVehicles { get; set; }
-   
+
         public OrganizationLicenseReason IssueReason { get; set; }
 
     }

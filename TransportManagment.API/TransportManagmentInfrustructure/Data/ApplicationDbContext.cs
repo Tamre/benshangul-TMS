@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using TransportManagmentInfrustructure.Model.Authentication;
 using TransportManagmentInfrustructure.Model.Common;
+using TransportManagmentInfrustructure.Model.MachineConfigeration;
 using TransportManagmentInfrustructure.Model.Organizations;
 using TransportManagmentInfrustructure.Model.Vehicle.Action;
 using TransportManagmentInfrustructure.Model.Vehicle.Configuration;
@@ -85,6 +86,8 @@ namespace TransportManagmentInfrustructure.Data
         public DbSet<OrganizationList> GetOrganizationLists { get; set; }
 
         public DbSet<OrganizationCompound> organizationCompounds { get; set; }
+
+        public DbSet<MachineConfiguration> MachineConfigurations { get; set; }
 
 
 
