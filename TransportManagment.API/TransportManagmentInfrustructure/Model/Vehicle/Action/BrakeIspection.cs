@@ -13,24 +13,18 @@ namespace TransportManagmentInfrustructure.Model.Vehicle.Action
     public string FrontLeftBrakeForce { get; set; }
     public string FrontRightBrakeForce { get; set; }     
     public bool FrontRightBrakeForceStatus { get; set; }
-
     public string RearLeftBrakeForce { get; set; }
     public string RearRightBrakeForce { get; set; }
-    public bool RearRightBrakeForceStatus { get; set; }
-        
+    public bool RearRightBrakeForceStatus { get; set; }        
     public string FrontLeftFriction { get; set; }
     public string FrontRightFriction { get; set; }
-    public bool FrontLeftFrictionStatus { get; set; }
-    
+    public bool FrontLeftFrictionStatus { get; set; }    
     public string RearLeftFriction { get; set; }
     public string RearRightFriction { get; set; }
-
     public string RearLeftFrictionEfficency { get; set; }
     public string RearRightFrictionEfficency { get; set; }
-
     public string FrontLeftFrictionEfficency { get; set; }
     public string FrontRightFrictionEfficency { get; set; }
-
     public string FrontBrakeEfficency { get; set; }
     public string RearBrakeEfficency { get; set; }
     public string HandBrakeEfficency { get; set; }

@@ -7,7 +7,7 @@ using TransportManagmentImplementation.Interfaces.Organaizations;
 using TransportManagmentImplementation.Interfaces.Vehicle.Action;
 using TransportManagmentImplementation.Services.Vehicle.Action;
 
-namespace TransportManagmentAPI.Controllers.Vehicle.Action
+namespace TransportManagmentAPI.Controllers.Organaization
 {
     [Route("api/[controller]/[action]")]
     [ApiController]
@@ -51,7 +51,7 @@ namespace TransportManagmentAPI.Controllers.Vehicle.Action
             }
         }
 
-       
+
 
 
 

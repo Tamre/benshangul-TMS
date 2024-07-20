@@ -10,10 +10,10 @@ namespace TransportManagmentImplementation.Interfaces.Organaizations
 {
     public interface IOrganaizationCompound
     {
-        public Task<ResponseMessage> CreateOrganizationCompound(OrganizationCompoundDto organaizationListDto);
-        public Task<ResponseMessage> UpdateOrganizationCompound(OrganizationCompoundDto organaizationListDto);
-        public Task<ResponseMessage> DeleteOrganizationCompound(Guid id);
-        public Task<List<OrganizationCompoundDto>> GetOrganaizationCompoundByIdAsync(Guid Id);
+        public Task<ResponseMessage> Add(OrganizationCompoundDto organaizationListDto);
+        public Task<ResponseMessage> Update(OrganizationCompoundDto organaizationListDto);
+        public Task<ResponseMessage> Delete(Guid id);
+        public Task<List<OrganizationCompoundDto>> GetAll(Guid Id);
 
 
     }

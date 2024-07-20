@@ -7,7 +7,6 @@ using Microsoft.IdentityModel.Tokens;
 using System.Net.Mail;
 using System.Net;
 using System.Text;
-
 using TransportManagmentInfrustructure.Data;
 using Microsoft.EntityFrameworkCore;
 using TransportManagmentInfrustructure.Model.Authentication;
@@ -15,14 +14,29 @@ using TransportManagmentImplementation.DTOS.Authentication;
 using TransportManagmentImplementation.Datas;
 using System.Configuration;
 using Microsoft.OpenApi.Models;
-
-
 using TransportManagmentImplementation.Interfaces.Common;
 using Serilog;
+using Hangfire;
+
+    using Hangfire.Server;
+using Microsoft.Extensions.Options;
+using Hangfire.AspNetCore;
+
+using Microsoft.AspNetCore.Mvc.Filters;
+using Hangfire.Dashboard;
+using Microsoft.Extensions.Configuration;
+
+using System.Runtime.Intrinsics.X86;
+using Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal;
+using TransportManagmentImplementation.Services.Vehicle.Action;
+using TransportManagmentImplementation.Interfaces.Vehicle.Action;
+using AutoMapper;
+using System.Net.Http;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Host.UseSerilog((context, configuration) => configuration.ReadFrom.Configuration(context.Configuration));
+
 
 
 // Add services to the container.
@@ -31,6 +45,36 @@ builder.Services.AddCors(policyBuilder =>
     policyBuilder.AddDefaultPolicy(policy =>
         policy.WithOrigins("*").AllowAnyHeader().AllowAnyHeader())
 );
+/*************************************   Add Hangfire services ******************************* By Tamire */
+
+
+builder.Services.AddHangfire(configuration => configuration
+     .SetDataCompatibilityLevel(CompatibilityLevel.Version_180)
+    .UseSimpleAssemblyNameTypeSerializer()
+    .UseRecommendedSerializerSettings()
+    .UseSqlServerStorage(builder.Configuration.GetConnectionString("ApplicationDbContext")));
+    
+
+
+
+// Add the processing server as IHostedService
+builder.Services.AddHangfireServer();
+
+
+
+// Add framework services.
+builder.Services.AddMvc();
+
+// Add the processing server as IHostedService
+//builder.Services.AddHangfireServer();
+
+
+/*************************************  Add the processing server as IHostedService ************** By Tamire */
+//builder.Services.AddHangfireServer();
+builder.Services.AddHttpClient();
+/* ********************************************************************************************** */
+
+
 
 //builder.Services.AddCors();
 builder.Services.AddControllers().AddJsonOptions(
@@ -98,6 +142,11 @@ builder.Services.AddCoreBusiness();
 
 builder.Services.AddAutoMapper(typeof(AutoMapperConfigurations));
 
+// Add DbContext
+builder.Services.AddDbContext<ApplicationDbContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("ApplicationDbContext")));
+
+
 
 //Jwt Authentication
 
@@ -163,13 +212,14 @@ builder.Services.AddSwaggerGen(c =>
 var app = builder.Build();
 
 
-
 // Enable Swagger middleware if in development or production environment
 if (app.Environment.IsDevelopment() || app.Environment.IsProduction())
 {
+  
     app.UseSwagger();
     app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Integrated Digital Platforms"));
 }
+
 
 app.UseSerilogRequestLogging();
 app.UseHttpsRedirection();
@@ -180,14 +230,22 @@ app.UseCors(cors =>
         .AllowAnyHeader()
         .AllowAnyMethod()
 );
+// **************************************Use Hangfire*******************************************************
 
-// Serve static files from wwwroot directory
-app.UseStaticFiles();
 app.UseStaticFiles(new StaticFileOptions
 {
     FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), @"wwwroot")),
     RequestPath = new PathString("/wwwroot")
 });
+app.UseHangfireDashboard();
+IBrake  brake1 = new BrakeDtaService(null, null, null, null, null) ;
+BackgroundJob.Enqueue(() => brake1.GetDataFromMachineAsync());
+//BackgroundJob.Enqueue(() => brake1.CreateBrake());
+
+
+//BackgroundJob.Enqueue(() => brake1.CreateBrake());
+
+
 
 // Enable authentication middleware
 app.UseAuthentication();
@@ -197,11 +255,12 @@ app.UseAuthentication();
 
 // Map controllers
 app.UseRouting();
+
+
 app.UseAuthorization();
-app.UseEndpoints(endpoints =>
-{
-    endpoints.MapControllers();
-});
+
+
+
 
 app.Run();
 

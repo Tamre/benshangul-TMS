@@ -1,24 +1,25 @@
 ﻿
 
+
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Hosting;
+using AutoMapper;
+using System.Net.Http.Json;
 using Implementation.Interfaces.Authentication;
 using Implementation.Services.Authentication;
 using IntegratedImplementation.Interfaces.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 using TransportManagmentImplementation.Interfaces.Common;
 using TransportManagmentImplementation.Interfaces.Configuration;
 using TransportManagmentImplementation.Interfaces.Vehicle.Action;
 using TransportManagmentImplementation.Interfaces.Vehicle.Configuration;
 using TransportManagmentImplementation.Services.Common;
 using TransportManagmentImplementation.Services.Configuration;
-using TransportManagmentImplementation.Services.Vehicle;
 using TransportManagmentImplementation.Services.Vehicle.Action;
 using TransportManagmentImplementation.Services.Vehicle.Configuration;
+
 
 namespace TransportManagmentImplementation.Datas
 {
@@ -100,9 +101,9 @@ namespace TransportManagmentImplementation.Datas
 
             services.AddScoped<IVehicleTransfer, VehicleTransferService>();
 
+            services.AddScoped<IBrake, BrakeService>();
 
-
-
+          
             #endregion
 
 

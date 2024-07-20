@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using static TransportManagmentInfrustructure.Enums.CommonEnum;
 using TransportManagmentInfrustructure.Model.Common;
 using TransportManagmentInfrustructure.Model.Authentication;
-namespace TransportManagmentInfrustructure.Model.Vehicle.Action
+namespace TransportManagmentInfrustructure.Model.Organizations
 {
     public class OrganizationOwner : ActionIdModel
     {
@@ -22,12 +22,12 @@ namespace TransportManagmentInfrustructure.Model.Vehicle.Action
         public string RegionId { get; set; }
         public virtual Region Region { get; set; }
         public string ZoneId { get; set; }
-    
+
         public string WoredaId { get; set; }
         public virtual Woreda Woreda { get; set; }
         public string MobilePhoneNumber { get; set; }
         public string ServiceZoneId { get; set; }
-      
+
         public string Remark { get; set; }
         public string Town { get; set; }
         public string Kebele { get; set; }

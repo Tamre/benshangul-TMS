@@ -33,7 +33,7 @@ namespace TransportManagmentImplementation.Services.Organizations
         }
 
 
-        public async Task<ResponseMessage> DeleteOrganizationCompound(Guid id)
+        public async Task<ResponseMessage> Delete(Guid id)
         {
             try
             {
@@ -71,7 +71,7 @@ namespace TransportManagmentImplementation.Services.Organizations
             }
         }
 
-        public async Task<ResponseMessage> UpdateOrganizationCompound( OrganizationCompoundDto organizationDto)
+        public async Task<ResponseMessage> Update( OrganizationCompoundDto organizationDto)
         {
             try
             {
@@ -117,7 +117,7 @@ namespace TransportManagmentImplementation.Services.Organizations
       
       
 
-        public async Task<List<OrganizationCompoundDto>> GetOrganaizationCompoundByIdAsync(Guid Id)
+        public async Task<List<OrganizationCompoundDto>> GetAll(Guid Id)
         {
 
 
@@ -128,7 +128,7 @@ namespace TransportManagmentImplementation.Services.Organizations
             return orgCompound;
 
         }
-        public async Task<ResponseMessage> CreateOrganizationCompound(OrganizationCompoundDto organizationDto)
+        public async Task<ResponseMessage> Add(OrganizationCompoundDto organizationDto)
         {
             try
             {

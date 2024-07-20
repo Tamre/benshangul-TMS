@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using TransportManagmentInfrustructure.Model.Authentication;
 using static TransportManagmentInfrustructure.Enums.CommonEnum;
 
-namespace TransportManagmentInfrustructure.Model.Vehicle.Action
+namespace TransportManagmentInfrustructure.Model.Organizations
 {
     public class OrganizationManPower : ActionIdModel
     {
